@@ -1,0 +1,23 @@
+<div class="main">
+  <div class="container">
+    <a href="/">
+      <img class="siteLogo" src="images/sitelogo.svg" alt="ADNOC Logo" />
+    </a>
+    <div class="success-icon">
+      <img src="images/success-check-mark.svg" alt="Success Icon" />
+    </div>
+    <h1 class="title">
+      {{ "userRegistrationTranslation.success.signUp" | cxTranslate }}
+    </h1>
+    <p class="refNumber">
+      {{ "userRegistrationTranslation.success.refNumber" | cxTranslate }}
+      {{ responseData?.registrationRequestId }}
+    </p>
+    <p class="msg">
+      {{ "userRegistrationTranslation.success.message" | cxTranslate }}
+    </p>
+    <a class="btn btn-block btn-primary loginBtn mb-4" href="/">{{
+      "userRegistrationTranslation.success.signIn" | cxTranslate
+    }}</a>
+  </div>
+</div>

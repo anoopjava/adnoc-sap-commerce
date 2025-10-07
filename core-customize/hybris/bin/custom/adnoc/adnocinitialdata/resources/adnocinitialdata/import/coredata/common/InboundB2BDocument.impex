@@ -1,0 +1,39 @@
+#************************
+#*** Inbound B2BDocument ****
+#************************;
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundB2BDocument; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]; itemTypeMatch(code)
+                                   ; InboundB2BDocument	; B2BDocumentType	; B2BDocumentType	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BDocument	; B2BDocument    	; B2BDocument    	; true	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BDocument	; DocumentStatus 	; DocumentStatus 	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BDocument	; AbstractOrder  	; AbstractOrder  	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BDocument	; Currency       	; Currency       	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BDocument	; B2BUnit        	; B2BUnit        	; 	; ALL_SUB_AND_SUPER_TYPES	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundB2BDocument:B2BDocumentType	; code          	; B2BDocumentType:code      	;                                   	; true	;
+                                            ; InboundB2BDocument:B2BDocument    	; dueDate       	; B2BDocument:dueDate       	;                                   	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; documentNumber	; B2BDocument:documentNumber	;                                   	; true	;
+                                            ; InboundB2BDocument:B2BDocument    	; date          	; B2BDocument:date          	;                                   	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; order         	; B2BDocument:order         	; InboundB2BDocument:AbstractOrder  	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; unit          	; B2BDocument:unit          	; InboundB2BDocument:B2BUnit        	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; status        	; B2BDocument:status        	; InboundB2BDocument:DocumentStatus 	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; documentType  	; B2BDocument:documentType  	; InboundB2BDocument:B2BDocumentType	; true	;
+                                            ; InboundB2BDocument:B2BDocument    	; currency      	; B2BDocument:currency      	; InboundB2BDocument:Currency       	; 	;
+                                            ; InboundB2BDocument:B2BDocument    	; amount        	; B2BDocument:amount        	;                                   	; 	;
+                                            ; InboundB2BDocument:DocumentStatus 	; code          	; DocumentStatus:code       	;                                   	; true	;
+                                            ; InboundB2BDocument:AbstractOrder  	; code          	; AbstractOrder:code        	;                                   	; true	;
+                                            ; InboundB2BDocument:Currency       	; isocode       	; Currency:isocode          	;                                   	; true	;
+                                            ; InboundB2BDocument:B2BUnit        	; uid           	; B2BUnit:uid               	;                                   	; true	;
+
+#******************************
+#*** Inbound B2BDocument ICC ****
+#******************************
+
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; InboundB2BDocument                ; OAUTH                  ;
+
+
+

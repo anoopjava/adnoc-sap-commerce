@@ -1,0 +1,329 @@
+@import "../../../../styles/scss/utilities/variables";
+
+.loginContainer {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  height: 100vh;
+  padding: 0;
+
+  .video-container {
+    flex: 67%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 67%;
+    height: 100%;
+    overflow: hidden;
+
+    @media (max-width: $breakpoint-ipad) {
+      flex: 62%;
+    }
+
+    @media screen and (min-width: 960px) and (max-width: 1480px) {
+      flex: 60%;
+    }
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: $breakpoint-xs) {
+      display: none;
+    }
+
+    .left-wrapper-img {
+      background: var(--cx-video-image-background-color);
+      background-image: url("../../../../../public/images/leftImage.svg");
+      background-repeat: no-repeat;
+      min-height: 100%;
+    }
+  }
+
+  .form-container {
+    flex: 35%;
+    position: relative;
+    margin-left: 67%;
+    width: 35%;
+    height: 100%;
+    background-color: var(--cx-white);
+    border-radius: 30px;
+    z-index: 1;
+    padding: 5rem 4rem 5rem 6rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-width: none;
+    left: -2%;
+
+    @media (max-width: $breakpoint-ipad) {
+      flex: 44%;
+      margin-left: 60%;
+      padding: 3rem 2rem 3rem 3rem;
+    }
+
+    @media screen and (min-width: 960px) and (max-width: 1480px) {
+      flex: 40%;
+      margin-left: 60%;
+    }
+
+    @media (max-width: $breakpoint-xs) {
+      width: 100%;
+      padding: 20px 0;
+      margin: 0;
+      left: 0;
+      border-radius: 0;
+      position: relative;
+      background: none;
+      box-shadow: none;
+    }
+
+    .hr {
+      margin: 2rem 0;
+      border: 1px solid var(--900, $horizontal-line-color);
+    }
+
+    .logo-container {
+      font-size: 20px;
+
+      .siteLogo {
+        margin-bottom: 2rem;
+      }
+    }
+
+    input {
+      background-color: var(--50, $input-background-color);
+      border: none;
+      border-radius: 8px;
+
+      &:focus,
+      &:not(.otp-input):not(:placeholder-shown) {
+        background-color: var(--cx-white);
+        border: 1.5px solid var(--cx-color-primary);
+        outline: none;
+      }
+    }
+
+    ::placeholder {
+      color: var(--950, $input-placeholder-color);
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 30px;
+      text-align: left;
+
+      .subTitle {
+        display: block;
+        font-family: var(--cx-font-family-bold);
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 45px;
+        text-align: left;
+      }
+    }
+
+    .signIn-title {
+      font-family: var(--cx-font-family-bold);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 45px;
+      text-align: left;
+    }
+
+    .signUp-title {
+      a {
+        font-family: var(--cx-font-family-bold);
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 27px;
+        text-align: left;
+      }
+    }
+
+    .cx-page-section {
+      margin: 0;
+      padding: 30px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .col-md-6 {
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      color: var(--cx-black);
+
+      .label-content {
+        display: block;
+        margin-bottom: 8px;
+      }
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      width: auto;
+      border-radius: 0;
+
+      &-primary {
+        width: 100%;
+        font-size: 16px;
+      }
+
+      &-link {
+        text-decoration: none;
+      }
+    }
+
+    .cx-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+    }
+
+    .otpLoginForm {
+      h1 {
+        font-family: var(--cx-font-family-xbold);
+        font-size: 30px;
+
+        .subtext {
+          font-family: var(--cx-font-family-regular);
+          font-size: 18px;
+          color: var(--cx-black);
+        }
+      }
+    }
+
+    .login-form-group {
+      display: flex;
+      align-items: inherit;
+      justify-content: space-between;
+    }
+
+    input[type="checkbox"] {
+      margin-inline-start: 0;
+      margin-top: 0;
+    }
+
+    .remember-link {
+      margin: 0 0 0 25px;
+    }
+
+    .forgot-link {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0;
+    }
+    .contactUsLabel {
+      float: right;
+      margin-right: 5px;
+    }
+  }
+
+  .disabled-link {
+    pointer-events: none;
+    cursor: default;
+    color: var(--cx-form-control-text-color);
+  }
+
+  .btn-back {
+    width: 100% !important;
+  }
+
+  .resend-link-text {
+    display: block;
+
+    .left-text,
+    .right-text {
+      display: inline-block;
+      width: 50%;
+
+      @media (max-width: $breakpoint-ipad) {
+        width: 45%;
+      }
+    }
+
+    .right-text {
+      text-align: right;
+      vertical-align: top;
+
+      @media (max-width: $breakpoint-ipad) {
+        width: 55%;
+      }
+    }
+  }
+
+  .verify-container {
+    .btn {
+      margin-top: 10px !important;
+    }
+  }
+
+  .otp-inputs {
+    display: flex;
+    gap: 8px;
+  }
+
+  .otp-field {
+    width: 40px;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 10px;
+    border: 1px solid var(--cx-footer-social-icon-hover-color);
+  }
+
+  .verify-container {
+    margin-top: 20px;
+  }
+
+  .text-danger {
+    color: var(--cx-color-danger);
+  }
+
+  .resend-link-text {
+    margin-top: 20px;
+  }
+
+  .otp-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .otp-input {
+    width: 40px !important;
+    height: 40px !important;
+    text-align: center;
+    border: 1px solid var(--cx-footer-social-icon-hover-color);
+    border-radius: 5px;
+    font-size: 18px;
+    margin: 0 5px;
+  }
+
+  .otp-input-filled {
+    border: 1.5px solid var(--cx-color-primary) !important;
+    background-color: var(--cx-white) !important;
+  }
+}

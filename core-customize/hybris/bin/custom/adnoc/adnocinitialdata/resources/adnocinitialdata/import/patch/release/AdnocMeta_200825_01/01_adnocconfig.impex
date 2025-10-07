@@ -1,0 +1,8 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$adnocPaymentCardUrl = $config-adnoc.payment.card.url
+
+UPDATE AdnocConfig; configKey[unique = true]  ; configvalue
+                  ; minRequestedDelieveryDays ; 2
+
+INSERT_UPDATE AdnocConfig; configKey[unique = true]; configvalue
+                         ; adnocPaymentCardUrl     ; $adnocPaymentCardUrl

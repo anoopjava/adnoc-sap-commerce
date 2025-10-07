@@ -1,0 +1,10 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$inboundAuth2UserId = $config-adnoc.inbound.OAuth2UserId
+$inboundAuth2Password = $config-adnoc.inbound.OAuth2Password
+$inboundAuth2Url = $config-adnoc.inbound.OAuth2Url
+
+INSERT_UPDATE IntegrationClientCredentialsDetails; clientId[unique = true]; resourceIds; authorities                                                                                      ; clientSecret          ; registeredRedirectUri; user(uid)           ;
+                                                 ; oauthAdnocOOClient     ; hybris     ; ROLE_TRUSTED_CLIENT,ROLE_CUSTOMERSUPPORTAGENTGROUP,ROLE_INTEGRATIONADMINGROUP,ROLE_CUSTOMERGROUP ; $inboundAuth2Password ; $inboundAuth2Url     ; $inboundAuth2UserId ;
+
+INSERT_UPDATE Employee; name             ; UID[unique = true]  ; groups(uid)                                        ; password              ; loginDisabled; sessionCurrency(isocode)
+                      ; oauthAdnocOOUser ; $inboundAuth2UserId ; integrationadmingroup,b2bregistrationapprovergroup ; $inboundAuth2Password ;              ; AED

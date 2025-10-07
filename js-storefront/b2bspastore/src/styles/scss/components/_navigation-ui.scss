@@ -1,0 +1,28 @@
+.accNavComponent {
+    nav > ul > li {
+        button{
+            @include media-breakpoint-up(lg) {
+                padding: 0 !important;
+                margin: 0 !important;
+                position: absolute;
+                opacity: 0;
+            }
+        }
+    }
+}
+
+.user-avatar-container{
+    color: var(--cx-color-primary);
+    &:hover {
+        cx-navigation-ui.flyout > nav > ul > li > button + .wrapper {
+            display: block;
+        }
+    }
+    cx-navigation-ui {
+        nav {
+            ul.childs > li > cx-generic-link > a {
+                font-weight: normal;
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+@import "../../../../../../../styles/scss/utilities/mixins";
+
+.cx-checkout-btns {
+  padding: 0 20px;
+  .btn {
+    padding: 0;
+  }
+}
+.error-msg {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  border: 1px dashed;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.btn-wrapper {
+  @include media-breakpoint-down(sm);
+  @include media-breakpoint-down(md) {
+    margin: 10px 0;
+  }
+}

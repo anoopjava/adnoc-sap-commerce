@@ -1,0 +1,15 @@
+<button
+  *ngIf="(isLoggedIn$ | async) === true && !iscStoreEnable"
+  #element
+  (click)="goToQuoteDetails()"
+  [disabled]="disableProceedToQuote"
+  type="button"
+  class="btn btn-block btn-secondary"
+>
+<div *ngIf="!loader">
+  {{ "quote.commons.requestQuote" | cxTranslate }}
+</div>
+  <div class="loader-wrap" *ngIf="loader">
+    <span class="loader"></span>
+  </div>
+</button>

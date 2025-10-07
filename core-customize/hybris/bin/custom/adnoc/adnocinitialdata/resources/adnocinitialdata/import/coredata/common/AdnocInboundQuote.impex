@@ -1,0 +1,38 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; AdnocInboundQuote; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]; itemTypeMatch(code) 
+; AdnocInboundQuote	; Quote              	; Quote              	; true	; ALL_SUB_AND_SUPER_TYPES	;  
+; AdnocInboundQuote	; SAPPricingCondition	; SAPPricingCondition	; 	; ALL_SUB_AND_SUPER_TYPES	;  
+; AdnocInboundQuote	; QuoteState         	; QuoteState         	; 	; ALL_SUBTYPES           	;  
+; AdnocInboundQuote	; QuoteEntry         	; QuoteEntry         	; 	; ALL_SUB_AND_SUPER_TYPES	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; AdnocInboundQuote:Quote              	; entries               	; Quote:entries                     	; AdnocInboundQuote:QuoteEntry         	; 	;  
+; AdnocInboundQuote:Quote              	; sapOrderCode          	; Quote:sapOrderCode                	;                                      	; 	;  
+; AdnocInboundQuote:Quote              	; quoteDocument         	; Quote:quoteDocument               	;                                      	; 	;  
+; AdnocInboundQuote:Quote              	; state                 	; Quote:state                       	; AdnocInboundQuote:QuoteState         	; 	;  
+; AdnocInboundQuote:Quote              	; code                  	; Quote:code                        	;                                      	; true	;  
+; AdnocInboundQuote:Quote              	; version               	; Quote:version                     	;                                      	; true	;  
+; AdnocInboundQuote:SAPPricingCondition	; orderEntry            	; SAPPricingCondition:orderEntry    	; AdnocInboundQuote:QuoteEntry         	; true	;  
+; AdnocInboundQuote:SAPPricingCondition	; conditionType         	; SAPPricingCondition:conditionType 	;                                      	; true	;  
+; AdnocInboundQuote:SAPPricingCondition	; conditionRate         	; SAPPricingCondition:conditionRate 	;                                      	; 	;  
+; AdnocInboundQuote:SAPPricingCondition	; currencyKey           	; SAPPricingCondition:currencyKey   	;                                      	; 	;  
+; AdnocInboundQuote:SAPPricingCondition	; conditionUnit         	; SAPPricingCondition:conditionUnit 	;                                      	; 	;  
+; AdnocInboundQuote:SAPPricingCondition	; order                 	; SAPPricingCondition:order         	;                                      	; true	;  
+; AdnocInboundQuote:SAPPricingCondition	; conditionValue        	; SAPPricingCondition:conditionValue	;                                      	; 	;  
+; AdnocInboundQuote:QuoteState         	; code                  	; QuoteState:code                   	;                                      	; true	;  
+; AdnocInboundQuote:QuoteEntry         	; grossTotalPrice       	; QuoteEntry:grossTotalPrice        	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; totalShippingCharges  	; QuoteEntry:totalShippingCharges   	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; entryNumber           	; QuoteEntry:entryNumber            	;                                      	; true	;  
+; AdnocInboundQuote:QuoteEntry         	; discountValuesInternal	; QuoteEntry:discountValuesInternal 	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; netTotalPrice         	; QuoteEntry:netTotalPrice          	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; taxValuesInternal     	; QuoteEntry:taxValuesInternal      	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; totalPrice            	; QuoteEntry:totalPrice             	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; quantity              	; QuoteEntry:quantity               	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; basePrice             	; QuoteEntry:basePrice              	;                                      	; 	;  
+; AdnocInboundQuote:QuoteEntry         	; sapPricingConditions  	; QuoteEntry:sapPricingConditions   	; AdnocInboundQuote:SAPPricingCondition	; 	; true 
+; AdnocInboundQuote:QuoteEntry         	; order                 	; QuoteEntry:order                  	; AdnocInboundQuote:Quote              	; true	;
+
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; AdnocInboundQuote                                                    ; OAUTH                       ;

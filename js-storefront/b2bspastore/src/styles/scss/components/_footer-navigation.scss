@@ -1,0 +1,31 @@
+%cx-footer-navigation {
+  a {
+    font-size: var(--cx-font-small, 0.8rem);
+    &:hover {
+      color: var(--cx-color-inverse);
+      text-decoration: underline;
+    }
+  }
+
+  cx-navigation-ui {
+    // first level heading / links
+    background: linear-gradient(90deg, #002E6D 0%, #0059D3 49.5%, #002E6D 100%);
+    span {
+      text-transform: uppercase;
+      @include type("5");
+      margin-bottom: 20px;
+      display: block;
+    }
+  }
+
+  cx-navigation-ui {
+    justify-content: center;
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+
+    > nav {
+      margin: 3vw;
+    }
+  }
+}

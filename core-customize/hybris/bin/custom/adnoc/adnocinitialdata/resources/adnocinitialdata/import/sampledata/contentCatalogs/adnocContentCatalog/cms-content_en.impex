@@ -1,0 +1,256 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+##******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$picture = media(code, $contentCV);
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+
+
+# Language
+$lang = en
+
+# Site Logo Component
+UPDATE SimpleBannerComponent; $contentCV[unique = true]; uid[unique = true]; $picture[lang = $lang]
+                            ;                          ; SiteLogoComponent ; /images/theme/logo_hybris_b2b_responsive.svg
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]      ; linkName[lang = $lang]
+                       ;                          ; ApprovalDashboardLink   ; "Approval Dashboard"
+                       ;                          ; ContactUsLink           ; "Support"
+                       ;                          ; FAQLink                 ; "FAQ"
+                       ;                          ; FacebookLink            ; "Facebook"
+                       ;                          ; HomepageNavLink         ; "Home"
+                       ;                          ; ImportSavedCartLink     ; "Import Saved Cart"
+                       ;                          ; LinkedInLink            ; "Linked In"
+                       ;                          ; MyQuotesLink            ; "Quotes"
+                       ;                          ; OrderFormsLink          ; "Order Forms"
+                       ;                          ; OrderHistoryLink        ; "Order History"
+                       ;                          ; SavedCartsLink          ; "Saved Carts"
+                       ;                          ; TwitterLink             ; "Twitter"
+                       ;                          ; UpdatePasswordLink      ; "Password"
+                       ;                          ; DownloadStatementLink   ; "Download Statement"
+                       ;                          ; OverDueInvoiceLink      ; "Open Invoices"
+                       ;                          ; AdnocAccountSummaryLink ; "Account Summary"
+                       ;                          ; InstagramLink           ; "Instagram"
+                       ;                          ; YoutubeLink             ; "Youtube"
+                       ;                          ; FindOurOfficeLink       ; "Find Our Offices"
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]     ; linkName[lang = en]
+                       ;                          ; FuelCategoryLink       ; "Fuel"
+                       ;                          ; LubricantsCategoryLink ; "Lubricants"
+                       ;                          ; LPGCategoryLink        ; "LPG"
+                       ;                          ; CarCareCategoryLink    ; "Car Care"
+
+# CMS Mini Cart Component
+UPDATE MiniCartComponent; $contentCV[unique = true]; uid[unique = true]; name      ; title[lang = $lang]
+                        ;                          ; MiniCart          ; Mini Cart ; "YOUR SHOPPING CART"
+
+# CMS tabs components
+UPDATE CMSTabParagraphComponent; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]; content[lang = $lang]
+                               ;                          ; deliveryTab       ; Delivery           ; "<div class=""tab-delivery"">Lorem ipsum dolor sit amet, dolor sed, ut nam ut. Senectus mauris egestas a massa, enim placeat wisi congue purus fermentum. Ut aptent mauris dapibus congue in sit. Sed dolor varius amet feugiat volutpat dignissim, pede a rhoncus sodales aliquam adipiscing, dapibus massa fusce. Dui egestas ornare urna nibh facilisi, cras posuere. Lorem aliquam accumsan eleifend sem libero lorem, aliquam sequi sed urna nec. Eget dolor quisque dolor, amet suspendisse ullamcorper minus elit lectus nunc, est mattis dui id eu et facilisis, conubia sit tristique. Ac fusce gravida condimentum iaculis neque, a platea curabitur accumsan porttitor vel justo. Amet potenti ac, eget amet ducimus sit nulla, ac porttitor rhoncus, justo proin tortor integer turpis nulla vitae. Egestas mollis litora nunc platea dui, eu semper mauris diam, erat quam, porta maecenas fusce libero non aliquet. Amet tellus taciti ligula sed sollicitudin, nonummy cursus enim, hendrerit nec, sed lacus sed at sit quis, semper a arcu mollis sapien nec pretium. Ante mauris eros nec, nonummy mauris, nulla lacinia vel. Volutpat luctus velit eu.</div>"
+
+# JSP include components
+UPDATE JspIncludeComponent; $contentCV[unique = true]; uid[unique = true]         ; title[lang = en]
+                          ;                          ; ProductDetailsTabComponent ; Product Details
+                          ;                          ; ProductReviewsTabComponent ; Reviews
+                          ;                          ; ProductSpecsTabComponent   ; Specs
+
+# CMS Footer Component
+UPDATE FooterNavigationComponent; $contentCV[unique = true]; uid[unique = true]        ; notice[lang = en][translator = de.hybris.platform.acceleratorservices.dataimport.batch.converter.CopyrightTranslator, dateFormat = yyyy]
+                                ;                          ; FooterNavigationComponent ; "Copyright © {0} SAP SE or an SAP affiliate company. All rights reserved."
+
+# CMS Paragraph Component (Contact information)
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]               ; content[lang = $lang]
+                            ;                          ; QuickOrderInfoParagraphComponent ; "You can add up to 25 valid SKUs below and add to cart. Stock is reserved once products are added to cart."
+
+# CMS ProductReferences Components
+UPDATE ProductReferencesComponent; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                                 ;                          ; Similar           ; "You may also like..."
+                                 ;                          ; accessories       ; "Accessories"
+
+# CMS PurchasedCategorySuggestion Components
+UPDATE PurchasedCategorySuggestionComponent; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+
+# CMS CartSuggestion Components
+UPDATE CartSuggestionComponent; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                              ;                          ; CartSuggestions   ; "You may also like..."
+
+# Category Pages
+UPDATE CategoryPage; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                        ;                          ; FollowUsNavNode   ; "Follow Us"
+                        ;                          ; MyAccountNavNode  ; "My Account"
+                        ;                          ; AdnocNavNode      ; "Adnoc Site"
+                        ;                          ; SiteRootNode      ; "SiteRoot"
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode; $contentCV[unique = true]; uid[unique = true]; title[lang = en]
+                        ;                          ; FuelNavNode       ; "Fuel"
+                        ;                          ; LubricantsNavNode ; "Lubricants"
+                        ;                          ; LPGNavNode        ; "LPG"
+                        ;                          ; CarCareNavNode    ; "Car Care"
+                        ;                          ; C-StoreNavNode    ; "C-Store"
+
+# CMS Paragraph Component (Contact information)
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]; content[lang = en]; visible;
+                            ;                          ; faqMenuParagraph  ; "<div class=""nav_column"">	<div class=""title_holder"">		<div class=""title"">			<div class=""title-top"">				<span></span>			</div>		</div>		<h2>Frequently asked questions</h2>	</div>	<div class=""item"">		<ul class=""facet_block indent"">			<li><a href=""#a00"">Returns and refunds</a></li>			<li><a href=""#b00"">Delivery information</a></li>			<li><a href=""#c00"">Registration</a></li>			<li><a href=""#d00"">Your online account</a></li>			<li><a href=""#e00"">Orders</a></li>			<li><a href=""#f00"">Promotions and discounts</a></li>			<li><a href=""#g00"">Product and general Informations</a></li>			<li><a href=""#h00"">Store information</a></li>			<li><a href=""#i00"">Business contacts</a></li>	<li><a href=""#l00"">Privacy and security</a></li>		</ul>	</div></div>" ; false ;
+                            ;                          ; faqTextParagraph  ; "<div class=""textpage textpage-faqs""><div class=""item_container""> <h2>Ordering & Products</h2> <p style=""font-weight: bold;"">Q1: How do I place a Sales Order?</p> <p>A: Log in to your account, browse the product catalogue, add items to your cart, select the appropriate Payment method or your available credit balance and proceed to checkout. You can add multiple Items in the car from our wide range of products in Fuel, LPG, Lubricants or Car Services.</p> <p style=""font-weight: bold;"">Q2: Can I request a quotation for bulk or custom orders?</p> <p>A: Yes, use the “Request for Quotation (RFQ)” feature or contact our Commercial Sales Manager for the best price. </p> <p style=""font-weight: bold;"">Q3: How do I check product availability?</p> <p>A: ADNOC Distribution E-Commerce catalogue products are available to place this order. In case of un-availability of the products, system will stop the order booking process. For large volumes or special items or occasional purchase, please contact support your corresponding ADNOC DISTRIBUTION Sales Manager for confirmation.</p> </div> <div class=""item_container""> <h2><a name=""b00""></a>Order Tracking & Delivery</h2> <p style=""font-weight: bold;"">Q4: How can I track my Sale Order with Delivery Quantity?</p> <p>A: Go to “Order History” section and then inside of the “Order Details” the line item shows the delivered Quantity for each line item and for each individual location.</p> <p style=""font-weight: bold;"">Q5: Can i create a order cart for multiple locations?</p> <p>A: Yes, you can select multiple delivery locations and dates in the same cart. </p> <p style=""font-weight: bold;"">Q6: Can I modify or cancel an order after submission?</p> <p>A: In the current available solution you cannot modify your order. For any update in the existing sales order Yes, Orders can be cancelled only before dispatch. Contact commercial support specialist or your sales manager immediately for assistance.</p> </div> <div class=""item_container""> <h2><a name=""c00""></a>Payments & Invoicing</h2> <p style=""font-weight: bold;"">Q7: What payment methods are accepted?</p> <p>A: We accept corporate credit cards and online bank transfers through Payment Gateway System.</p> <p style=""font-weight: bold;"">Q8: Can I download my system generated invoices?</p> <p>A: Yes, Invoices are available under “Account Summary Details” in your account dashboard </p> <p style=""font-weight: bold;"">Q9: What should I do if I find an error in my invoice?</p> <p>A: Contact our E Commerce specialist or Sales Manager through “Customer Service Section” with the invoice number and details of the issue.</p> </div> <div class=""item_container""> <h2><a name=""d00""></a>Technical Support</h2> <p style=""font-weight: bold;"">Q10: I’m unable to log in. What should I do?</p> <p>A: Use the “Forgot Password” option OR contact support team through “Contact Us” page.</p> <p style=""font-weight: bold;"">Q11: Why is my cart not updating or checkout not working?</p> <p>A: Try refreshing the page or clearing your browser cache. If the issue continues, contact technical support team through Contact Us page. </p> <p style=""font-weight: bold;"">Q12: How do I report a technical issue or bug?</p> <p>A: Use “Contact Us Page” to report an issue based on the category of the problem. Keep the description of issue ready with screenshots.</p> </div> <div class=""item_container""> <h2><a name=""e00""></a>Account & Access Management</h2> <p style=""font-weight: bold;"">Q13: How do I create or manage users in my company account?</p> <p>A: Admin users can manage roles and permissions under “Account Settings.” For help, navigate to “Contact Us” page.</p> <p style=""font-weight: bold;"">Q14: Can multiple users access the same company account?</p> <p>A: Yes, with role-based access control. Each user can be assigned specific permissions.</p> <b></b> </div> <div class=""item_container""> <p>Need More Help?</p> <p>If your question isn’t listed here, feel free to visit “Contact Us” page</p> <p style=""margin-bottom:5px;"">Call: <a href=""tel:800 300""><i class=""fa fa-phone"" style=""margin-right:5px;"" aria-hidden=""true""></i><span dir=""ltr"">800 300</span></a></p> <p> Email: <a href=""mailto:info@adnocdistribution.ae"">info@adnocdistribution.ae</a> </p></div>" ; true ;
+
+# Adnoc Order Expired Page
+
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]        ; content[lang = en]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ;
+                            ;                          ; orderExpiredMenuParagraph ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ;
+                            ;                          ; orderExpiredTextParagraph ; "<div class='cms-content order-expired'><div class='information_message neutral'><span class='single'></span><p>This page has expired.</p></div><h2>Dear Customer,</h2><p>Order Status for guest users are only kept for 3 months following the date the order was placed.<br>If you have not received your delivery or have other inquiries, please contact our Customer Service Dept.</p><h3>Be prepared with:</h3><ul class='bullet-list'><li>Your Name</li><li>Order Number (Your Order Number can be found on the confirmation email sent shortly after your order was placed.)</li><li>Order Delivery Address or Pick Up in Store Location</li></ul><p>Our Customer Service professionals will be happy to update you on the status of your order.</p><p class='cms-content-emphasized-big'>Thank you for shopping at hybrisstore.</p></div>" ;
+
+# Adnoc Terms and Conditions Page
+
+# CMS Paragraph Component (Contact information)
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]              ; content[lang = en]; visible;
+                            ;                          ; termsAndConditionsMenuParagraph ; "<div class=""nav_column"">	<div class=""title_holder"">		<div class=""title"">			<div class=""title-top"">				<span></span>			</div>		</div>		<h2>Terms and Conditions</h2>	</div>	<div class=""item"">		<ul class=""facet_block indent"">			<li><a href=""#a00"">Registration</a></li>			<li><a href=""#b00"">Eligibility to purchase</a></li>			<li><a href=""#c00"">Orders</a></li>			<li><a href=""#d00"">Pricing policy</a></li>			<li><a href=""#e00"">Sales price adjustment policy</a></li>			<li><a href=""#f00"">Acceptance of your order</a></li>			<li><a href=""#g00"">Payment</a></li>			<li><a href=""#h00"">Insurance and delivery</a></li>			<li><a href=""#i00"">Returns and exchanges</a></li>			<li><a href=""#j00"">Intellectual property rights</a></li>			<li><a href=""#k00"">Content</a></li>			<li><a href=""#l00"">No commercial use</a></li>			<li><a href=""#m00"">Your activity</a></li>			<li><a href=""#n00"">Third party</a></li>			<li><a href=""#o00"">General</a></li>			<li><a href=""#p00"">Indemnification</a></li>			<li><a href=""#q00"">General legal terms</a></li>		</ul>	</div></div>" ; false ;
+                            ;                          ; termsAndConditionsTextParagraph ; "<a name=""00""></a><div class=""textpage textpage-termsAndConditions""><div class=""item_container"">		<h2><a name=""a00""></a>B2B E-Commerce Portal</h2>		<p style=""font-weight: bold;"">1. Acceptance of Terms</p>	<p>By accessing and using this portal, you agree to comply with and be bound by these Terms and Conditions. If you do not agree, please refrain from using the ADNOC Distribution E-Commerce portal.</p> <p style=""font-weight: bold;"">2. User Eligibility</p><p>This portal is intended for use by registered businesses to ADNOC Distribution with valid trade license, certifications, regulatory government permits and authorized representatives only. </p><p>Individual consumers (B2C) are not permitted to transact unless explicitly approved by ADNOC Distribution Management.</p><p style=""font-weight: bold;"">3. Account Registration & Management</p><p>Users must provide accurate and complete business information during registration including trade license and Tax certificate.  Each company may designate multiple users with role-based access. You are responsible for maintaining the confidentiality of your own login credentials, including passwords.</p><p style=""font-weight: bold;"">4. Ordering & Transactions</p><p>All orders placed through the portal are subject to the acceptance and material availability. </p><p>Prices, taxes, discounts and delivery charges (and other pricing components) are displayed at checkout and may vary based on location, volume and customer contract. </p><p>Bulk Quantity Orders (more than the agreed quantity at the time of sales contract) may require additional manual verification or documentation.</p><p style=""font-weight: bold;"">5. Payment Terms</p><p>Accepted payment methods include online bank transfers and corporate cards. Payment terms (e.g., net 30, 60Days) are based on the sales agreement with ADNOC Distribution Or ADNOC Distribution higher management approval. Late payments or overdue invoices may incur account blocking based on the sales contract.</p><p style=""font-weight: bold;"">6. Delivery & Fulfilment</p><p>Delivery timelines, estimates, ownership will follow the terms and conditions maintained in the signed contract.</p><p style=""font-weight: bold;"">7. Returns & Refunds</p><p>Returns and refunds are accepted only based on the signed contract between customer and ADNOC Distribution.</p> <p style=""font-weight: bold;"">8. Data Privacy & Security</p> <p>All customer data is handled in accordance with applicable data protection laws. The portal uses encryption and secure protocols to protect transactions and user information. Users must not share, or misuse confidential data accessed through the portal.</p> <p style=""font-weight: bold;"">9. Intellectual Property</p><p>All content, branding, images and technology used in the portal are the property of ADNOC Distribution. Unauthorized use, reproduction, or distribution of the content is strictly prohibited.</p> <p style=""font-weight: bold;"">10. Termination & Suspension</p> <p>Accounts may be suspended or terminated for breach of terms, fraudulent activity, or misuse of the portal. </p> <p>ADNOC Distribution E-Commerce users account deactivation process will start at the time of the permanent closure of Customer Account.</p>		</div>" ; true ;
+
+# Adnoc Homepage
+
+UPDATE ProductCarouselComponent; $contentCV[unique = true]; uid[unique = true]                                 ; title[lang = en]
+                               ;                          ; AdnocHomepageNewProductCarouselComponent           ; "What's New"
+                               ;                          ; AdnocHomepageProductCarouselComponent              ; "Our Bestselling Products"
+                               ;                          ; PremiumbuyersgroupHomepageProductCarouselComponent ; "Our Bestselling Products"
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                      ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]; realfilename                             ; altText                                    ; mime[default = 'image/jpeg']; $contentCV[unique = true]; folder(qualifier)[default = images];
+                   ; widescreen            ; Adnoc_1400x480_BigSplash_EN_01_1400W.jpg ; $siteResource/images/banners/homepage/responsive/Adnoc_1400x480_BigSplash_EN_01_1400W.jpg      ; Adnoc_1400x480_BigSplash_EN_01_1400W.jpg ; "Order Now"                                ;
+                   ; mobile                ; Adnoc_320x300_BigSplash_EN_01_320W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_320x300_BigSplash_EN_01_320W.jpg        ; Adnoc_320x300_BigSplash_EN_01_320W.jpg   ; "Order Now"                                ;
+                   ; tablet                ; Adnoc_770x350_BigSplash_EN_01_770W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_770x350_BigSplash_EN_01_770W.jpg        ; Adnoc_770x350_BigSplash_EN_01_770W.jpg   ; "Order Now"                                ;
+                   ; desktop               ; Adnoc_960x400_BigSplash_EN_01_960W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_960x400_BigSplash_EN_01_960W.jpg        ; Adnoc_960x400_BigSplash_EN_01_960W.jpg   ; "Order Now"                                ;
+
+                   ; widescreen            ; Adnoc_350x290_Fuels_EN_01_350W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_350x290_Fuels_EN_01_350W.jpg            ; Adnoc_350x290_Fuels_EN_01_350W.jpg       ; "Fuels"                                    ;
+                   ; mobile                ; Adnoc_320x260_Fuels_EN_01_320W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_320x260_Fuels_EN_01_320W.jpg            ; Adnoc_320x260_Fuels_EN_01_320W.jpg       ; "Fuels"                                    ;
+                   ; tablet                ; Adnoc_385x290_Fuels_EN_01_385W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_385x290_Fuels_EN_01_385W.jpg            ; Adnoc_385x290_Fuels_EN_01_385W.jpg       ; "Fuels"                                    ;
+                   ; desktop               ; Adnoc_240x200_Fuels_EN_01_240W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_Fuels_EN_01_240W.jpg            ; Adnoc_240x200_Fuels_EN_01_240W.jpg       ; "Fuels"                                    ;
+
+                   ; widescreen            ; Adnoc_350x290_Lubricants_EN_01_350W.jpg  ; $siteResource/images/banners/homepage/responsive/Adnoc_350x290_Lubricants_EN_01_350W.jpg       ; Adnoc_350x290_Lubricants_EN_01_350W.jpg  ; "Lubricants"                               ;
+                   ; mobile                ; Adnoc_320x260_Lubricants_EN_01_320W.jpg  ; $siteResource/images/banners/homepage/responsive/Adnoc_320x260_Lubricants_EN_01_320W.jpg       ; Adnoc_320x260_Lubricants_EN_01_320W.jpg  ; "Lubricants"                               ;
+                   ; tablet                ; Adnoc_385x290_Lubricants_EN_01_385W.jpg  ; $siteResource/images/banners/homepage/responsive/Adnoc_385x290_Lubricants_EN_01_385W.jpg       ; Adnoc_385x290_Lubricants_EN_01_385W.jpg  ; "Lubricants"                               ;
+                   ; desktop               ; Adnoc_240x200_Lubricants_EN_01_240W.jpg  ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_Lubricants_EN_01_240W.jpg       ; Adnoc_240x200_Lubricants_EN_01_240W.jpg  ; "Lubricants"                               ;
+
+                   ; widescreen            ; Adnoc_350x290_Lpgs_EN_01_350W.jpg        ; $siteResource/images/banners/homepage/responsive/Adnoc_350x290_Lpgs_EN_01_350W.jpg             ; Adnoc_350x290_Lpgs_EN_01_350W.jpg        ; "LPGs"                                     ;
+                   ; mobile                ; Adnoc_320x260_Lpgs_EN_01_320W.jpg        ; $siteResource/images/banners/homepage/responsive/Adnoc_320x260_Lpgs_EN_01_320W.jpg             ; Adnoc_320x260_Lpgs_EN_01_320W.jpg        ; "LPGs"                                     ;
+                   ; tablet                ; Adnoc_385x290_Lpgs_EN_01_385W.jpg        ; $siteResource/images/banners/homepage/responsive/Adnoc_385x290_Lpgs_EN_01_385W.jpg             ; Adnoc_385x290_Lpgs_EN_01_385W.jpg        ; "LPGs"                                     ;
+                   ; desktop               ; Adnoc_240x200_Lpgs_EN_01_240W.jpg        ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_Lpgs_EN_01_240W.jpg             ; Adnoc_240x200_Lpgs_EN_01_240W.jpg        ; "LPGs"                                     ;
+
+                   ; widescreen            ; Adnoc_350x290_Carcares_EN_01_350W.jpg    ; $siteResource/images/banners/homepage/responsive/Adnoc_350x290_Carcares_EN_01_350W.jpg         ; Adnoc_350x290_Carcares_EN_01_350W.jpg    ; "Car Cares"                                ;
+                   ; mobile                ; Adnoc_320x260_Carcares_EN_01_320W.jpg    ; $siteResource/images/banners/homepage/responsive/Adnoc_320x260_Carcares_EN_01_320W.jpg         ; Adnoc_320x260_Carcares_EN_01_320W.jpg    ; "Car Cares"                                ;
+                   ; tablet                ; Adnoc_385x290_Carcares_EN_01_385W.jpg    ; $siteResource/images/banners/homepage/responsive/Adnoc_385x290_Carcares_EN_01_385W.jpg         ; Adnoc_385x290_Carcares_EN_01_385W.jpg    ; "Car Cares"                                ;
+                   ; desktop               ; Adnoc_240x200_Carcares_EN_01_240W.jpg    ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_Carcares_EN_01_240W.jpg         ; Adnoc_240x200_Carcares_EN_01_240W.jpg    ; "Car Cares"                                ;
+
+                   ; widescreen            ; Adnoc_1400x70_Brands_EN_01_1400W.jpg     ; $siteResource/images/banners/homepage/responsive/Adnoc_1400x70_Brands_EN_01_1400W.jpg          ; Adnoc_1400x70_Brands_EN_01_1400W.jpg     ; "Lubricants"                               ;
+                   ; mobile                ; Adnoc_320x100_Brands_EN_01_320W.jpg      ; $siteResource/images/banners/homepage/responsive/Adnoc_320x100_Brands_EN_01_320W.jpg           ; Adnoc_320x100_Brands_EN_01_320W.jpg      ; "Lubricants"                               ;
+                   ; tablet                ; Adnoc_770x70_Brands_EN_01_770W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_770x70_Brands_EN_01_770W.jpg            ; Adnoc_770x70_Brands_EN_01_770W.jpg       ; "Lubricants"                               ;
+                   ; desktop               ; Adnoc_960x70_Brands_EN_01_960W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_960x70_Brands_EN_01_960W.jpg            ; Adnoc_960x70_Brands_EN_01_960W.jpg       ; "Lubricants"                               ;
+
+                   ; widescreen            ; Adnoc_350x280_24Service_EN_01_350W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_350x280_24Service_EN_01_350W.jpg        ; Adnoc_350x280_24Service_EN_01_350W.jpg   ; "24/7 - Great Service After You Buy"       ;
+                   ; mobile                ; Adnoc_160x139_24Service_EN_01_160W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_160x139_24Service_EN_01_160W.jpg        ; Adnoc_160x139_24Service_EN_01_160W.jpg   ; "24/7 - Great Service After You Buy"       ;
+                   ; tablet                ; Adnoc_385x280_24Service_EN_01_385W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_385x280_24Service_EN_01_385W.jpg        ; Adnoc_385x280_24Service_EN_01_385W.jpg   ; "24/7 - Great Service After You Buy"       ;
+                   ; desktop               ; Adnoc_240x200_24Service_EN_01_240W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_24Service_EN_01_240W.jpg        ; Adnoc_240x200_24Service_EN_01_240W.jpg   ; "24/7 - Great Service After You Buy"       ;
+
+                   ; widescreen            ; Adnoc_350x280_25Deal_EN_01_350W.jpg      ; $siteResource/images/banners/homepage/responsive/Adnoc_350x280_25Deal_EN_01_350W.jpg           ; Adnoc_350x280_25Deal_EN_01_350W.jpg      ; "25% Great Prices and Great Deals"         ;
+                   ; mobile                ; Adnoc_160x139_25Deal_EN_01_160W.jpg      ; $siteResource/images/banners/homepage/responsive/Adnoc_160x139_25Deal_EN_01_160W.jpg           ; Adnoc_160x139_25Deal_EN_01_160W.jpg      ; "25% Great Prices and Great Deals"         ;
+                   ; tablet                ; Adnoc_385x280_25Deal_EN_01_385W.jpg      ; $siteResource/images/banners/homepage/responsive/Adnoc_385x280_25Deal_EN_01_385W.jpg           ; Adnoc_385x280_25Deal_EN_01_385W.jpg      ; "25% Great Prices and Great Deals"         ;
+                   ; desktop               ; Adnoc_240x200_25Deal_EN_01_240W.jpg      ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_25Deal_EN_01_240W.jpg           ; Adnoc_240x200_25Deal_EN_01_240W.jpg      ; "25% Great Prices and Great Deals"         ;
+
+                   ; mobile                ; Adnoc_160x139_30Day_EN_01_160W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_160x139_30Day_EN_01_160W.jpg            ; Adnoc_160x139_30Day_EN_01_160W.jpg       ; "30 Day - Shop with Confidence"            ;
+                   ; widescreen            ; Adnoc_350x280_30Day_EN_01_350W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_350x280_30Day_EN_01_350W.jpg            ; Adnoc_350x280_30Day_EN_01_350W.jpg       ; "30 Day - Shop with Confidence"            ;
+                   ; tablet                ; Adnoc_385x280_30Day_EN_01_385W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_385x280_30Day_EN_01_385W.jpg            ; Adnoc_385x280_30Day_EN_01_385W.jpg       ; "30 Day - Shop with Confidence"            ;
+                   ; desktop               ; Adnoc_240x200_30Day_EN_01_240W.jpg       ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_30Day_EN_01_240W.jpg            ; Adnoc_240x200_30Day_EN_01_240W.jpg       ; "30 Day - Shop with Confidence"            ;
+
+                   ; widescreen            ; Adnoc_350x280_6pm_EN_01_350W.jpg         ; $siteResource/images/banners/homepage/responsive/Adnoc_350x280_6pm_EN_01_350W.jpg              ; Adnoc_350x280_6pm_EN_01_350W.jpg         ; "6pm - Order by 6pm for Same Day Shipping" ;
+                   ; mobile                ; Adnoc_160x139_6pm_EN_01_160W.jpg         ; $siteResource/images/banners/homepage/responsive/Adnoc_160x139_6pm_EN_01_160W.jpg              ; Adnoc_160x139_6pm_EN_01_160W.jpg         ; "6pm - Order by 6pm for Same Day Shipping" ;
+                   ; tablet                ; Adnoc_385x280_6pm_EN_01_385W.jpg         ; $siteResource/images/banners/homepage/responsive/Adnoc_385x280_6pm_EN_01_385W.jpg              ; Adnoc_385x280_6pm_EN_01_385W.jpg         ; "6pm - Order by 6pm for Same Day Shipping" ;
+                   ; desktop               ; Adnoc_240x200_6pm_EN_01_240W.jpg         ; $siteResource/images/banners/homepage/responsive/Adnoc_240x200_6pm_EN_01_240W.jpg              ; Adnoc_240x200_6pm_EN_01_240W.jpg         ; "6pm - Order by 6pm for Same Day Shipping" ;
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]      ; $medias; $contentCV[unique = true]
+                            ; Adnoc-homepage-spalsh-en      ; Adnoc_1400x480_BigSplash_EN_01_1400W.jpg,Adnoc_960x400_BigSplash_EN_01_960W.jpg,Adnoc_320x300_BigSplash_EN_01_320W.jpg,Adnoc_770x350_BigSplash_EN_01_770W.jpg
+                            ; Adnoc-homepage-fuels-en       ; Adnoc_350x290_Fuels_EN_01_350W.jpg,Adnoc_240x200_Fuels_EN_01_240W.jpg,Adnoc_320x260_Fuels_EN_01_320W.jpg,Adnoc_385x290_Fuels_EN_01_385W.jpg
+                            ; Adnoc-homepage-lubricants-en  ; Adnoc_350x290_Lubricants_EN_01_350W.jpg,Adnoc_240x200_Lubricants_EN_01_240W.jpg,Adnoc_320x260_Lubricants_EN_01_320W.jpg,Adnoc_385x290_Lubricants_EN_01_385W.jpg
+                            ; Adnoc-homepage-lpgs-en        ; Adnoc_350x290_Lpgs_EN_01_350W.jpg,Adnoc_240x200_Lpgs_EN_01_240W.jpg,Adnoc_320x260_Lpgs_EN_01_320W.jpg,Adnoc_385x290_Lpgs_EN_01_385W.jpg
+                            ; Adnoc-homepage-carcares-en    ; Adnoc_350x290_Carcares_EN_01_350W.jpg,Adnoc_240x200_Carcares_EN_01_240W.jpg,Adnoc_320x260_Carcares_EN_01_320W.jpg,Adnoc_385x290_Carcares_EN_01_385W.jpg
+
+                            ; Adnoc-homepage-brands-en      ; Adnoc_1400x70_Brands_EN_01_1400W.jpg,Adnoc_960x70_Brands_EN_01_960W.jpg,Adnoc_320x100_Brands_EN_01_320W.jpg,Adnoc_770x70_Brands_EN_01_770W.jpg
+                            ; Adnoc-homepage-24/7service-en ; Adnoc_350x280_24Service_EN_01_350W.jpg,Adnoc_240x200_24Service_EN_01_240W.jpg,Adnoc_160x139_24Service_EN_01_160W.jpg,Adnoc_385x280_24Service_EN_01_385W.jpg
+                            ; Adnoc-homepage-25%-deal-en    ; Adnoc_350x280_25Deal_EN_01_350W.jpg,Adnoc_240x200_25Deal_EN_01_240W.jpg,Adnoc_160x139_25Deal_EN_01_160W.jpg,Adnoc_385x280_25Deal_EN_01_385W.jpg
+                            ; Adnoc-homepage-30Day-en       ; Adnoc_350x280_30Day_EN_01_350W.jpg,Adnoc_240x200_30Day_EN_01_240W.jpg,Adnoc_160x139_30Day_EN_01_160W.jpg,Adnoc_385x280_30Day_EN_01_385W.jpg
+                            ; Adnoc-homepage-6pm-en         ; Adnoc_350x280_6pm_EN_01_350W.jpg,Adnoc_240x200_6pm_EN_01_240W.jpg,Adnoc_160x139_6pm_EN_01_160W.jpg,Adnoc_385x280_6pm_EN_01_385W.jpg
+
+INSERT_UPDATE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]                ; $mediaContainer;
+                                             ;                          ; AdnocHompageSplashBannerComponent ; Adnoc-homepage-spalsh-en
+
+                                             ;                          ; AdnocHompage24/7BannerComponent   ; Adnoc-homepage-24/7service-en
+                                             ;                          ; AdnocHompage25%BannerComponent    ; Adnoc-homepage-25%-deal-en
+                                             ;                          ; AdnocHompage30dayBannerComponent  ; Adnoc-homepage-30Day-en
+                                             ;                          ; AdnocHompage6pmBannerComponent    ; Adnoc-homepage-6pm-en
+
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]                ; content[lang = $lang]
+                            ;                          ; EmptyCartParagraphComponent       ; "<h2>Your shopping cart is empty</h2><p>Suggestions</p><ul><li>Browse our products by selecting a category above</li></ul>"
+                            ;                          ; NoSearchResultsParagraphComponent ; "<h2>Sorry, we couldn't find any results for your search</h2><p>Suggestions:</p><ul><li>You may have typed your keywords incorrectly - please check for misspellings.</li><li>You may have been too specific - please broaden your search by using fewer keywords.</li><li>Browse our products by selecting a category above.</li></ul>"
+
+# Adnoc Cart Page
+
+# Media Content
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]                ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; folder(qualifier)[default = 'images']; altText
+                   ;                          ; Adnoc_148x300_HelpBanner_EN_01.jpg ; $siteResource/images/banners/site/Adnoc_148x300_HelpBanner_EN_01.jpg        ;                             ;                                      ; "Need Help? Click here for help with checking out"
+
+UPDATE SimpleBannerComponent; $contentCV[unique = true]; uid[unique = true]; $picture[lang = $lang]
+                            ;                          ; HelpBanner        ; Adnoc_148x300_HelpBanner_EN_01.jpg
+
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]          ; content[lang = $lang]
+                            ;                          ; EmptyCartParagraphComponent ; "<h2>Your shopping cart is empty</h2><p>Suggestions</p><ul><li>Browse our products by clicking a category above</li></ul>"
+                            ;                          ; HelpParagraphComponent      ; "<strong>Need Help with your checkout process?</strong> <span>Contact Us or Call phone number.</span>"
+
+INSERT_UPDATE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]                   ; name                                     ; &componentRef                        ; $mediaContainer
+                                             ;                          ; AdnoctronicsErrorpageBannerComponent ; Adnoctronics Error Page Banner Component ; AdnoctronicsErrorpageBannerComponent ;
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; linkName[lang = en]
+                       ;                          ; RegisterLink      ; "Register"
+
+#AdnocFooterNavigationComponent Start
+
+UPDATE CMSNavigationNode; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                        ;                          ; ConsumerNavNode   ; "Consumer"
+                        ;                          ; BusinessNavNode   ; "Business"
+                        ;                          ; CorporateNavNode  ; "Corporate"
+                        ;                          ; MoreNavNode       ; "More"
+
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; linkName[lang = en]
+                       ;                          ; FuelConsumerLink     ; "Fuel"
+                       ;                          ; CarCareConsumerLink  ; "Car care"
+                       ;                          ; ShopLink             ; "Shop"
+                       ;                          ; RewardsLink          ; "Rewards"
+                       ;                          ; InnovationLink       ; "Innovation"
+                       ;                          ; AppLink              ; "App"
+
+                       ;                          ; FuelBusinessLink     ; "Fuel"
+                       ;                          ; LubBusinessLink      ; "Lubricants"
+                       ;                          ; LPGBusinessLink      ; "LPG"
+                       ;                          ; DeliveryServicesLink ; "Delivery Services"
+
+                       ;                          ; OurStoryLink         ; "Our Story"
+                       ;                          ; OurBusinessLink      ; "Our Business"
+                       ;                          ; NewsMediaLink        ; "News & Media"
+
+                       ;                          ; CareersLink          ; "Careers"
+                       ;                          ; CommercialPortalLink ; "Commercial Portal"
+                       ;                          ; SupplierLink         ; "Suppliers"
+                       ;                          ; ContactUsMoreLink    ; "Contact Us"
+                       ;                          ; FAQsLink             ; "FAQs"
+
+#AdnocFooterNavigationComponent End

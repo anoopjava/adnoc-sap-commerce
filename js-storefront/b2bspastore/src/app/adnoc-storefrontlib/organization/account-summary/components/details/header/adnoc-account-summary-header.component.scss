@@ -1,0 +1,101 @@
+@import "../../../../../../../../src/styles/scss/utilities/variables";
+@import "../../../../../../../../src/styles/scss/utilities/mixins";
+
+cx-account-summary-header {
+  .cx-account-summary-header-past-due-section {
+    margin-inline-end: 0;
+    border: 0;
+    background: var(--cx-summary-range-background);
+  }
+
+  .cx-account-summary-header-past-due-range-dates {
+    border: 0;
+  }
+
+  .cx-account-summary-header-past-due-range-collection {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--cx-summary-range-border);
+    padding-top: 1rem;
+  }
+
+  .cx-account-summary {
+    background-color: transparent;
+    display: flex;
+
+    @media (max-width: $breakpoint-sm) {
+      display: contents;
+    }
+
+    .leftPart {
+      flex: 1;
+    }
+
+    .cx-account-summary-header-cards {
+      .cx-summary-card {
+        border: 1px solid var(--cx-summary-card-border);
+        background: var(--cx-summary-range-background);
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .cx-summary-card-group-unit-billing-address {
+    border: 1px solid var(--cx-summary-card-border);
+    background: var(--cx-summary-range-background);
+    margin-right: 0.5rem;
+
+    @include media-breakpoint-down(sm) {
+      margin-left: 8px;
+    }
+
+    .cx-summary-card {
+      .cx-card-body {
+        .cx-card-title {
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+    .cx-card-container {
+      div {
+        display: inline-block;
+        margin-right: 0.1rem;
+      }
+    }
+  }
+}
+
+.cxFeat_a11yImproveContrast {
+  .ng-select {
+    .ng-select-container {
+      border: 1px solid var(--cx-summary-card-border);
+      background: var(--cx-summary-input-background);
+    }
+
+    &.ng-select-single {
+      .ng-select-container {
+        border: 1px solid var(--cx-summary-card-border);
+        background: var(--cx-summary-input-background);
+      }
+    }
+  }
+}
+
+cx-account-summary-document {
+  cx-account-summary-document-filter {
+    .cx-account-summary-document-filter-form-input {
+      border-color: var(--cx-summary-card-border);
+      background: var(--cx-summary-range-background);
+    }
+  }
+
+  .ng-dropdown-panel {
+    .ng-dropdown-panel-items {
+      .ng-option {
+        color: var(--cx-color-primary);
+        border-bottom: 1px solid var(--cx-pdp-carousel-box-border);
+      }
+    }
+  }
+}

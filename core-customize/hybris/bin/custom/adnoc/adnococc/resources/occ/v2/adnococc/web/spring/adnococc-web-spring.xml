@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.adnoc.controllers"/>
+
+    <import resource="adnococc-dto-level-mappings-spring.xml"/>
+
+    <bean id="abstractAdnocFieldValidator" class="com.adnoc.validators.field.AbstractAdnocFieldValidator"
+          abstract="true">
+        <property name="adnocConfigService" ref="adnocConfigService"/>
+    </bean>
+
+    <alias name="adnocOrgCustomerCreationWsDTOValidator" alias="orgCustomerCreationWsDTOValidator"/>
+    <alias name="adnocOrgCustomerCreationWsDTOValidator" alias="orgCustomerModificationWsDTOValidator"/>
+    <bean id="adnocOrgCustomerCreationWsDTOValidator"
+          class="com.adnoc.validators.customer.AdnocOrgCustomerCreationWsDTOValidator" parent="abstractAdnocFieldValidator">
+        <property name="fieldValueValidatorMap" ref="orgCustomerCreationFieldValidatorMap"/>
+    </bean>
+
+    <util:map id="orgCustomerCreationFieldValidatorMap" key-type="java.lang.String"
+              value-type="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <entry key="titleCode" value-ref="mandatoryFieldValidationData"/>
+        <entry key="email" value-ref="emailFieldValidationData"/>
+        <entry key="firstName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="lastName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="gender" value-ref="mandatoryFieldValidationData"/>
+        <entry key="nationality" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identityType" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationNumber" value-ref="identificationNumberValidationData"/>
+        <entry key="identificationValidFrom" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationValidTo" value-ref="mandatoryFieldValidationData"/>
+        <entry key="designation" value-ref="mandatoryFieldValidationData"/>
+        <entry key="telephone" value-ref="nonMandatoryPhoneNumberFieldValidationData"/>
+        <entry key="mobileNumber" value-ref="mandatoryPhoneNumberFieldValidationData"/>
+        <entry key="orgUnit" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressStreet" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCountryIso" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCity" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressRegion" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationNumberDocument" value-ref="supportedDocumentFieldValidationData"/>
+        <entry key="countryOfOrigin" value-ref="mandatoryFieldValidationData"/>
+    </util:map>
+
+    <bean id="adnocOrgUserRegistrationDataValidator"
+          class="de.hybris.platform.webservicescommons.validators.CompositeValidator">
+        <property name="validators">
+            <list>
+                <bean class="com.adnoc.validators.registration.AdnocOrgUserRegistrationValidator"
+                      parent="abstractAdnocFieldValidator">
+                    <property name="fieldValueValidatorMap" ref="orgUserRegistrationFieldValidatorMap"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <util:map id="orgUserRegistrationFieldValidatorMap" key-type="java.lang.String"
+              value-type="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <entry key="partnerFunction" value-ref="mandatoryFieldValidationData"/>
+        <entry key="primaryProduct" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyEmail" value-ref="emailFieldValidationData"/>
+        <entry key="companyPhoneNumber" value-ref="mandatoryCompanyPhoneNumberFieldValidationData"/>
+        <entry key="companyMobileNumber" value-ref="nonMandatoryCompanyMobileNumberFieldValidationData"/>
+        <entry key="tradeLicenseAuthority" value-ref="mandatoryFieldValidationData"/>
+        <entry key="tradeLicenseNumber" value-ref="tradeLicenseFieldValidationData"/>
+        <entry key="tlnValidFrom" value-ref="mandatoryFieldValidationData"/>
+        <entry key="tlnValidTo" value-ref="mandatoryFieldValidationData"/>
+        <entry key="vatId" value-ref="vatIdFieldValidationData"/>
+        <entry key="faxNumber" value-ref="faxFieldValidationData"/>
+        <entry key="identificationNumberDocument" value-ref="supportedDocumentFieldValidationData"/>
+        <entry key="tlnDocument" value-ref="supportedDocumentFieldValidationData"/>
+        <entry key="vatIdDocument" value-ref="supportedDocumentFieldValidationData"/>
+
+        <entry key="companyAddressStreet" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCountryIso" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCity" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressRegion" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressPostalCode" value-ref="companyAddressPostalCodeValidationData"/>
+        <entry key="titleCode" value-ref="mandatoryFieldValidationData"/>
+        <entry key="firstName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="lastName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="gender" value-ref="mandatoryFieldValidationData"/>
+        <entry key="nationality" value-ref="mandatoryFieldValidationData"/>
+        <entry key="countryOfOrigin" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identityType" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationNumber" value-ref="identificationNumberValidationData"/>
+        <entry key="identificationValidFrom" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationValidTo" value-ref="mandatoryFieldValidationData"/>
+        <entry key="designation" value-ref="mandatoryFieldValidationData"/>
+        <entry key="email" value-ref="emailFieldValidationData"/>
+        <entry key="telephone" value-ref="nonMandatoryPhoneNumberFieldValidationData"/>
+        <entry key="mobileNumber" value-ref="mandatoryPhoneNumberFieldValidationData"/>
+    </util:map>
+
+    <bean id="mandatoryFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+    </bean>
+
+    <bean id="emailFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="#{configurationService.configuration.getProperty('email.regex')}"/>
+    </bean>
+
+    <bean id="mandatoryPhoneNumberFieldValidationData"
+          class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[0-9]{10}"/>
+    </bean>
+
+    <bean id="mandatoryCompanyPhoneNumberFieldValidationData"
+          class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[0-9]{10}"/>
+    </bean>
+
+    <bean id="nonMandatoryPhoneNumberFieldValidationData"
+          class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="pattern" value="^[0-9]{10}"/>
+    </bean>
+
+    <bean id="nonMandatoryCompanyMobileNumberFieldValidationData"
+          class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="pattern" value="^[0-9]{10}"/>
+    </bean>
+
+    <bean id="tradeLicenseFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[a-zA-Z]{2}-\d{7}$"/>
+    </bean>
+
+    <bean id="taxRegistrationFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="pattern" value="^[a-zA-Z0-9 ]{1,20}$"/>
+    </bean>
+
+    <bean id="vatIdFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[a-zA-Z0-9 ]{1,15}$"/>
+    </bean>
+
+    <bean id="faxFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="pattern" value="^[0-9]{10}"/>
+    </bean>
+
+    <bean id="supportedDocumentFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+    </bean>
+
+    <bean id="companyAddressPostalCodeValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="pattern" value="^[a-zA-Z0-9 ]{1,10}$"/>
+    </bean>
+
+    <bean id="identificationNumberValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[a-zA-Z0-9 ]{1,20}$"/>
+    </bean>
+
+    <bean id="companyNameFieldValidationData" class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="mandatory" value="true"/>
+        <property name="pattern" value="^[a-zA-Z0-9 ]{1,40}$"/>
+    </bean>
+
+    <alias name="adnocTicketStarterValidator" alias="ticketStarterValidator"/>
+    <bean id="adnocTicketStarterValidator" class="de.hybris.platform.webservicescommons.validators.CompositeValidator">
+        <property name="validators">
+            <list>
+                <bean class="de.hybris.platform.webservicescommons.validators.FieldNotEmptyValidator">
+                    <property name="fieldPath" value="subject"/>
+                </bean>
+                <bean class="de.hybris.platform.webservicescommons.validators.FieldNotEmptyValidator">
+                    <property name="fieldPath" value="message"/>
+                </bean>
+                <bean class="de.hybris.platform.customerticketingocc.validators.TicketStarterCategoryValidator"/>
+                <bean class="de.hybris.platform.webservicescommons.validators.FieldNotEmptyValidator">
+                    <property name="fieldPath" value="requestFor"/>
+                </bean>
+                <bean class="de.hybris.platform.webservicescommons.validators.FieldNotEmptyValidator">
+                    <property name="fieldPath" value="subCategory"/>
+                </bean>
+                <bean class="de.hybris.platform.webservicescommons.validators.FieldNotEmptyValidator">
+                    <property name="fieldPath" value="csTicketCategoryMapId"/>
+                </bean>
+                <bean class="de.hybris.platform.customerticketingocc.validators.OptionalObjectValidator">
+                    <property name="fieldPath" value="associatedTo"/>
+                    <constructor-arg ref="associatedToObjectValidator"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <alias name="adnocB2BPlaceOrderCartValidator" alias="b2BPlaceOrderCartValidator"/>
+    <bean id="adnocB2BPlaceOrderCartValidator" class="com.adnoc.validators.checkout.AdnocB2BPlaceOrderCartValidator"
+          parent="defaultB2BPlaceOrderCartValidator">
+        <property name="adnocB2BCartValidator" ref="adnocB2BCartValidator"/>
+    </bean>
+
+    <alias name="adnocReturnRequestEntryInputListDTOValidator" alias="returnRequestEntryInputListDTOValidator"/>
+    <bean id="adnocReturnRequestEntryInputListDTOValidator"
+          class="com.adnoc.validators.returnOrder.AdnocReturnRequestEntryInputListDTOValidator"/>
+
+    <bean id="adnocOrderReturnsHelper" class="com.adnoc.validators.helper.AdnocOrderReturnsHelper"/>
+    
+    <alias name="defaultB2BUnitWsDTOValidator" alias="adnocB2BUnitRegistrationWsDTOValidator"/>
+    <bean id="defaultB2BUnitWsDTOValidator" class="de.hybris.platform.webservicescommons.validators.CompositeValidator">
+        <property name="validators">
+            <list>
+                <bean class="com.adnoc.validators.customer.AdnocOrgB2BUnitValidator"
+                      parent="abstractAdnocFieldValidator">
+                    <property name="fieldValueValidatorMap" ref="orgB2BUnitRegistrationFieldValidatorMap"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <util:map id="orgB2BUnitRegistrationFieldValidatorMap" key-type="java.lang.String"
+              value-type="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <entry key="partnerFunction" value-ref="mandatoryFieldValidationData"/>
+        <entry key="parentB2BUnitUid" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressStreet" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCountryIso" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressCity" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressRegion" value-ref="mandatoryFieldValidationData"/>
+        <entry key="companyAddressPostalCode" value-ref="companyAddressPostalCodeValidationData"/>
+        <entry key="titleCode" value-ref="mandatoryFieldValidationData"/>
+        <entry key="firstName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="lastName" value-ref="mandatoryFieldValidationData"/>
+        <entry key="gender" value-ref="mandatoryFieldValidationData"/>
+        <entry key="nationality" value-ref="mandatoryFieldValidationData"/>
+        <entry key="countryOfOrigin" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identityType" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationNumber" value-ref="identificationNumberValidationData"/>
+        <entry key="identificationValidFrom" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationValidTo" value-ref="mandatoryFieldValidationData"/>
+        <entry key="identificationNumberDocument" value-ref="supportedDocumentFieldValidationData"/>
+        <entry key="designation" value-ref="mandatoryFieldValidationData"/>
+        <entry key="email" value-ref="emailFieldValidationData"/>
+        <entry key="telephone" value-ref="nonMandatoryPhoneNumberFieldValidationData"/>
+        <entry key="mobileNumber" value-ref="mandatoryPhoneNumberFieldValidationData"/>
+    </util:map>
+
+    <bean id="adnocCancellationRequestEntryInputListDTOValidator" class="com.adnoc.validators.cancelOrder.AdnocCancellationRequestEntryInputListDTOValidator"/>
+
+    <alias name="adnocAccountSummaryHelper" alias="accountSummaryHelper"/>
+    <bean id="adnocAccountSummaryHelper" class="com.adnoc.validators.helper.AdnocAccountSummaryHelper"/>
+
+    <alias name="adnocOrgUnitsHelper" alias="orgUnitsHelper"/>
+    <bean id="adnocOrgUnitsHelper" class="com.adnoc.validators.helper.AdnocOrgUnitsHelper"/>
+
+</beans>

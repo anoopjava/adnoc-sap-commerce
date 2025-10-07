@@ -1,0 +1,22 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/accountsummary
+$productCatalog = adnocProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+# Language
+$lang = en
+
+INSERT_UPDATE DocumentMedia; code[unique = true]                  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']
+                           ; INPG-10013                           ; $siteResource/documentmedias/10013.pdf
+                           ; INPG-33                              ; $siteResource/documentmedias/33.pdf
+                           ; INPG-44                              ; $siteResource/documentmedias/44.pdf
+                           ; INPG-pollutionUnderControlInspection ; $siteResource/documentmedias/pollutionUnderControlInspection.pdf
+                           ; INPG-194                             ; $siteResource/documentmedias/194.pdf
+
+UPDATE Product; code[unique = true]             ; $catalogVersion; productDocument(code, itemtype(code))
+              ; 10013                           ;                ; INPG-10013:DocumentMedia
+              ; 33                              ;                ; INPG-33:DocumentMedia
+              ; 44                              ;                ; INPG-44:DocumentMedia
+              ; pollutionUnderControlInspection ;                ; INPG-pollutionUnderControlInspection:DocumentMedia
+              ; 194                             ;                ; INPG-194:DocumentMedia

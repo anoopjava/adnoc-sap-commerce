@@ -1,0 +1,56 @@
+@import '../../../../../../styles/scss/utilities/variables';
+@import '../../../../../../styles/scss/utilities/mixins';
+
+.main {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container {
+        text-align: center;
+        padding: 40px;
+        width: 600px;
+        max-width: 600px;
+
+        @include media-breakpoint-down(md) {
+            padding: 20px;
+        }
+
+        .siteLogo {
+            max-width: auto;
+        }
+
+        .success-icon {
+            img {
+                max-width: auto;
+            }
+
+            margin: 40px 0;
+        }
+
+        .title {
+            font-family: var(--cx-font-family-bold);
+            font-size: 36px;
+            font-weight: var(--cx-font-weight-bold);
+            color: var(--cx-color-primary);
+            margin-bottom: 15px;
+        }
+
+        .msg {
+            font-family: var(--cx-font-family-regular);
+            font-size: 24px;
+            font-weight: var(--cx-font-weight-normal);
+            color: var(--cx-black);
+        }
+
+        .homeBtn {
+            font-family: var(--cx-font-family-medium);
+            font-size: 18px;
+            font-weight: var(--cx-font-weight-semi);
+            max-width: 75%;
+            margin: 0 auto;
+            text-transform: none;
+        }
+    }
+}

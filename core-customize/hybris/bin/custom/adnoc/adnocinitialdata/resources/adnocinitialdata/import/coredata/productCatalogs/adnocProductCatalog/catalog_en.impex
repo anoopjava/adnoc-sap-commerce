@@ -1,0 +1,15 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the Product Catalog and Classification Catalog
+#
+
+$lang=en
+
+$productCatalog=adnocProductCatalog
+$classificationCatalog=AdnocClassification
+
+UPDATE Catalog;id[unique=true];name[lang=$lang]
+              ;$classificationCatalog;"Adnoc Classification";
+              ;$productCatalog;"Adnoc Product Catalog";

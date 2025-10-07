@@ -1,0 +1,335 @@
+<section *ngIf="!cancellableItemsCount; else cancellableItemsList">
+  <p class="noCancellableItems">
+    {{
+      "userOrderTranslations.orderDetails.cancellationAndReturn.noItemToCancel"
+        | cxTranslate
+    }}
+  </p>
+</section>
+<ng-template #cancellableItemsList>
+  <div *ngIf="form$ | async as form">
+    <div class="cancelOrderdata">
+      <p class="cancelOrderNumber">
+        {{
+          "userOrderTranslations.orderDetails.cancellationAndReturn.orderNumber"
+            | cxTranslate
+        }}
+        #{{ orderNumber }}
+      </p>
+      <button
+        *ngIf="!isConfirmation"
+        class="btn btn-link cx-action-link setAllQtyToMax"
+        (click)="setAll(form)"
+      >
+        {{
+          "userOrderTranslations.orderDetails.cancellationAndReturn.setAll"
+            | cxTranslate
+        }}
+      </button>
+    </div>
+
+    <table class="cx-amend-order-items">
+      <caption class="cx-visually-hidden">
+        {{
+          "orderDetails.caption" | cxTranslate
+        }}
+      </caption>
+      <thead>
+        <tr>
+          <th role="columnheader" class="cx-item-list-slnum">
+            {{
+              "userOrderTranslations.orderDetails.cancellationAndReturn.slNum"
+                | cxTranslate
+            }}
+          </th>
+          <th role="columnheader" class="cx-item-list-desc">
+            {{ "orderDetails.cancellationAndReturn.item" | cxTranslate }}
+          </th>
+          <th role="columnheader" class="cx-request-delivery-date">
+            {{
+              "userOrderTranslations.orderDetails.cancellationAndReturn.requestDeliverydate"
+                | cxTranslate
+            }}
+          </th>
+          <th role="columnheader" class="cx-item-list-price">
+            {{ "userOrderTranslations.uomLable" | cxTranslate }}
+          </th>
+          <th
+            *ngIf="!isConfirmation"
+            role="columnheader"
+            class="cx-item-list-amend-qty"
+          >
+            {{ "orderDetails.cancellationAndReturn.quantity" | cxTranslate }}
+          </th>
+          <th
+            *ngIf="!isConfirmation"
+            role="columnheader"
+            class="cx-item-list-delivered-qty"
+          >
+            {{
+              "userOrderTranslations.orderDetails.cancellationAndReturn.deliveredQuantity"
+                | cxTranslate
+            }}
+          </th>
+          <th
+            *ngIf="!isConfirmation"
+            role="columnheader"
+            class="cx-item-list-remaining-qty"
+          >
+            {{
+              "userOrderTranslations.orderDetails.cancellationAndReturn.remainingQuantity"
+                | cxTranslate
+            }}
+          </th>
+          <th role="columnheader" class="cx-item-list-qty">
+            {{
+              (isCancellation() && isConfirmation
+                ? "orderDetails.cancellationAndReturn.cancelQty"
+                : "userOrderTranslations.orderHistory.actions"
+              ) | cxTranslate
+            }}
+          </th>
+          <th
+            *ngIf="isConfirmation"
+            role="columnheader"
+            class="cx-item-list-total"
+          >
+            {{ "orderDetails.cancellationAndReturn.totalPrice" | cxTranslate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="cx-item-list-items">
+        <ng-container *ngFor="let item of entries; let i = index">
+          <tr
+            class="cx-item-list-row cx-amend-order-item-row"
+            *ngIf="item?.isCancellable"
+          >
+            <td>
+              <span>{{ i + 1 }} </span>
+            </td>
+            <td role="cell">
+              <div class="cx-table-item-container">
+                <cx-media
+                  [container]="item?.product?.images?.['PRIMARY']"
+                  format="thumbnail"
+                ></cx-media>
+
+                <div class="cx-info">
+                  <div class="cx-name">
+                    {{ item.product?.name }}
+                  </div>
+
+                  <div *ngIf="item.product?.code" class="cx-code">
+                    {{
+                      "userOrderTranslations.orderDetails.cancellationAndReturn.productIdlabel"
+                        | cxTranslate
+                    }}
+                    {{ item.product?.code }}
+                  </div>
+                  <div class="cx-value">
+                    {{ item.basePrice!.formattedValue }}
+                    <span *ngIf="item.unit?.name">
+                      {{
+                        "userOrderTranslations.unitOfMeasurePer" | cxTranslate
+                      }}
+                      {{ item.unit?.name }}
+                      {{ "cartLabels.exclVat" | cxTranslate }}
+                    </span>
+                  </div>
+                </div>
+
+                <ng-container *ngIf="item.product?.baseOptions?.length">
+                  <div
+                    *ngFor="
+                    let variant of item?.product?.baseOptions?.[0]?.selected
+                      ?.variantOptionQualifiers
+                  "
+                    class="cx-property"
+                  >
+                    <div class="cx-label" *ngIf="variant.name">
+                      {{ variant.name }}:
+                    </div>
+                    <div class="cx-value" *ngIf="variant.value">
+                      {{ variant.value }}
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </td>
+
+            <td role="cell" class="cx-price" *ngIf="item.namedDeliveryDate">
+              <div class="cx-mobile-header">
+                {{
+                  "userOrderTranslations.orderDetails.cancellationAndReturn.requestDeliverydate"
+                    | cxTranslate
+                }}
+              </div>
+              <div class="cx-name">
+                {{ item?.namedDeliveryDate | cxDate }}
+              </div>
+            </td>
+
+            <td role="cell" class="cx-price" *ngIf="item.basePrice">
+              <div class="cx-mobile-header">
+                {{ "userOrderTranslations.uomLable" | cxTranslate }}
+              </div>
+              <div class="cx-value">
+                <span *ngIf="item.unit?.name">
+                  {{ item.unit?.name }}
+                </span>
+              </div>
+            </td>
+
+            <td role="cell" *ngIf="!isConfirmation" class="cx-request-qty">
+              <div
+                class="cx-mobile-header"
+                title="{{ 'cartItems.quantityTitle' | cxTranslate }}"
+              >
+                {{
+                  "orderDetails.cancellationAndReturn.quantity" | cxTranslate
+                }}
+              </div>
+              <div class="cx-value box-value">
+                {{ getMaxAmendQuantity(item) }}
+              </div>
+            </td>
+
+            <td role="cell" *ngIf="!isConfirmation" class="cx-delivered-qty">
+              <div
+                class="cx-mobile-header"
+                title="{{ 'cartItems.quantityTitle' | cxTranslate }}"
+              >
+                {{
+                  "userOrderTranslations.orderDetails.cancellationAndReturn.deliveredQuantity"
+                    | cxTranslate
+                }}
+              </div>
+              <div class="cx-value box-value">
+                {{ item?.quantityShipped }}
+              </div>
+            </td>
+
+            <td role="cell" *ngIf="!isConfirmation" class="cx-remaining-qty">
+              <div
+                class="cx-mobile-header"
+                title="{{ 'cartItems.quantityTitle' | cxTranslate }}"
+              >
+                {{
+                  "userOrderTranslations.orderDetails.cancellationAndReturn.remainingQuantity"
+                    | cxTranslate
+                }}
+              </div>
+              <div class="cx-value box-value active">
+                {{ item?.quantityPending }}
+              </div>
+            </td>
+
+            <td role="cell" class="cx-quantity">
+              <div class="cx-mobile-header">
+                {{
+                  (isCancellation()
+                    ? "userOrderTranslations.orderHistory.actions"
+                    : "orderDetails.cancellationAndReturn.returnQty"
+                  ) | cxTranslate
+                }}
+              </div>
+              <div
+                class="cx-value d-flex align-items-center justify-content-center"
+                [ngClass]="{ disableInput: !item?.isCancellable }"
+              >
+                <ng-container *ngIf="isConfirmation">
+                  {{ getControl(form, item).control.value }}
+                </ng-container>
+                <cx-item-counter
+                  *ngIf="!isConfirmation"
+                  [min]="0"
+                  [max]="getCancelMaxAmendQuantity(item)"
+                  [control]="getControl(form, item).control"
+                  [class]="'d-none'"
+                ></cx-item-counter>
+                <label
+                  class="custom-checkbox-wrapper"
+                  [hidden]="isConfirmation"
+                >
+                  <input
+                    type="checkbox"
+                    class="cancel__checkbox"
+                    [checked]="getControl(form, item).control.value > 0"
+                    (change)="onCheckboxChange($event, item, form)"
+                    [disabled]="item?.isCancellable === false"
+                    title=""
+                  />
+                  <span class="custom-checkbox"></span>
+                </label>
+              </div>
+            </td>
+
+            <td role="cell" *ngIf="isConfirmation" class="cx-total">
+              <div class="cx-mobile-header">
+                {{
+                  "orderDetails.cancellationAndReturn.totalPrice" | cxTranslate
+                }}
+              </div>
+              <div class="cx-value box-value active">
+                {{ getItemPrice(item)!.formattedValue }}
+              </div>
+            </td>
+          </tr>
+          <tr class="cancel__tr" *ngIf="(isCancelOrder || isConfirmation) && item?.isCancellable">
+            <td colspan="6">
+              <div class="cancel__wrap">
+                <span class="cancel__label">{{
+                  "userOrderTranslations.cancelReasonLabel" | cxTranslate
+                }}</span>
+                <ng-container *ngIf="cancelReasons$ | async as cancelList">
+                  <span *ngIf="!isConfirmation" class="cancel__select-wrap">
+                    <select
+                      class="cancel__select"
+                      name="reason"
+                      [formControl]="getControl(form, item).cancelReasonControl"
+                      [ngClass]="{
+                        'disabled-select': item?.isCancellable === false
+                      }"
+                    >
+                      <option
+                        [selected]="getControl(form, item).control.value < 1"
+                        value=""
+                        [disabled]="getControl(form, item).control.value > 0"
+                      >
+                        {{
+                          "userOrderTranslations.selectCancelLabel"
+                            | cxTranslate
+                        }}
+                      </option>
+                      <option
+                        *ngFor="let reason of cancelList"
+                        [value]="reason.code + '|' + reason.name"
+                      >
+                        {{ reason.name }}
+                      </option>
+                    </select>
+                    <i
+                      [ngClass]="{
+                        'disabled-select': !(
+                          getControl(form, item).control.value > 0
+                        )
+                      }"
+                      class="fa-solid fa-chevron-down"
+                    ></i
+                  ></span>
+                </ng-container>
+                <ng-container *ngIf="isConfirmation">
+                  <span class="select-value">{{
+                    getControl(form, item).cancelReasonControl.value.split(
+                      "|"
+                    )[1]
+                  }}</span>
+                </ng-container>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

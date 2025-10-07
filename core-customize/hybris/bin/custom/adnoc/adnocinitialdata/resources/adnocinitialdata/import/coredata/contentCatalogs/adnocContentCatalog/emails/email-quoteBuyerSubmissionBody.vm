@@ -1,0 +1,52 @@
+## messageSource=classpath:/adnocservice/messages/email-quoteBuyerSubmission_$lang.properties
+
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#0468b3">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+#macro(displayNegationForDiscount $priceData)
+    #if (${priceData.value} > 0)
+    -
+    #end
+    ${priceData.formattedValue}
+#end
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        a
+        {
+            text-decoration: none;
+            color:#0468b3;
+        }
+    </style>
+</head>
+<body>
+        <div class="content" style="font-family: Arial, Helvetica, sans-serif; color: #414a4f;">
+            <p>Dear ${ctx.title} ${ctx.displayName},</p>
+            <p>${ctx.messages.thankYouForQuote}</p>
+            <p><strong>Quote ID:</strong> ${ctx.quote.code}</p>
+
+        <div class="footer" style="font-family: Arial, Helvetica, sans-serif; color: #414a4f;">
+            <p>${ctx.messages.quoteStatus}<a href="${ctx.frontendUrl}" style="color:#0468b3;"><span>${ctx.messages.link}</span></a></p>
+            <p>${ctx.messages.enquiry}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+        </div>
+
+         <div class="footer">
+             <p>${ctx.messages.complimentaryClosing}</p>
+             <p>Sales Manager/Sales Co-ordinator</p>
+             <p>ADNOC</p>
+             <p>${ctx.messages.website}</p>
+         </div>
+</body>
+</html>

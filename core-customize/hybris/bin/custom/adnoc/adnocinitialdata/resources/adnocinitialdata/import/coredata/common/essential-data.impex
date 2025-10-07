@@ -1,0 +1,1124 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import essential data for the Accelerator
+#
+# Includes:
+# * Languages
+# * Currencies
+# * Titles
+# * Vendors
+# * Warehouses
+# * Supported Credit/Debit cards
+# * User Groups
+# * DistanceUnits for Storelocator
+# * MediaFolders
+# * MediaFormats
+# * Tax & Tax Groups
+# * Jobs
+$regulargroup = regulargroup
+
+# Languages
+INSERT_UPDATE Language; isocode[unique = true]; fallbackLanguages(isocode); active[default = true]
+                      ; en                    ;                           ; ;
+# Currencies
+INSERT_UPDATE Currency; isocode[unique = true]; conversion; digits; symbol
+                      ; AED                   ; 1,4       ; 2     ; AED
+                      ; USD                   ; 1,4       ; 2     ; $
+
+# Vendor
+INSERT_UPDATE Vendor; code[unique = true]; name
+                    ; default            ; Default Vendor
+                    ; ERP                ; ERP
+
+INSERT_UPDATE Warehouse; code[unique = true]; name              ; vendor(code)[default = default, forceWrite = true]; default[default = true, forceWrite = true]
+"#% beforeEach:
+import de.hybris.platform.core.Registry;
+import de.hybris.platform.ordersplitting.model.WarehouseModel;
+String warehouseCode = line.get(Integer.valueOf(1));
+WarehouseModel warehouse;
+try
+{
+    warehouse = Registry.getApplicationContext().getBean(""warehouseService"").getWarehouseForCode(warehouseCode);
+}
+catch (Exception e)
+{
+    warehouse = null;
+}
+if (warehouse != null)
+{
+    line.clear();
+}"
+                       ; default            ; Default Warehouse ;
+                       ; aw_warehouse_s     ;                   ; ERP
+                       ; aw_warehouse_e     ;                   ; ERP
+                       ; aw_warehouse_w     ;                   ; ERP
+                       ; aw_warehouse_n     ;                   ; ERP
+
+# Disable preview for email pages
+UPDATE CMSPageType; code[unique = true]; previewDisabled
+                  ; EmailPage          ; true
+
+# Titles
+INSERT_UPDATE Title; code[unique = true]
+                   ; 0001
+                   ; 0002
+
+# Media Folders
+INSERT_UPDATE MediaFolder; qualifier[unique = true]; path[unique = true]
+                         ; images                  ; images
+                         ; email-body              ; email-body
+                         ; email-attachments       ; email-attachments
+                         ; documents               ; documents
+
+# Media formats
+INSERT_UPDATE MediaFormat; qualifier[unique = true]
+                         ; 1200Wx1200H
+                         ; 515Wx515H
+                         ; 365Wx246H
+                         ; 300Wx300H
+                         ; 96Wx96H
+                         ; 65Wx65H
+                         ; 30Wx30H
+                         ; mobile
+                         ; tablet
+                         ; desktop
+                         ; widescreen
+# Tax & Tax Groups
+INSERT_UPDATE UserTaxGroup; code[unique = true]
+                          ; ae-taxes
+                          ; usa-taxes
+
+INSERT_UPDATE ProductTaxGroup; code[unique = true]
+                             ; ae-sales-tax-full
+                             ; usa-sales-tax-full
+
+INSERT_UPDATE Tax; code[unique = true]; value; currency(isocode)
+                 ; ae-sales-tax-full  ; 5
+                 ; usa-sales-tax-full ; 5
+
+INSERT_UPDATE ServicelayerJob; code[unique = true]; springId[unique = true]
+                             ; cartRemovalJob     ; cartRemovalJob
+                             ; siteMapMediaJob    ; siteMapMediaJob
+
+# Deactivate Frontend Restriction on category by default for perfomance purposes
+UPDATE SearchRestriction; code[unique = true]; active[default = false]
+                        ; Frontend_RestrictedCategory
+
+#promotion-preview-module
+INSERT_UPDATE DroolsKIEModule; name[unique = true]       ; mvnGroupId   ; mvnArtifactId      ; mvnVersion; ruleType(code); active; version;
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIEModule [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                             ; promotions-preview-module ; hybris-rules ; promotions-preview ; 1.0.0     ; PROMOTION     ; true  ; -1     ;
+
+INSERT_UPDATE DroolsKIEModule; name[unique = true]       ; allowedTargets(name)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIEModule [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                             ; promotions-preview-module ; promotions-module
+
+INSERT_UPDATE DroolsKIEBase; name[unique = true]     ; kieModule(name)[unique = true]; equalityBehavior(code); eventProcessingMode(code)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIEBase [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                           ; promotions-preview-base ; promotions-preview-module     ; EQUALITY              ; STREAM
+
+INSERT_UPDATE DroolsKIESession; name[unique = true]        ; kieBase(name)[unique = true]; sessionType(code)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIESession [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                              ; promotions-preview-session ; promotions-preview-base     ; STATEFUL
+
+INSERT_UPDATE DroolsRuleEngineContext; name[unique = true]        ; kieSession(name)           ; ruleFiringLimit
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsRuleEngineContext [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                                     ; promotions-preview-context ; promotions-preview-session ; 200 ;
+
+UPDATE DroolsKIEBase; name[unique = true]     ; defaultKIESession(name)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIEBase [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                    ; promotions-preview-base ; promotions-preview-session
+
+UPDATE DroolsKIEModule; name[unique = true]       ; defaultKIEBase(name)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""DroolsKIEModule [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").initializeModule(impex.getLastImportedItem());"
+                      ; promotions-preview-module ; promotions-preview-base
+
+INSERT_UPDATE RuleEngineJob; code[unique = true]                                                           ; springId                               ;
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""promotionengineservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""RuleEngineJob [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                           ; rules -> Compilation and Publishing for [promotions-preview-module]           ; ruleEngineCompilePublishJobPerformable ;
+                           ; rules -> Undeploy for [promotions-preview-module]                             ; ruleEngineUndeployJobPerformable       ;
+                           ; rules -> Modules Sync from [promotions-preview-module] to [promotions-module] ; ruleEngineModuleSyncJobPerformable     ;
+                           ; rules -> Module Init for [promotions-preview-module]                          ; ruleEngineModuleInitJobPerformable     ;
+
+INSERT_UPDATE RefundReason; code[unique = true]
+                          ; 102
+                          ; 103
+                          ; 104
+                          ; 105
+                          ; 200
+                          ; A1
+                          ; A2
+                          ; A3
+                          ; A4
+                          ; A5
+                          ; C36
+
+REMOVE RefundReason; code[unique = true]
+                   ; PriceMatch
+                   ; LostInTransit
+                   ; ManufacturingFault
+                   ; WrongDescription
+                   ; MissedLinkDeal
+                   ; MispickWrongItemDelivered
+                   ; MispickItemMissing
+                   ; SiteError
+                   ; GoodWill
+                   ; LateDelivery
+                   ; DamagedInTransit
+
+REMOVE ReturnStatus; code[unique = true]
+                   ; RECEIVING
+                   ; PAYMENT_REVERSED
+                   ; PAYMENT_REVERSAL_FAILED
+                   ; TAX_REVERSED
+                   ; TAX_REVERSAL_FAILED
+                   ; REVERSING_PAYMENT
+                   ; REVERSING_TAX
+                   ; CANCELED
+
+INSERT_UPDATE PreferredCommunicationChannel; code[unique = true]
+                                           ; INT
+                                           ; PAG
+
+INSERT_UPDATE IdentityType; code[unique = true]
+                          ; FS0001
+                          ; FS0002
+
+INSERT_UPDATE CustomerCategory; code[unique = true]
+                              ; Z1
+                              ; Z2
+                              ; Z3
+                              ; Z4
+
+INSERT_UPDATE DeliveryType; code[unique = true]
+                          ; 01
+                          ; 02
+
+INSERT_UPDATE Designation; code[unique = true]
+                         ; 0002
+                         ; 0003
+                         ; 0005
+                         ; 0006
+                         ; 0007
+                         ; 0009
+INSERT_UPDATE TradeLicenseAuthority; code[unique = true]
+                                   ; TL1
+                                   ; TL2
+                                   ; TL3
+                                   ; TL4
+                                   ; TL5
+                                   ; TL6
+                                   ; TL7
+                                   ; TL8
+                                   ; TL9
+                                   ; TL10
+                                   ; TL11
+                                   ; TL12
+                                   ; TL13
+                                   ; TL14
+                                   ; TL15
+                                   ; TL16
+                                   ; TL17
+                                   ; TL18
+                                   ; TL19
+                                   ; TL20
+                                   ; TL21
+                                   ; TL22
+                                   ; TL23
+                                   ; TL24
+                                   ; TL25
+                                   ; TL26
+                                   ; TL27
+                                   ; TL28
+                                   ; TL29
+                                   ; TL30
+                                   ; TL31
+                                   ; TL32
+                                   ; TL33
+                                   ; TL34
+                                   ; TL35
+                                   ; TL36
+
+INSERT_UPDATE Nationality; code[unique = true]
+                         ; AD
+                         ; AE
+                         ; AF
+                         ; AG
+                         ; AI
+                         ; AL
+                         ; AM
+                         ; AO
+                         ; AQ
+                         ; AR
+                         ; AS
+                         ; AT
+                         ; AU
+                         ; AW
+                         ; AZ
+                         ; BA
+                         ; BB
+                         ; BD
+                         ; BE
+                         ; BF
+                         ; BG
+                         ; BH
+                         ; BI
+                         ; BJ
+                         ; BL
+                         ; BM
+                         ; BN
+                         ; BO
+                         ; BQ
+                         ; BR
+                         ; BS
+                         ; BT
+                         ; BV
+                         ; BW
+                         ; BY
+                         ; BZ
+                         ; CA
+                         ; CC
+                         ; CD
+                         ; CF
+                         ; CG
+                         ; CH
+                         ; CI
+                         ; CK
+                         ; CL
+                         ; CM
+                         ; CN
+                         ; CO
+                         ; CR
+                         ; CS
+                         ; CU
+                         ; CV
+                         ; CW
+                         ; CX
+                         ; CY
+                         ; CZ
+                         ; DE
+                         ; DJ
+                         ; DK
+                         ; DM
+                         ; DO
+                         ; DZ
+                         ; EC
+                         ; EE
+                         ; EG
+                         ; EH
+                         ; ER
+                         ; ES
+                         ; ET
+                         ; FI
+                         ; FJ
+                         ; FK
+                         ; FM
+                         ; FO
+                         ; FR
+                         ; GA
+                         ; GB
+                         ; GD
+                         ; GE
+                         ; GF
+                         ; GG
+                         ; GH
+                         ; GI
+                         ; GL
+                         ; GM
+                         ; GN
+                         ; GP
+                         ; GQ
+                         ; GR
+                         ; GS
+                         ; GT
+                         ; GU
+                         ; GW
+                         ; GY
+                         ; HK
+                         ; HM
+                         ; HN
+                         ; HR
+                         ; HT
+                         ; HU
+                         ; ID
+                         ; IE
+                         ; IL
+                         ; IM
+                         ; IN
+                         ; IO
+                         ; IQ
+                         ; IR
+                         ; IS
+                         ; IT
+                         ; JE
+                         ; JM
+                         ; JO
+                         ; JP
+                         ; KE
+                         ; KG
+                         ; KH
+                         ; KI
+                         ; KM
+                         ; KN
+                         ; KP
+                         ; KR
+                         ; KW
+                         ; KY
+                         ; KZ
+                         ; LA
+                         ; LB
+                         ; LC
+                         ; LI
+                         ; LK
+                         ; LR
+                         ; LS
+                         ; LT
+                         ; LU
+                         ; LV
+                         ; LY
+                         ; MA
+                         ; MC
+                         ; MD
+                         ; MG
+                         ; MH
+                         ; MK
+                         ; ML
+                         ; MM
+                         ; MN
+                         ; MO
+                         ; MP
+                         ; MQ
+                         ; MR
+                         ; MS
+                         ; MT
+                         ; MU
+                         ; MV
+                         ; MW
+                         ; MX
+                         ; MY
+                         ; MZ
+                         ; NA
+                         ; NC
+                         ; NE
+                         ; NF
+                         ; NG
+                         ; NI
+                         ; NL
+                         ; NO
+                         ; NP
+                         ; NR
+                         ; NU
+                         ; NZ
+                         ; OM
+                         ; PA
+                         ; PE
+                         ; PF
+                         ; PG
+                         ; PH
+                         ; PK
+                         ; PL
+                         ; PM
+                         ; PN
+                         ; PR
+                         ; PS
+                         ; PT
+                         ; PW
+                         ; PY
+                         ; QA
+                         ; RE
+                         ; RO
+                         ; RS
+                         ; RU
+                         ; RW
+                         ; SA
+                         ; SB
+                         ; SC
+                         ; SD
+                         ; SE
+                         ; SG
+                         ; SH
+                         ; SI
+                         ; SJ
+                         ; SK
+                         ; SL
+                         ; SM
+                         ; SN
+                         ; SO
+                         ; SR
+                         ; SS
+                         ; ST
+                         ; SV
+                         ; SX
+                         ; SY
+                         ; SZ
+                         ; TC
+                         ; TD
+                         ; TF
+                         ; TG
+                         ; TH
+                         ; TJ
+                         ; TK
+                         ; TL
+                         ; TM
+                         ; TN
+                         ; TO
+                         ; TP
+                         ; TR
+                         ; TT
+                         ; TV
+                         ; TW
+                         ; TZ
+                         ; UA
+                         ; UG
+                         ; UM
+                         ; US
+                         ; UY
+                         ; UZ
+                         ; VA
+                         ; VC
+                         ; VE
+                         ; VG
+                         ; VI
+                         ; VN
+                         ; VU
+                         ; WF
+                         ; WS
+                         ; YE
+                         ; YT
+                         ; ZA
+                         ; ZM
+                         ; ZW
+
+INSERT_UPDATE IncoTerms; code[unique = true]
+                       ; CFR
+                       ; CIF
+                       ; CIP
+                       ; CPT
+                       ; DAF
+                       ; DAP
+                       ; DDP
+                       ; DDU
+                       ; DEQ
+                       ; DES
+                       ; DPU
+                       ; DS
+                       ; EXW
+                       ; FAS
+                       ; FCA
+                       ; FH
+                       ; FIP
+                       ; FOB
+                       ; UN
+
+INSERT_UPDATE CheckoutPaymentType; code[unique = true]
+                                 ; BANK_TRANSFER
+
+INSERT_UPDATE ShippingCondition; code[unique = true]
+                               ; Z1
+                               ; Z2
+                               ; 10
+                               ; 11
+                               ; 01
+
+INSERT_UPDATE PaymentTerms; code[unique = true]
+                          ; A000
+                          ; A001
+                          ; A008
+                          ; A020
+                          ; A021
+                          ; A025
+                          ; A027
+                          ; A030
+
+INSERT_UPDATE TaxClassification; code[unique = true]
+                               ; 0
+                               ; 1
+
+INSERT_UPDATE InvoicingDate; code[unique = true]
+                           ; Z3
+                           ; Z4
+                           ; Z5
+                           ; Z6
+
+INSERT_UPDATE CustomerGroup; code[unique = true]
+                           ; 10
+                           ; 11
+                           ; 12
+                           ; 13
+                           ; 14
+                           ; 15
+                           ; 16
+                           ; 17
+                           ; 18
+                           ; 19
+                           ; 20
+                           ; 21
+                           ; 22
+                           ; 23
+                           ; 24
+                           ; 25
+                           ; 26
+                           ; 27
+                           ; 28
+                           ; 29
+                           ; 30
+                           ; 31
+                           ; 32
+                           ; 33
+                           ; 34
+                           ; 35
+                           ; 36
+                           ; 37
+                           ; 38
+                           ; 39
+#adding new customer group
+                           ; 40
+                           ; 41
+                           ; 42
+                           ; 43
+                           ; 44
+                           ; 45
+                           ; 46
+                           ; 47
+                           ; 48
+                           ; 49
+                           ; 50
+                           ; 51
+                           ; 52
+                           ; 53
+                           ; 54
+                           ; 55
+                           ; 56
+                           ; 57
+                           ; 58
+                           ; 59
+                           ; 60
+                           ; 61
+                           ; 62
+                           ; 63
+                           ; 64
+                           ; 65
+                           ; 66
+                           ; 67
+                           ; 68
+                           ; 69
+                           ; 70
+                           ; 71
+                           ; 72
+                           ; 73
+                           ; 74
+                           ; 75
+                           ; 76
+
+INSERT_UPDATE SalesOffice; code[unique = true]
+                         ; 2110
+                         ; 2120
+                         ; 2130
+                         ; 2140
+                         ; 3110
+                         ; 3120
+                         ; 3130
+                         ; 3140
+                         ; 4110
+                         ; 4120
+                         ; 4130
+                         ; 4140
+
+INSERT_UPDATE SalesGroup; code[unique = true]
+                        ; 20
+                        ; 60
+                        ; 65
+                        ; 70
+
+INSERT_UPDATE Plant; code[unique = true]
+                   ; 87FX
+                   ; 9301
+                   ; 9302
+                   ; 9303
+                   ; 9304
+                   ; 9305
+                   ; 932X
+                   ; 932Z
+                   ; 933R
+                   ; 934H
+                   ; 934I
+                   ; 934J
+                   ; 934K
+                   ; 934L
+                   ; 934M
+                   ; 934N
+                   ; 934O
+                   ; 934P
+                   ; 934Q
+                   ; 934R
+                   ; 934S
+                   ; 934T
+                   ; 934U
+                   ; 934V
+                   ; 934W
+                   ; 934X
+                   ; 934Y
+                   ; 934Z
+                   ; 935A
+                   ; 935B
+                   ; 936N
+                   ; 936U
+                   ; 936V
+                   ; 936W
+                   ; 937V
+                   ; 937W
+                   ; 938A
+                   ; 938B
+                   ; 938C
+                   ; 938F
+                   ; 938H
+                   ; 938I
+                   ; 938J
+                   ; 938L
+                   ; 938M
+                   ; 938N
+                   ; 938P
+                   ; 938T
+                   ; 93CL
+                   ; 93CM
+                   ; 93CN
+                   ; 93FE
+                   ; 93GF
+                   ; 93HI
+                   ; 93HJ
+                   ; 93HS
+                   ; 93HT
+                   ; 93HU
+                   ; 93HV
+                   ; 93HW
+                   ; 93XM
+                   ; AV01
+                   ; AV02
+                   ; AV03
+                   ; AV04
+                   ; AV05
+                   ; AV11
+                   ; AV21
+                   ; AV22
+                   ; AV31
+                   ; AV41
+                   ; AV97
+                   ; AV98
+                   ; AV99
+                   ; V000
+                   ; V001
+                   ; 93M2
+
+INSERT_UPDATE PrimaryProduct; code[unique = true]
+                            ; 21
+                            ; 31
+                            ; 41
+
+INSERT_UPDATE CsTicketRequestForSubCategory; code[unique = true]
+                                           ; PRODUCT_CATALOGUE
+                                           ; PRODUCT_SELLING_PRICE
+                                           ; DELIVERY_LOCATION_UNAVAILABILITY
+                                           ; AVAILABLE_CREDIT_LIMIT
+                                           ; ONLINE_PAYMENT_PROCESS_FAILURE
+                                           ; DATA_CORRECTION
+                                           ; CREDIT_LIMIT
+                                           ; BG_LC
+                                           ; BANK_DETAILS
+                                           ; 103
+                                           ; A5
+                                           ; QBI
+                                           ; DELIVERY_STATUS_CHECK
+                                           ; DELIVERY_QUANTITY_DISCREPANCY
+                                           ; WRONG_SKU_DELIVERED
+                                           ; NOT_REFLECTING_IN_THE_CUSTOMER_ACCOUNT
+                                           ; REFLECTION_IN_THE_WRONG_ACCOUNT
+                                           ; Z2
+                                           ; VBI
+                                           ; A3
+                                           ; SHIPMENT_DELAYED
+                                           ; PAYMENT_AMOUNT_DISCREPANCY
+                                           ; VOI
+                                           ; Y1
+                                           ; RESCHEDULING
+                                           ; RECONCILIATION_ISSUE
+                                           ; FORMAT_ISSUE
+                                           ; DOWNLOAD_ERROR
+                                           ; QUANTITY_UPDATE
+                                           ; DELIVERY_LOCATION_UPDATE
+                                           ; SHORT_CLOSURE
+                                           ; PO_UPDATE
+                                           ; Y2
+                                           ; OTHERS
+                                           ; IMPROVE_THE_SERVICE
+                                           ; QUALITY_OF_PRODUCT
+                                           ; OTHER
+                                           ; GOOD_SERVICE
+                                           ; FAST_RELIABLE_SERVICE
+
+INSERT_UPDATE CsTicketRequestForCategory; code[unique = true]
+                                        ; CART
+                                        ; CUSTOMERDATA
+                                        ; BILLINGDOCUMENTS
+                                        ; DELIVERYSHIPMENTS
+                                        ; PAYMENT
+                                        ; SALESORDER
+                                        ; CUSTOMERLEDGER
+                                        ; MAINTENANCE
+                                        ; OTHERS
+                                        ; LOGINISSUES
+                                        ; EXPIREDCREDENTIALS
+                                        ; CALLBACKSERVICE
+                                        ; SESSIONTERMINATION
+                                        ; OTHER
+
+INSERT_UPDATE CsTicketAssociatedTo; code[unique = true]
+                                  ; CART
+                                  ; PAYER
+                                  ; INVOICE
+                                  ; ORDER
+                                  ; DELIVERY
+                                  ; PAYMENT
+                                  ; SOLDTO_PAYER
+                                  ; NA
+
+INSERT_UPDATE CsTicketState; code[unique = true]
+                           ; InProgress
+                           ; AwaitingCustomerInput
+                           ; ResolutionInProgress
+                           ; Resolved
+
+INSERT_UPDATE CancelReason; code[unique = true]
+                          ; Y1
+                          ; 04
+                          ; 01
+                          ; Z8
+                          ; Z6
+                          ; 02
+                          ; 03
+                          ; 10
+
+REMOVE CancelReason; code[unique = true]
+                   ; OutOfStock
+                   ; LateDelivery
+                   ; Warehouse
+                   ; CustomerRequest
+                   ; Other
+                   ; NA
+
+INSERT_UPDATE ConsignmentEntryStatus; code[unique = true]
+                                    ; NOT_DELIVERED
+
+REMOVE ConsignmentEntryStatus; code[unique = true]
+                             ; NOTHING_REJECTED
+                             ; PARTIAL_REJECTED
+                             ; EVERYTHING_REJECTED
+
+INSERT_UPDATE PriceGroup; code[unique = true]
+                        ; 01
+                        ; 02
+                        ; R1
+                        ; R2
+                        ; R3
+                        ; R4
+                        ; R5
+                        ; R6
+
+INSERT_UPDATE PriceListType; code[unique = true]
+                           ; Z1
+                           ; Z2
+                           ; Z3
+                           ; Z4
+                           ; Z5
+                           ; Z6
+                           ; Z7
+
+INSERT_UPDATE ReconciliationAccount; code[unique = true]
+                                   ; 15201010
+                                   ; 15201030
+                                   ; 15201040
+                                   ; 15201050
+                                   ; 15201070
+                                   ; 15202075
+                                   ; 15202076
+                                   ; 31207050
+
+INSERT_UPDATE SortKey; code[unique = true]
+                     ; 000
+                     ; 001
+                     ; 002
+                     ; 003
+                     ; 004
+                     ; 005
+                     ; 006
+                     ; 007
+                     ; 008
+                     ; 009
+                     ; 010
+                     ; 011
+                     ; 012
+                     ; 014
+                     ; 015
+                     ; 016
+                     ; 017
+                     ; 018
+                     ; 021
+                     ; 022
+                     ; 023
+                     ; 024
+                     ; 025
+                     ; 026
+                     ; 027
+                     ; 028
+                     ; 029
+                     ; 031
+                     ; 032
+                     ; 033
+
+INSERT_UPDATE PlanningGroup; code[unique = true]
+                           ; A1
+                           ; A2
+                           ; A3
+                           ; A4
+                           ; A5
+                           ; A6
+                           ; E1
+                           ; E2
+                           ; E3
+                           ; E4
+                           ; E5
+                           ; E6
+                           ; E7
+                           ; E8
+                           ; E9
+                           ; ES
+                           ; XR
+
+INSERT_UPDATE PaymentMethods; code[unique = true]
+                            ; N
+                            ; L
+                            ; R
+                            ; G
+                            ; H
+                            ; S
+                            ; T
+                            ; A
+                            ; C
+                            ; D
+                            ; I
+                            ; M
+                            ; P
+                            ; U
+                            ; V
+                            ; W
+                            ; X
+                            ; Y
+                            ; #
+                            ; B
+                            ; F
+                            ; Q
+                            ; K
+
+INSERT_UPDATE DunningClerk; code[unique = true]
+                          ; 02
+                          ; 03
+                          ; 04
+                          ; 05
+                          ; 06
+                          ; 08
+                          ; 09
+                          ; 10
+                          ; 11
+                          ; 12
+                          ; 93
+
+INSERT_UPDATE AccountingClerk; code[unique = true]
+                             ; 02
+                             ; 03
+                             ; 04
+                             ; 05
+                             ; 06
+                             ; 08
+                             ; 09
+                             ; 10
+                             ; 11
+                             ; 12
+                             ; 93
+
+INSERT_UPDATE VirtualIBANRequired; code[unique = true]
+                                 ; Yes
+                                 ; No
+
+INSERT_UPDATE VirtualIBANStatus; code[unique = true]
+                               ; A
+                               ; I
+
+INSERT_UPDATE HouseBankID; code[unique = true]
+                         ; ADCAE
+                         ; ADIAE
+                         ; FABAE
+
+INSERT_UPDATE AccountID; code[unique = true]
+                       ; AE002
+                       ; AE003
+                       ; AE004
+                       ; AE005
+                       ; AE006
+                       ; AE007
+                       ; AE008
+                       ; AE009
+                       ; AE120
+                       ; AE201
+                       ; AE202
+                       ; AE302
+                       ; AE650
+                       ; AE880
+                       ; US001
+                       ; US301
+                       ; AE468
+                       ; AE725
+                       ; US761
+                       ; AE019
+                       ; AE020
+                       ; AE031
+                       ; AE055
+                       ; US044
+
+INSERT_UPDATE ReturnRejectionReason; code[unique = true]
+                                   ; OutOfStock
+                                   ; LateDelivery
+                                   ; Warehouse
+                                   ; CustomerRequest
+                                   ; Other
+                                   ; NA
+
+

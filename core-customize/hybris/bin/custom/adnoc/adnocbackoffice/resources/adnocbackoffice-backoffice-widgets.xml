@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widgets.xsd">
+
+    <widget-extension widgetId="CustomerSupport-Perspective">
+        <remove widgetId="cs-navigation-width-extractor"/>
+        <remove widgetId="cs-navigation-collapse-extractor"/>
+    </widget-extension>
+
+    <widget-extension widgetId="cs-leftSlotContainer">
+        <remove widgetId="cs-leftBottomSlotContainer"/>
+        <setting key="southHeight" type="String">0%</setting>
+    </widget-extension>
+
+    <widget-extension widgetId="csExplorerTreeContainer">
+        <remove widgetId="customersupportRefineBy"/>
+        <setting key="southHeight" type="String">0%</setting>
+    </widget-extension>
+
+    <widget-extension widgetId="collaborationCenter-workflowOverview-view">
+        <remove widgetId="workflowOverview-workflows-collectionbrowser"/>
+    </widget-extension>
+
+    <widget-extension widgetId="csCollapsibleContainer">
+        <remove widgetId="omsCancelReturnPopup" />
+        <widget id="adnocOmsCancelReturnPopup"
+                widgetDefinitionId="com.adnoc.backoffice.widgets.actions.adnoccancelreturnpopup"
+                slotId="cockpitWidgetChildrenInvisible"
+                template="true">
+
+            <instance-settings socketEventRoutingMode="LAST_USED">
+                <create onInit="false" reuseExisting="true">
+                    <all-incoming-events/>
+                </create>
+                <close>
+                    <all-outgoing-events/>
+                </close>
+                <select onInit="false">
+                    <all-incoming-events/>
+                </select>
+            </instance-settings>
+
+            <setting key="widgetStyleClass" type="String"></setting>
+            <setting key="__externalLocationPath" type="String">extension://adnocbackoffice</setting>
+            <setting key="widgetStyleAttribute" type="String"></setting>
+            <setting key="_width" type="String">835px</setting>
+            <setting key="_height" type="String">420px</setting>
+            <virtual-sockets />
+        </widget>
+
+        <widget id="adnocOmsApproveReturnPopup"
+                widgetDefinitionId="com.adnoc.backoffice.widgets.actions.adnocapprovereturnpopup"
+                slotId="cockpitWidgetChildrenInvisible"
+                template="true">
+
+            <instance-settings socketEventRoutingMode="LAST_USED">
+                <create onInit="false" reuseExisting="true">
+                    <all-incoming-events/>
+                </create>
+                <close>
+                    <all-outgoing-events/>
+                </close>
+                <select onInit="false">
+                    <all-incoming-events/>
+                </select>
+            </instance-settings>
+
+            <setting key="widgetStyleClass" type="String"></setting>
+            <setting key="__externalLocationPath" type="String">extension://adnocbackoffice</setting>
+            <setting key="widgetStyleAttribute" type="String"></setting>
+            <setting key="_width" type="String">835px</setting>
+            <setting key="_height" type="String">420px</setting>
+            <virtual-sockets />
+        </widget>
+    </widget-extension>
+
+    <widget-extension widgetId="workflowOverview-tasks-collectionbrowser">
+        <remove widgetId="collaborationCenter-task-search-init"/>
+
+        <widget id="adnoc-collaborationCenter-task-search-init" widgetDefinitionId="com.hybris.cockpitng.adnocworkflowactionadapter"
+                slotId="cockpitWidgetChildrenInvisible" template="false">
+            <setting key="socketDataType_$T" type="String">de.hybris.platform.workflow.enums.WorkflowActionStatus</setting>
+        </widget>
+    </widget-extension>
+
+
+    <widget-connection sourceWidgetId="collaborationCenter-task-search-init-node" outputId="genericOutput" targetWidgetId="adnoc-collaborationCenter-task-search-init" inputId="nodeSelected"/>
+    <widget-connection sourceWidgetId="workflowOverview-tasks-status-chooser" outputId="selection" targetWidgetId="adnoc-collaborationCenter-task-search-init" inputId="statuses"/>
+    <widget-connection sourceWidgetId="adnoc-collaborationCenter-task-search-init" outputId="context" targetWidgetId="workflowOverview-tasks-fulltext-search" inputId="initContext"/>
+
+    <widget-connection sourceWidgetId="STUB_com.adnoc.backoffice.widgets.actions.adnoccancelreturnaction" outputId="csCancelReturnContext" targetWidgetId="adnocOmsCancelReturnPopup" inputId="cancelReturnContextInput"/>
+    <widget-connection sourceWidgetId="STUB_com.adnoc.backoffice.widgets.actions.adnocapprovereturnaction" outputId="csApproveReturnContext" targetWidgetId="adnocOmsApproveReturnPopup" inputId="approveReturnContextInput"/>
+
+</widgets>

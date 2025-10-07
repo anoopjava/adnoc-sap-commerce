@@ -1,0 +1,21 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+# -----------------------------------------------------------------------
+
+#% if: de.hybris.platform.core.Registry.getCurrentTenant().getTenantSpecificExtensionNames().contains("backofficesolrsearch")
+
+"#% impex.setValidationMode(""import_relaxed"");"
+
+$lang=en
+$solrIndexedType=solrIndexedType(identifier)[unique=true,default='BackofficeProduct'];
+$backofficeSFCName = Solr Config for Backoffice;
+$indexLanguages = en
+$indexCurrencies = AED,USD
+
+UPDATE SolrIndexedProperty ; name[unique=true]                   ; $solrIndexedType ; backofficeDisplayName[lang=$lang] ;
+                           ; pcmCoreAttributesCoverageGroup      ;                  ; Core attributes                   ;
+                           ; pcmMarketingAttributesCoverageGroup ;                  ; Marketing attributes              ;
+
+UPDATE SolrFacetSearchConfig; name[unique = true];  currencies(isocode); languages(isocode)
+                            ; $backofficeSFCName ; $indexCurrencies ; $indexLanguages
+#% endif:

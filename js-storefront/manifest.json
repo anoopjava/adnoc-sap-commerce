@@ -1,0 +1,17 @@
+{
+  "applications": [
+    {
+      "name": "b2bspastore",
+      "path": "b2bspastore",
+      "ssr": {
+        "enabled": false,
+        "path": "dist/b2bspastore/server/server.mjs"
+      },
+      "csr": {
+        "webroot": "dist/b2bspastore/browser/"
+      },
+      "enabledRepositories": ["spartacus-6"]
+    }
+  ],
+  "nodeVersion": "22"
+}

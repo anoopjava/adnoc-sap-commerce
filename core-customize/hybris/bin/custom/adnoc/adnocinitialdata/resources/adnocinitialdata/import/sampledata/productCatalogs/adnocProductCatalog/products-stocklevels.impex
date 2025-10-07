@@ -1,0 +1,272 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products stock levels into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = ERP
+
+INSERT_UPDATE Warehouse; code[unique = true]; name[lang = en]
+                       ; aw_warehouse_s     ; Adnoc Warehouse South
+                       ; aw_warehouse_e     ; Adnoc Warehouse East
+                       ; aw_warehouse_w     ; Adnoc Warehouse West
+                       ; aw_warehouse_n     ; Adnoc Warehouse North
+
+INSERT_UPDATE StockLevel; productCode[unique = true]      ; warehouse(code)[unique = true, default = default]; available; inStockStatus(code); maxPreOrder[default = 1]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+                        ; 13                              ; aw_warehouse_s                                   ; 414      ; forceInStock
+                        ; 13                              ; aw_warehouse_e                                   ; 228      ; forceInStock
+                        ; 13                              ; aw_warehouse_n                                   ; 335      ; forceInStock
+                        ; 13                              ; aw_warehouse_w                                   ; 161      ; forceInStock
+
+                        ; 21                              ; aw_warehouse_s                                   ; 215      ; forceInStock
+                        ; 21                              ; aw_warehouse_e                                   ; 122      ; forceInStock
+                        ; 21                              ; aw_warehouse_n                                   ; 496      ; forceInStock
+                        ; 21                              ; aw_warehouse_w                                   ; 241      ; forceInStock
+
+                        ; 26                              ; aw_warehouse_s                                   ; 386      ; forceInStock
+                        ; 26                              ; aw_warehouse_e                                   ; 410      ; forceInStock
+                        ; 26                              ; aw_warehouse_n                                   ; 305      ; forceInStock
+                        ; 26                              ; aw_warehouse_w                                   ; 331      ; forceInStock
+
+                        ; 10013                           ; aw_warehouse_s                                   ; 425      ; forceInStock
+                        ; 10013                           ; aw_warehouse_e                                   ; 309      ; forceInStock
+                        ; 10013                           ; aw_warehouse_n                                   ; 192      ; forceInStock
+                        ; 10013                           ; aw_warehouse_w                                   ; 366      ; forceInStock
+
+                        ; 10015                           ; aw_warehouse_s                                   ; 261      ; forceInStock
+                        ; 10015                           ; aw_warehouse_e                                   ; 3        ; forceInStock
+                        ; 10015                           ; aw_warehouse_n                                   ; 247      ; forceInStock
+                        ; 10015                           ; aw_warehouse_w                                   ; 302      ; forceInStock
+
+                        ; 42                              ; aw_warehouse_s                                   ; 286      ; forceInStock
+                        ; 42                              ; aw_warehouse_e                                   ; 342      ; forceInStock
+                        ; 42                              ; aw_warehouse_n                                   ; 236      ; forceInStock
+                        ; 42                              ; aw_warehouse_w                                   ; 493      ; forceInStock
+
+                        ; 44                              ; aw_warehouse_s                                   ; 375      ; forceInStock
+                        ; 44                              ; aw_warehouse_e                                   ; 63       ; forceInStock
+                        ; 44                              ; aw_warehouse_n                                   ; 223      ; forceInStock
+                        ; 44                              ; aw_warehouse_w                                   ; 421      ; forceInStock
+
+                        ; 170013000092                    ; aw_warehouse_s                                   ; 69       ; forceInStock
+                        ; 170013000092                    ; aw_warehouse_e                                   ; 48       ; forceInStock
+                        ; 170013000092                    ; aw_warehouse_n                                   ; 121      ; forceInStock
+                        ; 170013000092                    ; aw_warehouse_w                                   ; 378      ; forceInStock
+
+                        ; 33                              ; aw_warehouse_s                                   ; 476      ; forceInStock
+                        ; 33                              ; aw_warehouse_e                                   ; 393      ; forceInStock
+                        ; 33                              ; aw_warehouse_n                                   ; 284      ; forceInStock
+                        ; 33                              ; aw_warehouse_w                                   ; 491      ; forceInStock
+
+                        ; regularCarService               ; aw_warehouse_s                                   ; 256      ; forceInStock
+                        ; regularCarService               ; aw_warehouse_e                                   ; 479      ; forceInStock
+                        ; regularCarService               ; aw_warehouse_n                                   ; 14       ; forceInStock
+                        ; regularCarService               ; aw_warehouse_w                                   ; 236      ; forceInStock
+
+                        ; pollutionUnderControlInspection ; aw_warehouse_s                                   ; 201      ; forceInStock
+                        ; pollutionUnderControlInspection ; aw_warehouse_e                                   ; 327      ; forceInStock
+                        ; pollutionUnderControlInspection ; aw_warehouse_n                                   ; 49       ; forceInStock
+                        ; pollutionUnderControlInspection ; aw_warehouse_w                                   ; 195      ; forceInStock
+
+                        ; 194                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 194                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 194                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 194                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+#LPG
+                        ; 120009022753                    ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 120009022753                    ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 120009022753                    ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 120009022753                    ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 120009022754                    ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 120009022754                    ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 120009022754                    ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 120009022754                    ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000434                    ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000434                    ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000434                    ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000434                    ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000577                    ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000577                    ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000577                    ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000577                    ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000578                    ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000578                    ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000578                    ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000578                    ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+
+                        ; 43                              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 43                              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 43                              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 43                              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+
+                        ; 733                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 733                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 733                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 733                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 787                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 787                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 787                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 787                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 842                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 842                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 842                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 842                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 843                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 843                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 843                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 843                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+#Fuel
+                        ; 14                              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 14                              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 14                              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 14                              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 15                              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 15                              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 15                              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 15                              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 999                             ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 999                             ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 999                             ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 999                             ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+INSERT_UPDATE Product; code[unique = true]             ; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+                     ; 13                              ; 13:aw_warehouse_s
+                     ; 13                              ; 13:aw_warehouse_e
+                     ; 13                              ; 13:aw_warehouse_n
+                     ; 13                              ; 13:aw_warehouse_w
+
+                     ; 21                              ; 21:aw_warehouse_s
+                     ; 21                              ; 21:aw_warehouse_e
+                     ; 21                              ; 21:aw_warehouse_n
+                     ; 21                              ; 21:aw_warehouse_w
+
+                     ; 26                              ; 26:aw_warehouse_s
+                     ; 26                              ; 26:aw_warehouse_e
+                     ; 26                              ; 26:aw_warehouse_n
+                     ; 26                              ; 26:aw_warehouse_w
+
+                     ; 10013                           ; 10013:aw_warehouse_s
+                     ; 10013                           ; 10013:aw_warehouse_e
+                     ; 10013                           ; 10013:aw_warehouse_n
+                     ; 10013                           ; 10013:aw_warehouse_w
+
+                     ; 10015                           ; 10015:aw_warehouse_s
+                     ; 10015                           ; 10015:aw_warehouse_e
+                     ; 10015                           ; 10015:aw_warehouse_n
+                     ; 10015                           ; 10015:aw_warehouse_w
+
+
+                     ; 170013000092                    ; 170013000092:aw_warehouse_s
+                     ; 170013000092                    ; 170013000092:aw_warehouse_e
+                     ; 170013000092                    ; 170013000092:aw_warehouse_n
+                     ; 170013000092                    ; 170013000092:aw_warehouse_w
+
+                     ; 33                              ; 33:aw_warehouse_s
+                     ; 33                              ; 33:aw_warehouse_e
+                     ; 33                              ; 33:aw_warehouse_n
+                     ; 33                              ; 33:aw_warehouse_w
+
+                     ; regularCarService               ; regularCarService:aw_warehouse_s
+                     ; regularCarService               ; regularCarService:aw_warehouse_e
+                     ; regularCarService               ; regularCarService:aw_warehouse_n
+                     ; regularCarService               ; regularCarService:aw_warehouse_w
+
+                     ; pollutionUnderControlInspection ; pollutionUnderControlInspection:aw_warehouse_s
+                     ; pollutionUnderControlInspection ; pollutionUnderControlInspection:aw_warehouse_e
+                     ; pollutionUnderControlInspection ; pollutionUnderControlInspection:aw_warehouse_n
+                     ; pollutionUnderControlInspection ; pollutionUnderControlInspection:aw_warehouse_w
+
+                     ; 194                             ; 194:aw_warehouse_s
+                     ; 194                             ; 194:aw_warehouse_e
+                     ; 194                             ; 194:aw_warehouse_n
+                     ; 194                             ; 194:aw_warehouse_w
+#LPG
+                     ; 120009022753                    ; 120009022753:aw_warehouse_s
+                     ; 120009022753                    ; 120009022753:aw_warehouse_e
+                     ; 120009022753                    ; 120009022753:aw_warehouse_n
+                     ; 120009022753                    ; 120009022753:aw_warehouse_w
+
+                     ; 120009022754                    ; 120009022754:aw_warehouse_s
+                     ; 120009022754                    ; 120009022754:aw_warehouse_e
+                     ; 120009022754                    ; 120009022754:aw_warehouse_n
+                     ; 120009022754                    ; 120009022754:aw_warehouse_w
+
+                     ; 200009000434                    ; 200009000434:aw_warehouse_s
+                     ; 200009000434                    ; 200009000434:aw_warehouse_e
+                     ; 200009000434                    ; 200009000434:aw_warehouse_n
+                     ; 200009000434                    ; 200009000434:aw_warehouse_w
+
+                     ; 200009000577                    ; 200009000577:aw_warehouse_s
+                     ; 200009000577                    ; 200009000577:aw_warehouse_e
+                     ; 200009000577                    ; 200009000577:aw_warehouse_n
+                     ; 200009000577                    ; 200009000577:aw_warehouse_w
+
+                     ; 200009000578                    ; 200009000578:aw_warehouse_s
+                     ; 200009000578                    ; 200009000578:aw_warehouse_e
+                     ; 200009000578                    ; 200009000578:aw_warehouse_n
+                     ; 200009000578                    ; 200009000578:aw_warehouse_w
+
+                     ; 42                              ; 42:aw_warehouse_s
+                     ; 42                              ; 42:aw_warehouse_e
+                     ; 42                              ; 42:aw_warehouse_n
+                     ; 42                              ; 42:aw_warehouse_w
+
+                     ; 43                              ; 43:aw_warehouse_s
+                     ; 43                              ; 43:aw_warehouse_e
+                     ; 43                              ; 43:aw_warehouse_n
+                     ; 43                              ; 43:aw_warehouse_w
+
+                     ; 44                              ; 44:aw_warehouse_s
+                     ; 44                              ; 44:aw_warehouse_e
+                     ; 44                              ; 44:aw_warehouse_n
+                     ; 44                              ; 44:aw_warehouse_w
+
+                     ; 733                             ; 733:aw_warehouse_s
+                     ; 733                             ; 733:aw_warehouse_e
+                     ; 733                             ; 733:aw_warehouse_n
+                     ; 733                             ; 733:aw_warehouse_w
+
+                     ; 787                             ; 787:aw_warehouse_s
+                     ; 787                             ; 787:aw_warehouse_e
+                     ; 787                             ; 787:aw_warehouse_n
+                     ; 787                             ; 787:aw_warehouse_w
+
+                     ; 842                             ; 842:aw_warehouse_s
+                     ; 842                             ; 842:aw_warehouse_e
+                     ; 842                             ; 842:aw_warehouse_n
+                     ; 842                             ; 842:aw_warehouse_w
+
+                     ; 843                             ; 843:aw_warehouse_s
+                     ; 843                             ; 843:aw_warehouse_e
+                     ; 843                             ; 843:aw_warehouse_n
+                     ; 843                             ; 843:aw_warehouse_w
+#fuel
+                     ; 14                              ; 14:aw_warehouse_s
+                     ; 14                              ; 14:aw_warehouse_e
+                     ; 14                              ; 14:aw_warehouse_n
+                     ; 14                              ; 14:aw_warehouse_w
+
+                     ; 15                              ; 15:aw_warehouse_s
+                     ; 15                              ; 15:aw_warehouse_e
+                     ; 15                              ; 15:aw_warehouse_n
+                     ; 15                              ; 15:aw_warehouse_w
+
+                     ; 999                             ; 999:aw_warehouse_s
+                     ; 999                             ; 999:aw_warehouse_e
+                     ; 999                             ; 999:aw_warehouse_n
+                     ; 999                             ; 999:aw_warehouse_w

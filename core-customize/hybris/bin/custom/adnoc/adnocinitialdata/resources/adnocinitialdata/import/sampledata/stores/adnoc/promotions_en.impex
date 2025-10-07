@@ -1,0 +1,77 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Promotions for Adnoc Store
+
+# Language
+$lang = en
+
+#3% off orders over $500
+UPDATE OrderThresholdDiscountPercentagePromotion; enabled[default = true][unique = true]; code[unique = true]     ; messageCouldHaveFired[lang = $lang];
+                                                ;                                       ; 3PercentDiscountOver500 ; 3% off orders over $500            ; ;
+
+
+#Buy 2 Power Drills, Get 1 Free
+UPDATE AcceleratorProductBOGOFPromotion; enabled[default = true][unique = true]; code[unique = true]; messageCouldHaveFired[lang = $lang]; messageFired[lang = $lang]                               ;
+                                       ;                                       ; B2GOFPowerDrills   ; Buy 2 Power Drills, Get 1 Free     ; You get 1 Power Drill free for purchasing 2 Power Drills ; ;
+
+
+#Buy this great adnoc package by Black & Decker for $255! Save $39!
+UPDATE ProductBundlePromotion; enabled[default = true][unique = true]; code[unique = true]            ; messageCouldHaveFired[lang = $lang]                                    ; messageFired[lang = $lang]                                                       ;
+                             ;                                       ; ProductBundleAdnocPackage ; Buy this great adnoc package by Black & Decker for {2}! Save $39! ; You saved {3} by buying this great adnoc package by Black & Decker for {1}! ;
+
+
+#10% off on Sanders
+UPDATE ProductPercentageDiscountPromotion; enabled[default = true][unique = true]; code[unique = true]; messageFired[lang = $lang];
+                                         ;                                       ; 10DiscountSanders  ; 10% off on Sanders        ; ;
+
+
+#Discount on the cart using a coupon (promotion voucher)
+UPDATE PromotionVoucher; voucherCode[unique = true]; description[lang = $lang]    ;
+                       ; SUMMER69                  ; Get $10 discount on the cart ;
+                       ; WINTER16                  ; Get 10% discount on the cart ;
+
+# COUPON SAMPLE DATA
+INSERT_UPDATE SingleCodeCoupon; couponId(id)[unique = true]; name[lang = en]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""couponservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""SingleCodeCoupon [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                              ; SUMMER69                   ; Coupon code for Summer Campaign
+                              ; FALL16                     ; Coupon code for Fall Campaign
+                              ; CHRISTMAS16                ; Coupon code for Christmas Campaign
+                              ; WINTER16                   ; Coupon code for Winter Campaign
+
+INSERT_UPDATE MultiCodeCoupon; couponId(id)[unique = true]; name[lang = en]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""couponservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""MultiCodeCoupon [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                             ; PROMO16                    ; Coupon codes for email campaign
+

@@ -1,0 +1,24 @@
+
+$defaultPassword = 12341234
+$b2bregistrationapprovergroup = b2bregistrationapprovergroup
+$eCommerceSpecialistGroup = ecommerceSpecialist
+
+UPDATE Employee; UID[unique = true]            ; name                                           ; groups(uid)                                             ; description                                                                                                                                                                                                                                                   ; password[default = $defaultPassword]; loginDisabled[default = false]
+                      ; ecommmercespelicalistapprover ; Adnoc E-Commerce Specialist Approver           ; $eCommerceSpecialistGroup,$b2bregistrationapprovergroup ; This Adnoc Customer Support Administrator User is assigned and has access to the Backoffice Administrator, Customer Support Manager and Customer Support Agent Group views - to provide administrative support to these later users.                          ;                                     ;
+
+
+################ CS Quote Approval
+REMOVE BackofficeRole; UID[unique = true]            ; backOfficeLoginDisabled; authorities                                          ; locName[lang = en]
+                            ; csquoteapproverbackofficerole ; FALSE                  ; csquoteapproverbackofficerole,backofficeworkflowuser ; Quote Approver Role
+
+REMOVE CsAgentGroup; UID[unique = true]          ; description                   ; groups(uid)                                       ; locname[lang = en]
+                          ; csquoteqpprovermanagergroup ; CS Agent Quote Approver Group ; csquoteapproverbackofficerole,csagentmanagergroup ; CS Agent QUote Approver CS Agent Group
+
+REMOVE Employee; UID[unique = true]    ; name                    ; groups(uid)                 ; description                                                                                                           ; password[default = $defaultPassword]; loginDisabled[default = false]
+                      ; adnoccsaquoteapprover ; Adnoc CS Quote Approver ; csquoteqpprovermanagergroup ; This Adnoc Customer Support Administrator User is assigned and has access to the Customer Support Manager Group views ;                                     ;
+
+REMOVE PrincipalGroupRelation; source(uid)[unique = true]    ; target(uid)[unique = true]
+                                    ; csquoteapproverbackofficerole ; employeegroup
+                                    ; csquoteqpprovermanagergroup   ; employeegroup
+                                    ; csquoteqpprovermanagergroup   ; csquoteapproverbackofficerole
+                                    ; csquoteqpprovermanagergroup   ; backofficeauditgroup

@@ -1,0 +1,1109 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang = en
+
+# Languages
+UPDATE Language; isocode[unique = true]; name[lang = $lang]
+               ; en                    ; "English"
+
+# Currencies
+UPDATE Currency; isocode[unique = true]; name[lang = $lang]
+               ; AED                   ; "United Arab Emirates Dirham"
+               ; USD                   ; "United States Dollar"
+# Titles
+UPDATE Title; code[unique = true]; name[lang = $lang]
+            ; 0001               ; "Ms."
+            ; 0002               ; "Mr."
+
+# Credit / Debit Cards
+UPDATE CreditCardType; code[unique = true] ; name[lang = $lang]
+                     ; amex                ; "American Express"
+                     ; diners              ; "Diner's Club"
+                     ; maestro             ; "Maestro"
+                     ; master              ; "Mastercard"
+                     ; mastercard_eurocard ; "Mastercard/Eurocard"
+                     ; switch              ; "Switch"
+                     ; visa                ; "Visa"
+
+# DistanceUnits for Storelocator 
+UPDATE DistanceUnit; code[unique = true]; name[lang = $lang]
+                   ; km                 ; "km"
+                   ; miles              ; "miles"
+
+# MediaFormats
+UPDATE MediaFormat; qualifier[unique = true]; name[lang = $lang];
+                  ; 1200Wx1200H             ; "1200Wx1200H"
+                  ; 300Wx300H               ; "300Wx300H"
+                  ; 30Wx30H                 ; "30Wx30H"
+                  ; 365Wx246H               ; "365Wx246H"
+                  ; 515Wx515H               ; "515Wx515H"
+                  ; 65Wx65H                 ; "65Wx65H"
+                  ; 96Wx96H                 ; "96Wx96H"
+
+# Product Tax Groups
+UPDATE ProductTaxGroup; code[unique = true]; name[lang = $lang]
+                      ; ae-sales-tax-full  ; "AE Sales Tax"
+                      ; usa-sales-tax-full ; "USA Sales Tax"
+# User Tax Groups
+UPDATE UserTaxGroup; code[unique = true]; name[lang = $lang]
+                   ; ae-taxes           ; "AE Taxes"
+                   ; usa-taxes          ; "USA Taxes"
+
+# Tax
+UPDATE Tax; code[unique = true]; name[lang = $lang]
+          ; ae-sales-tax-full  ; "Sales Tax"
+          ; usa-sales-tax-full ; "USA Sales Tax"
+
+# Consginment statuses
+UPDATE ConsignmentStatus; code[unique = true]; name[lang = $lang]
+                        ; CANCELLED          ; "Cancelled"
+                        ; PICKPACK           ; "Pickpack"
+                        ; PICKUP_COMPLETE    ; "Pickup complete"
+                        ; READY              ; "Ready"
+                        ; READY_FOR_PICKUP   ; "Ready for pickup"
+                        ; SHIPPED            ; "Shipped"
+                        ; WAITING            ; "Waiting"
+
+UPDATE PreferredCommunicationChannel; code[unique = true]; name[lang = en]
+                                    ; INT                ; Email
+                                    ; PAG                ; SMS
+
+UPDATE Gender; code[unique = true]; name[lang = en]
+             ; MALE               ; Male
+             ; FEMALE             ; Female
+             ; OTHER              ; Other
+
+UPDATE IdentityType; code[unique = true]; name[lang = en]
+                   ; FS0001             ; Emirates ID
+                   ; FS0002             ; Passport Number
+
+UPDATE CustomerCategory; code[unique = true]; name[lang = en]
+                       ; Z1                 ; Commercial
+                       ; Z2                 ; Government
+                       ; Z3                 ; Export
+                       ; Z4                 ; Retail
+
+UPDATE DeliveryType; code[unique = true]; name[lang = en]
+                   ; 01                 ; Bulk
+                   ; 02                 ; My Station
+
+UPDATE CsTicketCategory; code[unique = true]; name[lang = en]
+                       ; Compliment         ; Compliment
+                       ; Suggestion         ; Suggestion
+
+UPDATE CsTicketRequestForCategory; code[unique = true]; name[lang = en]
+                                 ; CART               ; Cart
+                                 ; CUSTOMERDATA       ; Customer Data
+                                 ; BILLINGDOCUMENTS   ; Billing Documents
+                                 ; DELIVERYSHIPMENTS  ; Delivery Shipments
+                                 ; PAYMENT            ; Payment
+                                 ; SALESORDER         ; Sales Order
+                                 ; CUSTOMERLEDGER     ; Customer Ledger
+                                 ; MAINTENANCE        ; Maintenance
+                                 ; OTHERS             ; Others
+                                 ; LOGINISSUES        ; Login Issues
+                                 ; EXPIREDCREDENTIALS ; Expired Credentials
+                                 ; CALLBACKSERVICE    ; Callback Service
+                                 ; SESSIONTERMINATION ; Session Termination
+                                 ; OTHER              ; Other
+
+UPDATE CsTicketRequestForSubCategory; code[unique = true]                    ; name[lang = en]
+                                    ; PRODUCT_CATALOGUE                      ; Product Catalogue
+                                    ; PRODUCT_SELLING_PRICE                  ; Product Selling Price
+                                    ; DELIVERY_LOCATION_UNAVAILABILITY       ; Delivery Location Unavailability
+                                    ; AVAILABLE_CREDIT_LIMIT                 ; Available Credit Limit
+                                    ; ONLINE_PAYMENT_PROCESS_FAILURE         ; Online Payment Process Failure
+                                    ; DATA_CORRECTION                        ; Data Correction
+                                    ; CREDIT_LIMIT                           ; Credit Limit
+                                    ; BG_LC                                  ; BG/ LC
+                                    ; BANK_DETAILS                           ; Bank Details
+                                    ; 103                                    ; Quantity Discrepancy
+                                    ; A5                                     ; Price Discrepancy Including Tax, Unit Value, Total Value, Discounts, ICV.
+                                    ; QBI                                    ; Missing Deliveries
+                                    ; DELIVERY_STATUS_CHECK                  ; Delivery Status Check
+                                    ; DELIVERY_QUANTITY_DISCREPANCY          ; Delivery Quantity Discrepancy
+                                    ; WRONG_SKU_DELIVERED                    ; Wrong SKU Delivered (Product Swap)
+                                    ; NOT_REFLECTING_IN_THE_CUSTOMER_ACCOUNT ; Not Reflecting in Customer Account
+                                    ; REFLECTION_IN_THE_WRONG_ACCOUNT        ; Reflected in Wrong Account
+                                    ; Z2                                     ; Additional Deliveries
+                                    ; VBI                                    ; Invoice Splitting or Consolidation
+                                    ; A3                                     ; Invoice Data Mismatch
+                                    ; SHIPMENT_DELAYED                       ; Shipment Delayed
+                                    ; PAYMENT_AMOUNT_DISCREPANCY             ; Payment Amount Discrepancy
+                                    ; VOI                                    ; Exchange Rate Issue
+                                    ; OTHERS                                 ; Others
+                                    ; Y2                                     ; Others
+                                    ; RECONCILIATION_ISSUE                   ; Reconciliation Issue
+                                    ; FORMAT_ISSUE                           ; Format Issue
+                                    ; DOWNLOAD_ERROR                         ; Download Error
+                                    ; QUANTITY_UPDATE                        ; Quantity Update
+                                    ; DELIVERY_LOCATION_UPDATE               ; Delivery Location Update
+                                    ; SHORT_CLOSURE                          ; Short Closure
+                                    ; PO_UPDATE                              ; PO Update
+                                    ; Y1                                     ; Others
+                                    ; RESCHEDULING                           ; Re-Scheduling
+                                    ; IMPROVE_THE_SERVICE                    ; Improve the Service
+                                    ; QUALITY_OF_PRODUCT                     ; Quality of Product
+                                    ; OTHER                                  ; Other
+                                    ; GOOD_SERVICE                           ; Good Service
+                                    ; FAST_RELIABLE_SERVICE                  ; Fast & Reliable Service
+
+UPDATE CsTicketTargetSystem; code[unique = true]; name[lang = en]
+                           ; CRM                ; CRM
+
+UPDATE CsTicketAssociatedTo; code[unique = true]; name[lang = en]
+                           ; CART               ; Cart
+                           ; PAYER              ; Payer
+                           ; INVOICE            ; Invoice
+                           ; ORDER              ; Order
+                           ; DELIVERY           ; Delivery
+                           ; PAYMENT            ; Payment
+                           ; SOLDTO_PAYER       ; SoldTo Payer
+                           ; NA                 ; NA
+
+UPDATE OrderStatus; code[unique = true] ; name[lang = en]
+                  ; CONFIRMED           ; Confirmed
+                  ; PARTIAL_COMPLETED   ; Partially Completed
+                  ; NOTHING_REJECTED    ; Nothing Rejected
+                  ; PARTIAL_REJECTED    ; Partial Rejected
+                  ; EVERYTHING_REJECTED ; Everything Rejected
+                  ; CREATED             ; Booked
+                  ; ORDER_SPLIT         ; Booked
+                  ; CHECKED_VALID       ; Booked
+
+UPDATE RefundReason; code[unique = true]; name[lang = en]
+                   ; 102                ; Damaged in transit
+                   ; 103                ; Quantity discrepancy
+                   ; 104                ; Material ruined
+                   ; 105                ; Free of charge sample
+                   ; 200                ; Price difference: price was too low
+                   ; A1                 ; Demurrage Claims
+                   ; A2                 ; LC Verification
+                   ; A3                 ; Revised invoices
+                   ; A4                 ; Commission on the sales of customer
+                   ; A5                 ; VAT correction debit/credit note
+                   ; C36                ; Open Tonnage
+
+UPDATE Nationality; code[unique = true]; name[lang = en]
+                  ; AD                 ; "Andorran"
+                  ; AE                 ; "United Arab Emirates"
+                  ; AF                 ; "Afghanistan"
+                  ; AG                 ; "Antigua and Barbuda"
+                  ; AI                 ; "Anguilla"
+                  ; AL                 ; "Albania"
+                  ; AM                 ; "Armenia"
+                  ; AO                 ; "Angola"
+                  ; AQ                 ; "Antarctica"
+                  ; AR                 ; "Argentina"
+                  ; AS                 ; "American Samoa"
+                  ; AT                 ; "Austria"
+                  ; AU                 ; "Australia"
+                  ; AW                 ; "Aruba"
+                  ; AZ                 ; "Azerbaijan"
+                  ; BA                 ; "Bosnia and Herzegovina"
+                  ; BB                 ; "Barbados"
+                  ; BD                 ; "Bangladesh"
+                  ; BE                 ; "Belgium"
+                  ; BF                 ; "Burkina Faso"
+                  ; BG                 ; "Bulgaria"
+                  ; BH                 ; "Bahrain"
+                  ; BI                 ; "Burundi"
+                  ; BJ                 ; "Benin"
+                  ; BL                 ; "Blue"
+                  ; BM                 ; "Bermuda"
+                  ; BN                 ; "Brunei Darussalam"
+                  ; BO                 ; "Bolivia"
+                  ; BQ                 ; "Bonaire, Sint Eustatius and Saba"
+                  ; BR                 ; "Brazil"
+                  ; BS                 ; "Bahamas"
+                  ; BT                 ; "Bhutan"
+                  ; BV                 ; "Bouvet Islands"
+                  ; BW                 ; "Botswana"
+                  ; BY                 ; "Belarus"
+                  ; BZ                 ; "Belize"
+                  ; CA                 ; "Canada"
+                  ; CC                 ; "Cocos (Keeling) Islands "
+                  ; CD                 ; "Democratic Republic of the Congo"
+                  ; CF                 ; "Central African Republic"
+                  ; CG                 ; "Republic of the Congo"
+                  ; CH                 ; "Switzerland"
+                  ; CI                 ; "Cote d'Ivoire"
+                  ; CK                 ; "Cook Islands"
+                  ; CL                 ; "Chile"
+                  ; CM                 ; "Cameroon"
+                  ; CN                 ; "China"
+                  ; CO                 ; "Colombia"
+                  ; CR                 ; "Costa Rica"
+                  ; CS                 ; "Serbia and Montenegro"
+                  ; CU                 ; "Cuba"
+                  ; CV                 ; "Cape Verde"
+                  ; CW                 ; "Curaçao"
+                  ; CX                 ; "Christmas Island"
+                  ; CY                 ; "Cyprus"
+                  ; CZ                 ; "Czech Republic"
+                  ; DE                 ; "Germany"
+                  ; DJ                 ; "Djibouti"
+                  ; DK                 ; "Denmark"
+                  ; DM                 ; "Dominica"
+                  ; DO                 ; "Dominican Republic"
+                  ; DZ                 ; "Algeria"
+                  ; EC                 ; "Ecuador"
+                  ; EE                 ; "Estonia"
+                  ; EG                 ; "Egypt"
+                  ; EH                 ; "West Sahara"
+                  ; ER                 ; "Eritrea"
+                  ; ES                 ; "Spain"
+                  ; ET                 ; "Ethiopia"
+                  ; FI                 ; "Finland"
+                  ; FJ                 ; "Fiji"
+                  ; FK                 ; "Falkland Islands"
+                  ; FM                 ; "Micronesia"
+                  ; FO                 ; "Faroe Islands"
+                  ; FR                 ; "France"
+                  ; GA                 ; "Gabon"
+                  ; GB                 ; "United Kingdom"
+                  ; GD                 ; "Grenada"
+                  ; GE                 ; "Georgia"
+                  ; GF                 ; "French Guiana"
+                  ; GG                 ; "Guernsey (Channel Islands)"
+                  ; GH                 ; "Ghana"
+                  ; GI                 ; "Gibraltar"
+                  ; GL                 ; "Greenland"
+                  ; GM                 ; "Gambia   "
+                  ; GN                 ; "Guinea   "
+                  ; GP                 ; "Guadeloup"
+                  ; GQ                 ; "Equatorial Guin"
+                  ; GQ                 ; "Equatorial Guinea"
+                  ; GR                 ; "Greece"
+                  ; GS                 ; "South Georgia and the Southern Sandwich Islands"
+                  ; GT                 ; "Guatemala"
+                  ; GU                 ; "Guam"
+                  ; GW                 ; "Guinea-Bissau"
+                  ; GY                 ; "Guyana"
+                  ; HK                 ; "Hong Kong"
+                  ; HM                 ; "Heard and McDonald Islands"
+                  ; HN                 ; "Honduras"
+                  ; HR                 ; "Croatia"
+                  ; HT                 ; "Haiti"
+                  ; HU                 ; "Hungary"
+                  ; ID                 ; "Indonesia"
+                  ; IE                 ; "Ireland"
+                  ; IL                 ; "Israel"
+                  ; IM                 ; "Isle of Man"
+                  ; IN                 ; "India"
+                  ; IO                 ; "British Indian Ocean Territory"
+                  ; IQ                 ; "Iraq"
+                  ; IR                 ; "Iran"
+                  ; IS                 ; "Iceland"
+                  ; IT                 ; "Italy"
+                  ; JE                 ; "Jersey"
+                  ; JM                 ; "Jamaica"
+                  ; JO                 ; "Jordan"
+                  ; JP                 ; "Japan"
+                  ; KE                 ; "Kenya"
+                  ; KG                 ; "Kyrgyzstan"
+                  ; KH                 ; "Cambodia"
+                  ; KI                 ; "Kiribati"
+                  ; KM                 ; "Comoros"
+                  ; KN                 ; "Saint Kitts and Nevis"
+                  ; KP                 ; "North Korea"
+                  ; KR                 ; "South Korea"
+                  ; KW                 ; "Kuwait"
+                  ; KY                 ; "Cayman Islands"
+                  ; KZ                 ; "Kazakhstan"
+                  ; LA                 ; "Laos"
+                  ; LB                 ; "Lebanon"
+                  ; LC                 ; "Saint Lucia  "
+                  ; LI                 ; "Liechtenstein"
+                  ; LK                 ; "Sri Lanka"
+                  ; LR                 ; "Liberia"
+                  ; LS                 ; "Lesotho"
+                  ; LT                 ; "Lithuania"
+                  ; LU                 ; "Luxembourg"
+                  ; LV                 ; "Latvia    "
+                  ; LY                 ; "Libya"
+                  ; MA                 ; "Morocco"
+                  ; MC                 ; "Monaco"
+                  ; MD                 ; "Moldova "
+                  ; MG                 ; "Madagascar "
+                  ; MH                 ; "Marshall Islands"
+                  ; MK                 ; "Macedonia"
+                  ; ML                 ; "Mali "
+                  ; MM                 ; "Myanmar"
+                  ; MN                 ; "Mongolia"
+                  ; MO                 ; "Macau "
+                  ; MP                 ; "North Mariana Islands"
+                  ; MQ                 ; "Martinique "
+                  ; MR                 ; "Mauretania"
+                  ; MS                 ; "Montserrat"
+                  ; MT                 ; "Malta "
+                  ; MU                 ; "Mauritius"
+                  ; MV                 ; "Maldives"
+                  ; MW                 ; "Malawi"
+                  ; MX                 ; "Mexico"
+                  ; MY                 ; "Malaysia"
+                  ; MZ                 ; "Mozambique"
+                  ; NA                 ; "Namibia "
+                  ; NC                 ; "New Caledonia "
+                  ; NE                 ; "Niger"
+                  ; NF                 ; "Norfolk Islands"
+                  ; NG                 ; "Nigeria"
+                  ; NI                 ; "Nicaragua"
+                  ; NL                 ; "Netherlands"
+                  ; NO                 ; "Norway"
+                  ; NP                 ; "Nepal"
+                  ; NR                 ; "Nauru"
+                  ; NU                 ; "Niue"
+                  ; NZ                 ; "New Zealand"
+                  ; OM                 ; "Oman"
+                  ; PA                 ; "Panama"
+                  ; PE                 ; "Peru"
+                  ; PF                 ; "French Polynesia"
+                  ; PG                 ; "Papua New Guinea"
+                  ; PH                 ; "Philippines"
+                  ; PK                 ; "Pakistan"
+                  ; PL                 ; "Poland"
+                  ; PM                 ; "St. Pierre and Miquelon"
+                  ; PN                 ; "Pitcairn Islands"
+                  ; PR                 ; "Puerto Rico"
+                  ; PS                 ; "Palestine"
+                  ; PT                 ; "Portugal"
+                  ; PW                 ; "Palau"
+                  ; PY                 ; "Paraguay"
+                  ; QA                 ; "Qatar"
+                  ; RE                 ; "Reunion"
+                  ; RO                 ; "Romania"
+                  ; RS                 ; "Romania"
+                  ; RU                 ; "Russian Federation"
+                  ; RW                 ; "Rwanda"
+                  ; SA                 ; "Saudi Arabia"
+                  ; SB                 ; "Solomon Islands"
+                  ; SC                 ; "Seychelles"
+                  ; SD                 ; "Sudan"
+                  ; SE                 ; "Sweden"
+                  ; SG                 ; "Singapore"
+                  ; SH                 ; "Saint Helena"
+                  ; SI                 ; "Slovenia"
+                  ; SJ                 ; "Svalbard"
+                  ; SK                 ; "Slovakia"
+                  ; SL                 ; "Sierra Leone"
+                  ; SM                 ; "San Marino"
+                  ; SN                 ; "Senegal"
+                  ; SO                 ; "Somalia"
+                  ; SR                 ; "Suriname"
+                  ; SS                 ; "South Sudan"
+                  ; ST                 ; "Sao Tome and Principe"
+                  ; SV                 ; "El Salvador"
+                  ; SX                 ; "Sint Maarten (Dutch part)"
+                  ; SY                 ; "Syria"
+                  ; SZ                 ; "Swaziland"
+                  ; TC                 ; "Turks and Caicos Islands"
+                  ; TD                 ; "Chad"
+                  ; TF                 ; "French Southern and Antarctic Lands"
+                  ; TG                 ; "Togo"
+                  ; TH                 ; "Thailand"
+                  ; TJ                 ; "Tajikistan"
+                  ; TK                 ; "Tokelau Islands"
+                  ; TL                 ; "East Timor"
+                  ; TM                 ; "Turkmenistan"
+                  ; TN                 ; "Tunisia"
+                  ; TO                 ; "Tonga"
+                  ; TP                 ; "East Timor"
+                  ; TR                 ; "Republic of Turkiye"
+                  ; TT                 ; "Trinidad and Tobago"
+                  ; TV                 ; "Tuvalu"
+                  ; TW                 ; "Taiwan"
+                  ; TZ                 ; "Tanzania"
+                  ; UA                 ; "Ukraine"
+                  ; UG                 ; "Uganda"
+                  ; UM                 ; "American Minor Outlying Islands"
+                  ; US                 ; "United States of America"
+                  ; UY                 ; "Uruguay"
+                  ; UZ                 ; "Uzbekistan"
+                  ; VA                 ; "Vatican City"
+                  ; VC                 ; "St. Vincent and the Grenadines"
+                  ; VE                 ; "Venezuela"
+                  ; VG                 ; "British Virgin Islands"
+                  ; VI                 ; "American Virgin Islands"
+                  ; VN                 ; "Vietnam"
+                  ; VU                 ; "Vanuatu"
+                  ; WF                 ; "Wallis and Futuna Islands"
+                  ; WS                 ; "Samoa"
+                  ; YE                 ; "Yemen"
+                  ; YT                 ; "Mayotte"
+                  ; ZA                 ; "South Africa"
+                  ; ZM                 ; "Zambia"
+                  ; ZW                 ; "Zimbabwe"
+
+UPDATE ReturnStatus; code[unique = true]; name[lang = en]
+                   ; WAIT               ; Return in Progress
+                   ; COMPLETED          ; Returned
+                   ; CANCELLING         ; Rejected
+                   ; APPROVAL_PENDING   ; Waiting for Approval
+                   ; APPROVING          ; Approved
+
+UPDATE Designation; code[unique = true]; name[lang = en]
+                  ; 0002               ; Purchasing
+                  ; 0003               ; Sales
+                  ; 0005               ; Administration
+                  ; 0006               ; Production
+                  ; 0007               ; Quality Assurance
+                  ; 0009               ; Financial Department
+
+UPDATE TradeLicenseAuthority; code[unique = true]; name[lang = en]
+                            ; TL1                ; Abu Dhabi Department of Economic Devlpt.
+                            ; TL2                ; Abu Dhabi Global Market (ADGM)
+                            ; TL3                ; Abu Dhabi Media Free Zone
+                            ; TL4                ; Ajman Free Zone
+                            ; TL5                ; Ajman Media Free Zone (announced)
+                            ; TL6                ; Ajman Department of Economic Development
+                            ; TL7                ; Al Fujairah Dibba Municipality
+                            ; TL8                ; Creative City - Fujairah
+                            ; TL9                ; Dubai Airport Free Zone
+                            ; TL10               ; Dubai Development Authority
+                            ; TL11               ; Dubai HealthCare City
+                            ; TL12               ; Dubai International Financial Centre
+                            ; TL13               ; Dubai Maritime City
+                            ; TL14               ; Dubai Multi Commodities Centre (DMCC)
+                            ; TL15               ; Dubai Silicon Oasis
+                            ; TL16               ; Dubai South
+                            ; TL17               ; Dubai Department of Economic Development
+                            ; TL18               ; Fujairah Free Zone Authority
+                            ; TL19               ; Fujairah Municipality
+                            ; TL20               ; Gold and Diamond Park
+                            ; TL21               ; Hamriyah Free Zone
+                            ; TL22               ; International Free Zone Authority (IFZA)
+                            ; TL23               ; International Humanitarian City
+                            ; TL24               ; Jebel Ali Free Zone
+                            ; TL25               ; Khalifa Industrial Zone Abu Dhabi (KIZAD)
+                            ; TL26               ; Masdar City
+                            ; TL27               ; Meydan
+                            ; TL28               ; National Industries Park
+                            ; TL29               ; RAK Digital Assets Oasis
+                            ; TL30               ; Ras Al Khaimah Economic Zone (RAKEZ)
+                            ; TL31               ; RAK Department of Economic Development
+                            ; TL32               ; Sharjah Airport International Free Zone
+                            ; TL33               ; Sharjah Media City - Shams
+                            ; TL34               ; SHJ. Department of Economic Development
+                            ; TL35               ; UAQ Department of Economic Development
+                            ; TL36               ; Umm Al Quwain Free Trade Zone
+
+UPDATE CheckoutPaymentType; code[unique = true]; name[lang = en]; sequenceNumber
+                          ; CREDIT_LIMIT       ; Credit Limit   ; 0
+                          ; BANK_TRANSFER      ; Bank transfer  ; 2
+
+UPDATE IncoTerms; code[unique = true]; name[lang = en]
+                ; CFR                ; Costs and freight
+                ; CIF                ; Costs, insurance & freight
+                ; CIP                ; Carriage and insurance paid to
+                ; CPT                ; Carriage paid to
+                ; DAF                ; Delivered at frontier
+                ; DAP                ; Delivered At Place
+                ; DDP                ; Delivered Duty Paid
+                ; DDU                ; Delivered Duty Unpaid
+                ; DEQ                ; Delivered ex quay (duty paid)
+                ; DES                ; Delivered ex ship
+                ; DPU                ; Delivered at Place Unloaded
+                ; DS                 ; Drop Shipment
+                ; EXW                ; Ex Works
+                ; FAS                ; Free Alongside Ship
+                ; FCA                ; Free Carrier
+                ; FH                 ; Free house
+                ; FIP                ; Free In Pipe
+                ; FOB                ; Free on board
+                ; UN                 ; Not Free
+
+UPDATE ShippingCondition; code[unique = true]; name[lang = en]
+                        ; Z1                 ; Z1-MYSTATION
+                        ; Z2                 ; Z2-BULK
+                        ; 10                 ; 10-ROAD PICK UP
+                        ; 11                 ; 11-ROAD DELIVERED
+                        ; 01                 ; 01-TRANSPORTATION
+
+UPDATE PaymentTerms; code[unique = true]; name[lang = en]
+                   ; A000               ; A000-15 DAYS AFTER B/L DATE (B/L DATE EXCLUSIVE)
+                   ; A001               ; A001-30 DAYS AFTER B/L DATE (B/L DATE EXCLUSIVE)
+                   ; A008               ; A008-30 DAYS FROM B/L DATE (B/L DATE INCLUSIVE)
+                   ; A020               ; A020-LAST DAY OF THE MONTH SUCH BILLING
+                   ; A021               ; A021-30 DAYS FROM THE LAST DAY OF THE LIFTING MONTH
+                   ; A025               ; A025-30 DAYS FROM THE ISSUING DATE
+                   ; A027               ; A027-30 DAYS FROM INVOICE DATE (INVOICE DATE INCLUSIVE)
+                   ; A030               ; A030-IMMEDIATE
+
+UPDATE TaxClassification; code[unique = true]; name[lang = en]
+                        ; 0                  ; 0-Exempt
+                        ; 1                  ; 1-Tax Liable Customer
+
+UPDATE Currency; isocode[unique = true]; name[lang = en]
+               ; AED                   ; UAE Dirham
+               ; USD                   ; United States Dollar
+
+UPDATE InvoicingDate; code[unique = true]; name[lang = en]
+                    ; Z3                 ; SSD Billing: Monthly Calendar
+                    ; Z4                 ; SSD Billing: Weekly-End of Week
+                    ; Z5                 ; SSD Billing: Bi-Weekly-End of 15 Days
+                    ; Z6                 ; SSD Billing: 21 Days-End of 21 Days
+
+UPDATE CustomerGroup; code[unique = true]; name[lang = en]
+                    ; 10                 ; 10-ADNOC Subsidiary
+                    ; 11                 ; 11-Airlines
+                    ; 12                 ; 12-Chemical Company
+                    ; 13                 ; 13-Chemical Trader
+                    ; 14                 ; 14-Distributor
+                    ; 15                 ; 15-End user
+                    ; 16                 ; 16-Fertilizer Company
+                    ; 17                 ; 17-Government Owned
+                    ; 18                 ; 18-Government Refiner
+                    ; 19                 ; 19-Importer
+                    ; 20                 ; 20-Integrated Oil Compa
+                    ; 21                 ; 21-Inverstor
+                    ; 22                 ; 22-LNG Midstream
+                    ; 23                 ; 23-LPG Distributor
+                    ; 24                 ; 24-LPG Importer
+                    ; 25                 ; 25-Lube Oil Blender
+                    ; 26                 ; 26-Lubricant Manufactur
+                    ; 27                 ; 27-Major
+                    ; 28                 ; 28-National Oil Company
+                    ; 29                 ; 29-Petro Chemical Compa
+                    ; 30                 ; 30-Power Company
+                    ; 31                 ; 31-Public Owned Company
+                    ; 32                 ; 32-Refiner
+                    ; 33                 ; 33-Retailer
+                    ; 34                 ; 34-Trader
+                    ; 35                 ; 35-UAE Distributor
+                    ; 36                 ; 36-UAE Fertilizer Compa
+                    ; 37                 ; 37-ADNOC Group
+                    ; 38                 ; 38-ADNOC JV
+                    ; 39                 ; 39-Adnoc Fod Agents
+#adding new customer groups
+                    ; 40                 ; Construction Companies
+                    ; 41                 ; Educational Institute
+                    ; 42                 ; Own filling stations
+                    ; 43                 ; General Contracting
+                    ; 44                 ; Oil Field Supplies
+                    ; 45                 ; King and Rulers
+                    ; 46                 ; International Airline
+                    ; 47                 ; Municipal bodies
+                    ; 48                 ; Other oil companies
+                    ; 49                 ; Power Generation Uni
+                    ; 50                 ; Commercial Airlines
+                    ; 51                 ; 51-Rented Filling Stati
+                    ; 52                 ; 52-Service Sector
+                    ; 53                 ; 53-Transporters
+                    ; 54                 ; 54-Marine Services
+                    ; 55                 ; 55-G.H.Q.Armed Forces
+                    ; 56                 ; 56-Military Aviation Cu
+                    ; 57                 ; 57-Ministry of Health
+                    ; 58                 ; 58-Telecommunication
+                    ; 59                 ; 59-Overseas
+                    ; 60                 ; 60-Re - Seller
+                    ; 61                 ; 61-Dealers
+                    ; 62                 ; 62-Marine Agents
+                    ; 63                 ; 63-Converter
+                    ; 64                 ; 64-OEM
+                    ; 65                 ; 65-Mach.Co./Test Inst
+                    ; 66                 ; 66-Agent
+                    ; 67                 ; 67-Test Distributor
+                    ; 68                 ; 68-Importer/Facilitator
+                    ; 69                 ; 69-Manufacturing Compan
+                    ; 70                 ; 70-Insurance Company
+                    ; 71                 ; 71-Others
+                    ; 72                 ; 72-Independent Workshop
+                    ; 73                 ; 73-Mining / Crusher
+                    ; 74                 ; 74-OEM Car Dealer
+                    ; 75                 ; 75-Equipment Rental
+                    ; 76                 ; 76-Waste Management
+
+UPDATE SalesOffice; code[unique = true]; name[lang = en]
+                  ; 2110               ; 2110-Main Prod Abu Dhabi
+                  ; 2120               ; 2120-Main Products Al Ain
+                  ; 2130               ; 2130-Main Prod  Al Dhafra
+                  ; 2140               ; 2140-Main Prod North Emir
+                  ; 3110               ; 3110-LPG Abu Dhabi
+                  ; 3120               ; 3120-LPG Al Ain
+                  ; 3130               ; 3130-LPG Al Dhafra
+                  ; 3140               ; 3140-LPG Northern Emirate
+                  ; 4110               ; 4110-Lube &Grea Abu Dhabi
+                  ; 4120               ; 4120-Lube & Grease Al Ain
+                  ; 4130               ; 4130-Lube &Grea Al Dhafra
+                  ; 4140               ; 4140-Lube &Grea North Emi
+
+UPDATE SalesGroup; code[unique = true]; name[lang = en]
+                 ; 20                 ; 20-Export
+                 ; 60                 ; 60-Commercial
+                 ; 65                 ; 65-Government
+                 ; 70                 ; 70-Retail
+
+UPDATE CsTicketState; code[unique = true]   ; name[lang = en]
+                    ; InProgress            ; In progress
+                    ; AwaitingCustomerInput ; Awaiting customer input
+                    ; ResolutionInProgress  ; Resolution in progress
+                    ; Resolved              ; Resolved
+
+UPDATE Plant; code[unique = true]; name[lang = en]
+            ; 87FX               ; 87FX-Not to be used
+            ; 9301               ; 9301-Lube and Grease plant
+            ; 9302               ; 9302-Mussafah LPG plant
+            ; 9303               ; 9303-AlAin LPG plant
+            ; 9304               ; 9304-CENTRAL STORE MUSSAFAH
+            ; 9305               ; 9305-Smart Service
+            ; 932X               ; 932X-MUSSAFAH LUB DEPOT
+            ; 932Z               ; 932Z-SHARJAH LUB DEPOT
+            ; 933R               ; 933R-DIRECT
+            ; 934H               ; 934H-647-Al Talaa-SHJ
+            ; 934I               ; 934I-155-Al Riyadh City 10 OTG
+            ; 934J               ; 934J-648-Al Tarafa SS (Shj) NE
+            ; 934K               ; 934K-378-Ghoroob Mirdif
+            ; 934L               ; 934L-630-Al NUAIMIA-3-OTG
+            ; 934M               ; 934M-847-Babel-OTG-RAK
+            ; 934N               ; 934N-461-Al Sharya SS FUJ-NE.
+            ; 934O               ; 934O-156-Shamkha Community 2 OTG
+            ; 934P               ; 934P-540-MY STATION SHJ EMIRATE
+            ; 934Q               ; 934Q-118 Al MafraqIndCity OTG AD2SS
+            ; 934R               ; 934R-115 Al Mukatara OTG AD1 SS
+            ; 934S               ; 934S-119 Al GhadeerNorth OTG AD2SS
+            ; 934T               ; 934T-New station X09
+            ; 934U               ; 934U-235-Maleha Ind
+            ; 934V               ; 934V-236-Commercial Al Dhaid
+            ; 934W               ; 934W-117 New Shahama OTG AD2 SS
+            ; 934X               ; 934X-237-Ardh Al Maahed
+            ; 934Y               ; 934Y-238-Al Rahmania
+            ; 934Z               ; 934Z-543-MY STATION RAK EMIRATE
+            ; 935A               ; 935A-129 Al Rahba OTG AD2 SS
+            ; 935B               ; 935B-282 Al Bahia
+            ; 936N               ; 936N-Sharjah Terminal-NE
+            ; 936U               ; 936U-Hamriyah Multi Product Termina
+            ; 936V               ; 936V-Ruwais New Terminal
+            ; 936W               ; 936W-EXT-Hamriyah MP Terminal
+            ; 937V               ; 937V-BEDA ZAYED
+            ; 937W               ; 937W-RAS AL KHAIMA AIRPORT
+            ; 938A               ; 938A-BUNKERING BAAYA
+            ; 938B               ; 938B-DWC DACC Depot
+            ; 938C               ; 938C-RAS AL KHAIMA DEPOT
+            ; 938F               ; 938F-Overseas Direct Delivery
+            ; 938H               ; 938H-ALAIN INETL. AIRPORT
+            ; 938I               ; 938I-ABU DHABI INETL. AIRPORT
+            ; 938J               ; 938J-FUJAIRAH INTL. AIRPORT
+            ; 938L               ; 938L-Shk.Khalifa Air college
+            ; 938M               ; 938M-AL DHAFRA AIR BASE
+            ; 938N               ; 938N-Al Maktoum International Airpo
+            ; 938P               ; 938P-SHARJAH AIRPORT
+            ; 938T               ; 938T-BATEEN AIRPORT
+            ; 93CL               ; 93CL-MARINE
+            ; 93CM               ; 93CM-Musaffah Multi product Depot
+            ; 93CN               ; 93CN-Alain Depot
+            ; 93FE               ; 93FE-442-MY STATION -MUHASINAH
+            ; 93GF               ; 93GF-434-Mahawi My Station hub
+            ; 93HI               ; 93HI-367-Ramlat Al Showaib-OTG
+            ; 93HJ               ; 93HJ-368-Ghnayma-OTG
+            ; 93HS               ; 93HS-344-My Station SuperFuel Truck
+            ; 93HT               ; 93HT-345-My Station SuperFuel Truck
+            ; 93HU               ; 93HU-346-My Station SuperFuel Truck
+            ; 93HV               ; 93HV-347-My Station SuperFuel Truck
+            ; 93HW               ; 93HW-292-MyStation Abu Dhabi Hub
+            ; 93XM               ; 93XM-471-Qusahwira MyStation Micro
+            ; AV01               ; AV01-Abu Dhabi Int'l Airport (N)
+            ; AV02               ; AV02-Abu Dhabi Int'l Airport
+            ; AV03               ; AV03-Al Bateen Executive Airport
+            ; AV04               ; AV04-Al Ain Int'l Airport
+            ; AV05               ; AV05-Mussafah Aviation
+            ; AV11               ; AV11-Al Maktoum Int'l Airport
+            ; AV21               ; AV21-Sharjah Int'l Airport
+            ; AV22               ; AV22-Sharjah Hameriyah
+            ; AV31               ; AV31-Ras Al Khaimah Int'l Airport
+            ; AV41               ; AV41-Fujairah Int'l Airport
+            ; AV97               ; AV97-Aviation Road H
+            ; AV98               ; AV98-Aviation Road H
+            ; AV99               ; AV99-Aviation Pipeline M
+            ; V000               ; V000-Cortem Gulf Fzco
+            ; V001               ; V001-TANQIA FZC
+            ; 93M2               ; 93M2-688-Yas-North-AD
+
+UPDATE PrimaryProduct; code[unique = true]; name[lang = en]
+                     ; 21                 ; Fuel
+                     ; 31                 ; LPG
+                     ; 41                 ; Lubricants
+
+UPDATE QuoteState; code[unique = true]     ; name[lang = en]
+                 ; SELLER_REQUEST          ; Pending Approval
+                 ; BUYER_SUBMITTED         ; Pending Approval
+                 ; SELLERAPPROVER_APPROVED ; Approved
+                 ; BUYER_ORDERED           ; Ordered
+                 ; SELLERAPPROVER_REJECTED ; Rejected
+
+UPDATE CancelReason; code[unique = true]; name[lang = en]
+                   ; 04                 ; Competitor Better
+                   ; Y1                 ; Customer Requested: Short Close
+                   ; 01                 ; Delivery Date too Late
+                   ; Z8                 ; Discrepancy in Quantity or Price
+                   ; Z6                 ; Poor Service
+                   ; 02                 ; Poor Quality
+                   ; 03                 ; Too Expensive
+                   ; 10                 ; Unreasonable Request
+
+
+UPDATE ConsignmentEntryStatus; code[unique = true]; name[lang = en]
+                             ; NOT_DELIVERED      ; Not Delivered
+
+UPDATE SAPOrderStatus; code[unique = true] ; name[lang = en]
+                     ; NOTHING_REJECTED    ; Nothing Rejected
+                     ; PARTIAL_REJECTED    ; Partial Rejected
+                     ; EVERYTHING_REJECTED ; Everything Rejected
+                     ; PARTIAL_COMPLETED   ; Partially Completed
+                     ; CONFIRMED           ; Confirmed
+                     ; NOT_YET_PROCESSED   ; Not yet Processed
+                     ; COMPLETED           ; Completed
+                     ; CANCELLED           ; Cancelled
+                     ; CANCELLED_FROM_ERP  ; Cancelled from ERP
+                     ; CONFIRMED_FROM_ERP  ; Confirmed from ERP
+                     ; SENT_TO_ERP         ; Sent to ERP
+                     ; NOT_SENT_TO_ERP     ; Not Sent to ERP
+                     ; CANCELLING          ; Cancelling
+
+REMOVE OrderStatus; code[unique = true]
+                  ; OPEN
+                  ; READY
+                  ; ON_VALIDATION
+                  ; PAYMENT_AMOUNT_NOT_RESERVED
+                  ; APPROVED_BY_MERCHANT
+                  ; WAIT_FRAUD_MANUAL_CHECK
+                  ; B2B_PROCESSING_ERROR
+                  ; ON_HOLD
+                  ; PENDING_APPROVAL
+                  ; PENDING_APPROVAL_FROM_MERCHANT
+                  ; PAYMENT_AUTHORIZED
+                  ; PAYMENT_CAPTURED
+                  ; PAYMENT_AMOUNT_RESERVED
+                  ; PAYMENT_NOT_CAPTURED
+                  ; REJECTED
+                  ; FRAUD_CHECKED
+                  ; REJECTED_BY_MERCHANT
+                  ; ASSIGNED_TO_ADMIN
+                  ; PROCESSING_ERROR
+                  ; SUSPENDED
+                  ; TAX_NOT_REQUOTED
+                  ; TAX_NOT_COMMITTED
+                  ; TAX_NOT_VOIDED
+                  ; PAYMENT_NOT_VOIDED
+
+UPDATE AdnocOverDueStatus; code[unique = true] ; name[lang = en];
+                         ; PAYMENT_IN_PROGRESS ; Payment In Progress
+                         ; SUCCESS             ; Success
+
+UPDATE PriceListType; code[unique = true]; name[lang = en]
+                    ; Z1                 ; Z1-LPO/Customer PO Ref.
+                    ; Z2                 ; Z2-Ship-to Party
+                    ; Z3                 ; Z3-Sold-to Party
+                    ; Z4                 ; Z4-Payer
+                    ; Z5                 ; Z5-Delivery
+                    ; Z6                 ; Z6-Sales Order
+                    ; Z7                 ; Z7-Material
+
+UPDATE PriceGroup; code[unique = true]; name[lang = en]
+                 ; 01                 ; 01-Bulk buyer
+                 ; 02                 ; 02-Occasional buyer
+                 ; R1                 ; R1-Rank 1
+                 ; R2                 ; R2-Rank 2
+                 ; R3                 ; R3-Rank 3
+                 ; R4                 ; R4-Rank 4
+                 ; R5                 ; R5-Rank 5
+                 ; R6                 ; R6-Rank 6
+
+UPDATE ReconciliationAccount; code[unique = true]; name[lang = en]
+                            ; 15201010           ; 15201010-Trade rcvbls - third party - Accnt recv - HC
+                            ; 15201030           ; 15201030-Due from RP - ADNOC Group Recon
+                            ; 15201040           ; 15201040-Other rcvbls - sundry debtors
+                            ; 15201050           ; 15201050-Retail Site Recon Account
+                            ; 15201070           ; 15201070-Trade rcvbls - third party - Unapplied Receivables
+                            ; 15202075           ; 15202075-Postdated checks receivable (Special G/L W )
+                            ; 15202076           ; 15202076-Bounced check receivable (Special G/L S)
+                            ; 31207050           ; 31207050-Trade Payables - Recon-Customer Advances
+
+UPDATE SortKey; code[unique = true]; name[lang = en]
+              ; 000                ; 000-Allocation number
+              ; 001                ; 001-Posting date
+              ; 002                ; 002-Doc.no., fiscal year
+              ; 003                ; 003-Document date
+              ; 004                ; 004-Branch account
+              ; 005                ; 005-Loc.currency amount
+              ; 006                ; 006-Doc.currency amount
+              ; 007                ; 007-Bill/exch.due date
+              ; 008                ; 008-Cost center
+              ; 009                ; 009-External doc.number
+              ; 010                ; 010-Purchase order no.
+              ; 011                ; 011-Plant number
+              ; 012                ; 012-Vendor number
+              ; 014                ; 014-Purchase order
+              ; 015                ; 015-Personnel number
+              ; 016                ; 016-Settlement period
+              ; 017                ; 017-Settl.per., pers.no.
+              ; 018                ; 018-Asset number
+              ; 021                ; 021-Segment text
+              ; 022                ; 022-One-time name / city
+              ; 023                ; 023-One-time city / name
+              ; 024                ; 024-Document header text
+              ; 025                ; 025-CPU date
+              ; 026                ; 026-Pmnt per.bslne date
+              ; 027                ; 027-Value date
+              ; 028                ; 028-Asset number
+              ; 029                ; 029-Pstng month, vendor
+              ; 031                ; 031-Customer number
+              ; 032                ; 032-Pstng yr,month,curr.
+              ; 033                ; 033-aCost center
+
+UPDATE PlanningGroup; code[unique = true]; name[lang = en]
+                    ; A1                 ; A1-Domestic payments (A/P)
+                    ; A2                 ; A2-Foreign payments (A/P)
+                    ; A3                 ; A3-Vendor-affiliated companies
+                    ; A4                 ; A4-Major vendors
+                    ; A5                 ; A5-Personnel costs
+                    ; A6                 ; A6-Taxes
+                    ; E1                 ; E1-Customer receipts (A/R)
+                    ; E2                 ; E2-Domestic customers
+                    ; E3                 ; E3-Foreign customers
+                    ; E4                 ; E4-Customer-affiliated companies
+                    ; E5                 ; E5-High risk customer
+                    ; E6                 ; E6-Major customers
+                    ; E7                 ; E7-Rent received
+                    ; E8                 ; E8-Loan redemption (A/R)
+                    ; E9                 ; E9-Domestic Prompt paym Custome
+                    ; ES                 ; ES-Customers Paid in NBAD London
+                    ; XR                 ; XR-Parked Documents
+
+UPDATE PaymentMethods; code[unique = true]; name[lang = en]
+                     ; N                  ; N-Bank Guarantee
+                     ; L                  ; L-Letter of credit
+                     ; R                  ; R-Revolving LC
+                     ; G                  ; G-Parent Company Guarantee
+                     ; H                  ; H-Payment in advance
+                     ; S                  ; S-Stand by LC
+                     ; T                  ; T-Telegraphic Transfer
+                     ; A                  ; A-Treasury Pay-Dep FX Bnk-Bnk Tr
+                     ; C                  ; C-Pre-Numbered Cheques
+                     ; D                  ; D-Treasury Payments Deposit & FX
+                     ; I                  ; I-Irrevocable LC
+                     ; M                  ; M-MRO/ Single Payments
+                     ; P                  ; P-Payroll Payments
+                     ; U                  ; U-Treasury/BTB Payments
+                     ; V                  ; V-Treasury Internal Loans
+                     ; W                  ; W-EFT/ BTL  Payments
+                     ; X                  ; X-Payroll Sharia Payments
+                     ; Y                  ; Y-Payroll Payments Foreign Wires
+                     ; #                  ; #-Stop payment payroll
+                     ; B                  ; B- Manual Bank Transfer - Payroll
+                     ; F                  ; F-Local Wire transfer
+                     ; Q                  ; Q-Payroll US
+                     ; K                  ; K-Cash payment
+
+UPDATE DunningClerk; code[unique = true]; name[lang = en]
+                   ; 02                 ; 02-Mariam Mesaari Al Dhaheri
+                   ; 03                 ; 03-Hamid Awadh Hussain Al Menhali
+                   ; 04                 ; 04-Ali Salem Mobarak Al Aboolan
+                   ; 05                 ; 05-Khalil Darwish Al Bulouki
+                   ; 06                 ; 06-Salem Abdulla Salem Al Zaidi
+                   ; 08                 ; 08-Ahmed Mohammed Al Marzooqi
+                   ; 09                 ; 09-Safa Abdul Razzaq Mansour
+                   ; 10                 ; 10-Hind Al Dhaheri
+                   ; 11                 ; 11-Shaika Essa Mohamed Al Jaber
+                   ; 12                 ; 12-Humaid Abdalla Al Zarouni
+                   ; 93                 ; 93-ADNOC DISTRIBUTION AR Dep
+
+UPDATE AccountingClerk; code[unique = true]; name[lang = en]
+                      ; 02                 ; 02-Mariam Mesaari Al Dhaheri
+                      ; 03                 ; 03-Hamid Awadh Hussain Al Menhali
+                      ; 04                 ; 04-Ali Salem Mobarak Al Aboolan
+                      ; 05                 ; 05-Khalil Darwish Al Bulouki
+                      ; 06                 ; 06-Salem Abdulla Salem Al Zaidi
+                      ; 08                 ; 08-Ahmed Mohammed Al Marzooqi
+                      ; 09                 ; 09-Safa Abdul Razzaq Mansour
+                      ; 10                 ; 10-Hind Al Dhaheri
+                      ; 11                 ; 11-Shaika Essa Mohamed Al Jaber
+                      ; 12                 ; 12-Humaid Abdalla Al Zarouni
+                      ; 93                 ; 93-ADNOC DISTRIBUTION AR Dept
+
+UPDATE VirtualIBANRequired; code[unique = true]; name[lang = en]
+                          ; Yes                ; Yes
+                          ; No                 ; No
+
+UPDATE VirtualIBANStatus; code[unique = true]; name[lang = en]
+                        ; A                  ; Active
+                        ; I                  ; Inactive
+
+UPDATE HouseBankID; code[unique = true]; name[lang = en]
+                  ; ADCAE              ; ADCAE-ABU DHABI COMMERCIAL BANK
+                  ; ADIAE              ; ADIAE-ABU DHABI ISLAMIC BANK
+                  ; FABAE              ; FABAE-FIRST ABU DHABI BANK
+
+UPDATE AccountID; code[unique = true]; name[lang = en]
+                ; AE002              ; AE002-Bank - ADCB-AED-Current-0002
+                ; AE003              ; AE003-Bank - ADCB-AED-Current-0003
+                ; AE004              ; AE004-Bank - ADCB-AED-Current-0004
+                ; AE005              ; AE005-Bank - ADCB-AED-Current-0005
+                ; AE006              ; AE006-Bank - ADCB-AED-Current-0006
+                ; AE007              ; AE007-Bank - ADCB-AED-Current-0007
+                ; AE008              ; AE008-Bank - ADCB-AED-Current-0008
+                ; AE009              ; AE009-Bank - ADCB-AED-Current-0009
+                ; AE120              ; AE120-Bank - ADCB-AED-Current-0001
+                ; AE201              ; AE201-Bank - ADCB-AED-Current-0001
+                ; AE202              ; AE202-Bank - ADCB-AED-Current-0002
+                ; AE302              ; AE302-Bank - ADCB-AED-Call-0002
+                ; AE650              ; AE650-Bank - ADCB-AED-Call-8001
+                ; AE880              ; AE880-Bank - ADCB-AED-Current-0001
+                ; US001              ; US001-Bank - ADCB-USD-Call-9001
+                ; US301              ; US301-Bank - ADCB-USD-Call-0001
+                ; AE468              ; AE468-Bank - ADIB-AED-STI-5468
+                ; AE725              ; AE725-Bank - ADIB-AED-Current-4725
+                ; US761              ; US761-Bank - ADIB-USD-STI-4761
+                ; AE019              ; AE019-Bank - FAB-AED-Current-0019
+                ; AE020              ; AE020-Bank - FAB-AED-Current-0020
+                ; AE031              ; AE031-Bank - FAB-AED-Current-0031
+                ; AE055              ; AE055-Bank - FAB-AED- Ccall-0055
+                ; US044              ; US044-Bank - FAB-USD-Call-0041
+
+UPDATE ReturnRejectionReason; code[unique = true]; name[lang = en]
+                            ; OutOfStock         ; Out Of Stock
+                            ; LateDelivery       ; Late Delivery
+                            ; Warehouse          ; Warehouse
+                            ; CustomerRequest    ; Customer Request
+                            ; Other              ; Other
+                            ; NA                 ; NA
+
+INSERT_UPDATE Employee; uid[unique = true]; name                          ; defaultShipmentAddress(email)
+                      ; 176033            ; Abdulla Al-Jneibi             ; ABDULLA.MUBARAK@ADNOCDISTRIBUTION.AE
+                      ; 176063            ; Hamad Barak                   ; hamad.barak@adnocdistribution.ae
+                      ; 176076            ; Al Hosani Rashed              ; rashed.alhosani@adnocdistribution.ae
+                      ; 176099            ; Abdul Hameed Al Baloush       ; hameed.morad@adnocdistribution.ae
+                      ; 176102            ; Omar Baslaib                  ; omar.nasib@adnocdistribution.ae
+                      ; 176106            ; Hilal Al Mazroui              ; hilal.suhail@adnocdistribution.ae
+                      ; 176170            ; Mohd Abdulla Al-Dhaheri Saeed ; saeed.abdulla@adnocdistribution.ae
+                      ; 176195            ; Yaser Safar                   ; yaser.safar@adnocdistribution.ae
+                      ; 176203            ; Ali Al Marar                  ; ali.almarar@adnocdistribution.ae
+                      ; 176204            ; Ahmed Bin Tarish              ; ahmed.taresh@adnocdistribution.ae
+                      ; 176206            ; Nasser Al-Dhaheri             ; nasser.aldhahri@adnocdistribution.ae
+                      ; 176207            ; Al Hababi Tareq               ; tareq.alhebabi@adnocdistribution.ae
+                      ; 176218            ; Mohammed Al Dhaheri           ; MOHD.FARHAN@ADNOCDISTRIBUTION.AE
+                      ; 176312            ; Ahmed Al Yasi                 ; AHMED.YOUNES@ADNOCDISTRIBUTION.AE
+                      ; 176342            ; Mohd Abdel Hameed             ; abu.hazim@adnocdistribution.ae
+                      ; 181019            ; Al Ali Abdulsalam             ; Abdulsalam.AlAli@adnocdistribution.ae
+                      ; 176377            ; Sajid Kalirakkampol           ; SAJID.KP@ADNOCDISTRIBUTION.AE
+                      ; 176503            ; Mahfoudh Salem Ba Obaid Mohd. ; mohamed.mahfoudh@adnocdistribution.ae
+                      ; 181178            ; Hussain Al Marzooqi           ; H.ALMARZOOQI@ADNOCDISTRIBUTION.AE
+                      ; 186079            ; Al Hemeiri Abdulla            ; abdulla.alhemeiri@adnocdistribution.ae
+                      ; 181251            ; Ahmed Al Marzooqi             ; AHMED.ALMARZOOQI@ADNOCDISTRIBUTION.AE
+                      ; 181368            ; Al Mansoori Mohamed           ; mohamed.almansoori@adnocdistribution.ae
+                      ; 181400            ; Hamad Al Mulla                ; HAMAD.ALMULLA@ADNOCDISTRIBUTION.AE
+                      ; 176890            ; Khouri Omran                  ; omran.khouri@adnocdistribution.ae
+                      ; 176917            ; Simon Mupambo                 ; SIMON.MUPAMBO@ADNOCDISTRIBUTION.AE
+                      ; 181650            ; Al Ameri Tahmima              ; Tahmima.Abdulla@adnocdistribution.ae
+                      ; 181687            ; Al Mansoori Matar             ; Matar.Saeed@adnocdistribution.ae
+                      ; 177071            ; Khalifa Al Suwaidi            ; KHALIFA.ALSUWAIDI@ADNOCDISTRIBUTION.AE
+                      ; 177141            ; Jasim Mohammed Al Suwaidi     ; JASEM.OBAID@ADNOCDISTRIBUTION.AE
+                      ; 181815            ; Al Dhaheri Fatima             ; Fatima.Ateeq@adnocdistribution.ae
+                      ; 177423            ; Husain Al Helali              ; HUSSEIN.ALHILALI@ADNOCDISTRIBUTION.AE
+                      ; 177439            ; Al Ameri Obaid                ; obaid.alameri@adnocdistribution.ae
+                      ; 177508            ; Lamya Abdul Kare              ; lamya.abdulla@adnocdistribution.ae
+                      ; 177510            ; Manea Al Karbi                ; MANEA.ALKARBI@ADNOCDISTRIBUTION.AE
+                      ; 187322            ; Batra Vasudha Jagat           ; vasudha.batra@adnocdistribution.ae
+                      ; 182562            ; Rashed Salem                  ; RASHED.SALEM@ADNOCDISTRIBUTION.AE
+                      ; 182566            ; Abdulaziz Alzaabi             ; A.ALZAABI@ADNOCDISTRIBUTION.AE
+                      ; 187545            ; Al Falasi Shamsa              ; shamsa.alfalasi@adnocdistribution.ae
+                      ; 187546            ; Yousef Qaderi                 ; YOUSEF.QADERI@ADNOCDISTRIBUTION.AE
+                      ; 187583            ; Tahani Al Mohamed             ; TAHANI.ALMOHAMED@ADNOCDISTRIBUTION.AE
+                      ; 187592            ; Arun Mundani                  ; ARUN.MUNDANI@ADNOCDISTRIBUTION.AE
+                      ; 183013            ; Ahmed Al Shehhi               ; AHMED.ALQAISHI@ADNOCDISTRIBUTION.AE
+                      ; 183015            ; Ali Al Mansoori               ; ALI.ALMANSOORI@ADNOCDISTRIBUTION.AE
+                      ; 178489            ; Mohammed Al Zaabi             ; MOHAMED.HAMAD@ADNOCDISTRIBUTION.AE
+                      ; 178672            ; Naasan Mohamed                ; mohamed.naasan@adnoc.ae
+                      ; 183598            ; Naser Al Teneiji              ; NASER.ALTENEIJI@ADNOCDISTRIBUTION.AE
+                      ; 183757            ; Al Hosani Khalifa             ; K.alhosani@adnocdistribution.ae
+                      ; 179178            ; Humaid Al Ameri               ; HUMAID.ALAMERI@ADNOCDISTRIBUTION.AE
+                      ; 183999            ; Aziz Owais                    ; Owais.Aziz@adnocdistribution.ae
+                      ; 184026            ; Al Owais Ahmed                ; ahmed.alowais@adnocdistribution.ae
+                      ; 189034            ; Jagannadh Pokala              ; JAGANNADH.POKALA@ADNOCDISTRIBUTION.AE
+                      ; 184392            ; Mariam Al Dhaheri             ; MARIAM.HELAL@ADNOCDISTRIBUTION.AE
+                      ; 184674            ; Slayem Al Fatemi              ; SLAYEM.ALFATEMI@ADNOCDISTRIBUTION.AE
+                      ; 180056            ; Abdulla Al Ansari             ; ABDULLA.QAMBAR@ADNOCDISTRIBUTION.AE
+                      ; 180059            ; Al ketbi Hind                 ; hind.echtibi@adnocdistribution.ae
+                      ; 184933            ; shadreck gasura               ; shadreck.gasura@adnocdistribution.ae
+                      ; 180269            ; Al Shehhi Ahmed               ; ahmed.shehhi@adnocdistribution.ae
+                      ; 180272            ; Hamdan Al Ali                 ; HAMDAN.ALALI@ADNOCDISTRIBUTION.AE
+                      ; 184969            ; Al Mansoori Ahmed             ; ahmed.hamdan@adnocdistribution.ae
+                      ; 185106            ; Al Suwaidi Meera              ; Meera.AlSuwaidi@adnocdistribution.ae
+                      ; 190002            ; Rejish Pillai                 ; REJISH.PILLAI@ADNOCDISTRIBUTION.AE
+                      ; 190097            ; Hassan Naeem                  ; HASSAN.NAEEM@ADNOCDISTRIBUTION.AE
+                      ; 185362            ; Ahmed Khoory                  ; Ahmed.Khoory@adnocdistribution.ae
+                      ; 202424            ; Jimmy Cheriyan                ; JIMMY.C@ADNOCDISTRIBUTION.AE
+                      ; 202467            ; Deepak Gupta                  ; deepak.g@adnocdistribution.ae
+
+INSERT_UPDATE Address; email[unique = true]                    ; owner(Employee.uid); streetname; town      ; cellphone
+                     ; ABDULLA.MUBARAK@ADNOCDISTRIBUTION.AE    ; 176033             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; hamad.barak@adnocdistribution.ae        ; 176063             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; rashed.alhosani@adnocdistribution.ae    ; 176076             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; hameed.morad@adnocdistribution.ae       ; 176099             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; omar.nasib@adnocdistribution.ae         ; 176102             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; hilal.suhail@adnocdistribution.ae       ; 176106             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; saeed.abdulla@adnocdistribution.ae      ; 176170             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; yaser.safar@adnocdistribution.ae        ; 176195             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ali.almarar@adnocdistribution.ae        ; 176203             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ahmed.taresh@adnocdistribution.ae       ; 176204             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; nasser.aldhahri@adnocdistribution.ae    ; 176206             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; tareq.alhebabi@adnocdistribution.ae     ; 176207             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; MOHD.FARHAN@ADNOCDISTRIBUTION.AE        ; 176218             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; AHMED.YOUNES@ADNOCDISTRIBUTION.AE       ; 176312             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; abu.hazim@adnocdistribution.ae          ; 176342             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Abdulsalam.AlAli@adnocdistribution.ae   ; 181019             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; SAJID.KP@ADNOCDISTRIBUTION.AE           ; 176377             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; mohamed.mahfoudh@adnocdistribution.ae   ; 176503             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; H.ALMARZOOQI@ADNOCDISTRIBUTION.AE       ; 181178             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; abdulla.alhemeiri@adnocdistribution.ae  ; 186079             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; AHMED.ALMARZOOQI@ADNOCDISTRIBUTION.AE   ; 181251             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; mohamed.almansoori@adnocdistribution.ae ; 181368             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; HAMAD.ALMULLA@ADNOCDISTRIBUTION.AE      ; 181400             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; omran.khouri@adnocdistribution.ae       ; 176890             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; SIMON.MUPAMBO@ADNOCDISTRIBUTION.AE      ; 176917             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Tahmima.Abdulla@adnocdistribution.ae    ; 181650             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Matar.Saeed@adnocdistribution.ae        ; 181687             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; KHALIFA.ALSUWAIDI@ADNOCDISTRIBUTION.AE  ; 177071             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; JASEM.OBAID@ADNOCDISTRIBUTION.AE        ; 177141             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Fatima.Ateeq@adnocdistribution.ae       ; 181815             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; HUSSEIN.ALHILALI@ADNOCDISTRIBUTION.AE   ; 177423             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; obaid.alameri@adnocdistribution.ae      ; 177439             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; lamya.abdulla@adnocdistribution.ae      ; 177508             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; MANEA.ALKARBI@ADNOCDISTRIBUTION.AE      ; 177510             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; vasudha.batra@adnocdistribution.ae      ; 187322             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; RASHED.SALEM@ADNOCDISTRIBUTION.AE       ; 182562             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; A.ALZAABI@ADNOCDISTRIBUTION.AE          ; 182566             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; shamsa.alfalasi@adnocdistribution.ae    ; 187545             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; YOUSEF.QADERI@ADNOCDISTRIBUTION.AE      ; 187546             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; TAHANI.ALMOHAMED@ADNOCDISTRIBUTION.AE   ; 187583             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ARUN.MUNDANI@ADNOCDISTRIBUTION.AE       ; 187592             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; AHMED.ALQAISHI@ADNOCDISTRIBUTION.AE     ; 183013             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ALI.ALMANSOORI@ADNOCDISTRIBUTION.AE     ; 183015             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; MOHAMED.HAMAD@ADNOCDISTRIBUTION.AE      ; 178489             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; mohamed.naasan@adnoc.ae                 ; 178672             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; NASER.ALTENEIJI@ADNOCDISTRIBUTION.AE    ; 183598             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; K.alhosani@adnocdistribution.ae         ; 183757             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; HUMAID.ALAMERI@ADNOCDISTRIBUTION.AE     ; 179178             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Owais.Aziz@adnocdistribution.ae         ; 183999             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ahmed.alowais@adnocdistribution.ae      ; 184026             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; JAGANNADH.POKALA@ADNOCDISTRIBUTION.AE   ; 189034             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; MARIAM.HELAL@ADNOCDISTRIBUTION.AE       ; 184392             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; SLAYEM.ALFATEMI@ADNOCDISTRIBUTION.AE    ; 184674             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ABDULLA.QAMBAR@ADNOCDISTRIBUTION.AE     ; 180056             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; hind.echtibi@adnocdistribution.ae       ; 180059             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; shadreck.gasura@adnocdistribution.ae    ; 184933             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ahmed.shehhi@adnocdistribution.ae       ; 180269             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; HAMDAN.ALALI@ADNOCDISTRIBUTION.AE       ; 180272             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; ahmed.hamdan@adnocdistribution.ae       ; 184969             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Meera.AlSuwaidi@adnocdistribution.ae    ; 185106             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; REJISH.PILLAI@ADNOCDISTRIBUTION.AE      ; 190002             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; HASSAN.NAEEM@ADNOCDISTRIBUTION.AE       ; 190097             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; Ahmed.Khoory@adnocdistribution.ae       ; 185362             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; JIMMY.C@ADNOCDISTRIBUTION.AE            ; 202424             ; Main St   ; Abu Dhabi ; 0501234567
+                     ; deepak.g@adnocdistribution.ae           ; 202467             ; Main St   ; Abu Dhabi ; 0501234567

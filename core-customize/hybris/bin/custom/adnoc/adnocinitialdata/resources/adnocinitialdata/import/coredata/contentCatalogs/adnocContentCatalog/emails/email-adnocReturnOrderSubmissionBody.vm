@@ -1,0 +1,58 @@
+﻿## messageSource=classpath:/adnocservice/messages/email-adnocReturnOrderSubmission_$lang.properties
+
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Aptos Display, Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url" style="color:$textColor; text-decoration: none;">$bodyContent</a>
+#end
+
+<html>
+  <body style="background-color: #ffffff; margin: 0; padding: 20px; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; color: #414a4f; font-size: 16px;">
+
+    <div class="content" style="max-width: 600px; margin: 0 auto;">
+      <!-- Greeting -->
+      <p style="margin-bottom: 20px;">Dear ${ctx.title} ${ctx.firstName},</p>
+
+      <!-- Intro Paragraph -->
+      <p style="margin-bottom: 20px;">${ctx.messages.returnOrderDetailsParagraphForCustomer}</p>
+
+      <!-- Customer Details -->
+      <h3 style="margin-bottom: 10px;">${ctx.messages.customerDetails}</h3>
+      <ul style="margin: 0 0 20px 20px; padding: 0;">
+        <li><strong>Customer Name:</strong> ${ctx.displayName}</li>
+        <li><strong>Return Order Number:</strong> ${ctx.returnRequest.rma}</li>
+      </ul>
+
+      <!-- Order Details -->
+      <h3 style="margin-bottom: 10px;">${ctx.messages.orderDetails}</h3>
+      <ul style="margin: 0 0 20px 20px; padding: 0;">
+        <li><strong>Order Number:</strong> ${ctx.order.sapOrderCode}</li>
+        <li><strong>Order Date:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.order.created})</li>
+        <li><strong>Return Request Date:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.returnRequest.creationTime})</li>
+        <li><strong>Status:</strong> ${ctx.returnRequest.statusDisplay}</li>
+      </ul>
+
+      <!-- Action Message -->
+      <p style="margin-bottom: 20px;">
+        #set( $link = "<a href='${ctx.frontendUrl}' style='color: #4682B4; text-decoration: none;'>${ctx.messages.link}</a>" )
+        ${ctx.messages.customerReturnRequest.replace("{0}", $link)}
+      </p>
+
+      <!-- Support Info -->
+      <p style="margin-bottom: 15px;">${ctx.messages.customerEnquiry}</p>
+
+      <!-- Thank You -->
+      <p style="margin-bottom: 20px;">${ctx.messages.thankYouParagraph}</p>
+
+      <!-- Signature -->
+      <p style="margin: 0;">${ctx.messages.complimentaryClosing}</p>
+      <p style="margin: 0;">${ctx.messages.customerTeam}</p>
+      <p style="margin: 0;">${ctx.messages.adnoc}</p>
+      <p style="margin: 0;">
+        <a href="https://www.adnocdistribution.ae/" style="color: #4682B4;">${ctx.messages.website}</a>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,239 @@
+<h2 class="cx-checkout-title d-none d-lg-block d-xl-block">
+  {{ "checkoutB2B.methodOfPayment.paymentType" | cxTranslate }}
+</h2>
+<div
+  *cxFeature="'!a11yRemoveStatusLoadedRole'"
+  role="status"
+  [attr.aria-label]="'common.loaded' | cxTranslate"
+></div>
+<div class="row payment__po-wrap">
+  <div class="col-md-12 col-lg-6">
+    <label>
+      <span class="label-content">{{
+        "payments.purchaseOrderNumber" | cxTranslate
+      }}</span>
+      <input
+        #poNumber
+        id="poNumber"
+        class="form-control"
+        formControlName="poNumber"
+        minlength="1"
+        maxlength="18"
+        type="text"
+        placeholder="{{ 'checkoutB2B.placeholder' | cxTranslate }}"
+        value="{{ cartPoNumber$ | async }}"
+        (change)="poNumberChange(poNumber.value)"
+        (input)="sanitizePoNumber(poNumber)"
+      />
+    </label>
+  </div>
+  <div class="col-md-12 col-lg-6 input-group">
+    <span class="label-content">{{
+      "payments.uploadLabel" | cxTranslate
+    }}</span>
+    <div class="custom-file mb-2">
+      <input
+        type="file"
+        class="custom-file-input"
+        id="inputGroupFile"
+        accept=".pdf"
+        (change)="updateFileName($event)"
+      />
+      <label
+        class="custom-file-label"
+        for="inputGroupFile"
+        aria-describedby="inputGroupFileAddon"
+        >{{ "payments.selectFileUpload" | cxTranslate }}
+      </label>
+      <span class="payment__icon">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+      </span>
+    </div>
+    <div class="text-danger" *ngIf="fileSizeError">
+      {{ "payments.pdfErrorMsg" | cxTranslate }}
+    </div>
+    <div>{{ "payments.pdfDisclaimer" | cxTranslate }}</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <div class="cx-payment-type-container payment__type">
+      <span class="label-content payment__label-content">{{
+        "payments.selectPaymentMethod" | cxTranslate
+      }}</span>
+      <p class="m-2">{{ "payments.availablePaymentMethod" | cxTranslate }}</p>
+
+      <ng-container *ngIf="paymentTypes$ | async as paymentTypes">
+        <ng-container *ngIf="checkRule !== 'Z2'; else exceptionalCustomer">
+          <ng-container
+            *ngIf="
+              !!paymentTypes?.length && !(isUpdating$ | async);
+              else loading
+            "
+          >
+            <ng-container *ngFor="let type of paymentTypes">
+              <ng-container
+                *ngIf="type.code !== 'CREDIT_LIMIT'; else creditLimit"
+              >
+                <div class="form-check">
+                  <input
+                    id="paymentType-{{ type.code }}"
+                    class="form-check-input"
+                    role="radio"
+                    type="radio"
+                    [attr.aria-checked]="type.code === typeSelected"
+                    [disabled]="
+                      type.code === paymentTypeBank && currencyIsocode === 'USD'
+                    "
+                    (change)="changeType(type.code!)"
+                    [value]="type.code"
+                    [checked]="type.code === typeSelected"
+                    formControlName="paymentType"
+                    name="paymentType"
+                  />
+                  <label
+                    class="cx-payment-type-label form-check-label form-radio-label"
+                    for="paymentType-{{ type.code }}"
+                  >
+                    <div class="cx-payment-type payment__method">
+                      <!-- Display the translated payment type name -->
+                      <span
+                        class="creditCard"
+                        *ngIf="
+                          type.code === 'PAYMENT_24' ||
+                            type.code === 'BANK_TRANSFER';
+                          else cardType
+                        "
+                      >
+                        <ng-container
+                          *ngFor="let image of paymentTypeImages[type.code]"
+                        >
+                          <img [src]="image" alt="" />
+                        </ng-container>
+                      </span>
+                      <ng-template #cardType>
+                        <span class="creditCard" *ngIf="type.code === 'CARD'">
+                          <i class="fa-regular fa-credit-card"></i>
+                        </span>
+                      </ng-template>
+                      {{ "payments." + type?.code | cxTranslate }}
+                      <span
+                        class="creditCard"
+                        *ngIf="
+                          type.code === 'CARD' && paymentTypeImages[type.code]
+                        "
+                      >
+                        <ng-container
+                          *ngFor="let image of paymentTypeImages[type.code]"
+                        >
+                          <img [src]="image" alt="" />
+                        </ng-container>
+                      </span>
+                    </div>
+                    <div
+                      class="text-warning my-1 mx-3"
+                      *ngIf="
+                        type.code === paymentTypeBank &&
+                        currencyIsocode === 'USD'
+                      "
+                    >
+                      <i class="fa-solid fa-exclamation"></i>
+                      {{ "payments.bankTransferDisclaimer" | cxTranslate }}
+                    </div>
+                  </label>
+                  <i class="fa-solid fa-chevron-right text-primary"></i>
+                </div>
+              </ng-container>
+              <ng-template #creditLimit>
+                <ng-container *ngIf="CreditLimitValue && !loader">
+                  <div class="form-check" *ngIf="cart$ | async as cart">
+                    <input
+                      class="form-check-input"
+                      role="checkbox"
+                      type="checkbox"
+                      [attr.aria-checked]="
+                        cart.isCreditLimitUsed
+                          ? cart.isCreditLimitUsed
+                          : type.code === typeSelected || false
+                      "
+                      [value]="CreditLimitValue"
+                      id="paymentType-{{ type.code }}-checkbox"
+                      [checked]="
+                        cart.isCreditLimitUsed
+                          ? cart.isCreditLimitUsed
+                          : type.code === typeSelected || false
+                      "
+                      [disabled]="+CreditLimitValue <= 0"
+                      (change)="changeType(type.code!, $event)"
+                      name="paymentType"
+                      formControlName="paymentType"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="paymentType-{{ type.code }}-checkbox"
+                    >
+                      <div class="payment__method">
+                        {{ "payments.creditLimit" | cxTranslate }}
+                      </div>
+                      <div *ngIf="CreditLimitValue">
+                        {{ "payments.availableCreditLimit" | cxTranslate }}
+                        {{
+                          CreditLimitValue
+                            | currency : currencyIsocode : "symbol" : "1.2-2"
+                        }}
+                      </div>
+                    </label>
+                    <i class="fa-solid fa-chevron-right text-primary"></i>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!CreditLimitValue && loader">
+                  <div class="loader__wraper">
+                    <span class="loader"></span>
+                  </div>
+                </ng-container>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #exceptionalCustomer>
+          <!-- Z2 Customer Start -->
+          <ng-container *ngFor="let type of paymentTypes">
+            <div *ngIf="type.code === 'CREDIT_LIMIT'">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  role="radio"
+                  type="radio"
+                  aria-checked="true"
+                  [value]="CreditLimitValue"
+                  id="paymentType-{{ type.code }}-radio-z2"
+                  [checked]="true"
+                  (change)="changeType(type.code, $event)"
+                  name="paymentType"
+                  formControlName="paymentType"
+                />
+                <label
+                  class="form-check-label"
+                  for="paymentType-{{ type.code }}-radio-z2"
+                >
+                  <div class="payment__method">
+                    {{ "payments.creditLimit" | cxTranslate }}
+                  </div>
+                </label>
+                <i class="fa-solid fa-chevron-right text-primary"></i>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="cx-spinner" *ngIf="!paymentTypesError">
+    <cx-spinner></cx-spinner>
+  </div>
+</ng-template>

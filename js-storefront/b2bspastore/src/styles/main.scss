@@ -1,0 +1,29 @@
+/* import base folder to reset default styles */
+//@import "./scss/base/reset";
+
+/* import utilites folder to reset default styles */
+@import "./scss/utilities/variables";
+@import "./scss/utilities/mixins";
+@import "./scss/utilities/fonts";
+
+/* import components folder to reset default styles */
+@import "./scss/components/header";
+@import "./scss/components/category-navigation";
+@import "./scss/components/footer-navigation";
+@import "./scss/components/navigation-ui";
+
+/* import pages folder to reset default styles */
+@import "./scss/pages/global";
+@import "./scss/pages/home-page";
+@import "./scss/pages/breadcrumb";
+@import "./scss/pages/content-page-1";
+@import "./scss/pages/login-page";
+@import "./scss/pages/account-page";
+@import "./scss/pages/category-page";
+@import "./scss/pages/plp";
+@import "./scss/pages/pdp";
+@import "./scss/pages/product-references";
+@import "./scss/pages/cart-page";
+@import "./scss/pages/checkout-page";
+@import "./scss/pages/order-confirmation-page";
+@import "./scss/pages/common-template";

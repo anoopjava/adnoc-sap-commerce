@@ -1,0 +1,18 @@
+## messageSource=classpath:/adnocservice/messages/email-adnocOrderCompletion_$lang.properties
+<html>
+  <body bgcolor="#ffffff">
+    <div class="content" style="font-family: Aptos Display, Arial, Helvetica, sans-serif; color:#414a4f;">
+      <p style="margin:0;">Dear ${ctx.firstName},</p>
+      <p style="margin:0;">&nbsp;</p>
+      <p style="margin:0;">${ctx.messages.orderCompleted}</p>
+      <p style="margin:0;">&nbsp;</p>
+      <p style="margin:0;"><strong>${ctx.messages.orderReferenceNumber}</strong> ${ctx.order.sapOrderCode}</p>
+      <p style="margin:0;">&nbsp;</p>
+      <p style="margin:0;">${ctx.messages.orderStatus}</p>
+      <p style="margin:0;">&nbsp;</p>
+      <p style="margin:0;">${ctx.messages.enquiry}</p>
+      <p style="margin:0;">&nbsp;</p>
+      <p style="margin:0;">${ctx.messages.thankYouMessage}</p>
+    </div>
+  </body>
+</html>

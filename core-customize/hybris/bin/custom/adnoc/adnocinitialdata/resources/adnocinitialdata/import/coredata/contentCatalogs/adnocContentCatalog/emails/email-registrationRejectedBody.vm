@@ -1,0 +1,21 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-registrationRejected_$lang.properties
+<!DOCTYPE html>
+<html lang="en">
+
+<body style="padding: 20px; background-color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #414a4f;">
+    <p>${ctx.messages.getMessage("email.rejection.salutation", ${ctx.title}, ${ctx.displayName})}</p>
+
+    <p>${ctx.messages.getMessage("email.rejection.intro")}</p>
+    <p>${ctx.messages.getMessage("email.rejection.reason", ${ctx.rejectReason})}</p>
+    <p>${ctx.messages.getMessage("email.rejection.support")}</p>
+    <p>${ctx.messages.getMessage("email.rejection.appreciation")}</p>
+
+    <p>${ctx.messages.getMessage("email.rejection.closing")}</p>
+    <p>${ctx.messages.getMessage("email.rejection.signature")}</p>
+    <p>${ctx.messages.getMessage("email.rejection.company")}</p>
+    <p><a href="${ctx.messages.getMessage("email.rejection.website")}">
+        ${ctx.messages.getMessage("email.rejection.website")}
+    </a></p>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+$contentCatalog = adnocContentCatalog
+$contentCatalogName = Adnoc Content Catalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Online])[default = $contentCatalog:Online]
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$productCV = catalogVersion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+$picture = media(code, $contentCV);
+$image = image(code, $contentCV);
+$media = media(code, $contentCV);
+$page = page(uid, $contentCV);
+$contentPage = contentPage(uid, $contentCV);
+$product = product(code, $productCV)
+$category = category(code, $productCV)
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/adnocContentCatalog
+$jarResourceCms = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/cockpits/cmscockpit
+$productResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/productCatalogs/adnocProductCatalog
+$addonExtensionName = b2bacceleratoraddon
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV);
+$siteUid = adnoc
+
+INSERT_UPDATE CMSUserGroupRestriction; $contentCV[unique = true]; uid[unique = true]                    ; name                                       ; userGroups(uid)  ; includeSubgroups; components(&linkRef)
+                                     ;                          ; MyAccountLinkItemsCustomerGroupRestriction ; My Account Link Items Customer Group Restriction ; b2bcustomergroup ; true            ; QuotesLink,SavedCartsLink
+
+
+# my-account dropdown for Quotes
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name        ; url                ; &linkRef   ; &componentRef; target(code)[default = 'sameWindow']; restrictions(uid, $contentCV)
+                              ;                          ; QuotesLink        ; Quotes Link ; /my-account/quotes ; QuotesLink ; QuotesLink   ;                                     ;
+
+
+# my-account dropdown for saved carts
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name             ; url                     ; &linkRef       ; &componentRef  ; target(code)[default = 'sameWindow']; restrictions(uid, $contentCV)
+                              ;                          ; SavedCartsLink    ; Saved Carts Link ; /my-account/saved-carts ; SavedCartsLink ; SavedCartsLink ;									  ;
+
+

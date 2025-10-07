@@ -1,0 +1,44 @@
+<form *ngIf="form$ | async as form" (keypress)="onKeyPress($event)" (submit)="save(form)">
+  <cx-org-card
+    #card
+    [previous]="false"
+    [i18nRoot]="i18n"
+    cxOrgItemActive
+    [subtitle]="subtitle"
+    [cxFocus]="{ autofocus: 'input', refreshFocus: form }"
+  >
+    <button
+      actions
+      class="button primary"
+      [ngClass]="{ createUser: isCreateRoute, editUser: !isCreateRoute }"
+      [disabled]="form.disabled || (disabled$ | async)"
+    >
+      {{ "organization.save" | cxTranslate }}
+    </button>
+    <button
+      actions
+      class="link"
+      [ngClass]="{
+        createUserCancel: isCreateRoute,
+        editUserCancel: !isCreateRoute
+      }"
+      routerLink="../"
+      type="button"
+    >
+      <!--
+        We leverage the soft-close feature from the split view, so that the animation
+        has time to kick in before the router outlet is deleted.
+       -->
+      <span (click)="back($event)">{{
+        "organization.cancel" | cxTranslate
+      }}</span>
+    </button>
+
+    <section main class="details">
+      <ng-content select="[main]" ngProjectAs="[main]"></ng-content>
+    </section>
+  </cx-org-card>
+</form>
+<div *ngIf="formSubmitted" class="spinnerDiv">
+  <cx-spinner class="overlay"></cx-spinner>
+</div>

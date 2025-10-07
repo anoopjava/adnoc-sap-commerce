@@ -1,0 +1,5 @@
+Release Notes - Patch Data Impexes
+
+Overview:
+---------
+This folder contains the delta impex files that are executed during the "System Update" process in SAP Commerce Cloud for each specific release.

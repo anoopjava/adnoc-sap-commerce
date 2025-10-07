@@ -1,0 +1,24 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$language = en
+
+REMOVE CMSFlexComponent; $contentCV[unique = true]; uid[unique = true]
+                       ;                          ; SupportTicketReopenComponent
+                       ;                          ; SupportTicketCloseComponent
+
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]                     ; name                                         ; active; cmsComponents(uid, $contentCV)
+                         ;                          ; BodyContentSlot-support-ticket-details ; Body Content Slot for support ticket details ; true  ; SupportTicketDetailsComponent ,SupportTicketUpdateComponent
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'AccountPageTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; MiniCart-AccountPage ; MiniCart               ;                                                                              ; MiniCartSlot                               ; true
+
+REMOVE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name      ; url  ; &linkRef ; &componentRef; target(code)[default = 'sameWindow']; restrictions(uid, $contentCV);
+                       ;                          ; HelpLink          ; Help Link ; /faq ; HelpLink ; HelpLink     ;                                     ;                              ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name           ; url; &linkRef      ; &componentRef ; target(code)[default = 'sameWindow']; restrictions(uid, $contentCV);
+                              ;                          ; CustomerGuide     ; Customer Guide ;    ; CustomerGuide ; CustomerGuide ;newWindow                                     ;                              ;
+
+UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; name                     ; active; cmsComponents(uid, $contentCV)                                              ;
+                         ;                          ; SiteLinksSlot     ; Slot contains some links ; true  ; OrdersLink,UnitLevelOrderLink,ContactUsLink,CustomerGuide,FindOurOfficeLink ;
+

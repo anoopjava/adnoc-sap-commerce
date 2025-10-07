@@ -1,0 +1,52 @@
+@import '../../../../styles/scss/utilities/variables';
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    text-align: center;
+    padding: 40px;
+    width: 600px;
+    max-width: 600px;
+
+    .siteLogo {
+      max-width: auto;
+    }
+
+    .success-icon {
+      img {
+        max-width: auto;
+      }
+      margin: 40px 0 40px 0;
+    }
+
+    .title {
+      font-family: var(--cx-font-family-bold);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--cx-color-primary);
+      margin-bottom: 15px;
+    }
+
+    .refNumber, .msg {
+      font-family: var(--cx-font-family-regular);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--cx-black);
+    }
+
+    .refNumber {
+      margin-bottom: 10px;;
+    }
+
+    .loginBtn {
+      font-family: var(--cx-font-family-medium);
+      font-size: 18px;
+      font-weight: 500;
+      max-width: 75%;
+      margin: 0 auto;
+    }
+  }
+}

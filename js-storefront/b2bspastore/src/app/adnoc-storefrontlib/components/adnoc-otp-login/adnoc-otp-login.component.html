@@ -1,0 +1,226 @@
+<cx-spinner class="overlay" *ngIf="busy$ | async"></cx-spinner>
+<div class="container loginContainer">
+  <div class="video-container">
+    <video #videoPlayer width="100%" height="100%" autoplay loop>
+      <source src="videos/pageVideo.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="form-container">
+    <div role="status" [attr.aria-label]="'common.loaded' | cxTranslate"></div>
+    <div class="logo-container">
+      <a href="/">
+        <img class="siteLogo" src="images/sitelogo.svg" />
+      </a>
+      <p class="title text-color-primary">
+        {{ "loginTranslation.AdnocWelcomeTitle" | cxTranslate }}
+        <span class="subTitle">{{
+          "loginTranslation.AdnocWelcomeSubTitle" | cxTranslate
+        }}</span>
+      </p>
+    </div>
+    <hr class="hr" />
+    <div class="mt-5">
+      <form
+        (ngSubmit)="onLoginSubmit()"
+        [formGroup]="loginForm"
+        class="otpLoginForm"
+        method="POST"
+        autocomplete="off"
+      >
+        <h1 class="mb-4">
+          <span class="signIn-title text-color-primary">{{
+            "loginTranslation.signIn" | cxTranslate
+          }}</span>
+          <br />
+          <small class="subtext"
+            >{{ "loginTranslation.alreadyAccountLabel" | cxTranslate }}
+            <span class="signUp-title text-color-primary"
+              ><a
+                class="btn-link"
+                [routerLink]="{ cxRoute: 'register' } | cxUrl"
+                >{{ "loginTranslation.goToSignUpButtonLabel" | cxTranslate }}</a
+              ></span
+            ></small
+          >
+        </h1>
+        <label>
+          <span class="label-content">
+            {{ "loginTranslation.emailAddress.label" | cxTranslate }}
+            <ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template>
+          </span>
+          <input
+            id="userId"
+            required="true"
+            type="email"
+            class="form-control"
+            formControlName="userId"
+            placeholder="{{
+              'loginTranslation.emailAddress.placeholder' | cxTranslate
+            }}"
+          />
+          <cx-form-errors
+            *cxFeature="'formErrorsDescriptiveMessages'"
+            [translationParams]="{
+              label: 'loginTranslation.emailAddress.label' | cxTranslate
+            }"
+            [control]="loginForm.get('userId')"
+            class="text-danger"
+          ></cx-form-errors>
+        </label>
+
+        <label>
+          <span class="label-content">
+            {{ "loginTranslation.password.label" | cxTranslate }}
+            <ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template>
+          </span>
+          <input
+            id="password"
+            required="true"
+            type="password"
+            class="form-control"
+            placeholder="{{
+              'loginTranslation.password.placeholder' | cxTranslate
+            }}"
+            formControlName="password"
+            [attr.aria-label]="
+              'loginTranslation.password.placeholder' | cxTranslate
+            "
+            cxPasswordVisibilitySwitch
+          />
+          <cx-form-errors
+            *cxFeature="'formErrorsDescriptiveMessages'"
+            [translationParams]="{
+              label: 'loginTranslation.password.label' | cxTranslate
+            }"
+            [control]="loginForm.get('password')"
+            class="text-danger"
+          ></cx-form-errors>
+        </label>
+        <div class="login-form-group mb-2 mt-3">
+          <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+          <label class="remember-link" for="rememberMe">{{
+            "loginTranslation.rememberLink" | cxTranslate
+          }}</label>
+          <a
+            [routerLink]="{ cxRoute: 'forgotPassword' } | cxUrl"
+            class="btn-link forgotPasswordlabel"
+          >
+            {{ "loginTranslation.forgotPassword" | cxTranslate }}
+          </a>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-block btn-primary loginBtn mb-4"
+          [disabled]="loginForm.invalid"
+          *ngIf="!disableButton"
+        >
+          {{ "loginTranslation.signIn" | cxTranslate }}
+        </button>
+      </form>
+
+      <ng-template #requiredAsterisk>
+        <abbr
+          *cxFeature="'a11yRequiredAsterisks'"
+          class="text-decoration-none"
+          title="{{ 'common.required' | cxTranslate }}"
+          >*</abbr
+        >
+      </ng-template>
+
+      <!--Form to enter OTP after user enter credentials -->
+      <form
+        (ngSubmit)="onOTPSubmit()"
+        [formGroup]="OTP_form"
+        *ngIf="disableButton"
+      >
+        <label>
+          <span class="label-content">
+            {{
+              "loginTranslation.verificationTokenForm.verificationCode.label"
+                | cxTranslate
+            }}
+          </span>
+          <div class="otp-container">
+            <ng-container *ngFor="let control of otpControls; let i = index">
+              <input
+                [id]="control"
+                [formControlName]="control"
+                class="otp-input"
+                [ngClass]="{ 'otp-input-filled': isControlFilled(control) }"
+                (keyup)="onKeyUp($event, control)"
+                maxlength="1"
+              />
+            </ng-container>
+          </div>
+        </label>
+        <span id="tokenInputHint" class="cx-visually-hidden">
+          {{
+            "loginTranslation.verificationTokenForm.tokenInputHint"
+              | cxTranslate
+          }}
+        </span>
+
+        <div class="resend-link-text">
+          <div class="left-text">
+            <span role="timer" aria-live="polite" aria-atomic="true">
+              <a
+                role="button"
+                tabindex="-1"
+                #resendLink
+                (keydown.enter)="resendOTP()"
+                (keydown.space)="resendOTP()"
+                (click)="resendOTP()"
+                class="btn-link"
+                [ngClass]="{ 'disabled-link': isResendDisabled }"
+              >
+                {{
+                  "loginTranslation.verificationTokenForm.resend" | cxTranslate
+                }}
+              </a>
+              <ng-container *ngIf="isResendDisabled">
+                {{
+                  "loginTranslation.verificationTokenForm.sendRateLime"
+                    | cxTranslate : { waitTime: waitTime }
+                }}
+              </ng-container>
+            </span>
+          </div>
+          <div class="right-text">
+            <a
+              role="button"
+              tabindex="0"
+              #noReceiveCodeLink
+              (keydown)="onOpenInfoDailogKeyDown($event)"
+              (click)="openInfoDailog()"
+              class="btn-link"
+            >
+              {{
+                "loginTranslation.verificationTokenForm.noReceiveCode"
+                  | cxTranslate
+              }}
+            </a>
+          </div>
+        </div>
+
+        <div class="verify-container">
+          <button
+            type="submit"
+            class="btn btn-block btn-primary"
+            [disabled]="OTP_form.invalid"
+          >
+            {{ "loginTranslation.verificationTokenForm.verify" | cxTranslate }}
+          </button>
+          <button
+            (click)="clearForm()"
+            class="btn btn-block btn-secondary btn-back"
+          >
+            {{ "loginTranslation.verificationTokenForm.back" | cxTranslate }}
+          </button>
+        </div>
+      </form>
+      <a [routerLink]="['/contact']" class="btn-link contactUsLabel">
+        {{ "loginTranslation.contactUs" | cxTranslate }}
+      </a>
+    </div>
+  </div>
+</div>

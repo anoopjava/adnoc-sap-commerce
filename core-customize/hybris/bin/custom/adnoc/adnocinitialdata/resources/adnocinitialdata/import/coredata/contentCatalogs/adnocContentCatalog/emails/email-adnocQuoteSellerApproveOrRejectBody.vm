@@ -1,0 +1,31 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocQuoteSellerApproveOrReject_$lang.properties
+
+<!DOCTYPE html>
+<html>
+     <body>
+         <div class="content">
+                 <p>Dear ${ctx.title} ${ctx.displayName},</p>
+                <p>
+                        #set($quoteState = $ctx.quote.state.code)
+                    #if ($quoteState == "BUYER_OFFER")
+                        ${ctx.messages.quoteApprove}
+                    #elseif ($quoteState == "SELLERAPPROVER_REJECTED")
+                        ${ctx.messages.quoteReject}
+                    #end
+                </p>
+                <p><strong>Quote ID: ${ctx.quote.code}</strong></p>
+                     #if ($ctx.quote.sellerComment && !$ctx.quote.sellerComment.trim().isEmpty())
+                         <p><strong>Comments: ${ctx.quote.sellerComment}</strong></p>
+                     #end
+             <p>${ctx.messages.adnocQuoteStatus}&nbsp;<a href="${ctx.frontendUrl}" style="color:#0468b3;"><span>${ctx.messages.link}</span></a></p>
+                 <p>${ctx.messages.getMessage('customerEnquiry', ${ctx.messages.contactUsEmailAddress})}</p>
+                 <p>${ctx.messages.thankYouParagraph}</p>
+         </div>
+         <div class="footer">
+             <p>${ctx.messages.complimentaryClosing}</p>
+             <p>${ctx.messages.salesGroup}</p>
+             <p>${ctx.messages.adnoc}</p>
+             <p>${ctx.messages.website}</p>
+         </div>
+      </body>
+</html>

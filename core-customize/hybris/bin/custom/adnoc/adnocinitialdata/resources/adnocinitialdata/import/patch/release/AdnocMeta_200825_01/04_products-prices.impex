@@ -1,0 +1,60 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Adnoc Store Prices
+#% impex.setLocale( Locale.GERMAN );
+
+$productCatalog = adnocProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+$prices = Europe1prices[translator = de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$taxGroup = Europe1PriceFactory_PTG(code)[default = ae-sales-tax-full]
+
+# Set product approval status to Approved only for those products that have prices.
+$approved = approvalstatus(code)[default = 'approved']
+$aecurrencies = AED
+$uscurrencies = USD
+
+INSERT_UPDATE PriceRow; productId[unique = true]; unit(code)[unique = true]; currency(isocode)[unique = true]; price; minqtd; unitFactor; net
+#LPG
+                      ; 120009022753            ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 120009022754            ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000434            ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000577            ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000578            ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 42                      ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 43                      ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 44                      ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 733                     ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 787                     ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 842                     ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 843                     ; EA                       ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 120009022753            ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 120009022754            ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000434            ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000577            ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 200009000578            ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 42                      ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 43                      ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 44                      ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 733                     ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 787                     ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 842                     ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 843                     ; EA                       ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+
+#Fuel
+                      ; 13                      ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 21                      ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 26                      ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 14                      ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 15                      ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 999                     ; L                        ; $aecurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 13                      ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 14                      ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 15                      ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 21                      ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 26                      ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+                      ; 999                     ; L                        ; $uscurrencies                             ; 999  ; 1     ; 1         ; false
+
+
+
+

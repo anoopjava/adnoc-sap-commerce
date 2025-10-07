@@ -1,0 +1,16 @@
+{
+  "shared": {
+    "dateRange": {
+      "title": "Select a date range",
+      "startdate": "Start Date",
+      "enddate": "End Date"
+    },
+    "error": {
+      "400error": "Invalid request. Please check your input values and try again.",
+      "404error": "Something went wrong, Please try again later",
+      "500error": "Server error. Please try again later.",
+      "503error": "Service is unavailable. Please try again after some time.",
+      "messageToFailedToRegister": "Failed to register. Please contact your admin for further assistance."
+    }
+  }
+}

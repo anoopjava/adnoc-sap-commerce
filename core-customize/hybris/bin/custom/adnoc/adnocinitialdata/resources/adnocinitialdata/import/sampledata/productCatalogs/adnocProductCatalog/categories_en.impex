@@ -1,0 +1,170 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Categories into Adnoc Store
+
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+$lang = en
+
+
+UPDATE Category; $catalogVersion; code[unique = true]             ; name[lang = $lang]            ; description[lang = $lang]
+               ;                ; openCatalog                     ; Open Catalogue                ;
+
+               ;                ; fuel                            ; Fuel                          ;
+               ;                ; gasoline                        ; Gasoline                      ;
+               ;                ; aviation                        ; Aviation                      ;
+
+               ;                ; lpg                             ; LPG                           ;
+               ;                ; lpgForBusiness                  ; LPG for Business              ;
+
+               ;                ; lubricants                      ; Lubricants                    ;
+               ;                ; automotive                      ; Automotive                    ;
+
+               ;                ; carcare                         ; CarCare                       ;
+               ;                ; c-store                         ; C-Store                       ;
+               ;                ; baseOil                         ; BaseOil                       ;
+               ;                ; baseOil_group_1                 ; BaseOil_group_1               ;
+               ;                ; baseOil_group_2                 ; BaseOil_group_2               ;
+               ;                ; baseOil_group_3                 ; BaseOil_group_3               ;
+               ;                ; lube_additives                  ; Lube_additives                ;
+               ;                ; bulk_group_2                    ; Bulk_group_2                  ;
+               ;                ; bulk_group_3                    ; Bulk_group_3                  ;
+               ;
+               ;                ; grease                          ; Grease                        ;
+               ;                ; automotive_grease               ; Automotive_grease             ;
+               ;                ; grease_ep_0                     ; Grease_ep_0                   ;
+               ;                ; grease_ep_1                     ; Grease_ep_1                   ;
+               ;                ; grease_ep_s3                    ; Grease_ep_s3                  ;
+               ;                ; grease_mp_3                     ; Grease_mp_3                   ;
+               ;                ; grease_s2                       ; Grease_s2                     ;
+               ;                ; grease_s3                       ; Grease_s3                     ;
+               ;                ; mp_grease_moly                  ; Mp_grease_moly                ;
+               ;
+               ;                ; industrial_grease               ; Industrial_grease             ;
+               ;                ; adnoc_grease_htb                ; Adnoc_grease_htb              ;
+               ;
+               ;                ; lube                            ; Lube                          ;
+               ;
+               ;                ; others                          ; Others                        ;
+               ;                ; specialities                    ; Specialities                  ;
+               ;
+               ;                ; speciality                      ; Speciality                    ;
+               ;                ; lube_additives                  ; Lube_additives
+               ;                ; refrigerationOil                ; RefrigerationOil              ;
+               ;                ; lube_specialities               ; Lube_specialities             ;
+               ;                ; drums                           ; Drums                         ;
+               ;                ; lube_additives_non_blendables   ; Lube_additives_non_blendables ;
+               ;                ; refrigerationOil_non_blendables ; RefrigerationOil_non_blendabl ;
+               ;                ; non_food_grocery                ; Non_food_grocery              ;
+               ;                ; ny_frost                        ; Ny_frost                      ;
+               ;
+               ;                ; nonFuel                         ; NonFuel                       ;
+               ;                ; nonFuel_lube                    ; NonFuel_lube                  ;
+               ;                ; nonFuel_lube_accessories        ; NonFuel_lube_accessories      ;
+               ;
+               ;
+               ;                ; nonFuel_lube_raw_materials      ; NonFuel_lube_raw_materials    ;
+               ;                ; nonFuel_empty_drums             ; NonFuel_empty_drums           ;
+               ;
+               ;                ; nonFuel_lube_additivies         ; NonFuel_lube_additivies       ;
+               ;
+               ;                ; nonFuel_non_lubricants          ; NonFuel_non_lubricants        ;
+               ;                ; nonFuel_empty_ctns              ; NonFuel_empty_ctns            ;
+               ;                ; nonFuel_empty_cans              ; NonFuel_empty_cans            ;
+               ;                ; nonFuel_empty_drums             ; NonFuel_empty_drums           ;
+               ;                ; nonFuel_lube_consumables        ; NonFuel_lube_consumables      ;
+               ;
+               ;                ; nonFuel_specialities            ; NonFuel_specialities          ;
+               ;
+               ;                ; gasOil                          ; GasOil                        ;
+               ;                ; aviationFuel                    ; AviationFuel                  ;
+               ;                ; ULG_95                          ; ULG_95                        ;
+               ;                ; ULG_91_E_PLUS                   ; ULG_91_E_PLUS                 ;
+               ;                ; kerosene                        ; kerosene                      ;
+               ;                ; ULG_98                          ; ULG_98                        ;
+               ;                ; biodiesel_B5                    ; Biodiesel_B5                  ;
+               ;
+               ;                ; gasolineEngineOil               ; GasolineEngineOil             ;
+               ;                ; dieselEngineOil                 ; DieselEngineOil               ;
+               ;                ; transmissionOil                 ; TransmissionOil               ;
+               ;                ; automotiveGearOil               ; AutomotiveGearOil             ;
+               ;                ; naturalGasEngineOil             ; NaturalGasEngineOil           ;
+               ;                ; tractorOil                      ; TractorOil                    ;
+               ;                ; automotiveCoolant               ; AutomotiveCoolant             ;
+               ;                ; brakeFluids                     ; BrakeFluids                   ;
+               ;                ; threeWheelerOil                 ; ThreeWheelerOil               ;
+               ;                ; flushingOil                     ; FlushingOil                   ;
+               ;                ; 2TOil                           ; 2TOil                         ;
+               ;                ; motorcycleOil                   ; MotorcycleOil                 ;
+               ;                ; scooterOil                      ; ScooterOil                    ;
+               ;                ; automotiveGreases               ; AutomotiveGreases             ;
+               ;
+               ;                ; industrial                      ; Industrial                    ;
+               ;                ; hydraulicOil                    ; HydraulicOil                  ;
+               ;                ; industrialGearOil               ; IndustrialGearOil             ;
+               ;                ; turbineOil                      ; TurbineOil                    ;
+               ;                ; compressorOil                   ; CompressorOil                 ;
+               ;                ; refrigerationCompressorOil      ; RefrigerationCompressorOil    ;
+               ;                ; transforrmerOil                 ; TransforrmerOil               ;
+               ;                ; metalWorkingFluidsOil           ; MetalWorkingFluidsOil         ;
+               ;                ; heatTransferOil                 ; HeatTransferOil               ;
+               ;                ; railroadEngineOil               ; RailroadEngineOil             ;
+               ;                ; circulatingOil                  ; CirculatingOil                ;
+               ;                ; generalPurposeOil               ; GeneralPurposeOil             ;
+               ;                ; spindleOil                      ; SpindleOil                    ;
+               ;                ; rockDrillingOil                 ; RockDrillingOil               ;
+               ;                ; slidewayOil                     ; SlidewayOil                   ;
+               ;                ; industrialGreases               ; IndustrialGreases             ;
+               ;
+               ;                ; marine                          ; Marine                        ;
+               ;                ; trunkPistonEngineOil            ; TrunkPistonEngineOil          ;
+               ;                ; marineCylinderOil               ; MarineCylinderOil             ;
+               ;                ; sternTubeOil                    ; SternTubeOil                  ;
+               ;                ; sternSystemOil                  ; SternSystemOil                ;
+               ;                ; outboardEngineOil               ; OutboardEngineOil             ;
+               ;
+               ;                ; specialized                     ; Specialized                   ;
+               ;                ; mouldingOil                     ; MouldingOil                   ;
+               ;                ; degreaser                       ; Degreaser                     ;
+               ;                ; viscosityModifier               ; ViscosityModifier             ;
+               ;                ; dieselExhaustFluid              ; DieselExhaustFluid            ;
+               ;                ; refinerySpeciality              ; RefinerySpeciality            ;
+               ;                ; whiteOil                        ; WhiteOil                      ;
+               ;                ; petroleumJelly                  ; PetroleumJelly                ;
+               ;
+               ;                ; lpg_bulk                        ; Lpg_bulk                      ;
+               ;                ; bulk_lpg                        ; Bulk_lpg                      ;
+               ;                ; bulk_propane                    ; Bulk_propane                  ;
+               ;                ; bulk_butane                     ; Bulk_butane                   ;
+               ;
+               ;                ; lpg_cylinder                    ; Lpg_cylinder                  ;
+               ;                ; lpg_cylinder_filled             ; Lpg_cylinder_filled           ;
+               ;                ; lpg_cylinder_empty              ; Lpg_cylinder_empty            ;
+               ;                ; lpg_100Lbs                      ; Lpg_100Lbs                    ;
+               ;                ; lpg_50Lbs                       ; Lpg_50Lbs                     ;
+               ;                ; lpg_25Lbs                       ; Lpg_25Lbs                     ;
+               ;
+               ;                ; lpg_accessories                 ; Lpg_accessories               ;
+               ;
+               ;                ; 25Lbs                           ; 25Lbs                         ;
+               ;                ; 50Lbs                           ; 50Lbs                         ;
+# Changes for LPG and Fuel
+               ;                ; A02                             ; Non-Fuel                      ;
+               ;                ; B01                             ; Gasoline                      ;
+               ;                ; B02                             ; Gas Oil                       ;
+               ;                ; B03                             ; Other Petroleum Products      ;
+               ;                ; B04                             ; LPG - Bulk                    ;
+               ;                ; B05                             ; LPG - Cylinders               ;
+               ;                ; B06                             ; LPG - Accessories             ;
+               ;                ; C01                             ; ULG                           ;
+               ;                ; C02                             ; Gas Oil                       ;
+               ;                ; C03                             ; Other Petroleum Products      ;
+               ;                ; C04                             ; LPG - Bulk                    ;
+               ;                ; C05                             ; LPG - Cylinders - Filled      ;
+               ;                ; C06                             ; LPG - Cylinders - Empty       ;
+               ;                ; C07                             ; LPG - Accessories             ;

@@ -1,0 +1,53 @@
+<ng-container *ngIf="product$ | async as product">
+  <div class="rating" *ngIf="product?.averageRating">
+    <cx-star-rating [rating]="product?.averageRating ?? 0"></cx-star-rating>
+
+    <div class="count">({{ product?.numberOfReviews }})</div>
+
+    <ng-container *cxFeature="'a11yLinkBtnsToTertiaryBtns'">
+      <button
+        *ngIf="areReviewsAvailable$ | async"
+        class="btn btn-tertiary"
+        (click)="showReviews()"
+        [attr.aria-label]="
+          'productSummary.showReviewsDetailed'
+            | cxTranslate
+              : {
+                  rating: product?.averageRating | number : '1.0-1',
+                  count: product?.numberOfReviews
+                }
+        "
+      >
+        {{ "productSummary.showReviews" | cxTranslate }}
+      </button>
+    </ng-container>
+    <ng-container *cxFeature="'!a11yLinkBtnsToTertiaryBtns'">
+      <button
+        *ngIf="areReviewsAvailable$ | async"
+        class="btn btn-link cx-action-link"
+        (click)="showReviews()"
+        [attr.aria-label]="
+          'productSummary.showReviewsDetailed'
+            | cxTranslate
+              : {
+                  rating: product?.averageRating | number : '1.0-1',
+                  count: product?.numberOfReviews
+                }
+        "
+      >
+        {{ "productSummary.showReviews" | cxTranslate }}
+      </button>
+    </ng-container>
+  </div>
+  <div class="rating" *ngIf="!product?.averageRating">
+    {{ "productDetails.noReviews" | cxTranslate }}
+  </div>
+  <div class="code">
+    {{ "productSummary.id" | cxTranslate }} <!--{{product?.categories?.[0]?.code}} --> :
+    {{ product?.code }}
+  </div>
+  <div class="name">
+    {{ product?.name }}
+  </div>
+  <!-- <div class="sku">{{ product?.code }}</div> -->
+</ng-container>

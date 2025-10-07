@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+    <enum class="de.hybris.platform.customerticketingfacades.data.TicketCategory">
+        <value>Compliment</value>
+        <value>Suggestion</value>
+    </enum>
+
+    <enum class="com.adnoc.facades.company.data.PartnerFunction">
+        <value>SP</value>
+        <value>PY</value>
+        <value>SH</value>
+    </enum>
+
+    <enum class="com.adnoc.facades.creditsimulation.data.ECheckConfirmation">
+        <value>T</value>
+        <value>F</value>
+    </enum>
+
+    <enum class="com.adnoc.facades.creditsimulation.data.MessageType">
+        <value>S</value>
+        <value>E</value>
+    </enum>
+
+    <bean class="com.adnoc.facades.b2b.data.AdnocRegistrationData"
+          extends="de.hybris.platform.b2bcommercefacades.data.B2BRegistrationData">
+        <property name="firstName" type="String"/>
+        <property name="lastName" type="String"/>
+        <property name="gender" type="String"/>
+        <property name="designation" type="String"/>
+        <property name="nationality" type="String"/>
+        <property name="identityType" type="String"/>
+        <property name="identificationNumber" type="String"/>
+        <property name="identificationNumberDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="identificationValidFrom" type="java.util.Date"/>
+        <property name="identificationValidTo" type="java.util.Date"/>
+        <property name="mobileNumber" type="String"/>
+        <property name="faxNumber" type="String"/>
+        <property name="partnerFunction" type="com.adnoc.facades.company.data.PartnerFunction"/>
+        <property name="otherDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="countryOfOrigin" type="String"/>
+        <property name="poBox" type="String"/>
+        <property name="companyName2" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.b2b.data.AdnocB2BRegistrationData"
+          extends="com.adnoc.facades.b2b.data.AdnocRegistrationData">
+        <property name="primaryProduct" type="String"/>
+        <property name="companyEmail" type="String"/>
+        <property name="companyWebsite" type="String"/>
+        <property name="companyPhoneNumber" type="String"/>
+        <property name="companyMobileNumber" type="String"/>
+        <property name="tradeLicenseAuthority" type="String"/>
+        <property name="tradeLicenseNumber" type="String"/>
+        <property name="tlnDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="tlnValidFrom" type="java.util.Date"/>
+        <property name="tlnValidTo" type="java.util.Date"/>
+        <property name="vatId" type="String"/>
+        <property name="vatIdDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="preferredCommunicationChannel" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.b2b.unit.data.AdnocB2BUnitRegistrationData"
+          extends="com.adnoc.facades.b2b.data.AdnocRegistrationData">
+        <property name="defaultB2BUnit" type="String"/>
+        <property name="incoTerms" type="String"/>
+        <property name="latitude" type="String"/>
+        <property name="longitude" type="String"/>
+        <property name="vatId" type="String"/>
+        <property name="vatIdDocument" type="org.springframework.web.multipart.MultipartFile"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.PrimaryProductData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.validation.FieldValidationData">
+        <property name="minLength" type="Integer"/>
+        <property name="maxLength" type="Integer"/>
+        <property name="pattern" type="String"/>
+        <property name="mandatory" type="Boolean"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.PreferredCommunicationChannelData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.product.data.GenderData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.NationalityData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.IdentityTypeData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.AdnocDesignationData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.user.data.AdnocTradeLicenseAuthorityData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ordermanagement.data.ReturnReasonData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.user.data.CustomerData"
+          extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+        <property name="preferredCommunicationChannel" type="String"/>
+        <property name="gender" type="String"/>
+        <property name="nationality" type="String"/>
+        <property name="identityType" type="String"/>
+        <property name="identificationNumber" type="String"/>
+        <property name="identificationValidFrom" type="java.util.Date"/>
+        <property name="identificationValidTo" type="java.util.Date"/>
+        <property name="designation" type="String"/>
+        <property name="mobileNumber" type="String"/>
+        <property name="telephone" type="String"/>
+        <property name="lastlogin" type="java.util.Date"/>
+        <property name="userRole" type="String"/>
+        <property name="companyAddressStreet" type="String"/>
+        <property name="companyAddressStreetLine2" type="String"/>
+        <property name="companyAddressCountryIso" type="String"/>
+        <property name="companyAddressCity" type="String"/>
+        <property name="companyAddressRegion" type="String"/>
+        <property name="identificationNumberDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="countryOfOrigin" type="String"/>
+        <property name="sapBusinessPartnerID" type="String"/>
+        <property name="status" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commerceservices.service.data.CommerceCartParameter">
+        <property name="division" type="String">
+            <description>division</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+        <property name="division" type="String"/>
+        <property name="unit" type="com.adnoc.facade.product.data.UnitData"/>
+        <property name="minOrderQuantity" type="Integer"/>
+        <property name="maxOrderQuantity" type="Integer"/>
+        <property name="documentMediaCode" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+        <property name="division" type="String"/>
+        <property name="deliveryAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+        <property name="namedDeliveryDate" type="java.util.Date"/>
+        <property name="entryCode" type="Integer"/>
+        <property name="isCancellable" type="Boolean"/>
+        <property name="unit" type="com.adnoc.facade.product.data.UnitData"/>
+        <property name="incoTerms" type="com.adnoc.facades.company.data.IncoTermsData"/>
+        <property name="sapLineItemStatus" type="String"/>
+        <property name="discounts" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.PriceData>"/>
+        <property name="tax" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+    </bean>
+
+    <bean class="com.adnoc.facade.product.data.UnitData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.config.data.AdnocConfigData">
+        <property name="configKey" type="String"/>
+        <property name="configValue" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ticket.data.CsTicketCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ticket.data.CsTicketRequestForCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ticket.data.CsTicketRequestForSubCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ticket.data.AdnocCsTicketCategoryMapData">
+        <property name="csTicketCategoryMapId" type="String"/>
+        <property name="requestType" type="com.adnoc.facades.ticket.data.CsTicketCategoryData"/>
+        <property name="requestFor" type="com.adnoc.facades.ticket.data.CsTicketRequestForCategoryData"/>
+        <property name="subCategory" type="com.adnoc.facades.ticket.data.CsTicketRequestForSubCategoryData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.customerticketingfacades.data.TicketData">
+        <property name="csTicketCategoryMapId" type="String"/>
+        <property name="crmCaseId" type="String"/>
+        <property name="requestFor" type="com.adnoc.facades.ticket.data.CsTicketRequestForCategoryData"/>
+        <property name="subCategory" type="com.adnoc.facades.ticket.data.CsTicketRequestForSubCategoryData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.ticketsystem.data.CsTicketParameter">
+        <property name="csTicketCategoryMapId" type="String"/>
+        <property name="requestFor" type="com.adnoc.service.enums.CsTicketRequestForCategory"/>
+        <property name="subCategory" type="com.adnoc.service.enums.CsTicketRequestForSubCategory"/>
+        <property name="associated" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.b2bcommercefacades.company.data.B2BUnitData">
+        <property name="partnerFunction" type="com.adnoc.facades.company.data.PartnerFunction"/>
+        <property name="salesOrg" type="com.adnoc.facades.company.data.SAPSalesOrganizationData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.data.SAPSalesOrganizationData">
+        <property name="salesOrgId" type="String"/>
+        <property name="salesOrganization" type="String"/>
+        <property name="distributionChannel" type="String"/>
+        <property name="division" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.data.DeliveryTypeData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.data.IncoTermsData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.data.ShippingConditionData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.sapcpiadapter.data.SapCpiOrderCancellationItem">
+        <property name="quantity" type="String"/>
+        <property name="sapOrderCode" type="String"/>
+        <property name="productName" type="String"/>
+        <property name="rejectionReason" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.sapcpiadapter.data.SapCpiOrderCancellation">
+        <property name="sapOrderCode" type="String"/>
+        <property name="salesOrg" type="com.adnoc.facades.company.data.SAPSalesOrganizationData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.sapcpiadapter.data.SapCpiOrder">
+        <property name="plantCode" type="String"/>
+        <property name="paymentInfo" type="String"/>
+        <property name="deliveryType" type="String"/>
+        <property name="incoTerms" type="String"/>
+        <property name="poDocument" type="com.adnoc.facades.data.AdnocOutboundDocumentData"/>
+        <property name="utrnNumber" type="String"/>
+        <property name="mop" type="String"/>
+        <property name="quotation" type="String"/>
+        <property name="mopType1" type="String"/>
+        <property name="rrnCode1" type="String"/>
+        <property name="authCode1" type="String"/>
+        <property name="amount1" type="Double"/>
+        <property name="mopType2" type="String"/>
+        <property name="amount2" type="Double"/>
+        <property name="totalAmount" type="double"/>
+        <property name="cardNumber" type="String"/>
+        <property name="cardType" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.data.AdnocOutboundDocumentData">
+        <property name="supportedDocumentType" type="String"/>
+        <property name="documentBase64" type="String"/>
+        <property name="documentName" type="String"/>
+        <property name="documentType" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.order.data.OrderHistoryData">
+        <property name="category" type="de.hybris.platform.commercefacades.product.data.CategoryData"/>
+        <property name="deliveryAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.user.data.AddressData">
+        <property name="sapCustomerID" type="String"/>
+    </bean>
+
+    <!-- ADNOC Payment Start -->
+    <bean class="de.hybris.platform.commercefacades.order.data.OrderData">
+        <property name="deliveryType" type="com.adnoc.facades.company.data.DeliveryTypeData"/>
+        <property name="shippingCondition" type="com.adnoc.facades.company.data.ShippingConditionData"/>
+        <property name="sapOrderCode" type="String"/>
+        <property name="sapErrorMessage" type="String"/>
+        <property name="paymentTransactions"
+                  type="java.util.List&lt;de.hybris.platform.ordermanagementfacades.payment.data.PaymentTransactionData>"/>
+    </bean>
+
+    <bean class="de.hybris.platform.ordermanagementfacades.payment.data.PaymentTransactionData">
+        <property name="rrnNumber" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.data.AdnocPaymentInitiateRequestData">
+        <property name="payerId" type="String"/>
+        <property name="paymentType" type="String"/>
+        <property name="paymentAmount" type="double"/>
+        <property name="currency" type="String"/>
+        <property name="returnUrl" type="String"/>
+        <property name="cancelUrl" type="String"/>
+        <property name="description" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.data.AdnocPaymentInitiateResponseData">
+        <property name="utrn" type="String"/>
+    </bean>
+
+    <!-- ADNOC Card Payment Start -->
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentCardInitiateCheckoutRequestData">
+        <property name="apiOperation" type="String"/>
+        <property name="interaction" type="com.adnoc.facades.payment.card.data.AdnocPaymentInteractionData"/>
+        <property name="order" type="com.adnoc.facades.payment.card.data.AdnocPaymentOrderData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentInteractionData">
+        <property name="operation" type="String"/>
+        <property name="merchant" type="com.adnoc.facades.payment.card.data.AdnocPaymentMerchantData"/>
+        <property name="displayControl" type="com.adnoc.facades.payment.card.data.AdnocPaymentDisplayControlData"/>
+        <property name="returnUrl" type="String"/>
+        <property name="cancelUrl" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentMerchantData">
+        <property name="name" type="String"/>
+        <property name="url" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentDisplayControlData">
+        <property name="billingAddress" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentOrderData">
+        <property name="currency" type="String"/>
+        <property name="amount" type="java.math.BigDecimal"/>
+        <property name="id" type="String"/>
+        <property name="description" type="String"/>
+        <property name="itemAmount" type="Double"/>
+        <property name="taxAmount" type="Double"/>
+        <property name="shippingAndHandlingAmount" type="Double"/>
+        <property name="discount" type="com.adnoc.facades.payment.data.AdnocPaymentDiscountAmountData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentCardInitiateRequestData"
+          extends="com.adnoc.facades.payment.data.AdnocPaymentInitiateRequestData">
+        <property name="itemAmount" type="Double"/>
+        <property name="taxAmount" type="Double"/>
+        <property name="shippingAndHandlingAmount" type="Double"/>
+        <property name="discount" type="com.adnoc.facades.payment.data.AdnocPaymentDiscountAmountData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.data.AdnocPaymentDiscountAmountData">
+        <property name="amount" type="Double"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentCardInitiateCheckoutResponseData"
+          extends="com.adnoc.facades.payment.data.AdnocPaymentInitiateResponseData">
+        <property name="checkoutMode" type="String"/>
+        <property name="merchant" type="String"/>
+        <property name="result" type="String"/>
+        <property name="session" type="com.adnoc.facades.payment.card.data.AdnocPaymentSessionData"/>
+        <property name="successIndicator" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentSessionData">
+        <property name="id" type="String"/>
+        <property name="updateStatus" type="String"/>
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocPaymentResponseData">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="threeDsAcsEci" type="String">
+            <annotations>@JsonProperty("3dsAcsEci")</annotations>
+        </property>
+        <property name="amount" type="Double"/>
+        <property name="authentication" type="com.adnoc.facades.payment.card.data.AdnocAuthenticationData"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="authenticationVersion" type="String"/>
+        <property name="chargeback" type="com.adnoc.facades.payment.card.data.AdnocChargebackData"/>
+        <property name="creationTime" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="description" type="String"/>
+        <property name="device" type="com.adnoc.facades.payment.card.data.AdnocDeviceData"/>
+        <property name="id" type="String"/>
+        <property name="lastUpdatedTime" type="String"/>
+        <property name="merchant" type="String"/>
+        <property name="merchantAmount" type="Double"/>
+        <property name="merchantCategoryCode" type="String"/>
+        <property name="merchantCurrency" type="String"/>
+        <property name="result" type="String"/>
+        <property name="sourceOfFunds" type="com.adnoc.facades.payment.card.data.AdnocSourceOfFundsData"/>
+        <property name="status" type="String"/>
+        <property name="totalAuthorizedAmount" type="Double"/>
+        <property name="totalCapturedAmount" type="Double"/>
+        <property name="totalDisbursedAmount" type="Double"/>
+        <property name="totalRefundedAmount" type="Double"/>
+        <property name="transaction"
+                  type="java.util.List&lt;com.adnoc.facades.payment.card.data.AdnocTransactionData>"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocAuthenticationData">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="threeDs" type="com.adnoc.facades.payment.card.data.AdnocThreeDSData">
+            <annotations>@JsonProperty("3ds")</annotations>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocProvidedData">
+        <property name="card" type="com.adnoc.facades.payment.card.data.AdnocCardData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocCardData">
+        <property name="brand" type="String"/>
+        <property name="expiry" type="com.adnoc.facades.payment.card.data.AdnocExpiryData"/>
+        <property name="fundingMethod" type="String"/>
+        <property name="nameOnCard" type="String"/>
+        <property name="number" type="String"/>
+        <property name="scheme" type="String"/>
+        <property name="storedOnFile" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocExpiryData">
+        <property name="month" type="String"/>
+        <property name="year" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocTransactionData">
+        <property name="authentication" type="com.adnoc.facades.payment.card.data.AdnocTransactionAuthenticationData"/>
+        <property name="device" type="com.adnoc.facades.payment.card.data.AdnocDeviceData"/>
+        <property name="merchant" type="String"/>
+        <property name="order" type="com.adnoc.facades.payment.card.data.AdnocOrderData"/>
+        <property name="response" type="com.adnoc.facades.payment.card.data.AdnocResponseData"/>
+        <property name="result" type="String"/>
+        <property name="sourceOfFunds" type="com.adnoc.facades.payment.card.data.AdnocSourceOfFundsData"/>
+        <property name="timeOfLastUpdate" type="String"/>
+        <property name="timeOfRecord" type="String"/>
+        <property name="transaction" type="com.adnoc.facades.payment.card.data.AdnocTransactionDetailsData"/>
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocTransactionAuthenticationData">
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocOrderData">
+        <property name="amount" type="Double"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="chargeback" type="com.adnoc.facades.payment.card.data.AdnocChargebackData"/>
+        <property name="creationTime" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="description" type="String"/>
+        <property name="id" type="String"/>
+        <property name="lastUpdatedTime" type="String"/>
+        <property name="merchantAmount" type="Double"/>
+        <property name="merchantCategoryCode" type="String"/>
+        <property name="merchantCurrency" type="String"/>
+        <property name="status" type="String"/>
+        <property name="totalAuthorizedAmount" type="Double"/>
+        <property name="totalCapturedAmount" type="Double"/>
+        <property name="totalDisbursedAmount" type="Double"/>
+        <property name="totalRefundedAmount" type="Double"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocResponseData">
+        <property name="acquirerCode" type="String"/>
+        <property name="acquirerMessage" type="String"/>
+        <property name="gatewayCode" type="String"/>
+        <property name="gatewayRecommendation" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocTransactionDetailsData">
+        <property name="amount" type="Double"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="authorizationCode" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="id" type="String"/>
+        <property name="receipt" type="String"/>
+        <property name="source" type="String"/>
+        <property name="stan" type="String"/>
+        <property name="terminal" type="String"/>
+        <property name="type" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocAcquirerData">
+        <property name="batch" type="Double"/>
+        <property name="date" type="String"/>
+        <property name="id" type="String"/>
+        <property name="merchantId" type="String"/>
+        <property name="settlementDate" type="String"/>
+        <property name="timeZone" type="String"/>
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocThreeDSData">
+        <property name="acsEci" type="String"/>
+        <property name="authenticationToken" type="String"/>
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocChargebackData">
+        <property name="amount" type="Double"/>
+        <property name="currency" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocDeviceData">
+        <property name="browser" type="String"/>
+        <property name="ipAddress" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.card.data.AdnocSourceOfFundsData">
+        <property name="provided" type="com.adnoc.facades.payment.card.data.AdnocProvidedData"/>
+        <property name="type" type="String"/>
+    </bean>
+
+    <!-- ADNOC Card Payment End -->
+
+    <!-- ADNOC Bank Payment Start -->
+    <bean class="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegInitiateRequestData"
+          extends="com.adnoc.facades.payment.data.AdnocPaymentInitiateRequestData"/>
+
+    <bean class="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationRequestData">
+        <import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+        <import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+        <annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+        <property name="registration"
+                  type="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionRegistrationRequestData">
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionRegistrationRequestData">
+        <import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+        <import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+        <annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+        <property name="transactionHint" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="returnPath" type="String"/>
+        <property name="orderID" type="String"/>
+        <property name="orderName" type="String"/>
+        <property name="channel" type="String"/>
+        <property name="amount" type="Double"/>
+        <property name="customer" type="String"/>
+        <property name="store" type="String"/>
+        <property name="terminal" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.bank.data.AdnocPaymentBankTransactionRegistrationResponseData"
+          extends="com.adnoc.facades.payment.data.AdnocPaymentInitiateResponseData">
+        <import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+        <import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+        <annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+        <property name="transaction"
+                  type="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseData">
+        <import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+        <import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+        <annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+        <property name="paymentPortal" type="String"/>
+        <property name="paymentPage" type="String"/>
+        <property name="responseCode" type="String"/>
+        <property name="responseClass" type="String"/>
+        <property name="responseDescription" type="String"/>
+        <property name="responseClassDescription" type="String"/>
+        <property name="transactionID" type="String"/>
+        <property name="balance" type="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseAmount"/>
+        <property name="amount" type="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseAmount"/>
+        <property name="fees" type="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseAmount"/>
+        <property name="uniqueID" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.payment.bank.data.AdnocPaymentBankRegistrationResponseAmount">
+        <import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+        <import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+        <annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+        <property name="value" type="String"/>
+    </bean>
+
+	<bean class="com.adnoc.facades.payment.data.AdnocPaymentBankFinalizationRequestData">
+		<import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+		<import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+		<annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+		<property name="finalization" type="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionFinalizationRequestData"/>
+	</bean>
+
+	<bean class="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionFinalizationRequestData">
+		<import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+		<import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+		<annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+		<property name="customer" type="String"/>
+		<property name="transactionID" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.facades.payment.data.AdnocPaymentBankFinalizationResponseData">
+		<import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+		<import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+		<annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+		<property name="transaction" type="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionFinalizationResponseData"/>
+	</bean>
+
+	<bean class="com.adnoc.facades.payment.data.AdnocPaymentBankTransactionFinalizationResponseData">
+		<import type="com.fasterxml.jackson.databind.PropertyNamingStrategies.UpperCamelCaseStrategy"/>
+		<import type="com.fasterxml.jackson.databind.annotation.JsonNaming"/>
+		<annotations>@JsonNaming(UpperCamelCaseStrategy.class)</annotations>
+		<property name="responseCode" type="String"/>
+		<property name="responseClass" type="String"/>
+		<property name="responseDescription" type="String"/>
+		<property name="responseClassDescription" type="String"/>
+		<property name="language" type="String"/>
+		<property name="approvalCode" type="String"/>
+		<property name="account" type="String"/>
+		<property name="orderID" type="String"/>
+		<property name="cardBrand" type="String"/>
+		<property name="isWalletUsed" type="String"/>
+		<property name="isCaptured" type="String"/>
+		<property name="captureID" type="String"/>
+		<property name="uniqueID" type="String"/>
+		<property name="balance" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+		<property name="amount" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+		<property name="fees" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+        <property name="transactionId" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData">
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<property name="value" type="String">
+			<annotations>@JsonProperty("Value")</annotations>
+		</property>
+	</bean>
+
+    <!-- ADNOC Bank Payment End -->
+
+    <!-- ADNOC Credit Limit Payment Start -->
+    <bean class="com.adnoc.facades.company.request.data.AdnocCreditLimitRequestData">
+        <property name="b2bUnitUid" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.response.data.AdnocCreditLimitResponseData">
+        <property name="b2BCreditLimit" type="com.adnoc.facades.company.response.data.AdnocCreditLimitData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.response.data.AdnocCreditLimitData">
+        <property name="payer" type="java.lang.String"/>
+        <property name="creditExposure" type="java.lang.String"/>
+        <property name="availableCl" type="java.lang.String"/>
+        <property name="message" type="java.lang.String"/>
+        <property name="unsecureCl" type="java.lang.String"/>
+        <property name="totalCl" type="java.lang.String"/>
+        <property name="letterOfCredit" type="java.lang.String"/>
+        <property name="msgType" type="java.lang.String"/>
+        <property name="bankGuarantee" type="java.lang.String"/>
+        <property name="msgId" type="java.lang.String"/>
+        <property name="utilization" type="java.lang.String"/>
+        <property name="checkRule" type="java.lang.String"/>
+        <property name="msgNumber" type="java.lang.String"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="messageV2" type="java.lang.String"/>
+        <property name="messageV1" type="java.lang.String"/>
+    </bean>
+    <!-- ADNOC Credit Limit Payment End -->
+    <!-- ADNOC Payment End -->
+
+    <bean class="com.adnoc.facades.user.data.IncoTermsData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+        <property name="poDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="creditLimitValue" type="Double"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.overdue.inoice.data.AdnocOverdueInvoiceRequestData">
+        <property name="payer" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.creditsimulation.data.AdnocCreditSimulationRequestData">
+        <property name="payer" type="String"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="creditSegment" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.creditsimulation.data.AdnocCreditSimulationResponseData">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="payer" type="String"/>
+        <property name="creditSegment" type="String"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="eCheckConfirmation" type="com.adnoc.facades.creditsimulation.data.ECheckConfirmation">
+            <annotations>@JsonProperty("eCheckConfirmation")</annotations>
+        </property>
+        <property name="messageType" type="com.adnoc.facades.creditsimulation.data.MessageType"/>
+        <property name="message" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.overdue.inoice.data.AdnocOverdueInvoiceResponseData">
+        <property name="invoice"
+                  type="java.util.List&lt;com.adnoc.facades.overdue.inoice.data.AdnocOverdueInvoiceData>"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.overdue.inoice.data.AdnocOverdueInvoiceData">
+        <property name="payer" type="java.lang.String"/>
+        <property name="documentNumber" type="java.lang.String"/>
+        <property name="fiscalYear" type="java.lang.String"/>
+        <property name="invoiceAmount" type="double"/>
+        <property name="dueAmount" type="double"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="netDueDate" type="java.util.Date"/>
+        <property name="companyCode" type="java.lang.String"/>
+        <property name="division" type="java.lang.String"/>
+        <property name="documentDate" type="java.util.Date"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.data.AdnocOrderSummaryData">
+        <property name="ordersPlacedCount" type="int"/>
+        <property name="totalOrdersValue" type="java.lang.Double"/>
+        <property name="returnOrdersCount" type="int"/>
+        <property name="configValue" type="int"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.order.data.CartData">
+        <property name="creditLimitUsed" type="boolean"/>
+    </bean>
+
+    <bean class="de.hybris.platform.b2bcommercefacades.company.data.B2BUnitNodeData">
+        <property name="lob" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.ordermanagementfacades.returns.data.ReturnRequestData">
+        <property name="statusDisplay" type="String"/>
+        <property name="returnRequestDocument" type="org.springframework.web.multipart.MultipartFile"/>
+        <property name="refundReason" type="de.hybris.platform.basecommerce.enums.RefundReason"/>
+        <property name="reason" type="String"/>
+        <property name="reasonDisplay" type="String"/>
+        <property name="comment" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.company.overdue.invoice.data.AdnocOverduePaymentRequestData">
+        <property name="payerId" type="java.lang.String"/>
+        <property name="paymentType" type="java.lang.String"/>
+        <property name="totalAmount" type="double"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="invoiceDetails"
+                  type="java.util.List&lt;com.adnoc.service.company.overdue.invoice.data.AdnocOverdueInvoiceDetailsData>"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData">
+        <property name="amount" type="double"/>
+        <property name="rrnNumber" type="String"/>
+        <property name="creditLimitAmount" type="double"/>
+        <property name="account" type="String"/>
+        <property name="transactionId" type="String"/>
+        <property name="approvalCode" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.quote.data.QuoteData">
+        <property name="sellerComment" type="java.lang.String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData">
+        <property name="id" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.ordermanagement.data.CancelReasonData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.product.data.PriceData">
+        <property name="code" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.data.AdnocB2BInvoiceDocumentRequestData">
+        <property name="invoiceNumber" type="String"/>
+        <property name="type" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.data.AdnocB2BInvoiceDocumentResponseData">
+        <property name="type" type="String"/>
+        <property name="message" type="String"/>
+        <property name="messageType" type="com.adnoc.facades.creditsimulation.data.MessageType"/>
+        <property name="invoiceNo" type="String"/>
+        <property name="pdfString" type="String"/>
+    </bean>
+
+    <!--Base Sites-->
+    <bean class="com.adnoc.facades.gigya.data.GigyaConfigData">
+        <property name="cdcApiKey" type="String"/>
+        <property name="cdcUserKey" type="String"/>
+        <property name="cdcUserSecret" type="String"/>
+        <property name="loginMode" type="String"/>
+        <property name="sessionExpiration" type="String"/>
+        <property name="include" type="String"/>
+        <property name="dataCenter" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercefacades.basesite.data.BaseSiteData">
+        <property name="gigyaConfigData" type="com.adnoc.facades.gigya.data.GigyaConfigData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.gigya.data.AdnocGigyaAccountSearchResponseData">
+        <property name="callId" type="String"/>
+        <property name="errorCode" type="int"/>
+        <property name="apiVersion" type="int"/>
+        <property name="statusCode" type="int"/>
+        <property name="statusReason" type="String"/>
+        <property name="time" type="String"/>
+        <property name="results" type="java.util.List&lt;com.adnoc.facades.gigya.data.AdnocGigyaResultData>"/>
+        <property name="objectsCount" type="int"/>
+        <property name="totalCount" type="int"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.gigya.data.AdnocGigyaResultData">
+        <property name="data" type="com.adnoc.facades.gigya.data.AdnocGigyaCompanyData"/>
+        <property name="profile" type="com.adnoc.facades.gigya.data.AdnocGigyaProfileData"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.gigya.data.AdnocGigyaCompanyData">
+        <property name="companyEmail" type="String"/>
+        <property name="identificationNumber" type="String"/>
+        <property name="taxRegistrationNumber" type="String"/>
+        <property name="tradeLicenseNumber" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.facades.gigya.data.AdnocGigyaProfileData">
+        <property name="associatedEmail" type="String"/>
+    </bean>
+
+</beans>

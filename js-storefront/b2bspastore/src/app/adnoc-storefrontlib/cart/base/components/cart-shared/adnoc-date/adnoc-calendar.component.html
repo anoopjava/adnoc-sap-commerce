@@ -1,0 +1,15 @@
+<mat-form-field class="example-full-width">
+  <mat-label> {{ "cartLabels.selectDate" | cxTranslate }}</mat-label>
+  <input
+    [min]="todayDate"
+    [max]="maxDate"
+    [value]="selectedDate"
+    [matDatepickerFilter]="dateFilter"
+    readonly
+    matInput
+    [matDatepicker]="picker"
+    (dateChange)="onDateChange($event,groupKey)"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="picker"> </mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

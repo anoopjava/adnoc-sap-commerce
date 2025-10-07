@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocQuoteBuyerOrderPlaced_$lang.properties
+
+${ctx.messages.emailSubject} ${ctx.quote.code}

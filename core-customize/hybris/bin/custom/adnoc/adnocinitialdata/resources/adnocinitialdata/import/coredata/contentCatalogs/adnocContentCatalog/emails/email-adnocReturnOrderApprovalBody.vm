@@ -1,0 +1,74 @@
+﻿## messageSource=classpath:/adnocservice/messages/email-adnocReturnOrderApproval_$lang.properties
+
+<body style="margin: 0; padding: 20px; font-family: Aptos Display, Helvetica, sans-serif; background-color: #ffffff; color: #414a4f; font-size: 16px;">
+
+  <div class="content" style="max-width: 600px; margin: 0 auto;">
+
+    <!-- Greeting -->
+    <p style="margin-bottom: 20px;">Dear ${ctx.title} ${ctx.firstName},</p>
+
+    <!-- Determine Division Name -->
+    #set($divisionName = "")
+    #foreach($entry in $ctx.order.entries)
+        #if($entry.division == "21")
+            #set($divisionName = "FUEL")
+            #break
+        #elseif($entry.division == "41")
+            #set($divisionName = "LUBRICANTS")
+            #break
+        #elseif($entry.division == "31")
+            #set($divisionName = "LPG")
+            #break
+        #elseif($entry.division == "53")
+            #set($divisionName = "CARCARE")
+            #break
+        #elseif($entry.division == "23")
+            #set($divisionName = "C-STORE")
+            #break
+        #end
+    #end
+
+   <!-- Approval Paragraph -->
+    <p style="margin-bottom: 20px;">${ctx.messages.returnOrderApprovalDetailsParagraph.replace('{0}', $divisionName)}</p>
+
+   <!-- Customer Details Section -->
+    <div style="font-family: 'Aptos Display', text-align: left; font-weight: bold">${ctx.messages.customerDetails}</div>
+   <ul style="margin: 0 0 20px 0; padding-left: 20px;font-family: 'Aptos Display', sans-serif; font-size: 16px;">
+     <li><strong>${ctx.messages.customerName}</strong> ${ctx.returnRequest.order.user.name}</li>
+     <li><strong>${ctx.messages.rmaNumber}</strong> ${ctx.returnRequest.rma}</li>
+   #if(${ctx.returnRequest.comment})
+     <li><strong>${ctx.messages.comments}</strong> ${ctx.returnRequest.comment}</li>
+   #end
+   </ul>
+
+   <!-- Order Details Section -->
+     <div style="font-family: 'Aptos Display', text-align: left; font-weight: bold">${ctx.messages.orderDetails}</div>
+   <ul style="margin: 0; padding-left: 20px; font-family: Aptos Display, sans-serif; font-size: 16px;">
+     <li><strong>${ctx.messages.orderNumber}</strong> ${ctx.order.sapOrderCode}</li>
+     <li><strong>${ctx.messages.orderDate}</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.order.created})</li>
+     <li><strong>Return Request Date</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.returnRequest.creationTime})</li>
+     <li><strong>${ctx.messages.returnRejectedStatus}</strong> ${ctx.returnRequest.statusDisplay}</li>
+   </ul>
+
+    <!-- Call to Action -->
+    <p style="margin-top: 20px;">
+      ${ctx.messages.requestNewReturn}
+      <a href="${ctx.frontendUrl}" style="color:#4682B4; text-decoration: none; visited:color:#4682B4">
+        ${ctx.messages.link}
+      </a>
+    </p>
+  </div>
+
+  <p>${ctx.messages.customerEnquiry}</p>
+  <p>${ctx.messages.thankYouParagraph}</p>
+
+   <!-- Footer -->
+   <p style="margin: 10px 0 5px 0;"><strong>${ctx.messages.complimentaryClosing}</strong></p>
+   <p style="margin: 2px 0;">${ctx.messages.adnocAgentEmployee}</p>
+   <p style="margin: 2px 0;">${ctx.messages.adnoc}</p>
+   <p style="margin: 2px 0;">
+     <a href="https://www.adnocdistribution.ae/" style="color: #4682B4;">${ctx.messages.website}</a>
+   </p>
+
+  </div>
+</body>

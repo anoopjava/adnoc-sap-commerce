@@ -1,0 +1,635 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the adnoc site emails
+#
+
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$wideContent = CMSImageComponent, BannerComponent, SimpleBannerComponent, CMSLinkComponent, CMSParagraphComponent
+$jarEmailResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/adnocinitialdata/import/coredata/contentCatalogs/adnocContentCatalog/emails
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$jarResourceCms = $config-jarResourceCmsValue
+$emailPackageName = $config-emailContextPackageName
+$registrationEmailPackageName = $config-registrationEmailContextPackageName
+$emailVerificationTokenPackageName = de.hybris.platform.acceleratorservices.process.email.context.impl
+$adnocEmailPackage = com.adnoc.facades.process.email.context
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                          ; name                                              ; active; frontendTemplateName                ; subject(code)                                        ; htmlTemplate(code)                                ; restrictedPageTypes(code)
+                               ;                          ; CustomerRegistrationEmailTemplate           ; Customer Registration Email Template              ; true  ; customerRegistrationEmail           ; adnoc_Email_Customer_Registration_Subject            ; adnoc_Email_Customer_Registration_Body            ; EmailPage
+                               ;                          ; DeliverySentEmailTemplate                   ; Delivery Sent Email Template                      ; true  ; deliverySentEmail                   ; adnoc_Email_Delivery_Sent_Subject                    ; adnoc_Email_Delivery_Sent_Body                    ; EmailPage
+                               ;                          ; ForgottenPasswordEmailTemplate              ; Forgotten Password Email Template                 ; true  ; forgottenPasswordEmail              ; adnoc_Email_Forgotten_Password_Subject               ; adnoc_Email_Forgotten_Password_Body               ; EmailPage
+                               ;                          ; NotPickedUpConsignmentCanceledEmailTemplate ; Not Picked Up Consignment Canceled Email Template ; true  ; notPickedUpConsignmentCanceledEmail ; adnoc_Email_NotPickedUpConsignment_Canceled_Subject  ; adnoc_Email_NotPickedUpConsignment_Canceled_Body  ; EmailPage
+                               ;                          ; OrderCancelledEmailTemplate                 ; Order Cancelled Email Template                    ; true  ; orderCancelledEmail                 ; adnoc_Email_Order_Cancelled_Subject                  ; adnoc_Email_Order_Cancelled_Body                  ; EmailPage
+                               ;                          ; OrderCollectionReminderEmailTemplate        ; Order Collection Reminder Email Template          ; true  ; orderCollectionReminderEmail        ; adnoc_Email_Order_Collection_Reminder_Subject        ; adnoc_Email_Order_Collection_Reminder_Body        ; EmailPage
+                               ;                          ; OrderConfirmationEmailTemplate              ; Order Confirmation Email Template                 ; true  ; orderConfirmationEmail              ; adnoc_Email_Order_Confirmation_Subject               ; adnoc_Email_Order_Confirmation_Body               ; EmailPage
+                               ;                          ; OrderMoveToCsEmailTemplate                  ; Order Moved To CS Email Template                  ; true  ; orderMoveToCsEmail                  ; adnoc_Email_Order_Move_To_CS_Subject                 ; adnoc_Email_Order_Move_To_CS_Body                 ; EmailPage
+                               ;                          ; OrderPartiallyCanceledEmailTemplate         ; Order Partially Canceled Email Template           ; true  ; orderPartiallyCanceledEmail         ; adnoc_Email_Order_Partially_Canceled_Subject         ; adnoc_Email_Order_Partially_Canceled_Body         ; EmailPage
+                               ;                          ; OrderPartiallyRefundedEmailTemplate         ; Order Partially Refunded Email Template           ; true  ; orderPartiallyRefundedEmail         ; adnoc_Email_Order_Partially_Refunded_Subject         ; adnoc_Email_Order_Partially_Refunded_Body         ; EmailPage
+                               ;                          ; OrderRefundEmailTemplate                    ; Order Refund Email Template                       ; true  ; orderRefundEmail                    ; adnoc_Email_Order_Refund_Subject                     ; adnoc_Email_Order_Refund_Body                     ; EmailPage
+                               ;                          ; OrderPendingApprovalEmailTemplate           ; Order Pending Approval Email Template             ; true  ; orderPendingApprovalEmail           ; adnoc_Email_Order_PendingApproval_Subject            ; adnoc_Email_Order_PendingApproval_Body            ; EmailPage
+                               ;                          ; OrderApprovalRejectionEmailTemplate         ; Order Approval Rejection Email Template           ; true  ; orderApprovalRejectionEmail         ; adnoc_Email_Order_ApprovalRejection_Subject          ; adnoc_Email_Order_ApprovalRejection_Body          ; EmailPage
+                               ;                          ; QuoteBuyerCancellationEmailTemplate         ; Quote Buyer Cancellation Email Template           ; true  ; quoteBuyerCancellationEmail         ; adnoc_Email_Quote_Buyer_Cancellation_Subject         ; adnoc_Email_Quote_Buyer_Cancellation_Body         ; EmailPage
+                               ;                          ; QuoteBuyerSubmissionEmailTemplate           ; Quote Buyer Submission Email Template             ; true  ; quoteBuyerSubmissionEmail           ; adnoc_Email_Quote_Buyer_Submission_Subject           ; adnoc_Email_Quote_Buyer_Submission_Body           ; EmailPage
+                               ;                          ; QuoteExpiredEmailTemplate                   ; Quote Expired Email Template                      ; true  ; quoteExpiredEmail                   ; adnoc_Email_Quote_Expired_Subject                    ; adnoc_Email_Quote_Expired_Body                    ; EmailPage
+                               ;                          ; QuoteToExpireSoonEmailTemplate              ; Quote To Expire Soon Email Template               ; true  ; quoteToExpireSoonEmail              ; adnoc_Email_Quote_To_Expire_Soon_Subject             ; adnoc_Email_Quote_To_Expire_Soon_Body             ; EmailPage
+                               ;                          ; ReadyForPickupEmailTemplate                 ; Ready For Pickup Email Template                   ; true  ; readyForPickupEmail                 ; adnoc_Email_Ready_For_Pickup_Subject                 ; adnoc_Email_Ready_For_Pickup_Body                 ; EmailPage
+                               ;                          ; ReplenishmentOrderConfirmationEmailTemplate ; Replenishment Order Confirmation Email Template   ; true  ; replenishmentOrderConfirmationEmail ; adnoc_Email_Replenishment_Order_Confirmation_Subject ; adnoc_Email_Replenishment_Order_Confirmation_Body ; EmailPage
+                               ;                          ; ReplenishmentOrderPlacedEmailTemplate       ; Replenishment Order Placed Email Template         ; true  ; replenishmentOrderPlacedEmail       ; adnoc_Email_Replenishment_Order_Placed_Subject       ; adnoc_Email_Replenishment_Order_Placed_Body       ; EmailPage
+                               ;                          ; VerificationTokenEmailTemplate              ; Verification Token Email Template                 ; true  ; verificationTokenEmail              ; adnoc_Email_Verification_Token_Subject               ; adnoc_Email_Verification_Token_Body               ; EmailPage
+
+# Templates for CMS Cockpit Page Edit
+UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                          ; velocityTemplate[translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                        ;                          ; CustomerRegistrationEmailTemplate           ; $jarResourceCms/structure-view/structure_customerRegistrationEmailTemplate.vm
+                        ;                          ; ForgottenPasswordEmailTemplate              ; $jarResourceCms/structure-view/structure_forgottenPasswordEmailTemplate.vm
+                        ;                          ; OrderConfirmationEmailTemplate              ; $jarResourceCms/structure-view/structure_orderConfirmationEmailTemplate.vm
+                        ;                          ; DeliverySentEmailTemplate                   ; $jarResourceCms/structure-view/structure_deliverySentEmailTemplate.vm
+                        ;                          ; ReadyForPickupEmailTemplate                 ; $jarResourceCms/structure-view/structure_readyForPickupEmailTemplate.vm
+                        ;                          ; OrderCancelledEmailTemplate                 ; $jarResourceCms/structure-view/structure_orderCancelledEmailTemplate.vm
+                        ;                          ; OrderRefundEmailTemplate                    ; $jarResourceCms/structure-view/structure_orderRefundEmailTemplate.vm
+                        ;                          ; OrderCollectionReminderEmailTemplate        ; $jarResourceCms/structure-view/structure_orderCollectionReminderEmailTemplate.vm
+                        ;                          ; OrderMoveToCsEmailTemplate                  ; $jarResourceCms/structure-view/structure_orderMoveToCSEmailTemplate.vm
+                        ;                          ; OrderPartiallyCanceledEmailTemplate         ; $jarResourceCms/structure-view/structure_orderPartiallyCanceledEmailTemplate.vm
+                        ;                          ; OrderPartiallyRefundedEmailTemplate         ; $jarResourceCms/structure-view/structure_orderPartiallyRefundedEmailTemplate.vm
+                        ;                          ; NotPickedUpConsignmentCanceledEmailTemplate ; $jarResourceCms/structure-view/structure_notPickedUpConsignmentCanceledEmailTemplate.vm
+                        ;                          ; OrderApprovalRejectionEmailTemplate         ; $jarEmailResource/structure-view/structure_orderApprovalRejectionEmailTemplate.vm
+                        ;                          ; OrderPendingApprovalEmailTemplate           ; $jarEmailResource/structure-view/structure_orderPendingApprovalEmailTemplate.vm
+                        ;                          ; ReplenishmentOrderPlacedEmailTemplate       ; $jarEmailResource/structure-view/structure_replenishmentOrderPlacedEmailTemplate.vm
+                        ;                          ; ReplenishmentOrderConfirmationEmailTemplate ; $jarEmailResource/structure-view/structure_replenishmentOrderConfirmationEmailTemplate.vm
+                        ;                          ; QuoteBuyerSubmissionEmailTemplate           ; $jarResourceCms/structure-view/structure_quoteNotificationEmailTemplate.vm
+                        ;                          ; QuoteToExpireSoonEmailTemplate              ; $jarResourceCms/structure-view/structure_quoteNotificationEmailTemplate.vm
+                        ;                          ; QuoteExpiredEmailTemplate                   ; $jarResourceCms/structure-view/structure_quoteNotificationEmailTemplate.vm
+                        ;                          ; QuoteBuyerCancellationEmailTemplate         ; $jarResourceCms/structure-view/structure_quoteNotificationEmailTemplate.vm
+
+# Templates for registration email
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                       ; name                                         ; active; subject(code)                                   ; htmlTemplate(code)                           ; restrictedPageTypes(code); frontendTemplateName
+                               ;                          ; RegistrationPendingApprovalEmailTemplate ; Registration Pending Approval Email Template ; true  ; RegistrationPendingApprovalEmailTemplateSubject ; RegistrationPendingApprovalEmailTemplateBody ; EmailPage                ; RegistrationPendingApprovalEmailTemplate
+                               ;                          ; RegistrationApprovedEmailTemplate        ; Registration Approved Email Template         ; true  ; RegistrationApprovedEmailTemplateSubject        ; RegistrationApprovedEmailTemplateBody        ; EmailPage                ; RegistrationApprovedEmailTemplate
+                               ;                          ; RegistrationReceivedEmailTemplate        ; Registration Received Email Template         ; true  ; RegistrationReceivedEmailTemplateSubject        ; RegistrationReceivedEmailTemplateBody        ; EmailPage                ; RegistrationReceivedEmailTemplate
+                               ;                          ; RegistrationRejectedEmailTemplate        ; Registration Rejected Email Template         ; true  ; RegistrationRejectedEmailTemplateSubject        ; RegistrationRejectedEmailTemplateBody        ; EmailPage                ; RegistrationRejectedEmailTemplate
+
+INSERT_UPDATE ComponentTypeGroup; code[unique = true]
+                                ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'CustomerRegistrationEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                        ; $wideContent             ; email
+                             ; TopContent         ;                                                                                        ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                        ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ForgottenPasswordEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                     ; $wideContent             ; email
+                             ; TopContent         ;                                                                                     ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                     ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderConfirmationEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                     ; $wideContent             ; email
+                             ; TopContent         ;                                                                                     ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                     ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderCancelledEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                  ; $wideContent             ; email
+                             ; TopContent         ;                                                                                  ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                  ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderRefundEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                               ; $wideContent             ; email
+                             ; TopContent         ;                                                                               ; $wideContent             ; email
+                             ; BottomContent      ;                                                                               ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'DeliverySentEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                ; $wideContent             ; email
+                             ; TopContent         ;                                                                                ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ReadyForPickupEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                  ; $wideContent             ; email
+                             ; TopContent         ;                                                                                  ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                  ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderCollectionReminderEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                           ; $wideContent             ; email
+                             ; TopContent         ;                                                                                           ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                           ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderMoveToCsEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                 ; $wideContent             ; email
+                             ; TopContent         ;                                                                                 ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                 ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderPartiallyCanceledEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                          ; $wideContent             ; email
+                             ; TopContent         ;                                                                                          ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                          ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderPartiallyRefundedEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                          ; $wideContent             ; email
+                             ; TopContent         ;                                                                                          ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                          ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'NotPickedUpConsignmentCanceledEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                                  ; $wideContent             ; email
+                             ; TopContent         ;                                                                                                  ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                                  ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderApprovalRejectionEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                          ; $wideContent             ; email
+                             ; TopContent         ;                                                                                          ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                          ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'OrderPendingApprovalEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                        ; $wideContent             ; email
+                             ; TopContent         ;                                                                                        ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                        ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ReplenishmentOrderPlacedEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                            ; $wideContent             ; email
+                             ; TopContent         ;                                                                                            ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                            ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'ReplenishmentOrderConfirmationEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                                  ; $wideContent             ; email
+                             ; TopContent         ;                                                                                                  ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                                  ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'QuoteBuyerSubmissionEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                        ; $wideContent             ; email
+                             ; TopContent         ;                                                                                        ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                        ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'QuoteToExpireSoonEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                     ; $wideContent             ; email
+                             ; TopContent         ;                                                                                     ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                     ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'QuoteExpiredEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                ; $wideContent             ; email
+                             ; TopContent         ;                                                                                ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                ; $wideContent             ; email
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'QuoteBuyerCancellationEmailTemplate']; validComponentTypes(code); compTypeGroup(code)
+                             ; SiteLogo           ;                                                                                          ; $wideContent             ; email
+                             ; TopContent         ;                                                                                          ; $wideContent             ; email
+                             ; BottomContent      ;                                                                                          ; $wideContent             ; email
+
+# The name of the registration email content slots
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'RegistrationPendingApprovalEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                               ;              ; logo
+                             ; TopContent         ;                                                                                               ; $wideContent ;
+                             ; BottomContent      ;                                                                                               ; $wideContent ;
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'RegistrationApprovedEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                        ;              ; logo
+                             ; TopContent         ;                                                                                        ; $wideContent ;
+                             ; BottomContent      ;                                                                                        ; $wideContent ;
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'RegistrationReceivedEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                        ;              ; logo
+                             ; TopContent         ;                                                                                        ; $wideContent ;
+                             ; BottomContent      ;                                                                                        ; $wideContent ;
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'RegistrationRejectedEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                        ;              ; logo
+                             ; TopContent         ;                                                                                        ; $wideContent ;
+                             ; BottomContent      ;                                                                                        ; $wideContent ;
+
+INSERT_UPDATE ComponentTypeGroups2ComponentType; source(code)[unique = true]; target(code)[unique = true]
+                                               ; email                      ; SimpleBannerComponent
+                                               ; email                      ; CMSImageComponent
+                                               ; email                      ; CMSLinkComponent
+                                               ; email                      ; CMSParagraphComponent
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]                         ; name                                                  ; active
+                         ;                          ; CustomerRegistrationEmailTopSlot           ; Default customerRegistration Email Top Slot           ; true
+                         ;                          ; DeliverySentEmailTopSlot                   ; Default deliverySent Email Top Slot                   ; true
+                         ;                          ; ForgottenPasswordEmailTopSlot              ; Default forgottenPassword Email Top Slot              ; true
+                         ;                          ; NotPickedUpConsignmentCanceledEmailTopSlot ; Default notPickedUpConsignmentCanceled Email Top Slot ; true
+                         ;                          ; OrderCancelledEmailTopSlot                 ; Default orderCancelled Email Top Slot                 ; true
+                         ;                          ; OrderCollectionReminderEmailTopSlot        ; Default orderCollectionReminder Email Top Slot        ; true
+                         ;                          ; OrderConfirmationEmailTopSlot              ; Default orderConfirmation Email Top Slot              ; true
+                         ;                          ; OrderMoveToCsEmailTopSlot                  ; Default orderMoveToCs Email Top Slot                  ; true
+                         ;                          ; OrderPartiallyCanceledEmailTopSlot         ; Default orderPartiallyCanceled Email Top Slot         ; true
+                         ;                          ; OrderPartiallyRefundedEmailTopSlot         ; Default orderPartiallyRefunded Email Top Slot         ; true
+                         ;                          ; OrderRefundEmailTopSlot                    ; Default orderRefund Email Top Slot                    ; true
+                         ;                          ; OrderPendingApprovalEmailTopSlot           ; Default orderPendingApproval Email Top Slot           ; true
+                         ;                          ; OrderApprovalRejectionEmailTopSlot         ; Default orderApprovalRejection Email Top Slot         ; true
+                         ;                          ; QuoteBuyerCancellationEmailTopSlot         ; Default quoteBuyerCancellation Email Top Slot         ; true
+                         ;                          ; QuoteBuyerSubmissionEmailTopSlot           ; Default quoteBuyerSubmission Email Top Slot           ; true
+                         ;                          ; QuoteExpiredEmailTopSlot                   ; Default quoteExpired Email Top Slot                   ; true
+                         ;                          ; QuoteToExpireSoonEmailTopSlot              ; Default quoteToExpireSoon Email Top Slot              ; true
+                         ;                          ; ReadyForPickupEmailTopSlot                 ; Default readyForPickup Email Top Slot                 ; true
+                         ;                          ; ReplenishmentOrderConfirmationEmailTopSlot ; Default replenishmentOrderConfirmation Email Top Slot ; true
+                         ;                          ; ReplenishmentOrderPlacedEmailTopSlot       ; Default replenishmentOrderPlaced Email Top Slot       ; true
+                         ;                          ; EmailTopSlot                               ; Default Email Top Slot                                ; true
+                         ;                          ; EmailBottomSlot                            ; Default Email Bottom Slot                             ; true
+                         ;                          ; EmailSiteLogoSlot                          ; Default Email Site Slot                               ; true
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                      ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'CustomerRegistrationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-CustomerRegistrationEmail      ; SiteLogo               ;                                                                                            ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-CustomerRegistrationEmail    ; TopContent             ;                                                                                            ; CustomerRegistrationEmailTopSlot           ; true
+                                    ;                          ; BottomContent-CustomerRegistrationEmail ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ForgottenPasswordEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ForgottenPasswordEmail      ; SiteLogo               ;                                                                                         ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-ForgottenPasswordEmail    ; TopContent             ;                                                                                         ; ForgottenPasswordEmailTopSlot              ; true
+                                    ;                          ; BottomContent-ForgottenPasswordEmail ; BottomContent          ;                                                                                         ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderConfirmationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderConfirmationEmail      ; SiteLogo               ;                                                                                         ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderConfirmationEmail    ; TopContent             ;                                                                                         ; OrderConfirmationEmailTopSlot              ; true
+                                    ;                          ; BottomContent-OrderConfirmationEmail ; BottomContent          ;                                                                                         ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderCancelledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderCancelledEmail      ; SiteLogo               ;                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderCancelledEmail    ; TopContent             ;                                                                                      ; OrderCancelledEmailTopSlot                 ; true
+                                    ;                          ; BottomContent-OrderCancelledEmail ; BottomContent          ;                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]             ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderRefundEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderRefundEmail      ; SiteLogo               ;                                                                                   ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderRefundEmail    ; TopContent             ;                                                                                   ; OrderRefundEmailTopSlot                    ; true
+                                    ;                          ; BottomContent-OrderRefundEmail ; BottomContent          ;                                                                                   ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'DeliverySentEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-DeliverySentEmail      ; SiteLogo               ;                                                                                    ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-DeliverySentEmail    ; TopContent             ;                                                                                    ; DeliverySentEmailTopSlot                   ; true
+                                    ;                          ; BottomContent-DeliverySentEmail ; BottomContent          ;                                                                                    ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ReadyForPickupEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ReadyForPickupEmail      ; SiteLogo               ;                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-ReadyForPickupEmail    ; TopContent             ;                                                                                      ; ReadyForPickupEmailTopSlot                 ; true
+                                    ;                          ; BottomContent-ReadyForPickupEmail ; BottomContent          ;                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderPartiallyCanceledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderPartiallyCanceledEmail      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderPartiallyCanceledEmail    ; TopContent             ;                                                                                              ; OrderPartiallyCanceledEmailTopSlot         ; true
+                                    ;                          ; BottomContent-OrderPartiallyCanceledEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderPartiallyRefundedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderPartiallyRefundedEmail      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderPartiallyRefundedEmail    ; TopContent             ;                                                                                              ; OrderPartiallyRefundedEmailTopSlot         ; true
+                                    ;                          ; BottomContent-OrderPartiallyRefundedEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'NotPickedUpConsignmentCanceledEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-NotPickedUpConsignmentCanceledEmail      ; SiteLogo               ;                                                                                                      ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-NotPickedUpConsignmentCanceledEmail    ; TopContent             ;                                                                                                      ; NotPickedUpConsignmentCanceledEmailTopSlot ; true
+                                    ;                          ; BottomContent-NotPickedUpConsignmentCanceledEmail ; BottomContent          ;                                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                         ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderCollectionReminderEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderCollectionReminderEmail      ; SiteLogo               ;                                                                                               ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-OrderCollectionReminderEmail    ; TopContent             ;                                                                                               ; OrderCollectionReminderEmailTopSlot        ; true
+                                    ;                          ; BottomContent-OrderCollectionReminderEmail ; BottomContent          ;                                                                                               ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderApprovalRejectionEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderApprovalRejectionEmail      ; SiteLogo               ;                                                                                              ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-OrderApprovalRejectionEmail    ; TopContent             ;                                                                                              ; OrderApprovalRejectionEmailTopSlot         ; true
+                                    ;                          ; BottomContent-OrderApprovalRejectionEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                      ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'OrderPendingApprovalEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-OrderPendingApprovalEmail      ; SiteLogo               ;                                                                                            ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-OrderPendingApprovalEmail    ; TopContent             ;                                                                                            ; OrderPendingApprovalEmailTopSlot           ; true
+                                    ;                          ; BottomContent-OrderPendingApprovalEmail ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                                ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ReplenishmentOrderConfirmationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ReplenishmentOrderConfirmationEmail      ; SiteLogo               ;                                                                                                      ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-ReplenishmentOrderConfirmationEmail    ; TopContent             ;                                                                                                      ; ReplenishmentOrderConfirmationEmailTopSlot ; true
+                                    ;                          ; BottomContent-ReplenishmentOrderConfirmationEmail ; BottomContent          ;                                                                                                      ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                          ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'ReplenishmentOrderPlacedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-ReplenishmentOrderPlacedEmail      ; SiteLogo               ;                                                                                                ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-ReplenishmentOrderPlacedEmail    ; TopContent             ;                                                                                                ; ReplenishmentOrderPlacedEmailTopSlot       ; true
+                                    ;                          ; BottomContent-ReplenishmentOrderPlacedEmail ; BottomContent          ;                                                                                                ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                      ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'QuoteBuyerSubmissionEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-QuoteBuyerSubmissionEmail      ; SiteLogo               ;                                                                                            ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-QuoteBuyerSubmissionEmail    ; TopContent             ;                                                                                            ; QuoteBuyerSubmissionEmailTopSlot           ; true
+                                    ;                          ; BottomContent-QuoteBuyerSubmissionEmail ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'QuoteToExpireSoonEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-QuoteToExpireSoonEmail      ; SiteLogo               ;                                                                                         ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-QuoteToExpireSoonEmail    ; TopContent             ;                                                                                         ; QuoteToExpireSoonEmailTopSlot              ; true
+                                    ;                          ; BottomContent-QuoteToExpireSoonEmail ; BottomContent          ;                                                                                         ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'QuoteExpiredEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-QuoteExpiredEmail      ; SiteLogo               ;                                                                                    ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-QuoteExpiredEmail    ; TopContent             ;                                                                                    ; QuoteExpiredEmailTopSlot                   ; true
+                                    ;                          ; BottomContent-QuoteExpiredEmail ; BottomContent          ;                                                                                    ; EmailBottomSlot                            ; true
+
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                        ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'QuoteBuyerCancellationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-QuoteBuyerCancellationEmail      ; SiteLogo               ;                                                                                              ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-QuoteBuyerCancellationEmail    ; TopContent             ;                                                                                              ; QuoteBuyerCancellationEmailTopSlot         ; true
+                                    ;                          ; BottomContent-QuoteBuyerCancellationEmail ; BottomContent          ;                                                                                              ; EmailBottomSlot                            ; true
+
+# Bind content slots to email page template
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                                     ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'RegistrationPendingApprovalEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-RegistrationPendingApprovalEmailTemplate      ; SiteLogo               ;                                                                                                   ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-RegistrationPendingApprovalEmailTemplate    ; TopContent             ;                                                                                                   ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-RegistrationPendingApprovalEmailTemplate ; BottomContent          ;                                                                                                   ; EmailBottomSlot                            ; true
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'RegistrationApprovedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-RegistrationApprovedEmailTemplate      ; SiteLogo               ;                                                                                            ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-RegistrationApprovedEmailTemplate    ; TopContent             ;                                                                                            ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-RegistrationApprovedEmailTemplate ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'RegistrationReceivedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-RegistrationReceivedEmailTemplate      ; SiteLogo               ;                                                                                            ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-RegistrationReceivedEmailTemplate    ; TopContent             ;                                                                                            ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-RegistrationReceivedEmailTemplate ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                              ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'RegistrationRejectedEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-RegistrationRejectedEmailTemplate      ; SiteLogo               ;                                                                                            ; SiteLogoSlot                               ; true
+                                    ;                          ; TopContent-RegistrationRejectedEmailTemplate    ; TopContent             ;                                                                                            ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-RegistrationRejectedEmailTemplate ; BottomContent          ;                                                                                            ; EmailBottomSlot                            ; true
+
+# Email Pages
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                  ; name                                     ; masterTemplate(uid, $contentCV)             ; defaultPage; approvalStatus(code)[default = 'approved']
+                       ;                          ; CustomerRegistrationEmail           ; Customer Registration Email              ; CustomerRegistrationEmailTemplate           ; true       ;
+                       ;                          ; ForgottenPasswordEmail              ; Forgotten Password Email                 ; ForgottenPasswordEmailTemplate              ; true       ;
+                       ;                          ; OrderConfirmationEmail              ; Order Confirmation Email                 ; OrderConfirmationEmailTemplate              ; true       ;
+                       ;                          ; DeliverySentEmail                   ; Delivery Sent Email                      ; DeliverySentEmailTemplate                   ; true       ;
+                       ;                          ; ReadyForPickupEmail                 ; Ready For Pickup Email                   ; ReadyForPickupEmailTemplate                 ; true       ;
+                       ;                          ; OrderCancelledEmail                 ; Order Cancelled Email                    ; OrderCancelledEmailTemplate                 ; true       ;
+                       ;                          ; OrderRefundEmail                    ; Order Refund Email                       ; OrderRefundEmailTemplate                    ; true       ;
+                       ;                          ; OrderCollectionReminderEmail        ; Order Collection Reminder Email          ; OrderCollectionReminderEmailTemplate        ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; OrderMoveToCsEmail                  ; Order Move To CS Email                   ; OrderMoveToCsEmailTemplate                  ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; OrderPartiallyCanceledEmail         ; Order Partially Canceled Email           ; OrderPartiallyCanceledEmailTemplate         ; true       ;
+                       ;                          ; OrderPartiallyRefundedEmail         ; Order Partially Refunded Email           ; OrderPartiallyRefundedEmailTemplate         ; true       ;
+                       ;                          ; NotPickedUpConsignmentCanceledEmail ; Not Picked Up Consignment Canceled Email ; NotPickedUpConsignmentCanceledEmailTemplate ; true       ;
+                       ;                          ; OrderApprovalRejectionEmail         ; Order Approval Rejection Email           ; OrderApprovalRejectionEmailTemplate         ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; OrderPendingApprovalEmail           ; Order Pending Approval Email             ; OrderPendingApprovalEmailTemplate           ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; ReplenishmentOrderPlacedEmail       ; Order Confirmation Email                 ; ReplenishmentOrderPlacedEmailTemplate       ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; ReplenishmentOrderConfirmationEmail ; Order Confirmation Email                 ; ReplenishmentOrderConfirmationEmailTemplate ; true       ; ; no-reply@adnocdistribution.ae ; Customer Services Team
+                       ;                          ; QuoteBuyerSubmissionEmail           ; Quote Buyer Submission Email             ; QuoteBuyerSubmissionEmailTemplate           ; true       ;
+                       ;                          ; QuoteToExpireSoonEmail              ; Quote To Expire Soon Email               ; QuoteToExpireSoonEmailTemplate              ; true       ;
+                       ;                          ; QuoteExpiredEmail                   ; Quote Expired Email                      ; QuoteExpiredEmailTemplate                   ; true       ;
+                       ;                          ; QuoteBuyerCancellationEmail         ; Quote Buyer Cancellation Email           ; QuoteBuyerCancellationEmailTemplate         ; true       ;
+                       ;                          ; RegistrationPendingApprovalEmail    ; Registration Pending Approval Email      ; RegistrationPendingApprovalEmailTemplate    ; true       ;
+                       ;                          ; RegistrationApprovedEmail           ; Registration Approved Email              ; RegistrationApprovedEmailTemplate           ; true       ;
+                       ;                          ; RegistrationReceivedEmail           ; Registration Received Email              ; RegistrationReceivedEmailTemplate           ; true       ;
+                       ;                          ; RegistrationRejectedEmail           ; Registration Rejected Email              ; RegistrationRejectedEmailTemplate           ; true       ;
+                       ;                          ; VerificationTokenEmail              ; Verification Token Email                 ; VerificationTokenEmailTemplate              ; true       ;
+
+# CMS components velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                             ; contextClass; rendererType(code)[default = 'velocity']
+                              ; adnoc-CMSImageComponent-template                ; java.util.Map
+                              ; adnoc-BannerComponent-template                  ; java.util.Map
+                              ; adnoc-SimpleBannerComponent-template            ; java.util.Map
+                              ; adnoc-CMSLinkComponent-template                 ; java.util.Map
+                              ; adnoc-CMSParagraphComponent-template            ; java.util.Map
+                              ; adnoc-standalone-CMSImageComponent-template     ; java.util.Map
+                              ; adnoc-standalone-BannerComponent-template       ; java.util.Map
+                              ; adnoc-standalone-SimpleBannerComponent-template ; java.util.Map
+                              ; adnoc-standalone-CMSLinkComponent-template      ; java.util.Map
+                              ; adnoc-standalone-CMSParagraphComponent-template ; java.util.Map
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                                             ; contextClass; rendererType(code)[default = 'velocity']
+                              ; adnoc_Email_Customer_Registration_Body                          ; $emailPackageName.CustomerEmailContext
+                              ; adnoc_Email_Forgotten_Password_Body                             ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; adnoc_Email_Order_Confirmation_Body                             ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Delivery_Sent_Body                                  ; $emailPackageName.DeliverySentEmailContext
+                              ; adnoc_Email_Ready_For_Pickup_Body                               ; $emailPackageName.ReadyForPickupEmailContext
+                              ; adnoc_Email_Order_Cancelled_Body                                ; $emailPackageName.OrderCancelledEmailContext
+                              ; adnoc_Email_Order_Refund_Body                                   ; $emailPackageName.OrderRefundEmailContext
+                              ; adnoc_Email_Order_Collection_Reminder_Body                      ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc_Email_Order_Move_To_CS_Body                               ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc_Email_Order_Partially_Canceled_Body                       ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; adnoc_Email_Order_Partially_Refunded_Body                       ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; adnoc_Email_NotPickedUpConsignment_Canceled_Body                ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; adnoc_Email_Customer_Registration_Subject                       ; $emailPackageName.CustomerEmailContext
+                              ; adnoc_Email_Forgotten_Password_Subject                          ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; adnoc_Email_Order_Confirmation_Subject                          ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Delivery_Sent_Subject                               ; $emailPackageName.DeliverySentEmailContext
+                              ; adnoc_Email_Ready_For_Pickup_Subject                            ; $emailPackageName.ReadyForPickupEmailContext
+                              ; adnoc_Email_Order_Cancelled_Subject                             ; $emailPackageName.OrderCancelledEmailContext
+                              ; adnoc_Email_Order_Refund_Subject                                ; $emailPackageName.OrderRefundEmailContext
+                              ; adnoc_Email_Order_Collection_Reminder_Subject                   ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc_Email_Order_Move_To_CS_Subject                            ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc_Email_Order_Partially_Canceled_Subject                    ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; adnoc_Email_Order_Partially_Refunded_Subject                    ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; adnoc_Email_NotPickedUpConsignment_Canceled_Subject             ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; adnoc_Email_Order_ApprovalRejection_Body                        ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Order_ApprovalRejection_Subject                     ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Order_PendingApproval_Subject                       ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Order_PendingApproval_Body                          ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Replenishment_Order_Placed_Body                     ; de.hybris.platform.b2bacceleratoraddon.proccess.email.context.OrderReplenishmentEmailContext
+                              ; adnoc_Email_Replenishment_Order_Placed_Subject                  ; de.hybris.platform.b2bacceleratoraddon.proccess.email.context.OrderReplenishmentEmailContext
+                              ; adnoc_Email_Replenishment_Order_Confirmation_Subject            ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Replenishment_Order_Confirmation_Body               ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc_Email_Quote_Buyer_Submission_Subject                      ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_Buyer_Submission_Body                         ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_To_Expire_Soon_Subject                        ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_To_Expire_Soon_Body                           ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_Expired_Subject                               ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_Expired_Body                                  ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_Buyer_Cancellation_Subject                    ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Quote_Buyer_Cancellation_Body                       ; $emailPackageName.QuoteNotificationEmailContext
+                              ; RegistrationPendingApprovalEmailTemplateSubject                 ; $adnocEmailPackage.AdnocB2BRegistrationEmailContext
+                              ; RegistrationPendingApprovalEmailTemplateBody                    ; $adnocEmailPackage.AdnocB2BRegistrationEmailContext
+                              ; RegistrationApprovedEmailTemplateSubject                        ; $registrationEmailPackageName.B2BRegistrationApprovedEmailContext
+                              ; RegistrationApprovedEmailTemplateBody                           ; $registrationEmailPackageName.B2BRegistrationApprovedEmailContext
+                              ; RegistrationReceivedEmailTemplateSubject                        ; $registrationEmailPackageName.B2BRegistrationEmailContext
+                              ; RegistrationReceivedEmailTemplateBody                           ; $registrationEmailPackageName.B2BRegistrationEmailContext
+                              ; RegistrationRejectedEmailTemplateSubject                        ; $registrationEmailPackageName.B2BRegistrationRejectedEmailContext
+                              ; RegistrationRejectedEmailTemplateBody                           ; $registrationEmailPackageName.B2BRegistrationRejectedEmailContext
+                              ; adnoc-standalone_Email_Customer_Registration_Body               ; $emailPackageName.CustomerEmailContext
+                              ; adnoc-standalone_Email_Forgotten_Password_Body                  ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; adnoc-standalone_Email_Order_Confirmation_Body                  ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Delivery_Sent_Body                       ; $emailPackageName.DeliverySentEmailContext
+                              ; adnoc-standalone_Email_Ready_For_Pickup_Body                    ; $emailPackageName.ReadyForPickupEmailContext
+                              ; adnoc-standalone_Email_Order_Cancelled_Body                     ; $emailPackageName.OrderCancelledEmailContext
+                              ; adnoc-standalone_Email_Order_Refund_Body                        ; $emailPackageName.OrderRefundEmailContext
+                              ; adnoc-standalone_Email_Order_Collection_Reminder_Body           ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc-standalone_Email_Order_Move_To_CS_Body                    ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc-standalone_Email_Order_Partially_Canceled_Body            ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; adnoc-standalone_Email_Order_Partially_Refunded_Body            ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; adnoc-standalone_Email_NotPickedUpConsignment_Canceled_Body     ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; adnoc-standalone_Email_Customer_Registration_Subject            ; $emailPackageName.CustomerEmailContext
+                              ; adnoc-standalone_Email_Forgotten_Password_Subject               ; $emailPackageName.ForgottenPasswordEmailContext
+                              ; adnoc-standalone_Email_Order_Confirmation_Subject               ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Delivery_Sent_Subject                    ; $emailPackageName.DeliverySentEmailContext
+                              ; adnoc-standalone_Email_Ready_For_Pickup_Subject                 ; $emailPackageName.ReadyForPickupEmailContext
+                              ; adnoc-standalone_Email_Order_Cancelled_Subject                  ; $emailPackageName.OrderCancelledEmailContext
+                              ; adnoc-standalone_Email_Order_Refund_Subject                     ; $emailPackageName.OrderRefundEmailContext
+                              ; adnoc-standalone_Email_Order_Collection_Reminder_Subject        ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc-standalone_Email_Order_Move_To_CS_Subject                 ; $emailPackageName.ConsignmentCollectionReminderEmailContext
+                              ; adnoc-standalone_Email_Order_Partially_Canceled_Subject         ; $emailPackageName.OrderPartiallyCanceledEmailContext
+                              ; adnoc-standalone_Email_Order_Partially_Refunded_Subject         ; $emailPackageName.OrderPartiallyRefundedEmailContext
+                              ; adnoc-standalone_Email_NotPickedUpConsignment_Canceled_Subject  ; $emailPackageName.NotPickedUpConsignmentCanceledEmailContext
+                              ; adnoc-standalone_Email_Order_ApprovalRejection_Body             ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Order_ApprovalRejection_Subject          ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Order_PendingApproval_Subject            ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Order_PendingApproval_Body               ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Replenishment_Order_Placed_Body          ; de.hybris.platform.b2bacceleratoraddon.proccess.email.context.OrderReplenishmentEmailContext
+                              ; adnoc-standalone_Email_Replenishment_Order_Placed_Subject       ; de.hybris.platform.b2bacceleratoraddon.proccess.email.context.OrderReplenishmentEmailContext
+                              ; adnoc-standalone_Email_Replenishment_Order_Confirmation_Subject ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Replenishment_Order_Confirmation_Body    ; $emailPackageName.OrderNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Buyer_Submission_Subject           ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Buyer_Submission_Body              ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_To_Expire_Soon_Subject             ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_To_Expire_Soon_Body                ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Expired_Subject                    ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Expired_Body                       ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Buyer_Cancellation_Subject         ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc-standalone_Email_Quote_Buyer_Cancellation_Body            ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_Email_Verification_Token_Body                             ; $emailVerificationTokenPackageName.VerificationTokenEmailContext
+                              ; adnoc_Email_Verification_Token_Subject                          ; $emailVerificationTokenPackageName.VerificationTokenEmailContext
+
+# Preview Image for use in the CMS Cockpit
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]    ; mime     ; realfilename               ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]
+                   ;                          ; EmailPageModel_preview ; text/gif ; EmailPageModel_preview.gif ; $jarResourceCms/preview-images/EmailPageModel_preview.gif
+
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                  ; previewImage(code, $contentCV)
+                ;                          ; CustomerRegistrationEmail           ; EmailPageModel_preview
+                ;                          ; ForgottenPasswordEmail              ; EmailPageModel_preview
+                ;                          ; OrderConfirmationEmail              ; EmailPageModel_preview
+                ;                          ; DeliverySentEmail                   ; EmailPageModel_preview
+                ;                          ; ReadyForPickupEmail                 ; EmailPageModel_preview
+                ;                          ; OrderCancelledEmail                 ; EmailPageModel_preview
+                ;                          ; OrderRefundEmail                    ; EmailPageModel_preview
+                ;                          ; OrderCollectionReminderEmail        ; EmailPageModel_preview
+                ;                          ; OrderMoveToCsEmail                  ; EmailPageModel_preview
+                ;                          ; OrderPartiallyCanceledEmail         ; EmailPageModel_preview
+                ;                          ; OrderPartiallyRefundedEmail         ; EmailPageModel_preview
+                ;                          ; NotPickedUpConsignmentCanceledEmail ; EmailPageModel_preview
+                ;                          ; OrderApprovalRejectionEmail         ; EmailPageModel_preview
+                ;                          ; OrderPendingApprovalEmail           ; EmailPageModel_preview
+                ;                          ; ReplenishmentOrderPlacedEmail       ; EmailPageModel_preview
+                ;                          ; QuoteBuyerSubmissionEmail           ; EmailPageModel_preview
+                ;                          ; QuoteToExpireSoonEmail              ; EmailPageModel_preview
+                ;                          ; QuoteExpiredEmail                   ; EmailPageModel_preview
+                ;                          ; QuoteBuyerCancellationEmail         ; EmailPageModel_preview
+                ;                          ; ReplenishmentOrderConfirmationEmail ; EmailPageModel_preview
+                ;                          ; RegistrationPendingApprovalEmail    ; EmailPageModel_preview
+                ;                          ; RegistrationApprovedEmail           ; EmailPageModel_preview
+                ;                          ; RegistrationReceivedEmail           ; EmailPageModel_preview
+                ;                          ; RegistrationRejectedEmail           ; EmailPageModel_preview
+
+#Adnoc Email Notitication Templates Start
+
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                                      ; name                                                         ; active; frontendTemplateName                                    ; subject(code)                                 ; htmlTemplate(code)                         ; restrictedPageTypes(code)
+                               ;                          ; AdnocB2BCustomerCreationEmailTemplate                   ; Adnoc B2BCustomer Creation Email Templat                     ; true  ; AdnocB2BCustomerCreationEmailTemplate                   ; adnoc_AdnocB2BCustomer_Creation_Subject       ; adnoc_AdnocB2BCustomer_Creation_Body       ; EmailPage
+                               ;                          ; AdnocB2BAdminCreatedEmailTemplate                       ; Adnoc B2BAdmin Created Email Templat                         ; true  ; AdnocB2BAdminCreatedEmailTemplate                       ; adnoc_AdnocB2BAdmin_Created_Subject           ; adnoc_AdnocB2BAdmin_Created_Body           ; EmailPage
+                               ;                          ; AdnocPartialOrderCompletionEmailTemplate                ; Adnoc Partial Order Email Template                           ; true  ; AdnocPartialOrderCompletionEmailTemplate                ; adnoc_PartialOrder_Completion_Subject         ; adnoc_PartialOrder_Completion_Body         ; EmailPage
+                               ;                          ; AdnocOrderCompletedEmailTemplate                        ; Adnoc Order Completed Email Template                         ; true  ; AdnocOrderCompletedEmailTemplate                        ; adnoc_Order_Completed_Subject                 ; adnoc_Order_Completed_Body                 ; EmailPage
+                               ;                          ; AdnocOrderCancelledEmailTemplate                        ; Adnoc Order Cancelled Email Template                         ; true  ; AdnocOrderCancelledEmailTemplate                        ; adnoc_Order_Cancelled_Subject                 ; adnoc_Order_Cancelled_Body                 ; EmailPage
+                               ;                          ; AdnocQuoteBuyerOrderPlacedEmailTemplate                 ; Adnoc Quote Buyer Order Placed Email Templat                 ; true  ; AdnocQuoteBuyerOrderPlacedEmailTemplate                 ; adnoc_QuoteBuyerOrderPlaced_Subject           ; adnoc_QuoteBuyerOrderPlaced_Body           ; EmailPage
+                               ;                          ; AdnocReQuoteBuyerSubmissionEmailTemplate                ; Adnoc ReQuote Buyer Submission Email Templat                 ; true  ; AdnocReQuoteBuyerSubmissionEmailTemplate                ; adnoc_ReQuote_Buyer_Submission_Subject        ; adnoc_ReQuote_Buyer_Submission_Body        ; EmailPage
+                               ;                          ; AdnocReturnOrderSubmissionEmailTemplate                 ; Adnoc Return Order Submission Email Template                 ; true  ; AdnocReturnOrderSubmissionEmailTemplate                 ; adnoc_Return_Order_Submission_Subject         ; adnoc_Return_Order_Submission_Body         ; EmailPage
+                               ;                          ; AdnocReturnOrderApprovedEmailTemplate                   ; Adnoc Return Order Approved Email Template                   ; true  ; AdnocReturnOrderApprovedEmailTemplate                   ; adnoc_Return_Order_Approved_email_Subject     ; adnoc_Return_Order_Approved_email_Body     ; EmailPage
+                               ;                          ; AdnocNewQuoteRequestEmailTemplate                       ; Adnoc New Quote Request Email Template                       ; true  ; AdnocNewQuoteRequestEmailTemplate                       ; adnoc_New_Quote_Request_Subject               ; adnoc_New_Quote_Request_Body               ; EmailPage
+                               ;                          ; AdnocQuoteRequestResubmissionEmailTemplate              ; Adnoc Quote Request Resubmission Email Template              ; true  ; AdnocQuoteRequestReSubmissionEmailTemplate              ; adnoc_Quote_Request_ReSubmission_Subject      ; adnoc_Quote_Request_ReSubmission_Body      ; EmailPage
+                               ;                          ; AdnocReturnOrderRequestSubmissionToCsAgentEmailTemplate ; Adnoc ReturnOrderRequest Submission ToCsAgnet Email Template ; true  ; AdnocReturnOrderRequestSubmissionToCsAgentEmailTemplate ; adnoc_Return_Order_Submission_CSAgent_Subject ; adnoc_Return_Order_Submission_CSAgent_Body ; EmailPage
+                               ;                          ; AdnocShipToCreatedB2BCustomerEmailTemplate              ; Adnoc ShipTo Created B2BCustomer Email Templat               ; true  ; AdnocShipToCreatedB2BCustomerEmailTemplate              ; adnoc_ShipTo_Created_B2BCustomer_Subject      ; adnoc_ShipTo_Created_B2BCustomer_Body      ; EmailPage
+                               ;                          ; AdnocReturnOrderRejectedEmailTemplate                   ; Adnoc Return Order Rejected Email Templat                    ; true  ; AdnocReturnOrderRejectedEmailTemplate                   ; adnoc_Return_Order_Rejected_Subject           ; adnoc_Return_Order_Rejected_Body           ; EmailPage
+                               ;                          ; AdnocQuoteSellerApproveOrRejectEmailTemplate            ; Adnoc Quote Seller Approve OR Reject Email Templat           ; true  ; AdnocQuoteSellerApproveOrRejectEmailTemplate            ; adnoc_AdnocQuoteSellerApproveOrReject_Subject ; adnoc_AdnocQuoteSellerApproveOrReject_Body ; EmailPage
+                               ;                          ; AdnocOrderReplicationFailedEmailTemplate                ; Adnoc Order Replicatoin Failed Email Template                ; true  ; AdnocOrderReplicationFailedEmailTemplate                ; adnoc_Order_Replication_Failed_Subject        ; adnoc_Order_Replication_Failed_Body        ; EmailPage
+                               ;                          ; AdnocPartialOrderCancellationEmailTemplate              ; Adnoc Order  Partial Cancelled Email Template                ; true  ; AdnocPartialOrderCancellationEmailTemplate              ; adnoc_PartialOrder_Cancelled_Subject          ; adnoc_PartialOrder_Cancelled_Body          ; EmailPage
+
+
+INSERT_UPDATE RendererTemplate; code[unique = true]                           ; contextClass; rendererType(code)[default = 'velocity']
+                              ; adnoc_AdnocB2BCustomer_Creation_Body          ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+                              ; adnoc_AdnocB2BCustomer_Creation_Subject       ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+
+                              ; adnoc_AdnocB2BAdmin_Created_Body              ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+                              ; adnoc_AdnocB2BAdmin_Created_Subject           ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+
+                              ; adnoc_PartialOrder_Completion_Body            ; $adnocEmailPackage.AdnocPartialOrderCompletionEmailContext
+                              ; adnoc_PartialOrder_Completion_Subject         ; $adnocEmailPackage.AdnocPartialOrderCompletionEmailContext
+
+                              ; adnoc_Order_Completed_Body                    ; $adnocEmailPackage.AdnocPartialOrderCompletionEmailContext
+                              ; adnoc_Order_Completed_Subject                 ; $adnocEmailPackage.AdnocPartialOrderCompletionEmailContext
+
+                              ; adnoc_Order_Cancelled_Body                    ; $adnocEmailPackage.OrderNotificationEmailContext
+                              ; adnoc_Order_Cancelled_Subject                 ; $adnocEmailPackage.OrderNotificationEmailContext
+
+                              ; adnoc_AdnocCsTicketClosed_Body                ; $adnocEmailPackage.AdnocCsTicketClosedEmailContext
+                              ; adnoc_AdnocCsTicketClosed_Subject             ; $adnocEmailPackage.AdnocCsTicketClosedEmailContext
+
+                              ; adnoc_QuoteBuyerOrderPlaced_Body              ; $adnocEmailPackage.QuoteNotificationEmailContext
+                              ; adnoc_QuoteBuyerOrderPlaced_Subject           ; $adnocEmailPackage.QuoteNotificationEmailContext
+
+                              ; adnoc_ReQuote_Buyer_Submission_Body           ; $adnocEmailPackage.QuoteNotificationEmailContext
+                              ; adnoc_ReQuote_Buyer_Submission_Subject        ; $adnocEmailPackage.QuoteNotificationEmailContext
+
+                              ; adnoc_Return_Order_Submission_Body            ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+                              ; adnoc_Return_Order_Submission_Subject         ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+
+                              ; adnoc_Return_Order_Approved_email_Subject     ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+                              ; adnoc_Return_Order_Approved_email_Body        ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+
+                              ; adnoc_New_Quote_Request_Body                  ; $adnocEmailPackage.QuoteNotificationEmailContext
+                              ; adnoc_New_Quote_Request_Subject               ; $adnocEmailPackage.QuoteNotificationEmailContext
+
+                              ; adnoc_Quote_Request_ReSubmission_Body         ; $adnocEmailPackage.QuoteNotificationEmailContext
+                              ; adnoc_Quote_Request_ReSubmission_Subject      ; $adnocEmailPackage.QuoteNotificationEmailContext
+
+                              ; adnoc_Return_Order_Submission_CSAgent_Body    ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+                              ; adnoc_Return_Order_Submission_CSAgent_Subject ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+
+                              ; adnoc_ShipTo_Created_B2BCustomer_Body         ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+                              ; adnoc_ShipTo_Created_B2BCustomer_Subject      ; $adnocEmailPackage.AdnocB2BCustomerCreationContext
+
+                              ; adnoc_Return_Order_Rejected_Body              ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+                              ; adnoc_Return_Order_Rejected_Subject           ; com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext
+
+                              ; adnoc_AdnocQuoteSellerApproveOrReject_Body    ; $emailPackageName.QuoteNotificationEmailContext
+                              ; adnoc_AdnocQuoteSellerApproveOrReject_Subject ; $emailPackageName.QuoteNotificationEmailContext
+
+                              ; adnoc_Order_Replication_Failed_Body           ; $adnocEmailPackage.OrderNotificationEmailContext
+                              ; adnoc_Order_Replication_Failed_Subject        ; $adnocEmailPackage.OrderNotificationEmailContext
+
+                              ; adnoc_PartialOrder_Cancelled_Body                    ; $adnocEmailPackage.OrderNotificationEmailContext
+                              ; adnoc_PartialOrder_Cancelled_Subject                 ; $adnocEmailPackage.OrderNotificationEmailContext
+
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; name                                                ; masterTemplate(uid, $contentCV)                         ; defaultPage; approvalStatus(code)[default = 'approved']
+                       ;                          ; AdnocB2BCustomerCreationEmail                   ; Adnoc B2BCustomer Creation Email                    ; AdnocB2BCustomerCreationEmailTemplate                   ; true       ;
+                       ;                          ; AdnocB2BAdminCreatedEmail                       ; Adnoc B2BAdmin Created Email                        ; AdnocB2BAdminCreatedEmailTemplate                       ; true       ;
+                       ;                          ; AdnocPartialOrderCompletionEmail                ; Adnoc Partial Order Completion Email                ; AdnocPartialOrderCompletionEmailTemplate                ; true       ;
+                       ;                          ; AdnocOrderCompletedEmail                        ; Adnoc Order Completed Email                         ; AdnocOrderCompletedEmailTemplate                        ; true       ;
+                       ;                          ; AdnocOrderCancelledEmail                        ; Adnoc Order Cancelled Email                         ; AdnocOrderCancelledEmailTemplate                        ; true       ;
+                       ;                          ; AdnocQuoteBuyerOrderPlacedEmail                 ; Adnoc Quote Buyer Order Placed Email                ; AdnocQuoteBuyerOrderPlacedEmailTemplate                 ; true       ;
+                       ;                          ; AdnocReQuoteBuyerSubmissionEmail                ; Adnoc ReQuote Buyer Submission Email                ; AdnocReQuoteBuyerSubmissionEmailTemplate                ; true       ;
+                       ;                          ; AdnocReturnOrderSubmissionEmail                 ; Adnoc Return Order Submission Email                 ; AdnocReturnOrderSubmissionEmailTemplate                 ; true       ;
+                       ;                          ; AdnocReturnOrderApprovedEmail                   ; Adnoc Return Order Approved Email                   ; AdnocReturnOrderApprovedEmailTemplate                   ; true       ;
+                       ;                          ; AdnocNewQuoteRequestEmail                       ; Adnoc New Quote Request Email                       ; AdnocNewQuoteRequestEmailTemplate                       ; true       ;
+                       ;                          ; AdnocQuoteRequestReSubmissionEmail              ; Adnoc Quote Request ReSubmission Email              ; AdnocQuoteRequestResubmissionEmailTemplate              ; true       ;
+                       ;                          ; AdnocReturnOrderRequestSubmissionToCsAgentEmail ; Adnoc ReturnOrderRequest Submission ToCsAgent Email ; AdnocReturnOrderRequestSubmissionToCsAgentEmailTemplate ; true       ;
+                       ;                          ; AdnocShipToCreatedB2BCustomerEmail              ; Adnoc ShipTo Created B2BCustomer Email              ; AdnocShipToCreatedB2BCustomerEmailTemplate              ; true       ;
+                       ;                          ; AdnocReturnOrderRejectedEmail                   ; Adnoc Return Order Rejected Email                   ; AdnocReturnOrderRejectedEmailTemplate                   ; true       ;
+                       ;                          ; AdnocQuoteSellerApproveOrRejectEmail            ; Adnoc Seller Approve Or Reject Email                ; AdnocQuoteSellerApproveOrRejectEmailTemplate            ; true       ;
+                       ;                          ; AdnocOrderReplicationFailedEmail                ; Adnoc Order Replication Failed Email                ; AdnocOrderReplicationFailedEmailTemplate                ; true       ;
+                       ;                          ; AdnocPartialOrderCancellationEmail              ; Adnoc Order Partial Cancelled Email                 ; AdnocPartialOrderCancellationEmailTemplate              ; true       ;
+#AdnocCsTicket Creation
+$lang = 'en'
+
+INSERT_UPDATE CsTicketEventEmailConfiguration; code[unique = true]; recipientType(code); alteredAttributes(qualifier, enclosingType(ComposedType.code)); eventType(code)     ; subject                                       ; plainTextTemplate(code)                ; htmlTemplate(code)                     ;
+                                             ; 1                  ; Customer           ;                                                               ; ticketCreationEvent ; ADNOC Complaint/Request Created Successfully! ; TickSystem_Customer_TicketCreated_Text ; TickSystem_Customer_TicketCreated_HTML ; ; 2 ; AssignedGroup ; ; ticketCreationEvent ; ADNOC Complaint/Request Created Successfully! ; TickSystem_CSAgentmanager_TicketCreated_Text ; TickSystem_CSAgentmanager_TicketCreated_HTML ;
+
+INSERT_UPDATE RendererTemplate; code[unique = true]                    ; contextClass                                                  ; description[lang = $lang]                              ; rendererType(code)[default = 'velocity']; templateScript[lang = $lang];
+                              ; TickSystem_Customer_TicketCreated_Text ; de.hybris.platform.ticket.email.context.AbstractTicketContext ; Ticket System Ticket Created Customer Plain Text Email ;                                         ; "
+	Dear ${ctx.ticket.customer.title.name} ${ctx.name},
+
+	Your request has been created. Please find below the reference ID  ${ctx.ticketId} to track the status of resolution of your request.
+
+    You can view the status of the request through the given link: https://www.adnocdistribution.ae/
+
+	If you have any questions or need further assistance, please feel free to reach out to our support team at adnocsupport@adnocdistribution or 99999999999. We are here to help!
+
+	Thank you for choosing ADNOC. We look forward to serving you.
+    "                       ;
+
+                              ; TickSystem_Customer_TicketCreated_HTML ; de.hybris.platform.ticket.email.context.AbstractTicketContext ; Ticket System Ticket Created Customer HTML Email       ;                                         ; "
+	<html>
+		<head></head>
+		<body>
+			<div>
+				<p>Dear ${ctx.ticket.customer.title.name} ${ctx.name},</p>
+				<p>Your request has been created. Please find below the reference ID ${ctx.ticketId} to track the status of resolution of your request.</p>
+				<p>You can view the status of the request through the given link: https://www.adnocdistribution.ae/</p>
+				<p>If you have any questions or need further assistance, please feel free to reach out to our support team at adnocsupport@adnocdistribution or 99999999999. We are here to help!</p>
+				<p>Thank you for choosing ADNOC. We look forward to serving you.</p>
+			</div>
+		</body>
+	</html>
+	"                       ;
+
+#Adnoc Email Notitication Templates END

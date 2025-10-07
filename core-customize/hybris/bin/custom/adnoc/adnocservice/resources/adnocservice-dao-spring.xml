@@ -1,0 +1,67 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <alias name="adnocB2BRegistrationDaoImpl" alias="adnocB2BRegistrationDao"/>
+    <bean id="adnocB2BRegistrationDaoImpl" class="com.adnoc.service.registration.dao.impl.AdnocB2BRegistrationDaoImpl" parent="b2bRegistrationDao">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <alias name="adnocConfigDaoImpl" alias="adnocConfigDao"/>
+    <bean id="adnocConfigDaoImpl" class="com.adnoc.service.config.dao.impl.AdnocConfigDaoImpl">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <alias name="adnocB2BDocumentDaoImpl" alias="adnocB2BDocumentDao"/>
+    <bean id="adnocB2BDocumentDaoImpl" class="com.adnoc.service.company.dao.AdnocB2BDocumentDaoImpl" parent="defaultB2BDocumentDao"/>
+
+    <alias name="adnocB2BDocumentTypeDaoImpl" alias="adnocB2BDocumentTypeDao"/>
+    <bean id="adnocB2BDocumentTypeDaoImpl" class="com.adnoc.service.company.dao.AdnocB2BDocumentTypeDaoImpl" parent="defaultB2BDocumentTypeDao"/>
+
+    <alias name="adnocAddressDaoImpl" alias="adnocAddressDao"/>
+    <bean id="adnocAddressDaoImpl" class="com.adnoc.service.address.AdnocAddressDaoImpl" parent="addressDao"/>
+
+    <alias name="adnocB2BUnitDaoImpl" alias="adnocB2BUnitDao"/>
+    <bean id="adnocB2BUnitDaoImpl" class="com.adnoc.service.b2bunit.dao.impl.AdnocB2BUnitDaoImpl"
+          parent="defaultB2BUnitDao">
+    </bean>
+
+    <alias name="adnocTicketDaoImpl" alias="adnocTicketDao"/>
+    <bean id="adnocTicketDaoImpl" class="com.adnoc.service.ticket.dao.AdnocTicketDaoImpl" parent="defaultTicketDao"/>
+
+    <alias name="adnocCategoryDaoImpl" alias="adnocCategoryDao"/>
+    <bean id="adnocCategoryDaoImpl" class="com.adnoc.service.category.daos.impl.AdnocCategoryDaoImpl"
+          parent="categoryDao"/>
+
+    <alias name="adnocCustomerAccountDaoImpl" alias="adnocCustomerAccountDao"/>
+    <bean id="adnocCustomerAccountDaoImpl" class="com.adnoc.service.customer.dao.impl.AdnocCustomerAccountDaoImpl" parent="defaultCustomerAccountDao">
+        <property name="adnocConfigService" ref="adnocConfigService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <alias name="adnocStoreDaoImpl" alias="adnocStoreDao"/>
+    <bean id="adnocStoreDaoImpl" class="com.adnoc.service.storeservice.AdnocStoreDaoImpl" parent="defaultPointOfServiceDao"/>
+
+    <alias alias="b2bDocumentDao" name="adnocAccountSummaryDao" />
+    <bean id="adnocAccountSummaryDao" class="com.adnoc.service.company.dao.AdnocAccountSummaryDaoImpl" parent="defaultB2BDocumentDao"/>
+
+    <alias name="adnocProductDao" alias="adnocProductDao"/>
+    <bean id="adnocProductDao" class="com.adnoc.service.product.daos.AdnocProductDaoImpl" parent="defaultProductDao"/>
+
+    <alias name="adnocPriceRowDaoImpl" alias="adnocPriceRowDao"/>
+    <bean id="adnocPriceRowDaoImpl" class="com.adnoc.service.price.dao.impl.AdnocPriceRowDaoImpl">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <alias name="adnocLinkComponentDaoImpl" alias="adnocLinkComponentDao"/>
+    <bean id="adnocLinkComponentDaoImpl" class="com.adnoc.service.component.AdnocLinkComponentDaoImpl">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+</beans>

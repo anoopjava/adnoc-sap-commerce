@@ -1,0 +1,36 @@
+INSERT_UPDATE CronJob; code[unique = true]                       ; job(code)                         ; singleExecutable; sessionLanguage(isocode); nodeGroup[default = 'integration']
+                     ; adnocB2BRegistrationAutoRejectCronJob     ; adnocB2BRegistrationAutoRejectJob ; false           ; en                      ;
+                     ; adnocB2BUnitRelationMappingCronJob        ; adnocB2BUnitRelationMappingJob    ; false           ; en                      ;
+                     ; adnocAutoProductCatalogSyncCronJob        ; adnocAutoProductCatalogSyncJob    ; false           ; en                      ;
+
+INSERT_UPDATE CronJob; code[unique = true]                    ; job(code)[unique = true]           ; sessionLanguage(isoCode)[default = en]; nodeGroup[default = 'integration']
+                     ; customersWithOrdersRetentionCronJob    ; customersWithOrdersRetentionJob    ;                                       ;
+                     ; customersWithoutOrdersRetentionCronJob ; customersWithoutOrdersRetentionJob ;                                       ;
+                     ; ordersRetentionCronJob                 ; ordersRetentionJob                 ;                                       ;
+                     ; ticketsRetentionCronJob                ; ticketsRetentionJob                ;                                       ;
+                     ; ticketsStagnationJob                   ; ticketsFSStagnationJob             ;                                       ;
+                     ; priceRowRetentionJob                   ; priceRowsRetentionJob              ;                                       ;
+
+INSERT_UPDATE CronJob; code[unique = true]     ; job(code)           ; sessionLanguage(isoCode)[default = en]; nodeGroup[default = 'integration']
+                     ; cronjobRetentionCronJob ; cronjobRetentionJob ;                                       ;
+
+INSERT_UPDATE CronJob; code[unique = true]         ; job(code)               ; sessionLanguage(isoCode)[default = en]; nodeGroup[default = 'integration']
+                     ; storedSessionCleanupCronJob ; storedSessionCleanupJob ;                                       ;
+
+INSERT_UPDATE CronJob; code[unique = true]          ; job(code)                          ; singleExecutable; sessionLanguage(isocode); nodeGroup[default = 'integration']
+                     ; cleanOAuthAccessTokenCronJob ; cleanupOAuthAccessTokenPerformable ; false           ; en                      ;
+
+INSERT_UPDATE CronJob; code[unique = true]                ; job(code)                                ; singleExecutable; sessionLanguage(isocode); nodeGroup[default = 'integration']
+                     ; cleanOAuthAuthorizationCodeCronJob ; cleanupOAuthAuthorizationCodePerformable ; false           ; en                      ;
+
+INSERT_UPDATE CronJob; code[unique = true]           ; job(code)                           ; singleExecutable; sessionLanguage(isocode); nodeGroup[default = 'integration']
+                     ; cleanOAuthRefreshTokenCronJob ; cleanupOAuthRefreshTokenPerformable ; false           ; en                      ;
+
+INSERT_UPDATE ServicelayerJob; code[unique = true]            ; springId[unique = true]
+                             ; adnocUpdateCmsLinkComponentJob ; adnocUpdateCmsLinkComponentJob
+
+INSERT_UPDATE CronJob; code[unique = true]                       ; job(code)                      ; singleExecutable; sessionLanguage(isocode)
+                     ; adnocUpdateCmsLinkComponentJobSyncCronJob ; adnocUpdateCmsLinkComponentJob ; false           ; en ;
+
+INSERT_UPDATE Trigger; cronjob(code)[unique = true]          ; cronExpression
+                     ; adnocUpdateCmsLinkComponentJobSyncCronJob ; 0 0 0 * * ?

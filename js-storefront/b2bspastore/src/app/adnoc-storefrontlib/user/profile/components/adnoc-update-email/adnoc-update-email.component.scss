@@ -1,0 +1,54 @@
+@import "../../../../../../styles/scss/utilities/mixins";
+@import "../../../../../../styles/scss/utilities/variables";
+
+cx-page-layout {
+  &.AccountPageTemplate {
+    cx-page-slot {
+      @include media-breakpoint-up(md) {
+        display: flex;
+        align-items: flex-start;
+        padding-inline-start: 0;
+        margin: auto;
+      }
+
+      @include media-breakpoint-down(md) {
+        padding-inline-start: 1rem;
+        padding-inline-end: 1rem;
+      }
+
+      @include media-breakpoint-down(md) {
+        max-width: var(--cx-max-width);
+
+        &>* {
+          max-width: var(--cx-max-width);
+        }
+      }
+
+      adnoc-update-email {
+        .form-legend {
+          font-style: normal;
+        }
+
+        .subTitle {
+          font-family: var(--cx-font-family-medium);
+          font-weight: var(--cx-font-weight-semi);
+          flex: var(--cx-max-width);
+        }
+      }
+    }
+  }
+}
+
+.cxFeat_a11yImproveContrast {
+  .form-control {
+    background: var(--cx-summary-range-background);
+  }
+
+  .btn-block {
+    font-family: var(--cx-font-family-medium);
+    font-weight: var(--cx-font-weight-semi);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

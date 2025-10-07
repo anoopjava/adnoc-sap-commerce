@@ -1,0 +1,95 @@
+@import "../utilities/variables";
+* {
+  font-family: var(--cx-font-family-regular);
+}
+.btn {
+  border-radius: 8px !important;
+  &-primary {
+    &:hover {
+      background-color: var(--cx-color-primary) !important;
+      border-color: var(--cx-color-primary) !important;
+    }
+    &:disabled {
+      background-color: var(--cx-color-primary) !important;
+      border-color: var(--cx-color-primary) !important;
+    }
+  }
+  &-secondary {
+    color: var(--cx-color-primary);
+    &:hover {
+      color: var(--cx-color-primary) !important;
+      border-color: var(--cx-color-primary) !important;
+    }
+  }
+}
+@mixin noTextDecoration() {
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+cx-link a {
+  @include noTextDecoration();
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--cx-font-family-medium);
+}
+a {
+  @include noTextDecoration();
+}
+.cx-organization-user-register-button {
+  a {
+    &:hover {
+      border-color: var(--cx-org-register-button-color) !important;
+      color: var(--cx-org-register-button-color) !important;
+    }
+  }
+}
+.ng-select {
+  .ng-select-container {
+    .ng-value-container .ng-placeholder {
+      color: var(--cx-font-color) !important;
+    }
+  }
+}
+.text-color-primary {
+  color: var(--cx-color-primary);
+}
+@media (max-width: 576px) {
+  cx-verification-token-dialog {
+    .cx-asm-dialog {
+      .cx-modal-content {
+        width: 95%;
+      }
+    }
+  }
+}
+cx-asm-main-ui {
+  z-index: 1;
+  background-color: var(--cx-white);
+}
+ul {
+  margin: 0 !important;
+}
+
+cx-page-slot {
+  &.Section0 {
+    max-width: var(--cx-page-width-max);
+    margin: auto;
+    margin-top: 30px;
+
+    @include media-breakpoint-down(md) {
+      margin-top: 0;
+    }
+  }
+}
+.ErrorPageTemplate {
+  cx-media {
+    picture {
+      img {
+        height: 300px;
+      }
+    }
+  }
+}

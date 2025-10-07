@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        	
+    
+    <extension abstractclassprefix="Generated" classprefix="Adnocservice" description="adnocservice extension" jaloLogicFree="true" managername="AdnocserviceManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="adnocservice" usemaven="true">
+                		
+        
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+
+        <requires-extension name="b2bcommerce"/>
+        <requires-extension name="b2bacceleratorservices"/>
+        <requires-extension name="sapcpiorderexchange"/>
+        <requires-extension name="odata2webservices" />
+        <requires-extension name="saporderexchangeb2b"/>
+        <requires-extension name="saporderexchangeoms"/>
+        <requires-extension name="warehousing"/>
+        <coremodule generated="true" manager="com.adnoc.service.jalo.AdnocserviceManager" packageroot="com.adnoc.service"/>
+                		
+        
+        	
+    
+    </extension>
+        
+
+</extensioninfo>

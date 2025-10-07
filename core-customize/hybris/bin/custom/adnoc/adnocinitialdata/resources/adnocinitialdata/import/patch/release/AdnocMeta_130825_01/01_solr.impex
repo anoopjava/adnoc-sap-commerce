@@ -1,0 +1,14 @@
+$productCatalog = adnocProductCatalog
+$catalogVersions = catalogVersions(catalog(id), version);
+$facetSearchConfigName = adnocIndex
+$facetSearchConfigDescription = Adnoc Solr Index
+$searchIndexNamePrefix = adnoc
+$solrIndexedType = adnocProductType
+$indexBaseSite = adnoc
+$indexLanguages = en
+$indexCurrencies = AED, USD
+
+
+REMOVE SolrSearchQueryProperty; indexedProperty(name, solrIndexedType(identifier))[unique = true]; facet ; facetType(code); priority; facetDisplayNameProvider; facetSortProvider; facetTopValuesProvider   ; includeInResponse[default = true]; searchQueryTemplate(name, indexedType(identifier))[unique = true][default = DEFAULT:$solrIndexedType]
+                              ; allCategories:$solrIndexedType                                   ; false ; Refine         ; -9999   ;                         ;                  ;                          ;                                  ;
+                              ; price:$solrIndexedType                                           ; false ; MultiSelectOr  ; 4000    ;                         ;                  ; defaultTopValuesProvider ;                                  ;

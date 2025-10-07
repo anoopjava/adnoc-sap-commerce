@@ -1,0 +1,94 @@
+﻿## messageSource=classpath:/adnocservice/messages/email-adnocReturnOrderSubmission_$lang.properties
+
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url" style="color:$textColor; text-decoration: none;">$bodyContent</a>
+#end
+
+#macro(displayNegationForDiscount $priceData)
+    #if (${priceData.value} > 0)
+        -
+    #end
+    ${priceData.formattedValue}
+#end
+
+<html>
+  <body bgcolor="#ffffff" style="margin: 0; padding: 20px; font-family:Aptos Display, Arial, Helvetica, sans-serif; color: #414a4f; font-size: 16px;">
+
+    <div class="content" style="max-width: 600px; margin: auto; font-family:Aptos Display, Arial, Helvetica, sans-serif;">
+
+      <!-- Greeting -->
+      <p style="margin-bottom: 20px;">Dear ${ctx.title} ${ctx.csaEmployeeName},</p>
+
+      <!-- Determine Division Name -->
+      #set($divisionName = "")
+      #foreach($entry in $ctx.order.entries)
+          #if($entry.division == "21")
+              #set($divisionName = "FUEL")
+              #break
+          #elseif($entry.division == "41")
+              #set($divisionName = "LUBRICANTS")
+              #break
+          #elseif($entry.division == "31")
+              #set($divisionName = "LPG")
+              #break
+          #elseif($entry.division == "53")
+              #set($divisionName = "CARCARE")
+              #break
+          #elseif($entry.division == "23")
+              #set($divisionName = "C-STORE")
+              #break
+          #end
+      #end
+
+      <!-- Intro -->
+      <p style="margin-bottom: 20px;">${ctx.messages.returnOrderDetailsParagraph.replace('{0}', $divisionName)}</p>
+
+      <!-- Customer Details -->
+      <div style="margin-bottom: 25px;">
+        <h3 style="margin: 0 0 10px;">${ctx.messages.customerDetails}</h3>
+        <ul style="margin: 0 0 0 20px; padding: 0;">
+          <li><strong>Customer Name:</strong> ${ctx.displayName}</li>
+          <li><strong>Return Order Number:</strong> ${ctx.returnRequest.rma}</li>
+        </ul>
+      </div>
+
+      <!-- Order Details -->
+      <div style="margin-bottom: 25px;">
+        <h3 style="margin: 0 0 10px;">${ctx.messages.orderDetails}</h3>
+        <ul style="margin: 0 0 0 20px; padding: 0;">
+          <li><strong>Order Number:</strong> ${ctx.order.code}</li>
+          <li><strong>Order Date:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.order.created})</li>
+          <li><strong>Return Request Date:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.returnRequest.creationTime})</li>
+          <li><strong>Status:</strong> ${ctx.returnRequest.statusDisplay}</li>
+        </ul>
+      </div>
+
+      <!-- Action Section -->
+      <div style="margin-bottom: 25px;">
+        <p style="margin-bottom: 10px;">${ctx.messages.actionRequired}</p>
+        <p style="margin-bottom: 10px;">
+          <a href="${ctx.backOfficeLink}" style="color: #0066cc; text-decoration: none;">
+            ${ctx.messages.link}
+          </a> ${ctx.messages.returnRequest}
+        </p>
+        <p style="margin-bottom: 10px;">${ctx.messages.customerEnquiry}</p>
+        <p style="margin-bottom: 10px;">${ctx.messages.thankYouParagraph}</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer" style="font-size: 13px;">
+        <p style="margin: 4px 0;">${ctx.messages.complimentaryClosing}</p>
+        <p style="margin: 4px 0;">${ctx.messages.customerTeam}</p>
+        <p style="margin: 4px 0;">${ctx.messages.adnoc}</p>
+        <p style="margin: 4px 0;">
+          <a href="https://www.adnocdistribution.ae/" style="color: #4682B4;">${ctx.messages.website}</a>
+        </p>
+      </div>
+
+    </div>
+  </body>
+</html>

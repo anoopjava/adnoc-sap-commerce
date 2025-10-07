@@ -1,0 +1,70 @@
+<div class="main">
+  <div class="container">
+    <a [routerLink]="{ cxRoute: 'home' } | cxUrl">
+      <img class="siteLogo" src="images/sitelogo.svg" alt="ADNOC Logo" />
+    </a>
+    <div class="success-icon">
+      <img src="images/success-check-mark.svg" alt="payment success Icon" />
+    </div>
+    <h1 class="title">
+      {{ "common.payment.success.headTitle" | cxTranslate }}
+    </h1>
+    <p class="msg">
+      {{ "common.payment.success.message" | cxTranslate }}
+    </p>
+    <!-- Displaying payment result info -->
+    <ng-container
+      *ngIf="overdueInvoicepaymentResultStatus$ | async as paymentResult"
+    >
+      <div class="payment-info">
+        <ng-container *ngIf="paymentResult?.cardNumber">
+          <p>
+            <strong>{{
+              "common.payment.resultStatus.cardNumber" | cxTranslate
+            }}</strong>
+            {{ paymentResult.cardNumber }}
+          </p>
+        </ng-container>
+        <ng-container *ngIf="paymentResult?.referenceNumber">
+          <p>
+            <strong>{{
+              "common.payment.resultStatus.refNumber" | cxTranslate
+            }}</strong>
+            {{ paymentResult.referenceNumber }}
+          </p>
+        </ng-container>
+        <ng-container *ngIf="paymentResult?.receipt">
+          <p>
+            <strong>
+              {{
+                paymentResult?.referenceNumber
+                  ? ("common.payment.resultStatus.receiptId" | cxTranslate)
+                  : ("common.payment.resultStatus.receiptNumber" | cxTranslate)
+              }}</strong
+            >
+            {{ paymentResult.receipt }}
+          </p>
+        </ng-container>
+        <p>
+          <strong>
+            {{
+              paymentResult?.referenceNumber
+                ? ("common.payment.resultStatus.bankAmount" | cxTranslate)
+                : ("common.payment.resultStatus.cardAmount" | cxTranslate)
+            }}
+          </strong>
+          {{
+            paymentResult?.amount
+              | currency : paymentResult?.currency : "symbol" : "1.2-2"
+          }}
+        </p>
+      </div>
+    </ng-container>
+    <a
+      class="btn btn-block btn-primary homeBtn mb-4"
+      [routerLink]="{ cxRoute: 'home' } | cxUrl"
+    >
+      {{ "common.payment.success.backToHome" | cxTranslate }}
+    </a>
+  </div>
+</div>

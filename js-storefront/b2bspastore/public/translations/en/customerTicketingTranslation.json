@@ -1,0 +1,57 @@
+{
+  "customerTicketingTranslation": {
+    "customerTicketing": {
+      "mainLogoLabel": "SAP",
+      "mainTitle": "Customer Ticketing",
+      "ticketId": "ID",
+      "createdOn": "Created On",
+      "changedOn": "Changed On",
+      "status": "Status",
+      "message": "Message",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "saveChanges": "Save Changes",
+      "uploadFile": "Upload File",
+      "fileSizeLimit": "File size limit: {{count}} MB",
+      "maximumAttachment": "Maximum of one attachment per message",
+      "errorMessage": "Something went wrong.",
+      "charactersLeft": "characters left: {{count}}",
+      "customerService": "Customer Service"
+    },
+    "customerTicketingList": {
+      "subject": "Subject",
+      "ticketCategory": "Category",
+      "sortSubtitle": "Sort by",
+      "sortOrders": "Sort orders",
+      "noTickets": "You don't have any request",
+      "requestTitle": "All Requests",
+      "mobile": {
+        "ticketIdFull": "Ticket ID"
+      },
+      "crmCaseId": "Case Number"
+    },
+    "createCustomerTicket": {
+      "createNewTicket": "Add",
+      "addNewRequest": "Add New Request",
+      "addRequest": "Add Request",
+      "subject": "Subject",
+      "requestType": "Request type",
+      "category": "Category",
+      "subcategory": "Subcategory",
+      "associateTo": "Associate to",
+      "ticketCreated": "Request created.",
+      "optionallySelectAssociatedObject": "Select an option",
+      "selectRequest": "Select request type",
+      "selectCategory": "Select category",
+      "selectSubCategory": "Select sub category",
+      "description": "Description"
+    },
+    "customerTicketingDetails": {
+      "requestReopened": "Request Reopened.",
+      "requestClosed": "Request closed, you may reopen if needed.",
+      "reopenRequest": "Reopen Request",
+      "closeRequest": "Close Request",
+      "ticketNotFound": "Ticket not found."
+    }
+  }
+}

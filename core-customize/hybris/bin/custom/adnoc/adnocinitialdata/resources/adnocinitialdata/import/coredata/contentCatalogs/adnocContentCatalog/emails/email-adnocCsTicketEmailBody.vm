@@ -1,0 +1,13 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocCsTicketClosed_$lang.properties
+
+<html>
+     <body>
+     <div class="content">
+            <p>Dear ${ctx.ticket.customer.title.name} ${ctx.ticket.customer.displayName},</p>
+            <p>${ctx.messages.closedMessage}</p>
+            <p>${ctx.messages.ticketStatus}</p>
+            <p>${ctx.messages.customerEnquiry}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+     </div>
+     </body>
+</html>

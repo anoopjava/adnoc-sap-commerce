@@ -1,0 +1,74 @@
+@import '../../../../styles/scss/utilities/mixins';
+
+.adnoc-suggested-payers-container {
+    @include media-breakpoint-up(md) {
+        height: auto;
+        margin: 10% auto;
+    }
+
+    .modal-header {
+        align-items: center;
+
+        .modal-title {
+            color: var(--cx-color-primary);
+            font-family: var(--cx-font-family-xbold);
+        }
+    }
+
+    .modal-body {
+        padding: 16px 25px 25px;
+
+        .payer-info {
+            .payer-head {
+                color: var(--cx-black);
+                font-family: var(--cx-font-family-xbold);
+                font-size: 18px;
+            }
+
+            .payer-dropdown {
+                @include media-breakpoint-up(md) {
+                    width: 60%;
+                }
+            }
+        }
+    }
+
+    .modal-footer {
+        border-top: transparent;
+
+        .btn {
+            display: inline-block;
+            font-family: var(--cx-font-family-medium);
+            font-weight: var(--cx-font-weight-semi);
+            font-size: 18px;
+            padding: 12px 25px 10px;
+            margin: 0 10px;
+        }
+    }
+
+    .note-info {
+        .note-head {
+            color: var(--cx-color-primary);
+            font-family: var(--cx-font-family-xbold);
+            font-size: 18px;
+
+            @include media-breakpoint-up(md) {
+                display: inline-block;
+                float: left;
+            }
+        }
+
+        .note-text {
+            font-size: 16px;
+            font-family: var(--cx-font-family-light);
+            color: var(--cx-black);
+            font-weight: var(--cx-font-weight-light);
+
+            @include media-breakpoint-up(md) {
+                display: inline-block;
+                width: 90%;
+                margin: 2px 0 0 5px;
+            }
+        }
+    }
+}

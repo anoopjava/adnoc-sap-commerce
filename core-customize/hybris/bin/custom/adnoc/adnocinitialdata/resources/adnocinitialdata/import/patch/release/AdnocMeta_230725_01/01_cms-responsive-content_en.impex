@@ -1,0 +1,18 @@
+# Import the CMS content for the adnoc site
+#
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$picture = media(code, $contentCV)
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+$lang = en
+
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]           ; altText
+                   ;                          ; AccountSummaryHomeLinkImageEn ; Account Summary
+
+INSERT_UPDATE BannerComponent; $contentCV[unique = true]; uid[unique = true]     ; headline[lang = en]
+                             ;                          ; AccountSummaryHomeLink ; Account Summary
+
+UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]   ; title[lang = $lang]
+                  ;                          ; ManageAccountSummary ; "Account Summary"

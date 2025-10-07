@@ -1,0 +1,805 @@
+<cx-org-form i18nRoot="orgUser">
+  <ng-container main *ngIf="form" [formGroup]="form">
+    <h4 class="font-weight-bolder mb-4 text-color-primary subUserTitle">
+      {{ "orgUser.subUserCreationTitle" | cxTranslate }}
+    </h4>
+    <label>
+      <span class="label-content required subUserFieldLabel"
+        >{{ "orgUser.fields.titleCode.label" | cxTranslate }} *</span
+      >
+      <ng-select
+        formControlName="titleCode"
+        [searchable]="false"
+        [clearable]="false"
+        [items]="titles$ | async"
+        bindLabel="name"
+        bindValue="code"
+        appendTo="cx-org-list"
+        [placeholder]="'orgUser.title' | cxTranslate"
+      >
+      </ng-select>
+      <!-- appendTo="cx-org-list"-->
+
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{ label: 'orgUser.title' | cxTranslate }"
+        [control]="form.get('titleCode')"
+        class="text-danger"
+      ></cx-form-errors>
+
+      <cx-form-errors
+        *cxFeature="'!formErrorsDescriptiveMessages'"
+        [control]="form.get('titleCode')"
+      ></cx-form-errors>
+    </label>
+
+    <label>
+      <span class="label-content required subUserFieldLabel"
+        >{{ "orgUser.fields.email.label" | cxTranslate }} *</span
+      >
+      <input
+        class="form-control"
+        id="email"
+        name="email"
+        type="email"
+        required
+        placeholder="{{ 'orgUser.fields.email.placeholder' | cxTranslate }}"
+        formControlName="email"
+        maxlength="241"
+        autocomplete="off"
+      />
+
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.email.label' | cxTranslate,
+          maxlength: '241'
+        }"
+        [control]="form.get('email')"
+        class="text-danger"
+      ></cx-form-errors>
+
+      <cx-form-errors
+        *cxFeature="'!formErrorsDescriptiveMessages'"
+        [control]="form.get('email')"
+      ></cx-form-errors>
+    </label>
+
+    <label>
+      <span class="label-content required subUserFieldLabel"
+        >{{ "orgUser.fields.firstName.label" | cxTranslate }} *</span
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        name="firstName"
+        required
+        placeholder="{{ 'orgUser.fields.firstName.placeholder' | cxTranslate }}"
+        formControlName="firstName"
+        pattern="[a-zA-Z ]+"
+        maxlength="40"
+      />
+
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.firstName.label' | cxTranslate,
+          maxlength: '40'
+        }"
+        [control]="form.get('firstName')"
+        class="text-danger"
+      ></cx-form-errors>
+
+      <cx-form-errors
+        *cxFeature="'!formErrorsDescriptiveMessages'"
+        [control]="form.get('firstName')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <label>
+      <span class="label-content required subUserFieldLabel"
+        >{{ "orgUser.fields.lastName.label" | cxTranslate }} *</span
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        name="lastName"
+        required
+        placeholder="{{ 'orgUser.fields.lastName.placeholder' | cxTranslate }}"
+        formControlName="lastName"
+        pattern="[a-zA-Z ]+"
+        maxlength="40"
+      />
+
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.lastName.label' | cxTranslate,
+          maxlength: '40'
+        }"
+        [control]="form.get('lastName')"
+        class="text-danger"
+      ></cx-form-errors>
+
+      <cx-form-errors
+        *cxFeature="'!formErrorsDescriptiveMessages'"
+        [control]="form.get('lastName')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <ng-container *ngIf="gender$ | async as gender">
+      <label *ngIf="gender.length !== 0">
+        <span class="label-content required subUserFieldLabel"
+          >{{ "orgUser.fields.gender.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          class="gender-select"
+          id="gender"
+          name="gender"
+          formControlName="gender"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="gender"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{ 'orgUser.fields.gender.placeholder' | cxTranslate }}"
+        >
+        </ng-select>
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.gender.label' | cxTranslate
+          }"
+          [control]="form.get('gender')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <ng-container *ngIf="nationality$ | async as nationality">
+      <label *ngIf="nationality.length !== 0">
+        <span class="label-content required subUserFieldLabel"
+          >{{ "orgUser.fields.nationality.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          required
+          class="national-select"
+          id="national-select"
+          formControlName="nationality"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="nationality"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{
+            'orgUser.fields.nationality.placeholder' | cxTranslate
+          }}"
+        >
+        </ng-select>
+
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.nationality.label' | cxTranslate
+          }"
+          [control]="form.get('nationality')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <ng-container *ngIf="nationality$ | async as nationality">
+      <label *ngIf="nationality.length !== 0">
+        <span class="label-content required subUserFieldLabel"
+          >{{ "orgUser.fields.countryOfOrigin.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          required
+          class="countryOfOrigin-select"
+          id="countryOfOrigin-select"
+          formControlName="countryOfOrigin"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="nationality"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{
+            'orgUser.fields.countryOfOrigin.placeholder' | cxTranslate
+          }}"
+        >
+        </ng-select>
+
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.countryOfOrigin.label' | cxTranslate
+          }"
+          [control]="form.get('countryOfOrigin')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <ng-container *ngIf="identityType$ | async as identityType">
+      <label *ngIf="identityType.length !== 0">
+        <span class="label-content required subUserFieldLabel"
+          >{{ "orgUser.fields.identityType.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          class="identityType-select"
+          formControlName="identityType"
+          id="identityType"
+          name="identityType"
+          (change)="resetIdentificationFields()"
+          [clearable]="false"
+          [items]="identityType"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{
+            'orgUser.fields.identityType.placeholder' | cxTranslate
+          }}"
+          id="identityType-select"
+        >
+        </ng-select>
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.identityType.label' | cxTranslate
+          }"
+          [control]="form.get('identityType')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <label for="identificationNumber" class="identificationNumberDiv">
+      <span class="label-content required subUserFieldLabel"
+        >{{ "orgUser.fields.identificationNumber.label" | cxTranslate }} *<span
+          class="icon-container fileUploadtoolTip"
+        >
+          <span class="icon">
+            <span
+              class="tooltip-text"
+              [innerHTML]="
+                'orgUser.fields.otherDocument.tooltip'
+                  | cxTranslate : { maxFileSize: maxFileSize }
+              "
+            ></span
+          ></span> </span
+      ></span>
+
+      <input
+        required
+        class="form-control"
+        type="text"
+        id="identificationNumber"
+        name="identificationNumber"
+        placeholder="{{
+          'orgUser.fields.identificationNumber.placeholder' | cxTranslate
+        }}"
+        formControlName="identificationNumber"
+        maxlength="20"
+        pattern="^[a-zA-Z0-9 ]*$"
+        (input)="onIdentificationNumberInput($event)"
+      />
+      <div class="input-group-append fileUploadClip">
+        <i
+          class="fa fa-paperclip"
+          (click)="identificationNumberDocument.click()"
+          aria-hidden="true"
+        ></i>
+        <input
+          required
+          formControlName="identificationNumberDocument"
+          class="form-control fileUpload identificationNumberDocument"
+          type="file"
+          name="identificationNumberDocument"
+          id="identificationNumberDocument"
+          #identificationNumberDocument
+          (change)="handleFileInput($event)"
+        />
+      </div>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.identificationNumber.label' | cxTranslate,
+          maxLength: '20'
+        }"
+        [control]="form.get('identificationNumber')"
+        class="text-danger"
+      >
+      </cx-form-errors>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.identificationNumber.fileError' | cxTranslate,
+          maxFileSize: maxFileSize.toString()
+        }"
+        [control]="form.get('identificationNumberDocument')"
+        class="text-danger"
+      ></cx-form-errors>
+      <div
+        *ngIf="uploadedFilesIdentificationNumberDocument"
+        class="file-name-display"
+      >
+        {{
+          "userRegistrationForm.fields.otherDocument.selectedFile"
+            | cxTranslate
+        }}: {{ uploadedFilesIdentificationNumberDocument }}
+        <i
+          class="fa-solid fa-trash"
+          (click)="removeUploadedFile('identificationNumberDocument')"
+          aria-hidden="true"
+        ></i>
+      </div>
+    </label>
+
+    <label for="identificationValidFrom">
+      <span class="label-content required"
+        >{{ "orgUser.fields.calender.startDate.label" | cxTranslate }} *</span
+      >
+      <mat-form-field class="example-full-width">
+        <input
+          formControlName="identificationValidFrom"
+          [min]="minStartDate"
+          [max]="maxStartDate"
+          [value]="selectedStartDate"
+          [matDatepickerFilter]="startDateFilter"
+          readonly
+          matInput
+          [matDatepicker]="startDatePicker"
+          (dateChange)="onStartDateChange($event)"
+          id="identificationValidFrom"
+          name="identificationValidFrom"
+          placeholder="{{
+            'orgUser.fields.calender.placeholder' | cxTranslate
+          }}"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="startDatePicker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label:
+            'orgUser.fields.calender.startDate.label'
+            | cxTranslate,
+        }"
+        [control]="form.get('identificationValidFrom')"
+        class="text-danger"
+      ></cx-form-errors
+    ></label>
+
+    <div class="form-group col-md-6 identificationValidTo">
+      <label for="identificationValidTo">
+        <span class="label-content required"
+          >{{ "orgUser.fields.calender.endDate.label" | cxTranslate }} *</span
+        ></label
+      >
+      <mat-form-field class="example-full-width">
+        <input
+          formControlName="identificationValidTo"
+          [min]="minEndDate"
+          [max]="maxEndDate"
+          [value]="selectedEndDate"
+          [matDatepickerFilter]="endDateFilter"
+          readonly
+          matInput
+          [matDatepicker]="endDatePicker"
+          (dateChange)="onEndDateChange($event)"
+          id="identificationValidTo"
+          name="identificationValidTo"
+          placeholder="{{
+            'orgUser.fields.calender.placeholder' | cxTranslate
+          }}"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="endDatePicker">
+        </mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label:
+            'orgUser.fields.calender.endDate.label'
+            | cxTranslate,
+        }"
+        [control]="form.get('identificationValidTo')"
+        class="text-danger"
+      ></cx-form-errors>
+    </div>
+    <ng-container *ngIf="designation$ | async as designation">
+      <label>
+        <span class="label-content required subUserFieldLabel"
+          >{{ "orgUser.fields.designation.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          class="designation-select"
+          formControlName="designation"
+          [clearable]="false"
+          [items]="designation"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{
+            'orgUser.fields.designation.placeholder' | cxTranslate
+          }}"
+          id="designation-select"
+          name="designation-select"
+        >
+        </ng-select>
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.designation.label' | cxTranslate,
+          }"
+          [control]="form.get('designation')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <label>
+      <span class="label-content subUserFieldLabel"
+        >{{ "orgUser.fields.telephone.label" | cxTranslate
+        }}<span class="icon-container fileUploadtoolTip phNum">
+          <span class="icon">
+            <span
+              class="tooltip-text"
+              [innerHTML]="
+                'orgUser.fields.phoneNumberTooltip.tooltip'
+                  | cxTranslate : { length: contactPersonPhoneMinLength }
+              "
+            ></span
+          ></span> </span
+      ></span>
+      <input
+        type="tel"
+        class="form-control"
+        placeholder="{{ 'orgUser.fields.telephone.placeholder' | cxTranslate }}"
+        formControlName="telephone"
+        name="telephone"
+        [attr.minlength]="contactPersonPhoneMinLength"
+        [attr.maxlength]="contactPersonPhoneMinLength"
+        pattern="[\0-9]*"
+        inputmode="numeric"
+        (input)="filterInputPhoneNumber($event)"
+      />
+
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.telephone.label' | cxTranslate,
+          minLength: contactPersonPhoneMinLength.toString(),
+          maxlength: contactPersonPhoneMinLength.toString()
+        }"
+        [control]="form.get('telephone')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <label for="mobileNumber">
+      <span class="label-content subUserFieldLabel"
+        >{{ "orgUser.fields.mobileNumber.label" | cxTranslate }} *<span
+          class="icon-container fileUploadtoolTip phNum"
+        >
+          <span class="icon">
+            <span
+              class="tooltip-text"
+              [innerHTML]="
+                'orgUser.fields.phoneNumberTooltip.tooltip'
+                  | cxTranslate : { length: 10 }
+              "
+            ></span
+          ></span> </span
+      ></span>
+      <input
+        type="tel"
+        class="form-control"
+        placeholder="{{
+          'orgUser.fields.mobileNumber.placeholder' | cxTranslate
+        }}"
+        formControlName="mobileNumber"
+        name="mobileNumber"
+        id="mobileNumber"
+        minlength="10"
+        maxlength="10"
+        pattern="[\0-9]*"
+        inputmode="numeric"
+        required
+        (input)="filterInputPhoneNumber($event)"
+      />
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.mobileNumber.label' | cxTranslate,
+          minLength: '10',
+          maxlength: '10'
+        }"
+        [control]="form.get('mobileNumber')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <label>
+      <span class="label-content subUserFieldLabel"
+        >{{ "orgUser.fields.companyAddressStreet.label" | cxTranslate }} *</span
+      >
+      <textarea
+        type="text"
+        class="form-control"
+        placeholder="{{
+          'orgUser.fields.companyAddressStreet.placeholder' | cxTranslate
+        }}"
+        formControlName="companyAddressStreet"
+        name="companyAddressStreet"
+        id="companyAddressStreet"
+        rows="5"
+        maxlength="60"
+      ></textarea>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.companyAddressStreet.label' | cxTranslate,
+          maxlength: '60'
+        }"
+        [control]="form.get('companyAddressStreet')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <label>
+      <span class="label-content subUserFieldLabel">{{
+        "orgUser.fields.companyAddressStreetLine2.label" | cxTranslate
+      }}</span>
+      <textarea
+        type="text"
+        class="form-control"
+        placeholder="{{
+          'orgUser.fields.companyAddressStreetLine2.placeholder' | cxTranslate
+        }}"
+        formControlName="companyAddressStreetLine2"
+        name="companyAddressStreetLine2"
+        id="companyAddressStreetLine2"
+        rows="5"
+        maxlength="35"
+      ></textarea>
+      <cx-form-errors
+        *cxFeature="'formErrorsDescriptiveMessages'"
+        [translationParams]="{
+          label: 'orgUser.fields.companyAddressStreetLine2.label' | cxTranslate,
+          maxlength: '35'
+        }"
+        [control]="form.get('companyAddressStreetLine2')"
+        class="text-danger"
+      ></cx-form-errors>
+    </label>
+
+    <ng-container *ngIf="countries$ | async as countries">
+      <label *ngIf="countries.length !== 0">
+        <span class="label-content subUserFieldLabel"
+          >{{
+            "orgUser.fields.companyAddressCountryIso.label" | cxTranslate
+          }}
+          *</span
+        >
+        <ng-select
+          required
+          class="companyAddressCountryIso-select"
+          id="companyAddressCountryIso"
+          formControlName="companyAddressCountryIso"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="countries"
+          bindLabel="name"
+          bindValue="isocode"
+          placeholder="{{
+            'orgUser.fields.companyAddressCountryIso.placeholder' | cxTranslate
+          }}"
+        >
+        </ng-select>
+
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.companyAddressCountryIso.label' | cxTranslate
+          }"
+          [control]="form.get('companyAddressCountryIso')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <ng-container>
+      <label>
+        <span class="label-content subUserFieldLabel"
+          >{{
+            "orgUser.fields.companyAddressRegion.label" | cxTranslate
+          }}
+          *</span
+        >
+        <ng-select
+          required
+          class="companyAddressRegion-select"
+          id="companyAddressRegion-select"
+          formControlName="companyAddressRegion"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="regions || []"
+          bindLabel="name"
+          bindValue="isocode"
+          placeholder="{{
+            'orgUser.fields.companyAddressRegion.placeholder' | cxTranslate
+          }}"
+        >
+        </ng-select>
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.companyAddressRegion.label' | cxTranslate
+          }"
+          [control]="form.get('companyAddressRegion')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </ng-container>
+
+    <div class="form-group col-md-6">
+      <label>
+        <span class="label-content subUserFieldLabel"
+          >{{ "orgUser.fields.companyAddressCity.label" | cxTranslate }} *</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          placeholder="{{
+            'orgUser.fields.companyAddressCity.placeholder' | cxTranslate
+          }}"
+          formControlName="companyAddressCity"
+          name="companyAddressCity"
+          maxlength="40"
+          pattern="^[a-zA-Z0-9 ]*$"
+          (input)="filterInputAcceptAlphaNumeric($event)"
+          required
+        />
+
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{
+            label: 'orgUser.fields.companyAddressCity.label' | cxTranslate,
+            maxLength: '40'
+          }"
+          [control]="form.get('companyAddressCity')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </div>
+
+    <ng-container
+      *ngIf="communicationChannels$ | async as communicationChannels"
+    >
+      <label *ngIf="communicationChannels.length !== 0">
+        <span class="label-content subUserFieldLabel">{{
+          "orgUser.fields.preferredCommunicationChannel.label" | cxTranslate
+        }}</span>
+        <ng-select
+          class="communicationChannels-select"
+          id="communicationChannels-select"
+          formControlName="preferredCommunicationChannel"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="communicationChannels"
+          bindLabel="name"
+          bindValue="code"
+          placeholder="{{
+            'orgUser.fields.preferredCommunicationChannel.placeholder2'
+              | cxTranslate
+          }}"
+        >
+        </ng-select>
+      </label>
+    </ng-container>
+
+    <fieldset
+      required="true"
+      class="full-width roles fieldset"
+      formArrayName="roles"
+    >
+      <legend class="label-content required title">
+        {{ "orgUser.fields.roles.label" | cxTranslate }}
+      </legend>
+
+      <label
+        class="form-check"
+        *ngFor="let role of availableRoles; let i = index"
+      >
+        <input
+          type="radio"
+          class="form-check-input"
+          id="rolesRadio-{{ i }}"
+          name="rolesRadio"
+          [value]="role"
+          [checked]="roles.value.length > 0 && roles.value[0] === role"
+          (change)="selectSingleRole(role)"
+          [disabled]="form!.status === 'DISABLED'"
+        />
+        <span class="form-check-label">
+          {{ "organization.userRoles." + role | cxTranslate }}
+        </span>
+      </label>
+    </fieldset>
+
+    <hr class="hr" />
+
+    <fieldset required="true" class="full-width fieldset">
+      <legend class="label-content required title">
+        {{ "orgUser.fields.rights.label" | cxTranslate }}
+      </legend>
+
+      <label
+        class="form-check"
+        *ngFor="let right of availableRights; let i = index"
+      >
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="permissions-{{ i }}"
+          name="permissions"
+          [value]="right"
+          [checked]="!!roles && roles.value?.includes(right)"
+          (change)="updateRoles($any($event))"
+          [disabled]="!!form && form.status === 'DISABLED'"
+        />
+        <span class="form-check-label">
+          {{ "organization.userRights." + right | cxTranslate }}
+        </span>
+      </label>
+    </fieldset>
+
+    <hr class="hr" />
+
+    <div class="col-md-12 bussinessUnit">
+      <label class="fieldset" [formGroup]="$any(form.get('orgUnit'))">
+        <span class="label-content required title"
+          >{{ "orgUser.fields.orgUnit.label" | cxTranslate }} *</span
+        >
+        <ng-select
+          [inputAttrs]="{ required: 'true' }"
+          formControlName="uid"
+          [searchable]="true"
+          [clearable]="false"
+          [items]="(units$ | async) ?? null"
+          bindLabel="name"
+          bindValue="id"
+          appendTo="cx-org-list"
+          [placeholder]="'orgUser.orgUnit' | cxTranslate"
+        >
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.id }} - {{ item.lob }} - {{ item.name }}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.id }} - {{ item.lob }} - {{ item.name }}
+          </ng-template>
+        </ng-select>
+        <!-- appendTo="cx-org-list"-->
+
+        <cx-form-errors
+          *cxFeature="'formErrorsDescriptiveMessages'"
+          [translationParams]="{ label: 'orgUser.orgUnit' | cxTranslate }"
+          [control]="form.get('orgUnit.uid')"
+          class="text-danger"
+        ></cx-form-errors>
+
+        <cx-form-errors
+          *cxFeature="'!formErrorsDescriptiveMessages'"
+          [control]="form.get('orgUnit.uid')"
+          class="text-danger"
+        ></cx-form-errors>
+      </label>
+    </div>
+  </ng-container>
+</cx-org-form>

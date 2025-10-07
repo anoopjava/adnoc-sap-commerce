@@ -1,0 +1,29 @@
+@import "../../../../../../styles/scss/utilities/variables";
+.adnoc-org-account-summary-list {
+  .orgAccountSummary {
+    cx-split-view {
+      @media (max-width: $breakpoint-xs) {
+        width: 96vw;
+        margin: 0 auto;
+      }
+    }
+    adnoc-table {
+      table {
+        tr {
+          td.name {
+            padding: 30px 0 20px 0;
+            cx-org-toggle-link-cell {
+              padding-left: 0;
+              a {
+                padding: 0.5rem;
+                .tree-item-toggle {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

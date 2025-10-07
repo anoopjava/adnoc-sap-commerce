@@ -1,0 +1,20 @@
+# cleanOAuthAccessTokenCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode)
+                     ;cleanOAuthAccessTokenCronJob;cleanupOAuthAccessTokenPerformable;false;en
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthAccessTokenCronJob; 0 0/5 * ? * * *
+
+# cleanOAuthAuthorizationCodeCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode)
+                     ;cleanOAuthAuthorizationCodeCronJob;cleanupOAuthAuthorizationCodePerformable;false;en
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthAuthorizationCodeCronJob; 0 0/5 * ? * * *
+
+# cleanOAuthRefreshTokenCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode)
+                     ;cleanOAuthRefreshTokenCronJob;cleanupOAuthRefreshTokenPerformable;false;en
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthRefreshTokenCronJob; 0 0/5 * ? * * *

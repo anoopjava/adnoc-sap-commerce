@@ -1,0 +1,94 @@
+
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$wideContent = CMSImageComponent, BannerComponent, SimpleBannerComponent, CMSLinkComponent, CMSParagraphComponent
+$jarEmailResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/adnocinitialdata/import/coredata/contentCatalogs/adnocContentCatalog/emails
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$jarResourceCms = $config-jarResourceCmsValue
+$emailPackageName = $config-emailContextPackageName
+$registrationEmailPackageName = $config-registrationEmailContextPackageName
+$emailVerificationTokenPackageName = de.hybris.platform.acceleratorservices.process.email.context.impl
+$adnocEmailPackage = com.adnoc.facades.process.email.context
+$lang = en
+
+REMOVE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]               ; name                                ; active; frontendTemplateName             ; subject(code)                     ; htmlTemplate(code)             ; restrictedPageTypes(code)
+                        ;                          ; AdnocCsTicketClosedEmailTemplate ; Adnoc CsTicket Closed Email Templat ; true  ; AdnocCsTicketClosedEmailTemplate ; adnoc_AdnocCsTicketClosed_Subject ; adnoc_AdnocCsTicketClosed_Body ; EmailPage
+
+REMOVE EmailPage; $contentCV[unique = true]; uid[unique = true]       ; name                        ; masterTemplate(uid, $contentCV)  ; defaultPage; approvalStatus(code)[default = 'approved']
+                ;                          ; AdnocCsTicketClosedEmail ; Adnoc CsTicket Closed Email ; AdnocCsTicketClosedEmailTemplate ; true       ;
+
+REMOVE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; fromEmail[lang = $lang]                   ; fromName[lang = $lang]
+                ;                          ; AdnocCsTicketClosedEmail                        ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+
+
+# Partial Order Cancellation
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                                      ; name                                                         ; active; frontendTemplateName                                    ; subject(code)                                 ; htmlTemplate(code)                         ; restrictedPageTypes(code)
+                               ;                          ; AdnocPartialOrderCancellationEmailTemplate              ; Adnoc Order  Partial Cancelled Email Template                ; true  ; AdnocPartialOrderCancellationEmailTemplate              ; adnoc_PartialOrder_Cancelled_Subject          ; adnoc_PartialOrder_Cancelled_Body          ; EmailPage
+
+
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; name                                                ; masterTemplate(uid, $contentCV)                         ; defaultPage; approvalStatus(code)[default = 'approved']
+                       ;                          ; AdnocPartialOrderCancellationEmail              ; Adnoc Order Partial Cancelled Email                 ; AdnocPartialOrderCancellationEmailTemplate              ; true       ;
+
+#Partial Order Cancellation en file
+
+
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; fromEmail[lang = $lang]                   ; fromName[lang = $lang]
+                ;                          ; AdnocPartialOrderCancellationEmail                 ; "no-reply.b2bportal@adnocdistribution.ae" ; "Customer Service Team"
+
+
+UPDATE RendererTemplate; code[unique = true]                           ; description[lang = $lang]                               ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; adnoc_AdnocB2BCustomer_Creation_Body          ; "B2BCustomer Creation Email Body"                       ; $jarEmailResource/email-adnocB2BCustomerCreationBody.vm
+                       ; adnoc_AdnocB2BCustomer_Creation_Subject       ; "B2BCustomer Creation Email Subject"                    ; $jarEmailResource/email-adnocB2BCustomerCreationSubject.vm
+
+                       ; adnoc_AdnocB2BAdmin_Created_Body              ; "B2BAdmin Created Email Body"                           ; $jarEmailResource/email-adnocB2BAdminCreatedBody.vm
+                       ; adnoc_AdnocB2BAdmin_Created_Subject           ; "B2BAdmin Created Email Subject"                        ; $jarEmailResource/email-adnocB2BAdminCreatedSubject.vm
+
+                       ; adnoc_PartialOrder_Completion_Body            ; "Adnoc Partial Order completion Email Body"             ; $jarEmailResource/email-adnocPartialOrderCompletionBody.vm
+                       ; adnoc_PartialOrder_Completion_Subject         ; "Adnoc Partial Order completion Emaill Subject"         ; $jarEmailResource/email-adnocPartialOrderCompletionSubject.vm
+
+                       ; adnoc_Order_Completed_Body                    ; "Adnoc Order completed  Email Body"                     ; $jarEmailResource/email-adnocOrderCompletedBody.vm
+                       ; adnoc_Order_Completed_Subject                 ; "Adnoc Order completed  Emaill Subject"                 ; $jarEmailResource/email-adnocOrderCompletedSubject.vm
+
+                       ; adnoc_Order_Cancelled_Body                    ; "Adnoc Order cancelled  Email Body"                     ; $jarEmailResource/email-adnocOrderCancelledBody.vm
+                       ; adnoc_Order_Cancelled_Subject                 ; "Adnoc Order cancelled  Emaill Subject"                 ; $jarEmailResource/email-adnocOrderCancelledSubject.vm
+
+                       ; adnoc_AdnocCsTicketClosed_Body                ; "Adnoc CsTicket Closed Email Body"                      ; $jarEmailResource/email-adnocCsTicketEmailBody.vm
+                       ; adnoc_AdnocCsTicketClosed_Subject             ; "Adnoc CsTicket Closed Email Subject"                   ; $jarEmailResource/email-adnocCsTicketEmailSubject.vm
+
+                       ; adnoc_QuoteBuyerOrderPlaced_Body              ; "Adnoc Quote Buyer Order Placed Email Body"             ; $jarEmailResource/email-adnocQuoteBuyerOrderPlacedBody.vm
+                       ; adnoc_QuoteBuyerOrderPlaced_Subject           ; "Adnoc Quote Buyer Order Placed Email Subject"          ; $jarEmailResource/email-adnocQuoteBuyerOrderPlacedSubject.vm
+
+                       ; adnoc_ReQuote_Buyer_Submission_Body           ; "Adnoc ReQuote Buyer Submission Email Body"             ; $jarEmailResource/email-adnocReQuoteBuyerSubmissionBody.vm
+                       ; adnoc_ReQuote_Buyer_Submission_Subject        ; "Adnoc ReQuote Buyer Submission Email Subject"          ; $jarEmailResource/email-adnocReQuoteBuyerSubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Submission_Body            ; "Adnoc Return Order Submission Email Body"              ; $jarEmailResource/email-adnocReturnOrderSubmissionBody.vm
+                       ; adnoc_Return_Order_Submission_Subject         ; "Adnoc Return Order Submission Email Subject"           ; $jarEmailResource/email-adnocReturnOrderSubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Approved_email_Body        ; "Adnoc Return Order Approved Email Body"                ; $jarEmailResource/email-adnocReturnOrderApprovalBody.vm
+                       ; adnoc_Return_Order_Approved_email_Subject     ; "Adnoc Return Order Approved Email Subject"             ; $jarEmailResource/email-adnocReturnOrderApprovalSubject.vm
+
+                       ; adnoc_New_Quote_Request_Body                  ; "Adnoc New Quote Request Email Body"                    ; $jarEmailResource/email-adnocNewQuoteRequestBody.vm
+                       ; adnoc_New_Quote_Request_Subject               ; "Adnoc New Quote Request Email Subject"                 ; $jarEmailResource/email-adnocNewQuoteRequestSubject.vm
+
+                       ; adnoc_Quote_Request_ReSubmission_Body         ; "Adnoc Quote Request ReSubmission Email Body"           ; $jarEmailResource/email-adnocQuoteRequestResubmissionBody.vm
+                       ; adnoc_Quote_Request_ReSubmission_Subject      ; "Adnoc Quote Request ReSubmission Email Subject"        ; $jarEmailResource/email-adnocQuoteRequestResubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Submission_CSAgent_Body    ; "Adnoc Return Order Submission ToCsAgent Email Body"    ; $jarEmailResource/email-adnocReturnOrderSubmissionToCsAgentBody.vm
+                       ; adnoc_Return_Order_Submission_CSAgent_Subject ; "Adnoc Return Order Submission ToCsAgent Email Subject" ; $jarEmailResource/email-adnocReturnOrderSubmissionToCsAgentSubject.vm
+
+                       ; adnoc_ShipTo_Created_B2BCustomer_Body         ; "Adnoc ShipTo Created Email Body"                       ; $jarEmailResource/email-adnocShipToCreatedB2BCustomerBody.vm
+                       ; adnoc_ShipTo_Created_B2BCustomer_Subject      ; "Adnoc ShipTo Created Email Subject"                    ; $jarEmailResource/email-adnocShipToCreatedB2BCustomerSubject.vm
+
+                       ; adnoc_Return_Order_Rejected_Body              ; "Adnoc Return Rejected Email Body"                      ; $jarEmailResource/email-adnocReturnOrderRejectedBody.vm
+                       ; adnoc_Return_Order_Rejected_Subject           ; "Adnoc Return Rejected Email Subject"                   ; $jarEmailResource/email-adnocReturnOrderRejectedSubject.vm
+
+                       ; adnoc_AdnocQuoteSellerApproveOrReject_Body    ; "Adnoc Quote Seller Approve Or Reject Email Body"       ; $jarEmailResource/email-adnocQuoteSellerApproveOrRejectBody.vm
+                       ; adnoc_AdnocQuoteSellerApproveOrReject_Subject ; "Adnoc Quote Seller Approve Or Reject Email Subject"    ; $jarEmailResource/email-adnocQuoteSellerApproveOrRejectSubject.vm
+
+                       ; adnoc_Order_Replication_Failed_Body           ; "Adnoc Order Replication Failed  Email Body"            ; $jarEmailResource/email-adnocOrderReplicationFailedBody.vm
+                       ; adnoc_Order_Replication_Failed_Subject        ; "Adnoc Order Replication Failed  Emaill Subject"        ; $jarEmailResource/email-adnocOrderReplicationFailedSubject.vm
+
+                       ; adnoc_PartialOrder_Cancelled_Body             ; "Adnoc Order Partial cancelled  Email Body"             ; $jarEmailResource/email-adnocPartialOrderCancellationBody.vm
+                       ; adnoc_PartialOrder_Cancelled_Subject          ; "Adnoc Order Partial cancelled  Emaill Subject"         ; $jarEmailResource/email-adnocPartialOrderCancellationSubject.vm

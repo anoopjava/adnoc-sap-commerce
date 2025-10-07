@@ -1,0 +1,23 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocB2BCustomerCreation_$lang.properties
+
+<!DOCTYPE html>
+<html>
+     <body>
+     <div class="content">
+            <p>${ctx.customer.title} ${ctx.adnocB2BCustomer},</p>
+            <p>${ctx.messages.welcomeMessage}</p>
+            <p><strong>B2B Unit Details:</strong>${ctx.customer.unit.uid} - ${ctx.customer.unit.name}</p>
+            <p><strong>Username:</strong> ${ctx.email}</p>
+            <p><strong>Password:</strong> ${ctx.password}</p>
+            <p><strong>PortalLink:</strong> <a href="&{ctx.portalLink}">${ctx.portalLink} </a></p>
+            <p>${ctx.messages.customerEnquiry}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+     </div>
+     <div class="footer">
+           <p>Best regards,</p>
+           <p>${ctx.messages.admin}</p>
+           <p>ADNOC</p>
+           <p>${ctx.messages.website}</p>
+      </div>
+      </body>
+</html>

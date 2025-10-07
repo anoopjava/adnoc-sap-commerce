@@ -1,0 +1,28 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+
+$fullPathAdnoc = https://localhost:4200
+$language = en
+
+### Put spartacus into smart edit whitelist
+INSERT_UPDATE SmartEditConfiguration; key[unique = true]     ; value
+                                    ; whiteListedStorefronts ; "[""$fullPathAdnoc""]"
+
+### Kyma OAuth client
+INSERT_UPDATE OpenIDClientDetails; clientId[unique = true]; resourceIds; scope  ; autoApprove; authorizedGrantTypes                                    ; authorities ; clientSecret; registeredRedirectUri                        ; externalScopeClaimName; issuer
+                                 ; client4kyma            ; hybris     ; openid ; openid     ; password,client_credentials,implicit,authorization_code ; ROLE_CLIENT ; secret      ; http://MY_APPLICATION/,http://localhost:4200 ; scope                 ; ec
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope ; authorizedGrantTypes                                         ; authorities ; clientSecret; registeredRedirectUri
+                                ; client-side            ; hybris     ; basic ; implicit,client_credentials                                  ; ROLE_CLIENT ; secret      ; http://localhost:9001/authorizationserver/oauth2_implicit_callback ;
+                                ; mobile_android         ; hybris     ; basic ; authorization_code,refresh_token,password,client_credentials ; ROLE_CLIENT ; secret      ; http://localhost:9001/authorizationserver/oauth2_callback          ;
+
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; resourceIds; scope[mode = append]                            ; authorizedGrantTypes        ; accessTokenValiditySeconds; authorities; clientSecret;
+                                ; smartedit              ; hybris     ; basic,permissionswebservices,previewwebservices ; password,client_credentials ; 3600                      ;            ;             ;
+
+

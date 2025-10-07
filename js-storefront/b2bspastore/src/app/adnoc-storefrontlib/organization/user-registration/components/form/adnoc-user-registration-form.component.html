@@ -1,0 +1,1698 @@
+<div class="container registartionContainer">
+  <div class="video-container">
+    <video #videoPlayer width="100%" height="100%" autoplay loop>
+      <source src="videos/pageVideo.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="form-container">
+    <section *ngIf="!(isLoading$ | async); else loading">
+      <div
+        role="status"
+        [attr.aria-label]="'common.loaded' | cxTranslate"
+      ></div>
+      <div class="logo-container">
+        <a href="/">
+          <img class="siteLogo" src="images/sitelogo.svg" />
+        </a>
+        <p class="title text-color-primary">
+          {{ "userRegistrationForm.AdnocWelcomeTitle" | cxTranslate }}
+          <span class="subTitle">{{
+            "userRegistrationForm.AdnocWelcomeSubTitle" | cxTranslate
+          }}</span>
+        </p>
+      </div>
+      <hr class="hr" />
+      <div class="mt-4">
+        <form
+          [formGroup]="signupForm"
+          (ngSubmit)="submit()"
+          (keypress)="onKeyPress($event)"
+          enctype="multipart/form-data"
+          class="registartionForm"
+        >
+          <h1 class="mb-5">
+            <span class="signUp-title text-color-primary">{{
+              "userRegistrationForm.registerTitle" | cxTranslate
+            }}</span>
+            <br />
+            <small class="subtext"
+              >{{ "userRegistrationForm.alreadyAccountLabel" | cxTranslate }}
+              <span class="signIn-title text-color-primary"
+                ><a
+                  class="btn-link"
+                  [routerLink]="{ cxRoute: 'login' } | cxUrl"
+                  >{{
+                    "userRegistrationForm.goToSignInButtonLabel" | cxTranslate
+                  }}</a
+                >
+              </span>
+            </small>
+          </h1>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <h4 class="font-weight-bolder mb-4 text-color-primary">
+                {{
+                  "userRegistrationForm.fields.primaryProduct.title"
+                    | cxTranslate
+                }}
+              </h4>
+              <ng-container *ngIf="primaryProducts$ | async as primaryProducts">
+                <label *ngIf="primaryProducts.length !== 0">
+                  <span class="label-content"
+                    >{{
+                      "userRegistrationForm.fields.primaryProduct.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  class="primaryProduct-select"
+                  formControlName="primaryProduct"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="primaryProducts"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.primaryProduct.placeholder'
+                      | cxTranslate
+                  }}"
+                  id="primaryProduct-select"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.primaryProduct.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.primaryProduct.fieldName'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('primaryProduct')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+          </div>
+          <h4 class="font-weight-bolder mb-4 text-color-primary">
+            {{ "userRegistrationForm.companyDetailsTitle" | cxTranslate }}
+          </h4>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="companyName">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.companyName.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                required
+                class="form-control"
+                type="text"
+                id="companyName"
+                name="companyName"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyName.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyName"
+                maxlength="40"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyName.label'
+                    | cxTranslate,
+                  maxlength: '40'
+                }"
+                [control]="signupForm.get('companyName')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="companyName">
+                <span class="label-content required">{{
+                  "userRegistrationForm.fields.companyName2.label" | cxTranslate
+                }}</span></label
+              >
+              <input
+                class="form-control"
+                type="text"
+                name="companyName2"
+                id="companyName2"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyName2.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyName2"
+                maxlength="40"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyName2.label'
+                    | cxTranslate,
+                  maxlength: '40'
+                }"
+                [control]="signupForm.get('companyName2')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="companyEmail">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.companyEmail.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                required
+                class="form-control"
+                type="email"
+                id="companyEmail"
+                name="companyEmail"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyEmail.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyEmail"
+                maxlength="241"
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyEmail.label'
+                    | cxTranslate,
+                  maxlength: '241'
+                }"
+                [control]="signupForm.get('companyEmail')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="companyWebsite">
+                <span class="label-content required">{{
+                  "userRegistrationForm.fields.companyWebsite.label"
+                    | cxTranslate
+                }}</span>
+              </label>
+              <input
+                class="form-control"
+                type="text"
+                id="companyWebsite"
+                name="companyWebsite"
+                formControlName="companyWebsite"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyWebsite.placeholder'
+                    | cxTranslate
+                }}"
+                maxlength="40"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyWebsite.label'
+                    | cxTranslate,
+                  maxlength: '40'
+                }"
+                [control]="signupForm.get('companyWebsite')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="tradeLicenseNumber"
+                >{{
+                  "userRegistrationForm.fields.tradeLicenseNumber.label"
+                    | cxTranslate
+                }}
+                *
+                <span class="icon-container fileUploadtoolTip">
+                  <span class="icon">
+                    <span
+                      class="tooltip-text"
+                      [innerHTML]="
+                        'userRegistrationForm.fields.otherDocument.tooltip'
+                          | cxTranslate : { maxFileSize: maxFileSize }
+                      "
+                    ></span></span></span
+              ></label>
+              <div class="fileSection">
+                <input
+                  type="text"
+                  formControlName="tradeLicenseNumber"
+                  id="tradeLicenseNumber"
+                  name="tradeLicenseNumber"
+                  class="form-control"
+                  placeholder="{{
+                    'userRegistrationForm.fields.tradeLicenseNumber.placeholder'
+                      | cxTranslate
+                  }}"
+                  required
+                  minlength="10"
+                  maxlength="10"
+                  (input)="onTradeLicenseInput($event)"
+                />
+                <div class="input-group-append fileUploadClip">
+                  <i
+                    class="fa fa-paperclip"
+                    (click)="tlnDocument.click()"
+                    aria-hidden="true"
+                  ></i>
+                  <input
+                    required
+                    formControlName="tlnDocument"
+                    class="form-control fileUpload tlnDocument"
+                    type="file"
+                    name="tlnDocument"
+                    id="tlnDocument"
+                    #tlnDocument
+                    (change)="handleFileInput($event)"
+                  />
+                </div>
+              </div>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.tradeLicenseNumber.label2'
+                    | cxTranslate,
+                  minLength: '10',
+                  maxLength: '10'
+                }"
+                [control]="signupForm.get('tradeLicenseNumber')"
+                class="text-danger"
+              ></cx-form-errors>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.tradeLicenseNumber.fileError'
+                    | cxTranslate,
+                  maxFileSize: maxFileSize.toString()
+                }"
+                [control]="signupForm.get('tlnDocument')"
+                class="text-danger"
+              ></cx-form-errors>
+              <div *ngIf="uploadedFilesTlnDocument" class="file-name-display">
+                {{
+                  "userRegistrationForm.fields.otherDocument.selectedFile"
+                    | cxTranslate
+                }}: {{ uploadedFilesTlnDocument }}
+                <i
+                  class="fa-solid fa-trash"
+                  (click)="removeUploadedFile('tlnDocument')"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="tlnValidFrom">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.calender.tlnValidFrom.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <mat-form-field class="example-full-width">
+                <input
+                  formControlName="tlnValidFrom"
+                  [min]="minStartDate"
+                  [max]="maxStartDate"
+                  [matDatepickerFilter]="startDateFilter"
+                  readonly
+                  matInput
+                  [matDatepicker]="tradeLicenseStartDatePicker"
+                  (dateChange)="onStartDateChange($event, 'tlnValidFrom')"
+                  id="tlnValidFrom"
+                  name="tlnValidFrom"
+                  placeholder="{{
+                    'userRegistrationForm.fields.calender.placeholder'
+                      | cxTranslate
+                  }}"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="tradeLicenseStartDatePicker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #tradeLicenseStartDatePicker></mat-datepicker>
+              </mat-form-field>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.calender.tlnValidFrom.label'
+                    | cxTranslate,
+                }"
+                [control]="signupForm.get('tlnValidFrom')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="tlnValidTo">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.calender.tlnValidTo.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <mat-form-field class="example-full-width">
+                <input
+                  formControlName="tlnValidTo"
+                  [min]="minEndDate"
+                  [max]="maxEndDate"
+                  [matDatepickerFilter]="endDateFilter"
+                  readonly
+                  matInput
+                  [matDatepicker]="tradeLicenseEndDatePicker"
+                  (dateChange)="onEndDateChange($event, 'tlnValidTo')"
+                  id="tlnValidTo"
+                  name="tlnValidTo"
+                  placeholder="{{
+                    'userRegistrationForm.fields.calender.placeholder'
+                      | cxTranslate
+                  }}"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="tradeLicenseEndDatePicker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #tradeLicenseEndDatePicker></mat-datepicker>
+              </mat-form-field>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.calender.tlnValidTo.label'
+                    | cxTranslate,
+                }"
+                [control]="signupForm.get('tlnValidTo')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container
+                *ngIf="tradeLicenseAuthority$ | async as tradeLicenseAuthority"
+              >
+                <label *ngIf="tradeLicenseAuthority.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.tradeLicenseAuthority.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  id="tradeLicenseAuthority-select"
+                  formControlName="tradeLicenseAuthority"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="tradeLicenseAuthority"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.tradeLicenseAuthority.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.tradeLicenseAuthority.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.tradeLicenseAuthority.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('tradeLicenseAuthority')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="vatId"
+                >{{ "userRegistrationForm.fields.vatId.label" | cxTranslate }} *
+                <span class="icon-container fileUploadtoolTip">
+                  <span class="icon">
+                    <span
+                      class="tooltip-text"
+                      [innerHTML]="
+                        'userRegistrationForm.fields.otherDocument.tooltip'
+                          | cxTranslate : { maxFileSize: maxFileSize }
+                      "
+                    ></span> </span></span
+              ></label>
+              <div class="fileSection">
+                <input
+                  type="text"
+                  formControlName="vatId"
+                  id="vatId"
+                  name="vatId"
+                  class="form-control"
+                  placeholder="{{
+                    'userRegistrationForm.fields.vatId.placeholder'
+                      | cxTranslate
+                  }}"
+                  required
+                  maxlength="15"
+                  pattern="[\0-9]*"
+                  (input)="filterInputAcceptNumbers($event)"
+                />
+                <div class="input-group-append fileUploadClip">
+                  <i
+                    class="fa fa-paperclip"
+                    (click)="vatIdDocument.click()"
+                    aria-hidden="true"
+                  ></i>
+                  <input
+                    required
+                    formControlName="vatIdDocument"
+                    class="form-control fileUpload vatIdDocument"
+                    type="file"
+                    name="vatIdDocument"
+                    id="vatIdDocument"
+                    #vatIdDocument
+                    (change)="handleFileInput($event)"
+                  />
+                </div>
+              </div>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.vatId.label2' | cxTranslate,
+                  minLength: '15'
+                }"
+                [control]="signupForm.get('vatId')"
+                class="text-danger"
+              ></cx-form-errors>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.vatId.fileError' | cxTranslate,
+                  maxFileSize: maxFileSize.toString()
+                }"
+                [control]="signupForm.get('vatIdDocument')"
+                class="text-danger"
+              ></cx-form-errors>
+              <div *ngIf="uploadedFilesVatIdDocument" class="file-name-display">
+                {{
+                  "userRegistrationForm.fields.otherDocument.selectedFile"
+                    | cxTranslate
+                }}: {{ uploadedFilesVatIdDocument }}
+                <i
+                  class="fa-solid fa-trash"
+                  (click)="removeUploadedFile('vatIdDocument')"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="otherDocument">
+                <span class="label-content required fileUploadlabel"
+                  >{{
+                    "userRegistrationForm.fields.otherDocument.label"
+                      | cxTranslate
+                  }}
+                  <span class="icon-container fileUploadtoolTip tooltip2">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.otherDocument.tooltip2'
+                            | cxTranslate : { maxFileSize: maxFileSize }
+                        "
+                      ></span> </span></span></span
+              ></label>
+              <input
+                formControlName="otherDocument"
+                class="form-control fileUpload otherDocument"
+                type="file"
+                name="otherDocument"
+                id="otherDocument"
+                placeholder="{{
+                  'userRegistrationForm.fields.otherDocument.placeholder'
+                    | cxTranslate
+                }}"
+                (change)="handleFileInput($event)"
+              />
+              <label tabindex="0" for="otherDocument" class="input-file-trigger"
+                >{{
+                  "userRegistrationForm.fields.otherDocument.placeholder"
+                    | cxTranslate
+                }}
+                <span class="upload"
+                  >{{
+                    "userRegistrationForm.fields.otherDocument.button"
+                      | cxTranslate
+                  }}
+                  <span class="uploadIcon"></span>
+                </span>
+              </label>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.otherDocument.label'
+                    | cxTranslate,
+                  maxFileSize: maxFileSize.toString()
+                }"
+                [control]="signupForm.get('otherDocument')"
+                class="text-danger"
+              ></cx-form-errors>
+              <div *ngIf="uploadedFiles" class="file-name-display">
+                {{
+                  "userRegistrationForm.fields.otherDocument.selectedFile"
+                    | cxTranslate
+                }}: {{ uploadedFiles }}
+                <i
+                  class="fa-solid fa-trash"
+                  (click)="removeUploadedFile('otherDocument')"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="font-weight-bolder mb-4 text-color-primary">
+            {{
+              "userRegistrationForm.CompanyAddressDetailsTitle" | cxTranslate
+            }}
+          </h4>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="companyAddressStreet">
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.companyAddressStreet.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyAddressStreet.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyAddressStreet"
+                name="companyAddressStreet"
+                id="companyAddressStreet"
+                rows="5"
+                maxlength="60"
+              ></textarea>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyAddressStreet.label'
+                    | cxTranslate,
+                  maxlength: '60'
+                }"
+                [control]="signupForm.get('companyAddressStreet')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="companyAddressStreetLine2">
+                <span class="label-content">{{
+                  "userRegistrationForm.fields.companyAddressStreetLine2.label"
+                    | cxTranslate
+                }}</span></label
+              >
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyAddressStreetLine2.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyAddressStreetLine2"
+                name="companyAddressStreetLine2"
+                id="companyAddressStreetLine2"
+                rows="5"
+                maxlength="35"
+              ></textarea>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyAddressStreetLine2.label'
+                    | cxTranslate,
+                  maxlength: '35'
+                }"
+                [control]="signupForm.get('companyAddressStreetLine2')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="countries$ | async as countries">
+                <label *ngIf="countries.length !== 0">
+                  <span class="label-content"
+                    >{{
+                      "userRegistrationForm.fields.companyAddressCountryIso.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  class="companyAddressCountryIso-select"
+                  id="companyAddressCountryIso"
+                  formControlName="companyAddressCountryIso"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="countries"
+                  bindLabel="name"
+                  bindValue="isocode"
+                  placeholder="{{
+                    'userRegistrationForm.fields.companyAddressCountryIso.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.companyAddressCountryIso.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.companyAddressCountryIso.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('companyAddressCountryIso')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container>
+                <label>
+                  <span class="label-content"
+                    >{{
+                      "userRegistrationForm.fields.companyAddressRegion.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  class="companyAddressRegion-select"
+                  id="companyAddressRegion-select"
+                  formControlName="companyAddressRegion"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="regions || []"
+                  bindLabel="name"
+                  bindValue="isocode"
+                  placeholder="{{
+                    'userRegistrationForm.fields.companyAddressRegion.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.companyAddressRegion.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.companyAddressRegion.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('companyAddressRegion')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.companyAddressCity.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyAddressCity.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyAddressCity"
+                name="companyAddressCity"
+                maxlength="40"
+                pattern="^[a-zA-Z0-9 ]*$"
+                (input)="filterInputAcceptAlphaNumeric($event)"
+                required
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyAddressCity.label'
+                    | cxTranslate,
+                  maxLength: '40'
+                }"
+                [control]="signupForm.get('companyAddressCity')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content">{{
+                  "userRegistrationForm.fields.poBox.label" | cxTranslate
+                }}</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.poBox.placeholder' | cxTranslate
+                }}"
+                formControlName="poBox"
+                name="poBox"
+                maxlength="10"
+                pattern="^[a-zA-Z0-9 ]*$"
+                (input)="filterInputAcceptAlphaNumeric($event)"
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.poBox.label' | cxTranslate,
+                  maxLength: '10'
+                }"
+                [control]="signupForm.get('poBox')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content">{{
+                  "userRegistrationForm.fields.companyAddressPostalCode.label"
+                    | cxTranslate
+                }}</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyAddressPostalCode.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyAddressPostalCode"
+                name="companyAddressPostalCode"
+                maxlength="10"
+                pattern="^[a-zA-Z0-9 ]*$"
+                (input)="filterInputAcceptAlphaNumeric($event)"
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyAddressPostalCode.label'
+                    | cxTranslate,
+                  maxLength: '10'
+                }"
+                [control]="signupForm.get('companyAddressPostalCode')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.companyPhoneNumber.label"
+                      | cxTranslate
+                  }}
+                  *<span class="icon-container fileUploadtoolTip phNum">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.phoneNumberTooltip.tooltip'
+                            | cxTranslate : { length: companyPhoneMinLength }
+                        "
+                      ></span
+                    ></span>
+                  </span> </span
+              ></label>
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyPhoneNumber.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyPhoneNumber"
+                name="companyPhoneNumber"
+                [attr.minlength]="companyPhoneMinLength"
+                [attr.maxlength]="companyPhoneMinLength"
+                required
+                pattern="[\0-9]*"
+                inputmode="numeric"
+                (input)="filterInputAcceptNumbers($event)"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyPhoneNumber.label'
+                    | cxTranslate,
+                  minLength: companyPhoneMinLength.toString(),
+                  maxlength: companyPhoneMinLength.toString()
+                }"
+                [control]="signupForm.get('companyPhoneNumber')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.companyMobileNumber.label"
+                      | cxTranslate
+                  }}
+                  <span class="icon-container fileUploadtoolTip phNum">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.phoneNumberTooltip.tooltip'
+                            | cxTranslate : { length: 10 }
+                        "
+                      ></span
+                    ></span> </span
+                ></span>
+              </label>
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.companyMobileNumber.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="companyMobileNumber"
+                id="companyMobileNumber"
+                name="companyMobileNumber"
+                minlength="10"
+                maxlength="10"
+                pattern="[\0-9]*"
+                inputmode="numeric"
+                (input)="filterInputAcceptNumbers($event)"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.companyMobileNumber.label'
+                    | cxTranslate,
+                  minLength: '10',
+                  maxlength: '10'
+                }"
+                [control]="signupForm.get('companyMobileNumber')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="faxNumber"
+                ><span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.faxNumber.label" | cxTranslate
+                  }}<span class="icon-container fileUploadtoolTip phNum">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.faxNumber.tooltip'
+                            | cxTranslate
+                        "
+                      ></span
+                    ></span> </span></span
+              ></label>
+              <input
+                type="text"
+                formControlName="faxNumber"
+                id="faxNumber"
+                name="faxNumber"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.faxNumber.placeholder'
+                    | cxTranslate
+                }}"
+                minlength="10"
+                maxlength="10"
+                pattern="[\0-9]*"
+                (input)="filterInputAcceptNumbers($event)"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.faxNumber.label' | cxTranslate,
+                  minLength: '10'
+                }"
+                [control]="signupForm.get('faxNumber')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+          </div>
+
+          <h4 class="font-weight-bolder mb-4 text-color-primary">
+            {{ "userRegistrationForm.personalDetailsTitle" | cxTranslate }}
+          </h4>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="titles$ | async as titles">
+                <label *ngIf="titles.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.titleCode.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  id="title-code-select"
+                  formControlName="titleCode"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="titles"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.titleCode.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.titleCode.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.titleCode.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('titleCode')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.firstName.label" | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                required
+                class="form-control"
+                type="text"
+                name="firstname"
+                placeholder="{{
+                  'userRegistrationForm.fields.firstName.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="firstName"
+                maxlength="40"
+                pattern="[a-zA-Z ]+"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.firstName.label' | cxTranslate,
+                  maxlength: '40'
+                }"
+                [control]="signupForm.get('firstName')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.lastName.label" | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                required
+                class="form-control"
+                type="text"
+                name="lastname"
+                placeholder="{{
+                  'userRegistrationForm.fields.lastName.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="lastName"
+                pattern="[a-zA-Z ]+"
+                maxlength="40"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.lastName.label' | cxTranslate,
+                  maxlength: '40'
+                }"
+                [control]="signupForm.get('lastName')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="gender$ | async as gender">
+                <label *ngIf="gender.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.gender.label" | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  class="gender-select"
+                  formControlName="gender"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="gender"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.gender.placeholder'
+                      | cxTranslate
+                  }}"
+                  id="gender-select"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.gender.label' | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.gender.label' | cxTranslate
+                  }"
+                  [control]="signupForm.get('gender')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="nationality$ | async as nationality">
+                <label *ngIf="nationality.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.nationality.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  class="national-select"
+                  id="national-select"
+                  formControlName="nationality"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="nationality"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.nationality.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.nationality.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.nationality.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('nationality')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="nationality$ | async as nationality">
+                <label *ngIf="nationality.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.countryOfOrigin.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  required
+                  class="countryOfOrigin-select"
+                  id="countryOfOrigin-select"
+                  formControlName="countryOfOrigin"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="nationality"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.countryOfOrigin.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.countryOfOrigin.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.countryOfOrigin.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('countryOfOrigin')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="designation$ | async as designation">
+                <label>
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.designation.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  class="designation-select"
+                  formControlName="designation"
+                  [clearable]="false"
+                  [items]="designation"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.designation.placeholder'
+                      | cxTranslate
+                  }}"
+                  id="designation-select"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.designation.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.designation.label'
+                    | cxTranslate,
+                }"
+                  [control]="signupForm.get('designation')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container *ngIf="identityType$ | async as identityType">
+                <label *ngIf="identityType.length !== 0">
+                  <span class="label-content required"
+                    >{{
+                      "userRegistrationForm.fields.identityType.label"
+                        | cxTranslate
+                    }}
+                    *</span
+                  ></label
+                >
+                <ng-select
+                  class="identityType-select"
+                  formControlName="identityType"
+                  (change)="resetIdentificationFields()"
+                  [clearable]="false"
+                  [items]="identityType"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.identityType.placeholder'
+                      | cxTranslate
+                  }}"
+                  id="identityType-select"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.identityType.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+                <cx-form-errors
+                  *cxFeature="'formErrorsDescriptiveMessages'"
+                  [translationParams]="{
+                    label:
+                      'userRegistrationForm.fields.identityType.label'
+                      | cxTranslate
+                  }"
+                  [control]="signupForm.get('identityType')"
+                  class="text-danger"
+                ></cx-form-errors>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="identificationNumber"
+                >{{
+                  "userRegistrationForm.fields.identificationNumber.label"
+                    | cxTranslate
+                }}
+                *
+                <span class="icon-container fileUploadtoolTip">
+                  <span class="icon">
+                    <span
+                      class="tooltip-text"
+                      [innerHTML]="
+                        'userRegistrationForm.fields.otherDocument.tooltip'
+                          | cxTranslate : { maxFileSize: maxFileSize }
+                      "
+                    ></span
+                  ></span> </span
+              ></label>
+              <div class="fileSection">
+                <input
+                  required
+                  class="form-control"
+                  type="text"
+                  id="identificationNumber"
+                  name="identificationNumber"
+                  placeholder="{{
+                    'userRegistrationForm.fields.identificationNumber.placeholder'
+                      | cxTranslate
+                  }}"
+                  formControlName="identificationNumber"
+                  maxlength="20"
+                  (input)="onIdentificationNumberInput($event)"
+                />
+                <div class="input-group-append fileUploadClip">
+                  <i
+                    class="fa fa-paperclip"
+                    (click)="identificationNumberDocument.click()"
+                    aria-hidden="true"
+                  ></i>
+                  <input
+                    required
+                    formControlName="identificationNumberDocument"
+                    class="form-control fileUpload identificationNumberDocument"
+                    type="file"
+                    name="identificationNumberDocument"
+                    id="identificationNumberDocument"
+                    #identificationNumberDocument
+                    (change)="handleFileInput($event)"
+                  />
+                </div>
+              </div>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.identificationNumber.label2'
+                    | cxTranslate,
+                  maxLength: '20'
+                }"
+                [control]="signupForm.get('identificationNumber')"
+                class="text-danger"
+              >
+              </cx-form-errors>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.identificationNumber.fileError'
+                    | cxTranslate,
+                  maxFileSize: maxFileSize.toString()
+                }"
+                [control]="signupForm.get('identificationNumberDocument')"
+                class="text-danger"
+              ></cx-form-errors>
+              <div
+                *ngIf="uploadedFilesIdentificationNumberDocument"
+                class="file-name-display"
+              >
+                {{
+                  "userRegistrationForm.fields.otherDocument.selectedFile"
+                    | cxTranslate
+                }}: {{ uploadedFilesIdentificationNumberDocument }}
+                <i
+                  class="fa-solid fa-trash"
+                  (click)="removeUploadedFile('identificationNumberDocument')"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="identificationValidFrom">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.calender.identificationValidFrom.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <mat-form-field class="example-full-width">
+                <input
+                  formControlName="identificationValidFrom"
+                  [min]="minStartDate"
+                  [max]="maxStartDate"
+                  [matDatepickerFilter]="startDateFilter"
+                  readonly
+                  matInput
+                  [matDatepicker]="identificationStartDatePicker"
+                  (dateChange)="
+                    onStartDateChange($event, 'identificationValidFrom')
+                  "
+                  id="identificationValidFrom"
+                  name="identificationValidFrom"
+                  placeholder="{{
+                    'userRegistrationForm.fields.calender.placeholder'
+                      | cxTranslate
+                  }}"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="identificationStartDatePicker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #identificationStartDatePicker></mat-datepicker>
+              </mat-form-field>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.calender.identificationValidFrom.label'
+                    | cxTranslate,
+                }"
+                [control]="signupForm.get('identificationValidFrom')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="identificationValidTo">
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.calender.identificationValidTo.label"
+                      | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <mat-form-field class="example-full-width">
+                <input
+                  formControlName="identificationValidTo"
+                  [min]="minEndDate"
+                  [max]="maxEndDate"
+                  [matDatepickerFilter]="endDateFilter"
+                  readonly
+                  matInput
+                  [matDatepicker]="identificationEndDatePicker"
+                  (dateChange)="
+                    onEndDateChange($event, 'identificationValidTo')
+                  "
+                  id="identificationValidTo"
+                  name="identificationValidTo"
+                  placeholder="{{
+                    'userRegistrationForm.fields.calender.placeholder'
+                      | cxTranslate
+                  }}"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="identificationEndDatePicker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #identificationEndDatePicker></mat-datepicker>
+              </mat-form-field>
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.calender.identificationValidTo.label'
+                    | cxTranslate,
+                }"
+                [control]="signupForm.get('identificationValidTo')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content required"
+                  >{{
+                    "userRegistrationForm.fields.email.label" | cxTranslate
+                  }}
+                  *</span
+                ></label
+              >
+              <input
+                required
+                class="form-control"
+                type="email"
+                name="email"
+                placeholder="{{
+                  'userRegistrationForm.fields.email.placeholder' | cxTranslate
+                }}"
+                formControlName="email"
+                maxlength="241"
+                autocomplete="off"
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.email.label' | cxTranslate,
+                  maxlength: '241'
+                }"
+                [control]="signupForm.get('email')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label>
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.telephone.label" | cxTranslate
+                  }}<span class="icon-container fileUploadtoolTip phNum">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.phoneNumberTooltip.tooltip'
+                            | cxTranslate
+                              : { length: contactPersonPhoneMinLength }
+                        "
+                      ></span
+                    ></span> </span></span
+              ></label>
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.telephone.placeholder'
+                    | cxTranslate
+                }}"
+                formControlName="telephone"
+                name="telephone"
+                [attr.minlength]="contactPersonPhoneMinLength"
+                [attr.maxlength]="contactPersonPhoneMinLength"
+                pattern="[\0-9]*"
+                inputmode="numeric"
+                (input)="filterInputAcceptNumbers($event)"
+              />
+
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.telephone.label' | cxTranslate,
+                  minLength: contactPersonPhoneMinLength.toString(),
+                  maxlength: contactPersonPhoneMinLength.toString()
+                }"
+                [control]="signupForm.get('telephone')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="mobileNumber">
+                <span class="label-content"
+                  >{{
+                    "userRegistrationForm.fields.mobileNumber.label"
+                      | cxTranslate
+                  }}
+                  *<span class="icon-container fileUploadtoolTip phNum">
+                    <span class="icon">
+                      <span
+                        class="tooltip-text"
+                        [innerHTML]="
+                          'userRegistrationForm.fields.phoneNumberTooltip.tooltip'
+                            | cxTranslate : { length: 10 }
+                        "
+                      ></span
+                    ></span> </span></span
+              ></label>
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="{{
+                  'userRegistrationForm.fields.mobileNumber.placeholder'
+                    | cxTranslate
+                }}"
+                required
+                formControlName="mobileNumber"
+                name="mobileNumber"
+                id="mobileNumber"
+                minlength="10"
+                maxlength="10"
+                pattern="[\0-9]*"
+                inputmode="numeric"
+                (input)="filterInputAcceptNumbers($event)"
+              />
+              <cx-form-errors
+                *cxFeature="'formErrorsDescriptiveMessages'"
+                [translationParams]="{
+                  label:
+                    'userRegistrationForm.fields.mobileNumber.label'
+                    | cxTranslate,
+                  minLength: '10',
+                  maxlength: '10'
+                }"
+                [control]="signupForm.get('mobileNumber')"
+                class="text-danger"
+              ></cx-form-errors>
+            </div>
+            <div class="form-group col-md-6">
+              <ng-container
+                *ngIf="communicationChannels$ | async as communicationChannels"
+              >
+                <label *ngIf="communicationChannels.length !== 0">
+                  <span class="label-content">{{
+                    "userRegistrationForm.fields.preferredCommunicationChannel.label"
+                      | cxTranslate
+                  }}</span></label
+                >
+                <ng-select
+                  class="communicationChannels-select"
+                  id="communicationChannels-select"
+                  formControlName="preferredCommunicationChannel"
+                  [searchable]="true"
+                  [clearable]="false"
+                  [items]="communicationChannels"
+                  bindLabel="name"
+                  bindValue="code"
+                  placeholder="{{
+                    'userRegistrationForm.fields.preferredCommunicationChannel.placeholder'
+                      | cxTranslate
+                  }}"
+                  [cxNgSelectA11y]="{
+                    ariaLabel:
+                      'userRegistrationForm.fields.preferredCommunicationChannel.label'
+                      | cxTranslate
+                  }"
+                >
+                </ng-select>
+              </ng-container>
+            </div>
+            <div class="form-group col-md-6"></div>
+          </div>
+          <hr class="hr" />
+          <div class="form-row mt-5">
+            <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-block btn-primary">
+                {{ "userRegistrationForm.formSubmitButtonLabel" | cxTranslate }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <ng-template #loading>
+      <div class="cx-spinner">
+        <cx-spinner></cx-spinner>
+      </div>
+    </ng-template>
+  </div>
+</div>

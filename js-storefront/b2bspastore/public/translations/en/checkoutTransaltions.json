@@ -1,0 +1,21 @@
+{
+  "checkoutTransaltions": {
+    "checkoutOrderConfirmation": {
+      "thankYou": "Thank you for placing the order",
+      "updateOnOrder": "We will keep you updated on the order status. Please check your email for further details.",
+      "viewDetails": "To view the order placed, navigate to",
+      "viewDetailsLink": "Order History",
+      "buttonContinueShoppingLabel": "Continue Shopping"
+    },
+    "progress": {
+      "methodOfPayment": "Mode of payment"
+    },
+    "review": {
+      "poNumber": "Purchase order number"
+    },
+    "checkoutReview": {
+      "termsAndConditions": "Online terms and conditions",
+      "requiredError": "Terms & Conditions is mandatory."
+    }
+  }
+}

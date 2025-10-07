@@ -1,0 +1,140 @@
+<cx-spinner class="overlay" *ngIf="isUpdating$ | async"> </cx-spinner>
+<p class="subTitle">{{ "updateProfileForm.subHeadTitle" | cxTranslate }}</p>
+<p *cxFeature="'a11yRequiredAsterisks'" class="form-legend">
+  {{ "formLegend.required" | cxTranslate }}
+</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <label>
+    <span class="label-content">{{
+      "updateProfileForm.title" | cxTranslate
+    }}</span>
+    <ng-select
+      [clearable]="false"
+      [searchable]="false"
+      formControlName="titleCode"
+      id="title-select"
+      placeholder="{{
+        'updateProfileForm.fields.title.placeholder' | cxTranslate
+      }}"
+      [cxNgSelectA11y]="{
+        ariaLabel: 'updateProfileForm.title' | cxTranslate
+      }"
+    >
+      <ng-option *ngFor="let title of titles$ | async" [value]="title.code">{{
+        title.name
+      }}</ng-option>
+    </ng-select>
+  </label>
+  <label>
+    <span class="label-content"
+      >{{ "updateProfileForm.firstName.label" | cxTranslate }}
+      <ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template
+    ></span>
+    <input
+      required="true"
+      type="text"
+      class="form-control"
+      name="firstName"
+      pattern="[a-zA-Z ]+"
+      placeholder="{{
+        'updateProfileForm.firstName.placeholder' | cxTranslate
+      }}"
+      formControlName="firstName"
+    />
+
+    <cx-form-errors
+      *cxFeature="'formErrorsDescriptiveMessages'"
+      [translationParams]="{
+        label: 'updateProfileForm.firstName.label' | cxTranslate
+      }"
+      [control]="form.get('firstName')"
+    ></cx-form-errors>
+
+    <cx-form-errors
+      *cxFeature="'!formErrorsDescriptiveMessages'"
+      [control]="form.get('firstName')"
+    ></cx-form-errors>
+  </label>
+
+  <label>
+    <span class="label-content"
+      >{{ "updateProfileForm.lastName.label" | cxTranslate }}
+      <ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template
+    ></span>
+    <input
+      required="true"
+      type="text"
+      class="form-control"
+      name="lastName"
+      placeholder="{{ 'updateProfileForm.lastName.placeholder' | cxTranslate }}"
+      formControlName="lastName"
+      pattern="[a-zA-Z ]+"
+    />
+
+    <cx-form-errors
+      *cxFeature="'formErrorsDescriptiveMessages'"
+      [translationParams]="{
+        label: 'updateProfileForm.lastName.label' | cxTranslate
+      }"
+      [control]="form.get('lastName')"
+    ></cx-form-errors>
+
+    <cx-form-errors
+      *cxFeature="'!formErrorsDescriptiveMessages'"
+      [control]="form.get('lastName')"
+    ></cx-form-errors>
+  </label>
+
+  <label>
+    <span class="label-content">{{
+      "updateProfileForm.customerId" | cxTranslate
+    }}</span>
+    <input
+      required="true"
+      type="text"
+      class="form-control"
+      name="customerId"
+      formControlName="customerId"
+      readonly
+    />
+
+    <cx-form-errors
+      *cxFeature="'formErrorsDescriptiveMessages'"
+      [translationParams]="{
+        label: 'updateProfileForm.customerId' | cxTranslate
+      }"
+      [control]="form.get('customerId')"
+    ></cx-form-errors>
+
+    <cx-form-errors
+      *cxFeature="'!formErrorsDescriptiveMessages'"
+      [control]="form.get('customerId')"
+    ></cx-form-errors>
+  </label>
+
+  <button class="btn btn-block btn-primary" [disabled]="form.disabled">
+    {{ "common.saveChange" | cxTranslate }}
+  </button>
+
+  <ng-container *cxFeature="'a11yUseButtonsForBtnLinks'">
+    <button class="btn btn-block btn-secondary" (click)="navigateTo('home')">
+      {{ "common.cancel" | cxTranslate }}
+    </button>
+  </ng-container>
+  <ng-container *cxFeature="'!a11yUseButtonsForBtnLinks'">
+    <a
+      [routerLink]="{ cxRoute: 'home' } | cxUrl"
+      class="btn btn-block btn-secondary"
+      >{{ "common.cancel" | cxTranslate }}</a
+    >
+  </ng-container>
+</form>
+
+<ng-template #requiredAsterisk>
+  <abbr
+    *cxFeature="'a11yRequiredAsterisks'"
+    class="text-decoration-none"
+    title="{{ 'common.required' | cxTranslate }}"
+    >*</abbr
+  >
+</ng-template>

@@ -1,0 +1,25 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+#Online BankTransfer Delta Impex
+
+$outboundAuthUrl = $config-adnoc.outbound.authurl
+
+$adnocPaymentBankRegistrationEndPoint = $config-adnoc.payment.banktransfer.registration.endpoint
+$adnocBankFinalizationEndPoint = $config-adnoc.payment.banktransfer.finalization.endpoint
+$adnocBankRegistrationClinetId = $config-adnoc.payment.banktransfer.uaepgs.username
+$adnocBankRegistrationSecret = $config-adnoc.payment.banktransfer.uaepgs.password
+
+INSERT_UPDATE ConsumedOAuthCredential; id[unique = true]                          ; clientId                       ; clientSecret                 ; oAuthUrl
+                                     ; adnoc-payment-bank-registration-credential ; $adnocBankRegistrationClinetId ; $adnocBankRegistrationSecret ; $outboundAuthUrl
+                                     ; adnoc-payment-bank-finalization-credential ; $adnocBankRegistrationClinetId ; $adnocBankRegistrationSecret ; $outboundAuthUrl
+
+INSERT_UPDATE Endpoint; id[unique = true]                   ; version[unique = true]; name                                                  ; specUrl
+                      ; adnocPaymentBankRegistration        ; v2                    ; adnoc b2b Bank Account of Account Integration API     ; $adnocPaymentBankRegistrationEndPoint
+                      ; adnocPaymentBankFinalization        ; v1                    ; adnoc b2b bank transfer finalization API              ; $adnocBankFinalizationEndPointUrl
+
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; adnoc-payment-bank-registration-destination-target
+                               ; adnoc-payment-bank-finalization-destination-target
+
+INSERT_UPDATE ConsumedDestination; id[unique = true]                           ; url                                      ; endpoint(id, version)                  ; credential(id)                             ; destinationTarget(id)                              ; active[default = true]; additionalProperties
+                                 ; adnocPaymentBankRegistrationDestination     ; $adnocPaymentBankRegistrationEndPoint    ; adnocPaymentBankRegistration:v2        ; adnoc-payment-bank-registration-credential ; adnoc-payment-bank-registration-destination-target ;                       ;
+                                 ; adnocPaymentBankFinalizationDestination     ; $adnocBankFinalizationEndPoint           ; adnocPaymentBankFinalization:v1        ; adnoc-payment-bank-finalization-credential ; adnoc-payment-bank-finalization-destination-target ;                       ;

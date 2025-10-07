@@ -1,0 +1,157 @@
+@import "../../../../../../styles/scss/utilities/mixins";
+@import "../../../../../../styles//scss/utilities/variables";
+
+cx-page-layout {
+  &.AccountPageTemplate {
+    cx-page-slot {
+      display: flex;
+      align-items: flex-start;
+      padding-inline-start: 0;
+      margin: auto;
+
+      @include media-breakpoint-down(md) {
+        padding-inline-start: 1rem;
+        padding-inline-end: 1rem;
+      }
+
+      @include media-breakpoint-down(sm) {
+        .mat-mdc-form-field-bottom-align {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.adnoc-statement-of-account {
+  &-container {
+    p.label-content {
+      margin-bottom: 0;
+    }
+
+    .payer {
+      height: 59px;
+      min-width: 12rem;
+    }
+
+    .adnoc-items-list {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+
+      @include media-breakpoint-down(sm) {
+        display: block;
+      }
+
+      .adnoc-item-info {
+        flex-direction: column;
+
+        @include media-breakpoint-up(md) {
+          flex-basis: 24%;
+        }
+
+        @include media-breakpoint-down(md) {
+          flex-basis: 44%;
+        }
+
+        @include media-breakpoint-down(sm) {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .adnoc-button-group {
+      display: flex;
+      margin-top: 1rem;
+
+      @include media-breakpoint-down(sm) {
+        display: block;
+      }
+
+      .btn {
+        margin-inline-end: 1rem;
+        font-size: 18px;
+        font-weight: var(--cx-font-weight-semi);
+        width: auto;
+        text-transform: none;
+        min-width: 9rem;
+        max-height: 56px;
+        min-height: 56px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include media-breakpoint-down(sm) {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+
+    .calendarInfo {
+      .mat-datepicker-toggle-default-icon {
+        fill: var(--cx-color-primary) !important;
+      }
+    }
+  }
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.8s infinite ease-in-out;
+}
+
+.loader {
+  color: var(--cx-footer-social-icon-hover-color);
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+  top: -12px;
+}
+
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+
+.loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 3.5em;
+}
+
+@keyframes bblFadInOut {
+
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em
+  }
+
+  40% {
+    box-shadow: 0 2.5em 0 0
+  }
+}
+
+.loader-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pointer-event-none {
+  pointer-events: none;
+}

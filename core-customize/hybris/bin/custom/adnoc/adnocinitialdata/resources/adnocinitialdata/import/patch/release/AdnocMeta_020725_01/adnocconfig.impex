@@ -1,0 +1,9 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+INSERT_UPDATE AdnocSapIntegrationCodeMap; integrationType(code)[unique = true]; enumType[unique = true]                              ; enumCode            ; sapCode[unique = true]
+                                        ; INBOUND                             ; de.hybris.platform.sap.sapmodel.enums.SAPOrderStatus ; NOTHING_REJECTED    ; NOTHING_REJECTED
+                                        ; INBOUND                             ; de.hybris.platform.sap.sapmodel.enums.SAPOrderStatus ; PARTIAL_REJECTED    ; PARTIAL_REJECTED
+                                        ; INBOUND                             ; de.hybris.platform.sap.sapmodel.enums.SAPOrderStatus ; EVERYTHING_REJECTED ; EVERYTHING_REJECTED
+
+
+

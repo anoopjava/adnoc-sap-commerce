@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<process xmlns="http://www.hybris.de/xsd/processdefinition"
+         start="checkSellerApproverResponseOnQuoteAction" name="quote-seller-approval-process"
+         processClass="de.hybris.platform.commerceservices.model.process.QuoteProcessModel">
+
+    <action id="checkSellerApproverResponseOnQuoteAction" bean="checkSellerApproverResponseOnQuoteAction">
+        <transition name="OK" to="createBuyerOfferAction"/>
+        <transition name="NOK" to="quoteApprovalRejectedAction"/>
+        <transition name="ERROR" to="failed"/>
+    </action>
+
+    <action id="quoteApprovalRejectedAction" bean="quoteApprovalRejectedAction">
+        <transition name="OK" to="adnocQuoteSellerApproveOrRejectEmailAction"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="createBuyerOfferAction" bean="createBuyerOfferAction">
+        <transition name="OK" to="adnocQuoteSellerApproveOrRejectEmailAction"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="adnocQuoteSellerApproveOrRejectEmailAction" bean="adnocQuoteSellerApproveOrRejectEmailAction">
+        <transition name="OK" to="sendEmail"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="sendEmail" bean="sendEmail">
+        <transition name="OK" to="removeSentEmail"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="removeSentEmail" bean="removeSentEmail">
+        <transition name="OK" to="success"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <end id="error" state="ERROR">Something went wrong.</end>
+    <end id="failed" state="FAILED">Unable to process the quote for approval.</end>
+    <end id="success" state="SUCCEEDED">Seller approval process completed.</end>
+
+</process>
+

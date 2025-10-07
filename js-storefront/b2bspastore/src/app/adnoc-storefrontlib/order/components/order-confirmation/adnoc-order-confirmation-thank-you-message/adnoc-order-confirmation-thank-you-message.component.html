@@ -1,0 +1,36 @@
+<ng-container *ngIf="order$ | async as order">
+  <div class="cx-order-confirmation-message my-5 py-5">
+    <h2 class="title">
+      {{
+        "checkoutTransaltions.checkoutOrderConfirmation.thankYou" | cxTranslate
+      }}
+    </h2>
+    <p class="message">
+      {{
+        "checkoutTransaltions.checkoutOrderConfirmation.updateOnOrder"
+          | cxTranslate
+      }}
+    </p>
+    <p class="message">
+      {{
+        "checkoutTransaltions.checkoutOrderConfirmation.viewDetails"
+          | cxTranslate
+      }}
+      <a [routerLink]="'/my-account/orders'" class="link orderHistoryLink">
+        {{
+          "checkoutTransaltions.checkoutOrderConfirmation.viewDetailsLink"
+            | cxTranslate
+        }}
+      </a>
+    </p>
+  </div>
+  <div class="row justify-content-center my-5 pb-5 continueShopping">
+    <div class="col-xs-12 col-md-8 col-lg-4">
+      <a [routerLink]="'/'" class="btn btn-primary">{{
+        "checkoutTransaltions.checkoutOrderConfirmation.buttonContinueShoppingLabel"
+          | cxTranslate
+      }}</a>
+    </div>
+  </div>
+  <cx-add-to-home-screen-banner></cx-add-to-home-screen-banner>
+</ng-container>

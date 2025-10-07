@@ -1,0 +1,55 @@
+@font-face {
+     font-family: 'ADNOC_Sans_Light';
+     src: url('../../../../public/fonts/ADNOC_Sans_Light.woff2') format('woff2'),
+          url('../../../../public/fonts/ADNOC_Sans_Light.woff') format('woff'),
+          url('../../../../public/fonts/ADNOC_Sans_Light.ttf') format('truetype'),
+          url('../../../../public/fonts/ADNOC_Sans_Light.eot') format('embedded-opentype'),
+          url('../../../../public/fonts/ADNOC_Sans_Light.svg#ADNOC_Sans') format('svg');
+     font-weight: light;
+     font-style: normal;
+     color: var(--cx-font-color);
+}
+@font-face {
+     font-family: 'ADNOC_Sans_Medium';
+     src: url('../../../../public/fonts/ADNOC_Sans_Medium.woff2') format('woff2'),
+          url('../../../../public/fonts/ADNOC_Sans_Medium.woff') format('woff'),
+          url('../../../../public/fonts/ADNOC_Sans_Medium.ttf') format('truetype'),
+          url('../../../../public/fonts/ADNOC_Sans_Medium.eot') format('embedded-opentype'),
+          url('../../../../public/fonts/ADNOC_Sans_Medium.svg#ADNOC_Sans') format('svg');
+     font-weight: Medium;
+     font-style: normal;
+     color: var(--cx-font-color);
+}
+@font-face {
+     font-family: 'ADNOC_Sans_Regular';
+     src: url('../../../../public/fonts/ADNOC_Sans_Regular.woff2') format('woff2'),
+          url('../../../../public/fonts/ADNOC_Sans_Regular.woff') format('woff'),
+          url('../../../../public/fonts/ADNOC_Sans_Regular.ttf') format('truetype'),
+          url('../../../../public/fonts/ADNOC_Sans_Regular.eot') format('embedded-opentype'),
+          url('../../../../public/fonts/ADNOC_Sans_Regular.svg#ADNOC_Sans') format('svg');
+     font-weight: normal;
+     font-style: normal;
+     color: var(--cx-font-color);
+}
+@font-face {
+     font-family: 'ADNOC_Sans_Bold';
+     src: url('../../../../public/fonts/ADNOC_Sans_Bold.woff2') format('woff2'),
+          url('../../../../public/fonts/ADNOC_Sans_Bold.woff') format('woff'),
+          url('../../../../public/fonts/ADNOC_Sans_Bold.ttf') format('truetype'),
+          url('../../../../public/fonts/ADNOC_Sans_Bold.eot') format('embedded-opentype'),
+          url('../../../../public/fonts/ADNOC_Sans_Bold.svg#ADNOC_Sans') format('svg');
+     font-weight: bold;
+     font-style: normal;
+     color: var(--cx-font-color);
+}
+@font-face {
+     font-family: 'ADNOC_Sans_XBold';
+     src: url('../../../../public/fonts/ADNOC_Sans_XBold.woff2') format('woff2'),
+          url('../../../../public/fonts/ADNOC_Sans_XBold.woff') format('woff'),
+          url('../../../../public/fonts/ADNOC_Sans_XBold.ttf') format('truetype'),
+          url('../../../../public/fonts/ADNOC_Sans_XBold.eot') format('embedded-opentype'),
+          url('../../../../public/fonts/ADNOC_Sans_XBold.svg#ADNOC_Sans') format('svg');
+     font-weight: normal;
+     font-style: normal;
+     color: var(--cx-font-color);
+}

@@ -1,0 +1,9 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$language = en
+
+
+# Sort the order
+UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; children(uid, $contentCV)
+                        ; MyAccountNavNode  ;                          ; UpdatePasswordNavNode,OrderHistoryNavNode,UnitLevelOrderNavNode,QuotesNavNode,SavedCartsNavNode,ApprovalDashboardNavNode,MyCompanyNavNode,DownloadStatementNavNode,SupportTicketNavNode,AdnocAccountSummaryNavNode,OverDueInvoiceNavNode,GigyaProfileNavNode,SignOutNavNode

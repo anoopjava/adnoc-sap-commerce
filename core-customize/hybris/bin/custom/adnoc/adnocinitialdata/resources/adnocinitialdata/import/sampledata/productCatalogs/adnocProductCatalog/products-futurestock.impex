@@ -1,0 +1,28 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for importing products Future Stock into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+
+
+INSERT_UPDATE FutureStock; productCode[unique = true]      ; quantity; date[unique = true, dateformat = yyyy-MM-dd]
+                         ; 13                              ; 50      ; 2024-03-10
+                         ; 21                              ; 85      ; 2024-06-15
+                         ; 26                              ; 15      ; 2024-03-12
+                         ; 10013                           ; 25      ; 2024-06-10
+                         ; 10015                           ; 35      ; 2024-05-10
+
+                         ; 42                              ; 45      ; 2024-02-10
+                         ; 44                              ; 50      ; 2024-08-10
+
+                         ; 170013000092                    ; 15      ; 2024-11-10
+                         ; 33                              ; 25      ; 2024-02-09
+
+                         ; regularCarService               ; 85      ; 2024-07-15
+                         ; pollutionUnderControlInspection ; 35      ; 2024-12-10
+
+                         ; 194                             ; 35      ; 2024-12-10

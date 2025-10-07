@@ -1,0 +1,57 @@
+<div class="cx-account-summary" *ngIf="headerDetails$ | async as headerDetails">
+  <div class="leftPart">
+    <div class="cx-account-summary-header-cards">
+      <div
+        class="cx-summary-card-responsive-group cx-summary-card-group-unit-address"
+      >
+        <!-- Card: Unit ID & Unit Name -->
+        <div class="cx-summary-card">
+          <cx-card
+            [content]="getIdCardContent(headerDetails?.orgUnit?.uid) | async"
+          >
+          </cx-card>
+
+          <cx-card
+            [content]="getNameCardContent(headerDetails?.orgUnit?.name) | async"
+          >
+          </cx-card>
+        </div>
+      </div>
+
+      <div
+        class="cx-summary-card-responsive-group cx-summary-card-group-credit-balance"
+      >
+        <!-- Card: Credit Rep & Credit Line -->
+        <div class="cx-summary-card">
+          <cx-card
+            [content]="
+              getCreditRepCardContent(headerDetails?.accountManagerName) | async
+            "
+          >
+          </cx-card>
+
+          <cx-card
+            [content]="
+              getCreditLineCardContent(headerDetails?.accountManagerEmail)
+                | async
+            "
+          >
+          </cx-card>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cx-summary-card-responsive-group cx-summary-card-group-unit-billing-address"
+    >
+      <!-- Card: Address -->
+      <div class="cx-summary-card">
+        <cx-card
+          [content]="
+            getAddressCardContent(headerDetails?.billingAddress) | async
+          "
+        >
+        </cx-card>
+      </div>
+    </div>
+  </div>
+</div>

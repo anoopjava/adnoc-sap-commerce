@@ -1,0 +1,51 @@
+## messageSource=classpath:/adnocservice/messages/email-quoteExpired_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#0468b3">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+#macro(displayNegationForDiscount $priceData)
+    #if (${priceData.value} > 0)
+    -
+    #end
+    ${priceData.formattedValue}
+#end
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        a
+        {
+            text-decoration: none;
+            color:#0468b3;
+        }
+    </style>
+</head>
+<body>
+ <div class="content">
+            <p>Dear ${ctx.title} ${ctx.displayName},</p>
+            <p>${ctx.messages.getMessage('quoteExpiryParagraph', ${ctx.quote.code},${ctx.quote.expirationTime})}</p>
+            <p>${ctx.messages.quoteEnquiry}</p>
+            <p>${ctx.messages.newQuoteRequestParagraph}</p>
+            <strong>
+               #genHtmlLink("${ctx.frontendUrl}", "#0468b3", "${ctx.messages.requestNewQuoteHyperLink}")
+            </strong>
+            <p>${ctx.messages.customerEnquiry}</p>
+            <p>${ctx.messages.thankYouParagraph}</p>
+     </div>
+     <div class="footer">
+          <p>${ctx.messages.complimentaryClosing}</p>
+           <p>Sales Manager/Sales Co-ordinator</p>
+           <p>ADNOC</p>
+           <p>${ctx.messages.website}</p>
+      </div>
+</body>
+</html>

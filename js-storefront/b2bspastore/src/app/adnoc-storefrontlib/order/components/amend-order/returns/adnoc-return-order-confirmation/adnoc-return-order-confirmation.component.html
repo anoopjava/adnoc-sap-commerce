@@ -1,0 +1,26 @@
+<form
+  *ngIf="form$ | async as form"
+  [formGroup]="form"
+  (ngSubmit)="submit(form)"
+>
+  <!-- <ng-container *ngTemplateOutlet="actions"></ng-container> -->
+
+  <adnoc-amend-order-items
+    *ngIf="entries$ | async as entries"
+    [entries]="entries"
+    [isConfirmation]="true"
+    [orderNumber]="orderCode"
+  >
+  </adnoc-amend-order-items>
+
+  <ng-container *ngTemplateOutlet="actions"></ng-container>
+
+  <ng-template #actions>
+    <adnoc-amend-order-actions
+      *ngIf="orderCode"
+      [orderCode]="orderCode"
+      [amendOrderForm]="form"
+      backRoute="orderReturn"
+    ></adnoc-amend-order-actions>
+  </ng-template>
+</form>

@@ -1,0 +1,45 @@
+.circle {
+  border: 1px solid var(--cx-user-circle-color);
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+  width: 45px;
+  height: 45px;
+}
+
+.Active,
+.Deactive {
+  display: inline-flex;
+  background: var(--cx-user-active-background);
+  padding: 5px 10px 0px 10px;
+  border: 1px solid var(--cx-active-status-circle);
+  border-radius: 30px;
+  text-transform: uppercase;
+  justify-content: center;
+  letter-spacing: 2px;
+  white-space: nowrap;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    -moz-border-radius: 7.5px;
+    -webkit-border-radius: 7.5px;
+    border-radius: 7.5px;
+    background-color: var(--cx-active-status-circle);
+    margin: 6px 6px 0 0;
+  }
+}
+
+.InActive,
+.Deactive {
+  background: var(--cx-user-disable-background);
+  border: 1px solid var(--cx-disable-status-circle);
+
+  &::before {
+    background-color: var(--cx-disable-status-circle);
+  }
+}

@@ -1,0 +1,281 @@
+@use "sass:math";
+
+$space: 0.5rem;
+
+%header {
+  background-color: var(--cx-color-light);
+  color: var(--cx-color-inverse);
+  border: 1px solid var(--cx-color-border-header);
+
+  @include media-breakpoint-up(lg) {
+    background: linear-gradient(to top,
+        var(--cx-color-background-header) $header-height + 1,
+        var(--cx-white) 0);
+  }
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin: auto;
+
+    @include media-breakpoint-down(md) {
+      overflow: hidden;
+    }
+
+    @include media-breakpoint-up(lg) {
+      padding: 0 30px;
+    }
+
+    >* {
+      align-self: center;
+      display: block;
+      flex: none;
+    }
+
+    .SiteLinks {
+      font-weight: var(--cx-font-weight-semi);
+    }
+
+    .SiteContext {
+      &::after {
+        border: 0;
+      }
+    }
+
+    cx-site-context-selector {
+      @include media-breakpoint-up(sm) {
+        select {
+          background-color: transparent;
+          border: 1px solid var(--cx-color-primary);
+          border-radius: 5px;
+          padding: 8px 12px 4px;
+          color: var(--cx-color-primary);
+          min-width: 90px;
+        }
+
+        cx-icon {
+          position: absolute;
+          right: 3px;
+        }
+      }
+
+      label {
+        position: relative;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.is-expanded {
+    .navigation {
+      position: absolute;
+      width: 100%;
+      z-index: 20;
+
+      @include media-breakpoint-down(md) {
+        height: 100vh;
+        background-color: var(--cx-color-background);
+      }
+    }
+
+    .PreHeader {
+      z-index: 4;
+    }
+
+    @include media-breakpoint-down(md) {
+      &:after {
+        content: "";
+        display: block;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--cx-background-dark);
+        z-index: 2;
+      }
+    }
+  }
+
+  &:not(.is-expanded) {
+    cx-page-layout.navigation {
+      display: none;
+    }
+  }
+
+  .SiteContext,
+  .SiteLinks {
+    font-size: 0.75rem;
+    color: var(--cx-color-medium);
+    justify-content: flex-start;
+
+    >* {
+      flex: none;
+    }
+  }
+
+  .SiteLinks {
+    --cx-display: block;
+
+    cx-link {
+      display: block;
+      padding-inline-end: 10px;
+
+      @media (max-width: $breakpoint-sm) {
+        margin-right: 20px;
+      }
+
+      a {
+        @include media-breakpoint-down(md) {
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+
+  .SiteLogo {
+    width: 90px;
+    margin: 0 30px;
+  }
+
+  .SearchBox {
+    margin: 14px 10px 14px auto;
+
+    .searchbox {
+      max-width: 100%;
+      width: auto;
+
+      @include media-breakpoint-down(sm) {
+        .cx-input-label {
+          display: none;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 4px;
+      margin-inline-end: 0;
+      margin-bottom: 4px;
+      margin-inline-start: auto;
+    }
+  }
+
+  .VariantConfigExitButton,
+  .VariantConfigOverviewExitButton,
+  .CpqConfigExitButton {
+    margin-block-start: 14px;
+    margin-block-end: 14px;
+    margin-inline-start: auto;
+    margin-inline-end: 14px;
+
+    @include media-breakpoint-down(sm) {
+      margin-block-start: 4px;
+      margin-inline-end: 0;
+      margin-block-end: 4px;
+      margin-inline-start: auto;
+    }
+  }
+
+  .NavigationBar {
+    flex: 100%;
+    min-height: $header-height;
+
+    @include media-breakpoint-down(md) {
+      background-color: var(--cx-color-background);
+    }
+  }
+
+  .cx-hamburger {
+    display: block;
+  }
+
+  @include media-breakpoint-only(xs) {
+    .SearchBox {
+      margin-inline-start: auto;
+    }
+  }
+
+  // non-desktop
+  @include media-breakpoint-down(md) {
+
+    .SiteContext,
+    .SiteLinks,
+    .SiteLogin {
+      background-color: var(--cx-color-light);
+      color: var(--cx-color, var(--cx-color-text));
+    }
+
+    .SiteContext {
+      padding: $space calc($space * 2) div($space, 2);
+    }
+
+    .SiteLinks {
+      padding-top: 20px;
+      color: var(--cx-color-primary);
+    }
+  }
+
+  // desktop
+  @include media-breakpoint-up(lg) {
+    header {
+      padding: 0 $space * 2;
+    }
+
+    .cx-hamburger {
+      display: none;
+
+      &.is-active {
+        background-color: var(--cx-color-primary);
+      }
+    }
+
+    .SiteContext,
+    .SiteLinks {
+      display: flex;
+      --cx-margin: #{$space} 5px;
+    }
+
+    .SiteContext {
+      justify-content: flex-start;
+
+      &:after {
+        border-top: 1px solid currentColor;
+        content: "";
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 33px;
+      }
+    }
+
+    .SiteLinks {
+      justify-content: flex-end;
+      color: var(--cx-color-primary);
+    }
+
+    .SiteLogin {
+      padding: $space $space * 3.75 $space 0;
+    }
+  }
+
+  .cx-hamburger {
+    &.is-active {
+
+      .hamburger-inner,
+      .hamburger-inner::before,
+      .hamburger-inner::after {
+        background-color: var(--cx-color-primary);
+      }
+    }
+  }
+
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    background-color: var(--cx-color-primary);
+  }
+}

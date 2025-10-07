@@ -1,0 +1,84 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2021 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# -----------------------------------------------------------------------
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]                 ; active; content
+                                      ; b2bRegistrationReceivedEmailProcess ; true  ; "<process xmlns='http://www.hybris.de/xsd/processdefinition'
+        start='generateEmail'
+        name='b2bRegistrationReceivedEmailProcess'
+        processClass='de.hybris.platform.b2b.model.B2BRegistrationProcessModel'
+        onError='error'>
+
+    <action id='generateEmail' bean='b2bRegistrationReceivedGenerateEmailAction'>
+   		<transition name='OK' to='sendEmail'/>
+   		<transition name='NOK' to='error'/>
+   	</action>
+
+   	<action id='sendEmail' bean='sendEmail'>
+   		<transition name='OK' to='removeSentEmail'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<action id='removeSentEmail' bean='removeSentEmail'>
+   		<transition name='OK' to='sendSms'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<action id='sendSms' bean='adnocB2bRegistrationReceivedGenerateSmsAction'>
+   		<transition name='OK' to='success'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<end id='error' state='ERROR'>An error occured during this process</end>
+   	<end id='failed' state='FAILED'>Failed to send 'registration pending approval' email</end>
+   	<end id='success' state='SUCCEEDED'>Sent 'registration pending approval' email(s)</end>
+
+</process>"
+
+
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]                 ; active; content
+                                      ; b2bRegistrationRejectedEmailProcess ; true  ; "<process xmlns='http://www.hybris.de/xsd/processdefinition'
+        start='generateEmail'
+        name='b2bRegistrationRejectedEmailProcess'
+        processClass='de.hybris.platform.b2b.model.B2BRegistrationRejectedProcessModel'
+        onError='error'>
+
+    <action id='generateEmail' bean='b2bRegistrationRejectedGenerateEmailAction'>
+   		<transition name='OK' to='sendEmail'/>
+   		<transition name='NOK' to='error'/>
+   	</action>
+
+   	<action id='sendEmail' bean='sendEmail'>
+   		<transition name='OK' to='removeSentEmail'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<action id='removeSentEmail' bean='removeSentEmail'>
+   		<transition name='OK' to='sendSms'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<action id='sendSms' bean='adnocB2bRegistrationRejectedGenerateSmsAction'>
+   		<transition name='OK' to='cleanupRegistration'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<action id='cleanupRegistration' bean='b2bRegistrationRejectedCleanupAction'>
+   		<transition name='OK' to='success'/>
+   		<transition name='NOK' to='failed'/>
+   	</action>
+
+   	<end id='error' state='ERROR'>An error occured during this process</end>
+   	<end id='failed' state='FAILED'>Failed to send 'registration pending approval' email</end>
+   	<end id='success' state='SUCCEEDED'>Sent 'registration pending approval' email(s)</end>
+
+</process>"
+
+REMOVE DynamicProcessDefinition; code[unique = true]                 ; active; content
+                               ; b2bRegistrationApprovedEmailProcess ; true  ;
+
+REMOVE AutomatedWorkflowActionTemplate; code[unique = true]   ; workflow(code)[unique = true]
+                                      ; B2BRSendEmailApproved ; B2BUserRegistration
+

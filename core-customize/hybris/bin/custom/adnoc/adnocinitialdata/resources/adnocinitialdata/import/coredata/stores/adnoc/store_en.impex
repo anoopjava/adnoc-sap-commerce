@@ -1,0 +1,6 @@
+$lang = en
+
+$storeUid = adnoc
+
+UPDATE BaseStore; uid[unique = true]; name[lang = $lang]
+                ; $storeUid         ; "Adnoc Store" ;

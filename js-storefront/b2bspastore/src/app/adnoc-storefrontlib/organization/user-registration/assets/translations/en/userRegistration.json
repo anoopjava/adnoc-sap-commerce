@@ -1,0 +1,210 @@
+{
+  "userRegistrationForm": {
+    "fields": {
+      "primaryProduct": {
+        "label": "Please select primary product",
+        "placeholder": "Select your primary product",
+        "fieldName": "Primary product",
+        "title": "Product selection"
+      },
+      "companyType": {
+        "label": "Company type",
+        "placeholder": "Select your company type"
+      },
+      "companyName": {
+        "label": "Company name",
+        "placeholder": "Enter your company name"
+      },
+      "companyName2": {
+        "label": "Company name 2",
+        "placeholder": "Enter your company name 2"
+      },
+      "companyEmail": {
+        "label": "Company email address",
+        "placeholder": "Enter company email address"
+      },
+      "companyWebsite": {
+        "label": "Company website",
+        "placeholder": "Enter your company website"
+      },
+      "companyPhoneNumber": {
+        "label": "Company phone number",
+        "placeholder": "Enter your company phone number"
+      },
+      "companyMobileNumber": {
+        "label": "Company mobile number",
+        "placeholder": "Enter your company mobile number"
+      },
+      "tradeLicenseNumber": {
+        "label": "Trade license number and document",
+        "label2": "Trade license number",
+        "placeholder": "Enter your trade license number",
+        "fileError": "Trade license number document"
+      },
+      "tradeLicenseAuthority": {
+        "label": "Trade license authority",
+        "placeholder": "Select your trade license authority"
+      },
+      "vatId": {
+        "label": "TRN/VAT and document",
+        "label2": "TRN/VAT number",
+        "placeholder": "Enter your TRN/VAT number",
+        "fileError": "TRN/VAT document"
+      },
+      "otherDocument": {
+        "label": "Upload document",
+        "placeholder": "Select file to upload",
+        "button": "Upload",
+        "tooltip": "1) Only pdf files are allowed <br>2) Max {{maxFileSize}} mb file size.",
+        "tooltip2": "1) Only pdf files are allowed <br>2) Max {{maxFileSize}} mb file size. <br>3) Power of Attorney/Sales Agreement document",
+        "selectedFile": "Selected file"
+      },
+      "faxNumber": {
+        "label": "Fax number",
+        "placeholder": "Enter your fax number",
+        "tooltip": "1) Should be 10 digits long <br>2) If the digits are less than 10, then add leading zeroes"
+      },
+      "companyAddressStreet": {
+        "label": "Street line 1",
+        "placeholder": "Enter your street details (60 characters maximum)"
+      },
+      "companyAddressStreetLine2": {
+        "label": "Street line 2",
+        "placeholder": "Enter your street details (35 characters maximum)"
+      },
+      "streetNumber": {
+        "label": "Street number",
+        "placeholder": "Enter your street number"
+      },
+      "companyAddressCountryIso": {
+        "label": "Country",
+        "placeholder": "Select your country"
+      },
+      "companyAddressRegion": {
+        "label": "Region",
+        "placeholder": "Select your region"
+      },
+      "companyAddressCity": {
+        "label": "City",
+        "placeholder": "Enter your city"
+      },
+      "poBox": {
+        "label": "PO box",
+        "placeholder": "Enter your po box"
+      },
+      "companyAddressPostalCode": {
+        "label": "Postal code",
+        "placeholder": "Enter your postal code"
+      },
+      "preferredCommunicationChannel": {
+        "label": "Preferred communication channel",
+        "placeholder": "Select your communication channel",
+        "placeholder2": "Communication channels"
+      },
+      "firstName": {
+        "label": "First name",
+        "placeholder": "First name"
+      },
+      "lastName": {
+        "label": "Last name",
+        "placeholder": "Last name"
+      },
+      "titleCode": {
+        "label": "Salutation",
+        "placeholder": "What you would like to be addressed"
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select your gender"
+      },
+      "nationality": {
+        "label": "Nationality",
+        "placeholder": "Select your nationality"
+      },
+      "countryOfOrigin": {
+        "label": "Country of residence",
+        "placeholder": "Select your country of residence"
+      },
+      "identityType": {
+        "label": "Identity type",
+        "placeholder": "Select your ID type"
+      },
+      "identificationNumber": {
+        "label": "Identification number and document",
+        "label2": "Identification number",
+        "placeholder": "Enter your identification number",
+        "fileError": "Identification number document"
+      },
+      "calender": {
+        "tlnValidFrom": {
+          "label": "Trade license valid from"
+        },
+        "tlnValidTo": {
+          "label": "Trade license valid to"
+        },
+        "identificationValidFrom": {
+          "label": "Identification valid from"
+        },
+        "identificationValidTo": {
+          "label": "Identification valid to"
+        },
+        "placeholder": "Select a date"
+      },
+      "designation": {
+        "label": "Department",
+        "placeholder": "Select your department"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter company email address"
+      },
+      "telephone": {
+        "label": "Phone number",
+        "placeholder": "Enter your phone number"
+      },
+      "mobileNumber": {
+        "label": "Mobile number",
+        "placeholder": "Enter your mobile number"
+      },
+      "phoneNumberTooltip": {
+        "tooltip": "1) Should be {{length}} digits long <br>2) If the digits are less than {{length}}, then add leading zeroes"
+      },
+      "roles": {
+        "label": "Assign Role"
+      },
+      "orgUnit": {
+        "label": "Business Unit"
+      },
+      "rights": {
+        "label": "Permissions"
+      }
+    },
+    "messageToApproverTemplate": "Company name: {{companyName}},\n  Phone number: {{phoneNumber}},\n  Address: {{addressLine}} {{secondAddressLine}} {{city}} {{state}} {{postalCode}} {{country}},\n  Message: {{message}}",
+    "successFormSubmitMessage": "Thank you for registering! A representative will contact you shortly and confirm your access information.",
+    "formSubmitButtonLabel": "Register",
+    "goToLoginButtonLabel": "Already registered? Go to Sign in",
+    "AdnocWelcomeTitle": "Welcome to Adnoc",
+    "AdnocWelcomeSubTitle": "B2B Distribution Portal",
+    "httpHandlers": {
+      "conflict": "User with this e-mail address already exists."
+    },
+    "messageToFailedToRegister": "Failed to register. Please contact your admin for further assistance.",
+    "goToSignInButtonLabel": "Sign in",
+    "registerTitle": "Sign Up",
+    "alreadyAccountLabel": "Already have an account?",
+    "companyDetailsTitle": "Company Details",
+    "personalDetailsTitle": "Contact person",
+    "CompanyAddressDetailsTitle": "Company address",
+    "success": {
+      "message": "Thank you for submitting your registration. ADNOC will get back to you soon.",
+      "signIn": "Continue to sign in",
+      "signUp": "Form Submission Successful"
+    },
+    "error": {
+      "400error": "Invalid request. Please check your input values and try again.",
+      "404error": "Something went wrong, Please try again later",
+      "500error": "Server error. Please try again later.",
+      "503error": "Service is unavailable. Please try again after some time."
+    }
+  }
+}

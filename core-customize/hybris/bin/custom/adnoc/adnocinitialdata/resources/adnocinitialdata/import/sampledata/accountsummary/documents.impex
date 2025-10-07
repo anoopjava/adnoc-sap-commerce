@@ -1,0 +1,184 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import sample documents and attachments for account summary
+#
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/accountsummary
+
+INSERT_UPDATE DocumentMedia; code[unique = true]; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']
+                           ; INPG-00100001      ; $siteResource/documentmedias/INPG-00100001.pdf                              ; application/pdf
+                           ; INPG-00100002      ; $siteResource/documentmedias/INPG-00100002.pdf                              ; application/pdf
+                           ; INPG-00100003      ; $siteResource/documentmedias/INPG-00100003.pdf                              ; application/pdf
+                           ; INPG-00100004      ; $siteResource/documentmedias/INPG-00100004.pdf                              ; application/pdf
+                           ; INPG-00100005      ; $siteResource/documentmedias/INPG-00100005.pdf                              ; application/pdf
+                           ; INPG-00100006      ; $siteResource/documentmedias/INPG-00100006.pdf                              ; application/pdf
+                           ; POPG-00100006      ; $siteResource/documentmedias/POPG-00100001.pdf                              ; application/pdf
+                           ; POPG-00006009      ; $siteResource/documentmedias/POPG-00006009.pdf                              ; application/pdf
+                           ; POPG-00006012      ; $siteResource/documentmedias/POPG-00006012.pdf                              ; application/pdf
+                           ; POPG-00006015      ; $siteResource/documentmedias/POPG-00006015.pdf                              ; application/pdf
+                           ; POPG-00006017      ; $siteResource/documentmedias/POPG-00006017.pdf                              ; application/pdf
+                           ; POPG-00006020      ; $siteResource/documentmedias/POPG-00006020.pdf                              ; application/pdf
+                           ; STAPG-00010000     ; $siteResource/documentmedias/STAPG-00010000.pdf                             ; application/pdf
+
+INSERT_UPDATE B2BDocument; documentnumber[unique = true]; Unit(uid); amount     ; currency(isocode); date[dateformat = yyyy-MM-dd]; documentType(code); dueDate[dateformat = yyyy-MM-dd]; openAmount ; status(code, itemtype(code)); documentMedia(code, itemtype(code))
+# The following script updates the document dates. It generates relevant organizational unit document data based on the
+# SAP Commerce Cloud installation or upgrade date.
+"#% afterEach:
+	import de.hybris.platform.b2bacceleratorservices.jalo.B2BDocument;
+	import java.util.Date;
+    import java.time.*;
+    import java.time.temporal.*;
+
+    B2BDocument b2bDocument = (B2BDocument) impex.getLastImportedItem();
+    LocalDate currentDate = LocalDate.now();
+    int latestMonth = 12;
+
+    void adjustDates(Date date, dueDate) {
+      if (date == null) {
+      	return;
+      }
+
+      LocalDate documentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+      int documentDateMonth = documentDate.getMonthValue();
+      int documentDateDay = documentDate.getDayOfMonth();
+      int monthsDiff = latestMonth - documentDateMonth;
+
+      /* Adjust the document date by using the following logic:
+         year = current year
+         month = current month - month difference between latest month and document date month
+         day = document date day or latest day of the month, whichever is valid */
+      LocalDate newDocumentDate = LocalDate.of(currentDate.getYear(), currentDate.getMonthValue(), 1).minusMonths(monthsDiff);
+      int lengthOfMonth = newDocumentDate.lengthOfMonth();
+      newDocumentDate = newDocumentDate.withDayOfMonth(documentDateDay <= lengthOfMonth ? documentDateDay : lengthOfMonth);
+
+      b2bDocument.setDate(Date.from(newDocumentDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+      if (dueDate == null) {
+        return;
+      }
+
+      LocalDate documentDueDate = dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+      long daysDiff = documentDate.until(documentDueDate, ChronoUnit.DAYS);
+
+      /* Adjust the document due date by using the following logic:
+         date = new document date + difference in days between document date and due date */
+      LocalDate newDocumentDueDate = newDocumentDate.plus(daysDiff, ChronoUnit.DAYS);
+
+      b2bDocument.setDueDate(Date.from(newDocumentDueDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    adjustDates(b2bDocument.getDate(), b2bDocument.getDueDate());
+"
+                         ; POCR-0000001                 ; 300000   ; 78515,58   ; AED              ; 2014-06-10                   ; Delivery          ;                                 ; 78515,58   ; open:DocumentStatus         ; INPG-00100001:DocumentMedia  ;
+                         ; POCR-0000002                 ; 300000   ; 50945,36   ; AED              ; 2014-06-10                   ; Delivery          ;                                 ; 50945,36   ; open:DocumentStatus         ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-0000003                 ; 300000   ; 82005,11   ; AED              ; 2014-06-10                   ; Delivery          ;                                 ; 82005,11   ; open:DocumentStatus         ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-0000004                 ; 300000   ; 31751,03   ; AED              ; 2014-06-10                   ; Delivery          ;                                 ; 31751,03   ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-0000005                 ; 300000   ; 79077,74   ; AED              ; 2014-06-12                   ; Delivery          ;                                 ; 79077,74   ; closed:DocumentStatus       ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-0000006                 ; 300000   ; 69296,63   ; AED              ; 2014-06-12                   ; Delivery          ;                                 ; 69296,63   ; closed:DocumentStatus       ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-0000007                 ; 300000   ; 64628,96   ; AED              ; 2014-06-14                   ; Delivery          ;                                 ; 64628,96   ; closed:DocumentStatus       ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-0000008                 ; 300000   ; 56781,49   ; AED              ; 2014-06-14                   ; Delivery          ;                                 ; 56781,49   ; closed:DocumentStatus       ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-0000009                 ; 300000   ; 37542,63   ; AED              ; 2014-06-18                   ; Delivery          ;                                 ; 37542,63   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; POCR-0000010                 ; 300000   ; 38938,37   ; AED              ; 2014-06-18                   ; Delivery          ;                                 ; 38938,37   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; POCR-0000011                 ; 300000   ; 25377,17   ; AED              ; 2014-06-18                   ; Delivery          ;                                 ; 25377,17   ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; POCR-0000012                 ; 300000   ; 77451,97   ; AED              ; 2014-06-18                   ; Delivery          ;                                 ; 77451,97   ; open:DocumentStatus         ; POPG-00006020 :DocumentMedia ;
+                         ; POCR-0000013                 ; 300000   ; 76241,05   ; AED              ; 2014-06-18                   ; Delivery          ;                                 ; 76241,05   ; open:DocumentStatus         ; STAPG-00010000:DocumentMedia ;
+                         ; POCR-0000014                 ; 300000   ; 33632,01   ; AED              ; 2014-06-19                   ; Delivery          ;                                 ; 33632,01   ; closed:DocumentStatus       ; INPG-00100001:DocumentMedia  ;
+                         ; POCR-0000015                 ; 300000   ; 34610,03   ; AED              ; 2014-06-19                   ; Delivery          ;                                 ; 34610,03   ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-0000016                 ; 300000   ; 24693,61   ; AED              ; 2014-06-19                   ; Delivery          ;                                 ; 24693,61   ; closed:DocumentStatus       ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-0000017                 ; 300000   ; 11777,15   ; AED              ; 2014-06-21                   ; Delivery          ;                                 ; 11777,15   ; closed:DocumentStatus       ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-0000018                 ; 300000   ; 43515,33   ; AED              ; 2014-06-23                   ; Delivery          ;                                 ; 43515,33   ; closed:DocumentStatus       ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-0000019                 ; 300000   ; 2964,41    ; AED              ; 2014-06-24                   ; Delivery          ;                                 ; 2964,41    ; closed:DocumentStatus       ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-0000020                 ; 300000   ; 78372,43   ; AED              ; 2014-06-25                   ; Delivery          ;                                 ; 78372,43   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-0000021                 ; 300000   ; 26773,57   ; AED              ; 2014-06-25                   ; Delivery          ;                                 ; 26773,57   ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-0000022                 ; 300000   ; 717,60     ; AED              ; 2014-06-25                   ; Delivery          ;                                 ; 717,60     ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; POCR-0000023                 ; 300000   ; 34090,59   ; AED              ; 2014-06-25                   ; Delivery          ;                                 ; 34090,59   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; POCR-0000024                 ; 300000   ; 80277,99   ; AED              ; 2014-06-29                   ; Delivery          ;                                 ; 80277,99   ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; POCR-0000025                 ; 300000   ; 91568,74   ; AED              ; 2014-06-30                   ; Delivery          ;                                 ; 91568,74   ; closed:DocumentStatus       ; POPG-00006020 :DocumentMedia ;
+                         ; POCR-0000026                 ; 300000   ; 94698,19   ; AED              ; 2014-06-30                   ; Delivery          ;                                 ; 94698,19   ; closed:DocumentStatus       ; STAPG-00010000:DocumentMedia ;
+                         ; POCR-0000027                 ; 300000   ; 56557,58   ; AED              ; 2014-07-10                   ; Delivery          ;                                 ; 56557,58   ; closed:DocumentStatus       ; INPG-00100001 :DocumentMedia ;
+                         ; POCR-0000028                 ; 300000   ; 36710,80   ; AED              ; 2014-07-10                   ; Delivery          ;                                 ; 36710,80   ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-0000029                 ; 300000   ; 86181,54   ; AED              ; 2014-07-12                   ; Delivery          ;                                 ; 86181,54   ; closed:DocumentStatus       ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-0000030                 ; 300000   ; 50356,24   ; AED              ; 2014-07-15                   ; Delivery          ;                                 ; 50356,24   ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-0000031                 ; 300000   ; 47075,33   ; AED              ; 2014-07-15                   ; Delivery          ;                                 ; 47075,33   ; open:DocumentStatus         ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-0000032                 ; 300000   ; 78810,87   ; AED              ; 2014-07-18                   ; Delivery          ;                                 ; 78810,87   ; open:DocumentStatus         ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-0000033                 ; 300000   ; 60666,78   ; AED              ; 2014-07-25                   ; Delivery          ;                                 ; 60666,78   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-0000034                 ; 300000   ; 21188,07   ; AED              ; 2014-07-25                   ; Delivery          ;                                 ; 21188,07   ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-0000035                 ; 300000   ; 44354,40   ; AED              ; 2014-07-25                   ; Delivery          ;                                 ; 44354,40   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; CRNCR-0000001                ; 300000   ; 7963,71    ; AED              ; 2014-06-10                   ; LC                ; 2014-07-10                      ; 7963,71    ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; CRNCR-0000002                ; 300000   ; 8953,13    ; AED              ; 2014-07-15                   ; LC                ; 2014-08-14                      ; 8953,13    ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; CRNCR-0000003                ; 300000   ; 7186,09    ; AED              ; 2014-07-18                   ; LC                ; 2014-08-17                      ; 7186,09    ; open:DocumentStatus         ; POPG-00006020 :DocumentMedia ;
+                         ; CRNCR-0000004                ; 300000   ; 7509,96    ; AED              ; 2014-07-25                   ; LC                ; 2014-08-24                      ; 7509,96    ; open:DocumentStatus         ; STAPG-00010000:DocumentMedia ;
+                         ; CRNCR-0000005                ; 300000   ; 3634,43    ; AED              ; 2014-07-27                   ; LC                ; 2014-08-26                      ; 3634,43    ; closed:DocumentStatus       ; INPG-00100001:DocumentMedia  ;
+                         ; CRNCR-0000006                ; 300000   ; 7772,91    ; AED              ; 2014-07-27                   ; LC                ; 2014-08-26                      ; 7772,91    ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; DBNCR-0000001                ; 300000   ; 45079,40   ; AED              ; 2014-08-05                   ; LC                ; 2014-09-04                      ; 45079,40   ; open:DocumentStatus         ; INPG-00100003:DocumentMedia  ;
+                         ; DBNCR-0000002                ; 300000   ; 6601,69    ; AED              ; 2014-08-15                   ; LC                ; 2014-09-14                      ; 6601,69    ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; DBNCR-0000003                ; 300000   ; 33617,44   ; AED              ; 2014-09-02                   ; LC                ; 2014-10-02                      ; 33617,44   ; open:DocumentStatus         ; INPG-00100005 :DocumentMedia ;
+                         ; DBNCR-0000004                ; 300000   ; 24488,07   ; AED              ; 2014-09-11                   ; LC                ; 2014-10-11                      ; 24488,07   ; open:DocumentStatus         ; INPG-00100006 :DocumentMedia ;
+                         ; DBNCR-0000005                ; 300000   ; 56669,94   ; AED              ; 2014-10-20                   ; LC                ; 2014-11-19                      ; 56669,94   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; DBNCR-0000006                ; 300000   ; 2129,47    ; AED              ; 2014-10-23                   ; LC                ; 2014-11-22                      ; 2129,47    ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; DBNCR-0000007                ; 300000   ; 69682,63   ; AED              ; 2014-11-01                   ; LC                ; 2014-12-01                      ; 69682,63   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; DBNCR-0000008                ; 300000   ; 66038,65   ; AED              ; 2014-11-10                   ; LC                ; 2014-12-10                      ; 66038,65   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; DBNCR-0000009                ; 300000   ; 7695,66    ; AED              ; 2014-11-11                   ; LC                ; 2014-12-11                      ; 7695,66    ; closed:DocumentStatus       ; POPG-00006017 :DocumentMedia ;
+                         ; DBNCR-0000010                ; 300000   ; 33342,00   ; AED              ; 2014-11-11                   ; LC                ; 2014-12-11                      ; 33342,00   ; closed:DocumentStatus       ; POPG-00006020 :DocumentMedia ;
+                         ; DBNCR-0000011                ; 300000   ; 83296,37   ; AED              ; 2014-11-14                   ; LC                ; 2014-12-14                      ; 83296,37   ; closed:DocumentStatus       ; STAPG-00010000:DocumentMedia ;
+                         ; DBNCR-0000012                ; 300000   ; 67348,34   ; AED              ; 2014-11-14                   ; LC                ; 2014-12-14                      ; 67348,34   ; closed:DocumentStatus       ; POPG-00006017:DocumentMedia  ;
+                         ; STACR-00000001               ; 300000   ; 966969,24  ; AED              ; 2014-11-20                   ; BG                ; 2014-11-20                      ; 966969,24  ; closed:DocumentStatus       ; POPG-00006009:DocumentMedia  ;
+                         ; STACR-00000002               ; 300000   ; 1294146,53 ; AED              ; 2014-11-25                   ; BG                ; 2014-11-25                      ; 1294146,53 ; open:DocumentStatus         ; INPG-00100001:DocumentMedia  ;
+
+                         ; POCR-10000001                 ; 300000   ; 78515,58   ; USD              ; 2014-06-10                   ; Delivery          ;                                 ; 78515,58   ; open:DocumentStatus         ; INPG-00100001:DocumentMedia  ;
+                         ; POCR-10000002                 ; 300000   ; 50945,36   ; USD              ; 2014-06-10                   ; Delivery          ;                                 ; 50945,36   ; open:DocumentStatus         ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-10000003                 ; 300000   ; 82005,11   ; USD              ; 2014-06-10                   ; Delivery          ;                                 ; 82005,11   ; open:DocumentStatus         ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-10000004                 ; 300000   ; 31751,03   ; USD              ; 2014-06-10                   ; Delivery          ;                                 ; 31751,03   ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-10000005                 ; 300000   ; 79077,74   ; USD              ; 2014-06-12                   ; Delivery          ;                                 ; 79077,74   ; closed:DocumentStatus       ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-10000006                 ; 300000   ; 69296,63   ; USD              ; 2014-06-12                   ; Delivery          ;                                 ; 69296,63   ; closed:DocumentStatus       ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-10000007                 ; 300000   ; 64628,96   ; USD              ; 2014-06-14                   ; Delivery          ;                                 ; 64628,96   ; closed:DocumentStatus       ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-10000008                 ; 300000   ; 56781,49   ; USD              ; 2014-06-14                   ; Delivery          ;                                 ; 56781,49   ; closed:DocumentStatus       ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-10000009                 ; 300000   ; 37542,63   ; USD              ; 2014-06-18                   ; Delivery          ;                                 ; 37542,63   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; POCR-10000010                 ; 300000   ; 38938,37   ; USD              ; 2014-06-18                   ; Delivery          ;                                 ; 38938,37   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; POCR-10000011                 ; 300000   ; 25377,17   ; USD              ; 2014-06-18                   ; Delivery          ;                                 ; 25377,17   ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; POCR-10000012                 ; 300000   ; 77451,97   ; USD              ; 2014-06-18                   ; Delivery          ;                                 ; 77451,97   ; open:DocumentStatus         ; POPG-00006020 :DocumentMedia ;
+                         ; POCR-10000013                 ; 300000   ; 76241,05   ; USD              ; 2014-06-18                   ; Delivery          ;                                 ; 76241,05   ; open:DocumentStatus         ; STAPG-00010000:DocumentMedia ;
+                         ; POCR-10000014                 ; 300000   ; 33632,01   ; USD              ; 2014-06-19                   ; Delivery          ;                                 ; 33632,01   ; closed:DocumentStatus       ; INPG-00100001:DocumentMedia  ;
+                         ; POCR-10000015                 ; 300000   ; 34610,03   ; USD              ; 2014-06-19                   ; Delivery          ;                                 ; 34610,03   ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-10000016                 ; 300000   ; 24693,61   ; USD              ; 2014-06-19                   ; Delivery          ;                                 ; 24693,61   ; closed:DocumentStatus       ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-10000017                 ; 300000   ; 11777,15   ; USD              ; 2014-06-21                   ; Delivery          ;                                 ; 11777,15   ; closed:DocumentStatus       ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-10000018                 ; 300000   ; 43515,33   ; USD              ; 2014-06-23                   ; Delivery          ;                                 ; 43515,33   ; closed:DocumentStatus       ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-10000019                 ; 300000   ; 2964,41    ; USD              ; 2014-06-24                   ; Delivery          ;                                 ; 2964,41    ; closed:DocumentStatus       ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-10000020                 ; 300000   ; 78372,43   ; USD              ; 2014-06-25                   ; Delivery          ;                                 ; 78372,43   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-10000021                 ; 300000   ; 26773,57   ; USD              ; 2014-06-25                   ; Delivery          ;                                 ; 26773,57   ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-10000022                 ; 300000   ; 717,60     ; USD              ; 2014-06-25                   ; Delivery          ;                                 ; 717,60     ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; POCR-10000023                 ; 300000   ; 34090,59   ; USD              ; 2014-06-25                   ; Delivery          ;                                 ; 34090,59   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; POCR-10000024                 ; 300000   ; 80277,99   ; USD              ; 2014-06-29                   ; Delivery          ;                                 ; 80277,99   ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; POCR-10000025                 ; 300000   ; 91568,74   ; USD              ; 2014-06-30                   ; Delivery          ;                                 ; 91568,74   ; closed:DocumentStatus       ; POPG-00006020 :DocumentMedia ;
+                         ; POCR-10000026                 ; 300000   ; 94698,19   ; USD              ; 2014-06-30                   ; Delivery          ;                                 ; 94698,19   ; closed:DocumentStatus       ; STAPG-00010000:DocumentMedia ;
+                         ; POCR-10000027                 ; 300000   ; 56557,58   ; USD              ; 2014-07-10                   ; Delivery          ;                                 ; 56557,58   ; closed:DocumentStatus       ; INPG-00100001 :DocumentMedia ;
+                         ; POCR-10000028                 ; 300000   ; 36710,80   ; USD              ; 2014-07-10                   ; Delivery          ;                                 ; 36710,80   ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; POCR-10000029                 ; 300000   ; 86181,54   ; USD              ; 2014-07-12                   ; Delivery          ;                                 ; 86181,54   ; closed:DocumentStatus       ; INPG-00100003:DocumentMedia  ;
+                         ; POCR-10000030                 ; 300000   ; 50356,24   ; USD              ; 2014-07-15                   ; Delivery          ;                                 ; 50356,24   ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; POCR-10000031                 ; 300000   ; 47075,33   ; USD              ; 2014-07-15                   ; Delivery          ;                                 ; 47075,33   ; open:DocumentStatus         ; INPG-00100005 :DocumentMedia ;
+                         ; POCR-10000032                 ; 300000   ; 78810,87   ; USD              ; 2014-07-18                   ; Delivery          ;                                 ; 78810,87   ; open:DocumentStatus         ; INPG-00100006 :DocumentMedia ;
+                         ; POCR-10000033                 ; 300000   ; 60666,78   ; USD              ; 2014-07-25                   ; Delivery          ;                                 ; 60666,78   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; POCR-10000034                 ; 300000   ; 21188,07   ; USD              ; 2014-07-25                   ; Delivery          ;                                 ; 21188,07   ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; POCR-10000035                 ; 300000   ; 44354,40   ; USD              ; 2014-07-25                   ; Delivery          ;                                 ; 44354,40   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; CRNCR-10000001                ; 300000   ; 7963,71    ; USD              ; 2014-06-10                   ; LC                ; 2014-07-10                      ; 7963,71    ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; CRNCR-10000002                ; 300000   ; 8953,13    ; USD              ; 2014-07-15                   ; LC                ; 2014-08-14                      ; 8953,13    ; open:DocumentStatus         ; POPG-00006017 :DocumentMedia ;
+                         ; CRNCR-10000003                ; 300000   ; 7186,09    ; USD              ; 2014-07-18                   ; LC                ; 2014-08-17                      ; 7186,09    ; open:DocumentStatus         ; POPG-00006020 :DocumentMedia ;
+                         ; CRNCR-10000004                ; 300000   ; 7509,96    ; USD              ; 2014-07-25                   ; LC                ; 2014-08-24                      ; 7509,96    ; open:DocumentStatus         ; STAPG-00010000:DocumentMedia ;
+                         ; CRNCR-10000005                ; 300000   ; 3634,43    ; USD              ; 2014-07-27                   ; LC                ; 2014-08-26                      ; 3634,43    ; closed:DocumentStatus       ; INPG-00100001:DocumentMedia  ;
+                         ; CRNCR-10000006                ; 300000   ; 7772,91    ; USD              ; 2014-07-27                   ; LC                ; 2014-08-26                      ; 7772,91    ; closed:DocumentStatus       ; INPG-00100002:DocumentMedia  ;
+                         ; DBNCR-10000001                ; 300000   ; 45079,40   ; USD              ; 2014-08-05                   ; LC                ; 2014-09-04                      ; 45079,40   ; open:DocumentStatus         ; INPG-00100003:DocumentMedia  ;
+                         ; DBNCR-10000002                ; 300000   ; 6601,69    ; USD              ; 2014-08-15                   ; LC                ; 2014-09-14                      ; 6601,69    ; open:DocumentStatus         ; INPG-00100004 :DocumentMedia ;
+                         ; DBNCR-10000003                ; 300000   ; 33617,44   ; USD              ; 2014-09-02                   ; LC                ; 2014-10-02                      ; 33617,44   ; open:DocumentStatus         ; INPG-00100005 :DocumentMedia ;
+                         ; DBNCR-10000004                ; 300000   ; 24488,07   ; USD              ; 2014-09-11                   ; LC                ; 2014-10-11                      ; 24488,07   ; open:DocumentStatus         ; INPG-00100006 :DocumentMedia ;
+                         ; DBNCR-10000005                ; 300000   ; 56669,94   ; USD              ; 2014-10-20                   ; LC                ; 2014-11-19                      ; 56669,94   ; open:DocumentStatus         ; POPG-00100006 :DocumentMedia ;
+                         ; DBNCR-10000006                ; 300000   ; 2129,47    ; USD              ; 2014-10-23                   ; LC                ; 2014-11-22                      ; 2129,47    ; open:DocumentStatus         ; POPG-00006009 :DocumentMedia ;
+                         ; DBNCR-10000007                ; 300000   ; 69682,63   ; USD              ; 2014-11-01                   ; LC                ; 2014-12-01                      ; 69682,63   ; open:DocumentStatus         ; POPG-00006012 :DocumentMedia ;
+                         ; DBNCR-10000008                ; 300000   ; 66038,65   ; USD              ; 2014-11-10                   ; LC                ; 2014-12-10                      ; 66038,65   ; open:DocumentStatus         ; POPG-00006015 :DocumentMedia ;
+                         ; DBNCR-10000009                ; 300000   ; 7695,66    ; USD              ; 2014-11-11                   ; LC                ; 2014-12-11                      ; 7695,66    ; closed:DocumentStatus       ; POPG-00006017 :DocumentMedia ;
+                         ; DBNCR-10000010                ; 300000   ; 33342,00   ; USD              ; 2014-11-11                   ; LC                ; 2014-12-11                      ; 33342,00   ; closed:DocumentStatus       ; POPG-00006020 :DocumentMedia ;
+                         ; DBNCR-10000011                ; 300000   ; 83296,37   ; USD              ; 2014-11-14                   ; LC                ; 2014-12-14                      ; 83296,37   ; closed:DocumentStatus       ; STAPG-00010000:DocumentMedia ;
+                         ; DBNCR-10000012                ; 300000   ; 67348,34   ; USD              ; 2014-11-14                   ; LC                ; 2014-12-14                      ; 67348,34   ; closed:DocumentStatus       ; POPG-00006017:DocumentMedia  ;
+                         ; STACR-100000001               ; 300000   ; 966969,24  ; USD              ; 2014-11-20                   ; BG                ; 2014-11-20                      ; 966969,24  ; closed:DocumentStatus       ; POPG-00006009:DocumentMedia  ;
+                         ; STACR-100000002               ; 300000   ; 1294146,53 ; USD              ; 2014-11-25                   ; BG                ; 2014-11-25                      ; 1294146,53 ; open:DocumentStatus         ; INPG-00100001:DocumentMedia  ;

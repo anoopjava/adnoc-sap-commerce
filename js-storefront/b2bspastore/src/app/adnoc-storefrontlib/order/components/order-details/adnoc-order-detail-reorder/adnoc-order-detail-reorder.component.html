@@ -1,0 +1,23 @@
+<ng-container *ngIf="order$ | async as order">
+  <ng-container *ngIf="order.code">
+    <div class="cx-nav row">
+      <div class="col-xs-12 col-md-4 col-lg-3">
+        <button
+          [routerLink]="{ cxRoute: 'orders' } | cxUrl"
+          class="btn btn-block btn-secondary"
+        >
+          {{ "common.back" | cxTranslate }}
+        </button>
+      </div>
+      <div class="col-xs-12 col-md-4 col-lg-3">
+        <button
+          #element
+          class="btn btn-primary reOrderButton"
+          (click)="onReorderClick(order)"
+        >
+          {{ "reorder.button" | cxTranslate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

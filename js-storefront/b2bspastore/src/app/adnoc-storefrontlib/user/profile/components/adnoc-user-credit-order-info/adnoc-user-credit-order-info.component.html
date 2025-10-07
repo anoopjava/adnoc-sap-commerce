@@ -1,0 +1,189 @@
+<div class="userCreditOrderInfo">
+  <div
+    class="creditDiv creditDiv-userInfo"
+    *ngIf="currentUser$ | async as currentUser"
+  >
+    <div class="userInfoName">
+      <div>
+        <div class="name-circle">
+          {{ currentUser.firstName.charAt(0)
+          }}{{ currentUser.lastName.charAt(0) }}
+        </div>
+      </div>
+      <div class="nameAndRole">
+        <h3 class="sectionTitle">
+          <span class="subTitle">{{
+            "accountSummaryTranslations.userData.welcome" | cxTranslate
+          }}</span>
+          {{ currentUser.name }}
+        </h3>
+        <span class="userRole">{{ currentUser.userRole }}</span>
+      </div>
+    </div>
+    <ng-container *ngIf="currentUser.lastlogin">
+      <hr class="hr" />
+      <p class="lastLogin">
+        <i class="fa-regular fa-clock text-color-primary"></i>
+        {{ "accountSummaryTranslations.userData.lastLogin" | cxTranslate }}
+        {{ currentUser.lastlogin | date : "dd/MM/yyyy" : "UTC" }} at
+        {{ currentUser.lastlogin | date : "hh:mm a" }}
+      </p>
+    </ng-container>
+  </div>
+  <div class="creditDiv creditDiv-creditLimit creditInfo" *ngIf="!adminUser">
+    <div class="title">
+      <h3 class="sectionTitle">
+        {{
+          "accountSummaryTranslations.userData.credit.creditDataTitle"
+            | cxTranslate
+        }}
+        <span class="vertical-bar"></span>
+        <i
+          *ngIf="creditLimit"
+          class="fas fa-redo-alt refreshCreditLimit"
+          (click)="refreshCreditLimitData(true); $event.stopPropagation()"
+        ></i>
+        <span class="configDays lastUpdateCredit" *ngIf="creditLimit">
+          <span *ngIf="!creditLimitErrorMsg">{{
+            "accountSummaryTranslations.userData.credit.lastUpdateCredit"
+              | cxTranslate
+                : {
+                    dateTime:
+                      creditLimit?.updatedOn | date : "dd/MM/yyyy hh:mm a"
+                  }
+          }}</span></span
+        >
+      </h3>
+    </div>
+    <hr class="hr" />
+    <div *ngIf="!creditLimit" class="spinnerDiv">
+      <cx-spinner class="overlay"></cx-spinner>
+    </div>
+    <div *ngIf="creditLimit as creditLimit">
+      <div
+        class="creditInfoSectionOne"
+        *ngIf="!creditLimitErrorMsg; else errorMsg"
+      >
+        <p class="mainHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.totalCreditLimit"
+              | cxTranslate
+          }}
+          <span class="subValueTC"
+            >: {{ creditLimit?.currency
+            }}{{ creditLimit?.totalCl | number : "1.2-2" }}</span
+          >
+        </p>
+        <p class="subHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.unsecureCreditLimit"
+              | cxTranslate
+          }}
+          <span class="subValueTC"
+            >: {{ creditLimit?.currency
+            }}{{ creditLimit?.unsecureCl | number : "1.2-2" }}</span
+          >
+        </p>
+        <p class="subHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.bankGuarantee"
+              | cxTranslate
+          }}
+          <span class="subValue">
+            : {{ creditLimit?.currency
+            }}{{ creditLimit?.bankGuarantee | number : "1.2-2" }}
+          </span>
+        </p>
+        <p class="subHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.letterOfCredit"
+              | cxTranslate
+          }}
+          <span class="subValue">
+            : {{ creditLimit?.currency
+            }}{{ creditLimit?.letterOfCredit | number : "1.2-2" }}
+          </span>
+        </p>
+      </div>
+      <div class="creditInfoSection" *ngIf="!creditLimitErrorMsg">
+        <p class="subHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.utilisedCreditLimit"
+              | cxTranslate
+          }}
+          :
+          <span class="subValue">
+            {{ creditLimit?.currency
+            }}{{ creditLimit?.creditExposure | number : "1.2-2" }}
+          </span>
+        </p>
+        <p class="subHeading">
+          {{
+            "accountSummaryTranslations.userData.credit.balancedCreditLimit"
+              | cxTranslate
+          }}
+          :
+          <span class="subValue">
+            {{ creditLimit?.currency
+            }}{{ creditLimit?.availableCl | number : "1.2-2" }}
+          </span>
+        </p>
+      </div>
+    </div>
+    <ng-template #errorMsg>
+      <div class="creditInfoSection">
+        <p>{{ creditLimitErrorMsg }}</p>
+      </div>
+    </ng-template>
+  </div>
+  <div class="creditDiv creditDiv-orderInfo" *ngIf="!adminUser">
+    <h3 class="sectionTitle">
+      {{
+        "accountSummaryTranslations.userData.order.orderDataTitle" | cxTranslate
+      }}
+      <span class="vertical-bar"></span>
+      <i
+        *ngIf="orderInfo$ | async as orderInfo"
+        class="fas fa-redo-alt refreshOrderInfo"
+        (click)="refreshOrderInfoData(); $event.stopPropagation()"
+      ></i>
+      <span class="configDays" *ngIf="orderInfo$ | async as orderInfo">{{
+        "accountSummaryTranslations.userData.order.showData"
+          | cxTranslate : { configDays: orderInfo?.configValue }
+      }}</span>
+    </h3>
+    <hr class="hr" />
+    <div *ngIf="!(orderInfo$ | async)" class="spinnerDiv">
+      <cx-spinner class="overlay"></cx-spinner>
+    </div>
+    <div class="orderInfoSection" *ngIf="orderInfo$ | async as orderInfo">
+      <p class="subHeading">
+        {{
+          "accountSummaryTranslations.userData.order.noOfOrder" | cxTranslate
+        }}
+        <span class="subValue">
+          : {{ orderInfo?.ordersPlacedCount | number : "1.0" }}</span
+        >
+      </p>
+      <p class="subHeading">
+        {{
+          "accountSummaryTranslations.userData.order.totalOrderValue"
+            | cxTranslate
+        }}
+        <span class="subValue">
+          : {{ (currentUser$ | async)?.currency?.isocode
+          }}{{ orderInfo?.totalOrdersValue | number : "1.2-2" }}</span
+        >
+      </p>
+      <p class="subHeading">
+        {{
+          "accountSummaryTranslations.userData.order.returnOrderCount"
+            | cxTranslate
+        }}
+        <span class="subValue">
+          : {{ orderInfo?.returnOrdersCount | number : "1.0" }}</span
+        >
+      </p>
+    </div>
+  </div>
+</div>

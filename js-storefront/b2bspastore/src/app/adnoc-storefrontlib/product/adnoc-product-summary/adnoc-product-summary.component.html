@@ -1,0 +1,45 @@
+<ng-container *ngIf="product$ | async as product">
+  <ng-container *ngIf="product.potentialPromotions">
+    <cx-promotions
+      *cxFeature="'showPromotionsInPDP'"
+      [promotions]="product.potentialPromotions"
+    ></cx-promotions>
+  </ng-container>
+
+  <ng-template
+    [cxOutlet]="outlets.PRICE"
+    [cxOutletContext]="{ product: product }"
+  >
+    <span
+      class="stock-info"
+      [ngClass]="
+        product?.stock?.stockLevelStatus === 'inStock'
+          ? ('addToCart.inStockInfo' | cxTranslate)
+          : ('addToCart.outStockInfo' | cxTranslate)
+      "
+    >
+      {{
+        product?.stock?.stockLevelStatus === "inStock"
+          ? ("addToCart.inStock" | cxTranslate)
+          : ("addToCart.outOfStock" | cxTranslate)
+      }}</span
+    >
+    <div
+      [attr.aria-label]="'productSummary.newItemPrice' | cxTranslate"
+      class="price"
+    >
+      {{ product?.price?.formattedValue }}
+      <span class="unit-of-measure"
+        >{{ "productDetails.unitOfMeasure" | cxTranslate }}
+        {{ product?.unit?.name }}</span
+      >
+    </div>
+  </ng-template>
+
+  <ng-template
+    [cxOutlet]="outlets.SUMMARY"
+    [cxOutletContext]="{ product: product }"
+  >
+    <p [innerHTML]="product?.summary" class="summary"></p>
+  </ng-template>
+</ng-container>

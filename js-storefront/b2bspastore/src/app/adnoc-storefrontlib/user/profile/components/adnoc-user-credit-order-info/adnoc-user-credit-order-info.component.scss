@@ -1,0 +1,269 @@
+@import "../../../../../../styles/scss/utilities/variables";
+.userCreditOrderInfo {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2.5rem 0 0;
+  margin: 0;
+  position: relative;
+  & > * {
+    @media (min-width: $breakpoint-md) {
+      flex: 1;
+    }
+  }
+  @media (max-width: $breakpoint-sm) {
+    flex-wrap: wrap;
+    margin: 0 0.625rem;
+  }
+  @media (min-width: $breakpoint-xl) {
+    width: 100%;
+  }
+  &:has(> .creditDiv:only-child) {
+    justify-content: center;
+    .creditDiv {
+      flex: 0 0 30%;
+    }
+  }
+  .creditDiv {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--cx-pdp-carousel-box-border);
+    margin-bottom: 1.25rem;
+    .hr {
+      border: 1px solid var(--cx-pdp-carousel-box-border);
+      margin: 0.5rem 0;
+    }
+    &-userInfo {
+      position: relative;
+      @media (max-width: $breakpoint-md) {
+        width: 100%;
+      }
+      .userInfoName {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 1.25rem 0;
+        position: relative;
+        .name-circle {
+          width: 3.125rem;
+          height: 3.125rem;
+          background-color: var(--cx-white);
+          color: var(--cx-color-primary);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.125rem;
+          border: 1px solid var(--cx-pdp-carousel-box-border);
+        }
+        .nameAndRole {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0;
+          .sectionTitle {
+            font-family: var(--cx-font-family-medium);
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 2.25rem;
+            color: var(--cx-color-primary);
+            margin-bottom: 0;
+            .subTitle {
+              font-family: var(--cx-font-family-light);
+              font-weight: 300;
+              color: var(--cx-text-color);
+            }
+          }
+          .userRole {
+            font-family: var(--cx-font-family-medium);
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--cx-text-color);
+          }
+        }
+      }
+      .lastLogin {
+        font-family: var(--cx-font-family-regular);
+        font-weight: 400;
+        font-size: 0.75rem;
+        text-align: center;
+        i.fa-clock::after {
+          content: "|";
+          margin: 0 0 0 0.25rem;
+          color: var(--cx-pdp-carousel-box-border);
+          font-size: 1rem;
+        }
+      }
+    }
+
+    &-creditLimit,
+    &-orderInfo {
+      @media (max-width: $breakpoint-md) {
+        width: 100%;
+      }
+      .sectionTitle {
+        font-family: var(--cx-font-family-bold);
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 2.25rem;
+        color: var(--cx-color-primary);
+        .vertical-bar {
+          content: "|";
+          display: inline-block;
+          width: 1px;
+          height: 1.25rem;
+          background-color: var(--cx-pdp-carousel-box-border);
+          margin: 0 0.625rem 0 0.5rem;
+        }
+        .fa-redo-alt {
+          cursor: pointer;
+        }
+        .lastUpdateCredit,
+        .configDays {
+          font-family: var(--cx-font-family-regular);
+          font-weight: 400;
+          font-size: 0.75rem;
+          letter-spacing: 0;
+          text-align: right;
+          color: var(--cx-black);
+          float: inline-end;
+        }
+        .configDays {
+          margin-left: 10px;
+        }
+      }
+      .spinnerDiv {
+        position: relative;
+        top: 65px;
+      }
+      .creditInfoSectionOne {
+        .mainHeading {
+          font-family: var(--cx-font-family-medium);
+          font-weight: 500;
+          font-size: 22px;
+          color: var(--cx-color-primary);
+          display: inline-block;
+          margin: 0;
+        }
+        .subHeading {
+          font-family: var(--cx-font-family-medium);
+          font-weight: 500;
+          font-size: 15px;
+          color: var(--cx-text-color);
+          margin: 0 0 0 20px;
+        }
+      }
+      .creditInfoSection {
+        display: flex;
+        gap: 1px;
+        flex-wrap: nowrap;
+        .subHeading {
+          flex: 1;
+          margin: 0;
+          padding: 0.625rem;
+          border-radius: 0.25rem;
+          word-wrap: break-word;
+          position: relative;
+          font-family: var(--cx-font-family-medium);
+          font-weight: 500;
+          font-size: 18px;
+          color: var(--cx-text-color);
+          @media (min-width: $breakpoint-xl) {
+            flex: 1;
+          }
+          .subValueTC {
+            font-family: var(--cx-font-family-bold);
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: block;
+            word-break: break-all;
+            color: var(--cx-color-primary);
+          }
+          .subValue {
+            font-family: var(--cx-font-family-regular);
+            font-weight: 400;
+            font-size: 1.25rem;
+            display: block;
+            word-break: break-all;
+          }
+          &:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 1px;
+            background-color: var(--cx-pdp-carousel-box-border);
+            height: 100%;
+            margin: 0;
+          }
+        }
+      }
+    }
+    &-creditLimit,
+    &-orderInfo {
+      .sectionTitle {
+        .configDays {
+          @media (max-width: 500px) {
+            float: unset;
+            display: block;
+            margin-left: 0;
+          }
+          @media (min-width: 500px) and (max-width: $breakpoint-sm) {
+            float: inline-end;
+          }
+          @media (min-width: $breakpoint-sm) and (max-width: 1590px) {
+            float: unset;
+            display: block;
+            margin-left: 0;
+          }
+        }
+      }
+      .orderInfoSection {
+        width: 100%;
+        .subHeading {
+          font-family: var(--cx-font-family-medium);
+          font-size: 20px;
+          font-weight: 500;
+          color: var(--cx-text-color);
+          margin: 0;
+          .subValue {
+            font-size: 20px;
+            font-family: var(--cx-font-family-regular);
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    h2,
+    h3 {
+      margin-bottom: 0.625rem;
+    }
+
+    p {
+      margin: 0.313rem 0;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      overflow: auto;
+      max-width: 100%;
+      word-break: break-word;
+    }
+    .spinnerDiv {
+      cx-spinner {
+        .loader {
+          width: 80px;
+          height: 80px;
+          &::before {
+            width: 80px;
+            height: 80px;
+          }
+        }
+      }
+    }
+  }
+  .creditInfo {
+    @media (min-width: $breakpoint-md) {
+      min-width: 36%;
+    }
+  }
+}

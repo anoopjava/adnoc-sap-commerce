@@ -1,0 +1,76 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+REMOVE AdnocConfig; configKey[unique = true]                         ; configvalue
+                  ; adnoc.backoffice.account.id.for.house.bank.ADCAE ; AE002,AE003,AE004,AE005,AE006,AE007,AE008,AE009,AE120,AE201,AE202,AE302,AE650,AE880,US001,US301
+                  ; adnoc.backoffice.account.id.for.house.bank.FABAE ; AE019,AE020,AE031,AE055,US044
+                  ; adnoc.backoffice.account.id.for.house.bank.ADIAE ; AE468,AE725,US761
+
+# Import enum mappings for house bank account IDs and sales office with sales group configurations for Registration Approval
+INSERT_UPDATE AdnocBackofficeApprovalRegistrationEnumMapping; sourceEnumType[unique = true]       ; sourceEnumValue[unique = true]; targetEnumType[unique = true]      ; targetEnumValue[unique = true]
+# House Bank to Account ID mapping
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE002
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE003
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE004
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE005
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE006
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE007
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE008
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE009
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE120
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE201
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE202
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE302
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE650
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; AE880
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; US001
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADCAE                         ; com.adnoc.service.enums.AccountID  ; US301
+
+                                                            ; com.adnoc.service.enums.HouseBankID ; FABAE                         ; com.adnoc.service.enums.AccountID  ; AE019
+                                                            ; com.adnoc.service.enums.HouseBankID ; FABAE                         ; com.adnoc.service.enums.AccountID  ; AE020
+                                                            ; com.adnoc.service.enums.HouseBankID ; FABAE                         ; com.adnoc.service.enums.AccountID  ; AE031
+                                                            ; com.adnoc.service.enums.HouseBankID ; FABAE                         ; com.adnoc.service.enums.AccountID  ; AE055
+                                                            ; com.adnoc.service.enums.HouseBankID ; FABAE                         ; com.adnoc.service.enums.AccountID  ; US044
+
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADIAE                         ; com.adnoc.service.enums.AccountID  ; AE468
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADIAE                         ; com.adnoc.service.enums.AccountID  ; AE725
+                                                            ; com.adnoc.service.enums.HouseBankID ; ADIAE                         ; com.adnoc.service.enums.AccountID  ; US761
+
+# Sales Office to Sales Group mapping
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2110                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2110                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2120                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2120                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2130                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2130                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2140                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 2140                          ; com.adnoc.service.enums.SalesGroup ; 65
+
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3110                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3110                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3110                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3120                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3120                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3120                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3130                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3130                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3130                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3140                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3140                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 3140                          ; com.adnoc.service.enums.SalesGroup ; 70
+
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4110                          ; com.adnoc.service.enums.SalesGroup ; 20
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4110                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4110                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4110                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4120                          ; com.adnoc.service.enums.SalesGroup ; 20
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4120                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4120                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4120                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4130                          ; com.adnoc.service.enums.SalesGroup ; 20
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4130                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4130                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4130                          ; com.adnoc.service.enums.SalesGroup ; 70
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4140                          ; com.adnoc.service.enums.SalesGroup ; 20
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4140                          ; com.adnoc.service.enums.SalesGroup ; 60
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4140                          ; com.adnoc.service.enums.SalesGroup ; 65
+                                                            ; com.adnoc.service.enums.SalesOffice ; 4140                          ; com.adnoc.service.enums.SalesGroup ; 70

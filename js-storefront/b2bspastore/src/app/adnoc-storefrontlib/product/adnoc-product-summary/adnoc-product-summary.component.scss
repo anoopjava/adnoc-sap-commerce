@@ -1,0 +1,45 @@
+cx-product-summary {
+  .stock-info {
+
+    &.Active,
+    &.Deactive {
+      border: 1px solid var(--cx-pdp-stock-border-color);
+      background: var(--cx-user-active-background);
+      color: var(--cx-pdp-stock-text-color);
+      width: auto;
+      font-size: 12px;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center;
+      font-weight: var(--cx-font-weight-normal);
+      align-self: flex-start;
+      margin-bottom: 1rem;
+      border-radius: 15px;
+      padding: 4px 15px 0;
+    }
+
+    &.Deactive {
+      background: var(--cx-user-disable-background);
+      border: 1px solid var(--cx-disable-status-circle);
+      color: var(--cx-disable-status-circle);
+    }
+  }
+
+  .price {
+    font-size: 36px;
+    font-weight: var(--cx-font-weight-normal);
+    line-height: 54px;
+
+    .piece-info {
+      font-size: 20px;
+      margin-left: 10px;
+    }
+
+    .unit-of-measure {
+      font-weight: var(--cx-font-weight-bold);
+      font-size: 1rem;
+      color: var(--cx-black);
+      word-break: break-word;
+    }
+  }
+}

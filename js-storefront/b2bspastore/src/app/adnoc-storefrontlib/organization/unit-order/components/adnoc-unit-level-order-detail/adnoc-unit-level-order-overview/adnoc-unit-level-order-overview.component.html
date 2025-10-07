@@ -1,0 +1,191 @@
+<div class="cx-order-summary" *ngIf="order$ | async as order">
+  <ng-container *ngIf="!(isOrderLoading$ | async)">
+    <div class="container" *ngIf="simple$ | async">
+      <div class="cx-summary-card">
+        <cx-card
+          [content]="getOrderCodeCardContent(order.code) | async"
+        ></cx-card>
+
+        <cx-card
+          [content]="
+            getOrderCurrentDateCardContent(order.created | cxDate) | async
+          "
+        ></cx-card>
+
+        <cx-card
+          [content]="getOrderStatusCardContent(order.statusDisplay) | async"
+        ></cx-card>
+
+        <cx-card
+          class="cx-display-inline"
+          [content]="getBuyerNameCardContent(order.orgCustomer) | async"
+        ></cx-card>
+      </div>
+      <div class="cx-summary-card">
+        <cx-card
+          [content]="getUnitNameCardContent(order.orgUnit?.name) | async"
+        ></cx-card>
+
+        <cx-card
+          [content]="getPurchaseOrderNumber(order.purchaseOrderNumber) | async"
+        ></cx-card>
+
+        <cx-card
+          [content]="getMethodOfPaymentCardContent(order.paymentInfo) | async"
+        ></cx-card>
+
+        <ng-container *ngIf="order.costCenter">
+          <cx-card
+            [content]="getCostCenterCardContent(order.costCenter) | async"
+          ></cx-card>
+        </ng-container>
+      </div>
+
+      <div class="cx-summary-card">
+        <ng-container *ngIf="order.deliveryAddress">
+          <cx-card
+            [content]="getAddressCardContent(order.deliveryAddress) | async"
+          ></cx-card>
+        </ng-container>
+
+        <ng-container *ngIf="order.deliveryMode">
+          <cx-card
+            [content]="getDeliveryModeCardContent(order.deliveryMode) | async"
+          ></cx-card>
+        </ng-container>
+      </div>
+
+      <ng-container *ngIf="order.paymentInfo">
+        <div class="cx-summary-card">
+          <cx-card
+            [content]="getPaymentInfoCardContent(order.paymentInfo) | async"
+          ></cx-card>
+
+          <cx-card
+            [content]="
+              getBillingAddressCardContent(order.paymentInfo.billingAddress)
+                | async
+            "
+          ></cx-card>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+  <div class="unit-order-details-container">
+    <div class="order-row">
+      <div class="order-info shipTo">
+        <p class="orderData">
+          {{ "userOrderTranslations.order.shipTo" | cxTranslate }}
+        </p>
+        <p>{{ order.deliveryAddress?.sapCustomerID }}</p>
+        <p class="orderShipTo">{{ order.deliveryAddress?.companyName }},</p>
+        <p class="orderShipTo">{{ order.deliveryAddress?.line1 }},</p>
+        <p class="orderShipTo">{{ order.deliveryAddress?.town }},</p>
+        <p class="orderShipTo">{{ order.deliveryAddress?.region?.name }},</p>
+        <p class="orderShipTo">
+          {{ order.deliveryAddress?.country?.name }}
+        </p>
+      </div>
+      <div class="orderStatus rightAlign">
+        <p class="orderData">
+          {{ "userOrderTranslations.order.orderStatus" | cxTranslate }}
+          <span class="{{ order.status }}">{{ order.statusDisplay }}</span>
+        </p>
+        <p *ngIf="order?.orgUnit?.uid" class="orderData">
+          {{ "userOrderTranslations.order.payerId" | cxTranslate }}
+          <span class="subValueFonts">{{ order.orgUnit?.uid }}</span>
+        </p>
+        <p *ngIf="order?.orgUnit?.name" class="orderData">
+          {{ "userOrderTranslations.order.payerName" | cxTranslate }}
+          <span class="subValueFonts">{{ order.orgUnit?.name }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="order-row">
+      <div class="order-info orderNumCreated">
+        <p>
+          {{ "userOrderTranslations.order.sapOrderNumber" | cxTranslate }}
+          <span *ngIf="order?.sapOrderCode" class="headValueFonts">{{
+            order.sapOrderCode
+          }}</span>
+        </p>
+        <div class="order-details-subrow">
+          <p class="orderNumber">
+            {{ "userOrderTranslations.order.orderNumber" | cxTranslate }}
+            <span class="subValueFonts">{{ order.code }}</span>
+          </p>
+        </div>
+        <div class="order-details-subrow">
+          <span class="createdDate">
+            <i class="fa-regular fa-clock"></i>
+            {{
+              "userOrderTranslations.order.orderPlacedDateAndTime" | cxTranslate
+            }}
+            {{ order.created | cxDate : "medium" }}
+          </span>
+        </div>
+      </div>
+      <div class="order-info rightAlign orderNumCreated">
+        <p>
+          {{ "userOrderTranslations.order.purchaseOrderNumber" | cxTranslate }}
+          <span class="headValueFonts">{{
+            order.purchaseOrderNumber ? order.purchaseOrderNumber : "None"
+          }}</span>
+        </p>
+        <div
+          class="methodOfPayment"
+          *ngIf="paymentMethodCardContent$ | async as paymentMethodCard"
+        >
+          <div
+            class="order-details-subrow rightAlign"
+            *ngIf="paymentMethodCard.text && paymentMethodCard.text.length > 0"
+          >
+            <p class="method createdDate">
+              <i class="fa fa-wallet"></i>
+              {{ "userOrderTranslations.order.paymentMethod" | cxTranslate }}
+              {{ paymentMethodCard?.text?.[0] }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-row">
+      <div class="order-info deliveryType">
+        <p *ngIf="order.shippingCondition?.name">
+          {{ "userOrderTranslations.order.deliveryType" | cxTranslate }}
+          <span class="headValueFonts">{{
+            order.shippingCondition?.name
+          }}</span>
+        </p>
+      </div>
+      <div class="orderStatus rightAlign orderNumCreated">
+        <p class="orderData" *ngIf="order?.paymentInfo?.cardNumber">
+          {{ "userOrderTranslations.order.cardNumber" | cxTranslate }}
+          <span class="subValueFonts">{{
+            order?.paymentInfo?.cardNumber
+          }}</span>
+        </p>
+        <p class="orderData" *ngIf="order?.paymentInfo?.rrnNumber">
+          {{ "userOrderTranslations.order.transactionReference" | cxTranslate }}
+          <span class="subValueFonts">{{ order?.paymentInfo?.rrnNumber }}</span>
+        </p>
+        <p class="orderData" *ngIf="order?.paymentInfo?.amount">
+          {{ "userOrderTranslations.order.cardAmount" | cxTranslate }}
+          <span class="subValueFonts"
+            >{{ order?.totalPrice?.currencyIso
+            }}{{ order?.paymentInfo?.amount | number : "1.2-2" }}</span
+          >
+        </p>
+        <p class="orderData" *ngIf="order?.paymentInfo?.creditLimitAmount">
+          {{ "userOrderTranslations.order.creditUtilized" | cxTranslate }}
+          <span class="subValueFonts"
+            >{{ order?.totalPrice?.currencyIso
+            }}{{
+              order?.paymentInfo?.creditLimitAmount | number : "1.2-2"
+            }}</span
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

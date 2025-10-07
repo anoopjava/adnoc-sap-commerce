@@ -1,0 +1,16 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-registrationPendingApproval_$lang.properties
+<html>
+ <html>
+      <body>
+      <div class="content">
+             <p>Dear ${ctx.title} ${ctx.csaEmployeeName},</p>
+             <p>${ctx.messages.notification}</p>
+            <p><strong>Reference Number -</strong> ${ctx.registration.pk}</p>
+      </div>
+      <div class="footer">
+            <p>Auto Mailer,</p>
+            <p>ADNOC</p>
+            <p>${ctx.messages.website}</p>
+       </div>
+       </body>
+</html>

@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+		
+	<context:annotation-config/>
+
+	<bean id="ticket_awaiting_customerinput" class="de.hybris.platform.customerticketingfacades.data.StatusData">
+		<property name="id" value="AWAITINGCUSTOMERINPUT"/>
+	</bean>
+	<bean id="ticket_inprogress" class="de.hybris.platform.customerticketingfacades.data.StatusData">
+		<property name="id" value="INPROGRESS"/>
+	</bean>
+	<bean id="ticket_resolution_inprogress" class="de.hybris.platform.customerticketingfacades.data.StatusData">
+		<property name="id" value="RESOLUTIONINPROGRESS"/>
+	</bean>
+	<bean id="ticket_resolved" class="de.hybris.platform.customerticketingfacades.data.StatusData">
+		<property name="id" value="RESOLVED"/>
+	</bean>
+
+	<alias alias="simpleSuggestionFacade" name="defaultSimpleSuggestionFacade"/>
+	<bean id="defaultSimpleSuggestionFacade" class="com.adnoc.facades.suggestion.impl.DefaultSimpleSuggestionFacade">
+		<property name="userService" ref="userService"/>
+		<property name="categoryService" ref="categoryService"/>
+		<property name="productService" ref="productService"/>
+		<property name="productConverter" ref="carouselProductConverter"/>
+		<property name="simpleSuggestionService" ref="simpleSuggestionService"/>
+		<property name="cartService" ref="cartService"/>
+	</bean>
+	
+	<bean id="carouselProductConverter" parent="defaultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="productPricePopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorVariantOptionDataConverter" alias="variantOptionDataConverter"/> 
+	<bean id="acceleratorVariantOptionDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="variantOptionData"/>
+		<property name="populators">
+			<list>
+				<ref bean="acceleratorVariantOptionDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAcceleratorVariantOptionDataPopulator" alias="acceleratorVariantOptionDataPopulator"/>
+	<bean id="defaultAcceleratorVariantOptionDataPopulator"  class="com.adnoc.facades.populators.AcceleratorVariantOptionDataPopulator"
+	      parent="variantOptionDataPopulator">
+		<property name="mediaService" ref="mediaService"/>
+		<property name="mediaContainerService" ref="mediaContainerService"/>
+		<property name="typeService" ref="typeService"/>
+		<property name="imageFormatMapping" ref="imageFormatMapping"/>
+		<property name="variantAttributeMapping">
+			<map>
+				<entry key="ApparelStyleVariantProduct.style" value="styleSwatch"/>
+			</map>
+		</property>
+	</bean>
+
+
+	<alias name="acceleratorGenderConverter" alias="genderConverter"/> 
+	<bean id="acceleratorGenderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.adnoc.facades.product.data.GenderData"/>
+			<property name="populators">
+				<list>
+					<ref bean="genderDataPopulator"/>
+				</list>
+			</property>
+	</bean>
+
+	<alias name="defaultGenderDataPopulator" alias="genderDataPopulator"/>
+	<bean id="defaultGenderDataPopulator" class="com.adnoc.facades.populators.AdnocGenderDataPopulator">
+		<property name="typeService" ref="typeService"/>
+	</bean>
+
+	<!-- accelerator Image Format Mappings -->
+	<alias name="acceleratorImageFormatMapping" alias="imageFormatMapping"/>
+	<bean id="acceleratorImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" value="1200Wx1200H"/>
+				<entry key="zoom" value="515Wx515H"/>
+				<entry key="store" value="365Wx246H"/>
+				<entry key="product" value="300Wx300H"/>
+				<entry key="thumbnail" value="96Wx96H"/>
+				<entry key="cartIcon" value="65Wx65H"/>
+				<entry key="styleSwatch" value="30Wx30H"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductPrimaryImagePopulator" alias="productPrimaryImagePopulator" />
+	<bean id="acceleratorProductPrimaryImagePopulator" parent="defaultProductPrimaryImagePopulator">
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+				<value>cartIcon</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductGalleryImagesPopulator" alias="productGalleryImagesPopulator" />
+	<bean id="acceleratorProductGalleryImagesPopulator" parent="defaultProductGalleryImagesPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>superZoom</value>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customerEmailContext" class="com.adnoc.facades.process.email.context.CustomerEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter"/>
+	</bean>
+
+	<bean id="forgottenPasswordEmailContext" class="com.adnoc.facades.process.email.context.ForgottenPasswordEmailContext" parent="customerEmailContext" scope="prototype">
+		<property name="customerConverter" ref="customerConverter"/>
+		<property name="frontendUrl" value="#{configurationService.configuration.getString('adnoc.frontend.url', 'http://localhost:4200/adnoc/en/AED')}"/>
+	</bean>
+
+	<bean id="orderNotificationEmailContext" class="com.adnoc.facades.process.email.context.OrderNotificationEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+		<property name="frontendUrl" value="#{configurationService.configuration.getString('adnoc.frontend.url', 'http://localhost:4200/adnoc/en/AED')}"/>
+	</bean>
+
+	<bean id="quoteNotificationEmailContext" class="com.adnoc.facades.process.email.context.QuoteNotificationEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="quoteService" ref="quoteService"/>
+		<property name="quoteConverter" ref="quoteConverter"/>
+		<property name="userService" ref="userService"/>
+		<property name="csaEmployeeId" value="#{configurationService.configuration.getString('adnoc.registration.workflow.assigned.employee.uid', 'ecommmercespelicalistapprover')}"/>
+		<property name="backOfficeLink" value="#{configurationService.configuration.getString('email.backoffice.url', 'https://localhost:9002/backoffice')}"/>
+		<property name="frontendUrl" value="#{configurationService.configuration.getString('adnoc.frontend.url', 'http://localhost:4200/adnoc/en/AED')}"/>
+	</bean>
+
+	<bean id="deliverySentEmailContext" class="com.adnoc.facades.process.email.context.DeliverySentEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="readyForPickupEmailContext" class="com.adnoc.facades.process.email.context.ReadyForPickupEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="orderCancelledEmailContext" class="com.adnoc.facades.process.email.context.OrderCancelledEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	
+	<bean id="orderRefundEmailContext" class="com.adnoc.facades.process.email.context.OrderRefundEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	<bean id="consignmentCollectionReminderEmailContext" class="com.adnoc.facades.process.email.context.ConsignmentCollectionReminderEmailContext" parent="abstractEmailContext" scope="prototype">
+        <property name="consignmentConverter" ref="consignmentConverter"/>
+        <property name="formatFactory" ref="formatFactory"/>
+        <property name="customerServiceUncollectedConsignmentStrategy" ref="customerServiceUncollectedConsignmentStrategy" />
+        <property name="orderConverter" ref="orderConverter"/>
+    </bean>
+
+	<bean id="orderPartiallyModifiedEmailContext" class="com.adnoc.facades.process.email.context.OrderPartiallyModifiedEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+		<property name="orderEntryConverter" ref="orderEntryConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>		
+	</bean>
+
+	<bean id="orderPartiallyCanceledEmailContext" class="com.adnoc.facades.process.email.context.OrderPartiallyCanceledEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="orderPartiallyRefundedEmailContext" class="com.adnoc.facades.process.email.context.OrderPartiallyRefundedEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype">
+	</bean>
+
+	<bean id="notPickedUpConsignmentCanceledEmailContext" class="com.adnoc.facades.process.email.context.NotPickedUpConsignmentCanceledEmailContext" parent="abstractEmailContext" scope="prototype">
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+	</bean>
+
+	<alias name="yacceleratorSearchPagePointOfServiceDistancePopulator" alias="searchPagePointOfServiceDistancePopulator" />
+	<bean id="yacceleratorSearchPagePointOfServiceDistancePopulator" class="com.adnoc.facades.storefinder.populators.SearchPagePointOfServiceDistancePopulator">
+		<property name="pointOfServiceDistanceConverter" ref="pointOfServiceDistanceConverter"/>
+	</bean>
+
+	<bean id="genderData" class="com.adnoc.facades.product.data.GenderData" scope="prototype"/>
+
+	<alias name="adnocCartFacade" alias="cartFacade"/>
+	<bean id="adnocCartFacade" class="com.adnoc.facades.AdnocCartFacadeImpl" parent="defaultCartFacade">
+		<property name="adnocAddressService" ref="adnocAddressService"/>
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="adnocStoreService" ref="adnocStoreService"/>
+		<property name="calculationService" ref="calculationService"/>
+	</bean>
+
+	<!-- Registration Start-->
+	<alias name="adnocB2BRegistrationFacadeImpl" alias="adnocB2BRegistrationFacade"/>
+	<bean id="adnocB2BRegistrationFacadeImpl" class="com.adnoc.facades.registration.impl.AdnocB2BRegistrationFacadeImpl"
+		  parent="b2bRegistrationFacade">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="mediaService" ref="mediaService"/>
+		<property name="allowedUploadedFormats" ref="allowedAdnocUploadedFormats"/>
+		<property name="b2bRegistrationWorkflowFacade" ref="b2bRegistrationWorkflowFacade"/>
+		<property name="workflowTemplateService" ref="workflowTemplateService"/>
+		<property name="adnocB2BRegistrationService" ref="adnocB2BRegistrationService"/>
+		<property name="primaryProductDataConverter" ref="primaryProductDataConverter" />
+	</bean>
+
+	<alias name="defaultAdnocAllowedUploadedFormats" alias="allowedAdnocUploadedFormats"/>
+	<bean name="defaultAdnocAllowedUploadedFormats" class="java.lang.String">
+		<constructor-arg>
+			<value>${adnoc.media.allowed.supported.document.extensions}</value>
+		</constructor-arg>
+	</bean>
+
+	<alias name="adnocB2BRegistrationWorkflowFacadeImpl" alias="b2bRegistrationWorkflowFacade"/>
+	<bean id="adnocB2BRegistrationWorkflowFacadeImpl" class="com.adnoc.facades.registration.impl.AdnocB2BRegistrationWorkflowFacadeImpl">
+		<property name="workflowService" ref="newestWorkflowService"/>
+		<property name="workflowProcessingService" ref="workflowProcessingService"/>
+		<property name="userService" ref="userService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<!-- PrimaryProduct Start-->
+	<alias name="defaultPrimaryProductDataConverter" alias="primaryProductDataConverter" />
+	<bean id="defaultPrimaryProductDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="primaryProductData"/>
+		<property name="populators">
+			<list>
+				<ref bean="primaryProductDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultPrimaryProductDataPopulator" alias="primaryProductDataPopulator" />
+	<bean id="defaultPrimaryProductDataPopulator" class="com.adnoc.facades.user.populators.AdnocPrimaryProductDataPopulator">
+		<property name="typeService" ref="typeService" />
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<bean id="primaryProductData" class="com.adnoc.facades.user.data.PrimaryProductData" scope="prototype" />
+	<!-- PrimaryProduct End-->
+
+	<!-- PreferredCommunicationChannel Start -->
+	<alias name="defaultPreferredCommunicationChannelDataConverter" alias="preferredCommunicationChannelDataConverter" />
+	<bean id="defaultPreferredCommunicationChannelDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="preferredCommunicationChannelData"/>
+		<property name="populators">
+			<list>
+				<ref bean="preferredCommunicationChannelDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultPreferredCommunicationChannelDataPopulator" alias="preferredCommunicationChannelDataPopulator" />
+	<bean id="defaultPreferredCommunicationChannelDataPopulator" class="com.adnoc.facades.user.populators.AdnocPreferredCommunicationChannelDataPopulator">
+		<property name="typeService" ref="typeService" />
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<bean id="preferredCommunicationChannelData" class="com.adnoc.facades.user.data.PreferredCommunicationChannelData" scope="prototype" />
+	<!-- PreferredCommunicationChannel End-->
+
+	<!-- Nationality Start -->
+	<alias name="defaultNationalityDataConverter" alias="nationalityDataConverter" />
+	<bean id="defaultNationalityDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="nationalityData"/>
+		<property name="populators">
+			<list>
+				<ref bean="nationalityDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultNationalityDataPopulator" alias="nationalityDataPopulator" />
+	<bean id="defaultNationalityDataPopulator" class="com.adnoc.facades.user.populators.AdnocNationalityDataPopulator">
+		<property name="typeService" ref="typeService" />
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<bean id="nationalityData" class="com.adnoc.facades.user.data.NationalityData" scope="prototype" />
+	<!-- Nationality End-->
+
+	<!-- IdentityType starts-->
+	<bean id="identityTypeData" class="com.adnoc.facades.user.data.IdentityTypeData" scope="prototype" />
+
+	<alias name="defaultIdentityTypeDataConverter" alias="identityTypeDataConverter" />
+	<bean id="defaultIdentityTypeDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="identityTypeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="identityTypeDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultIdentityTypeDataPopulator" alias="identityTypeDataPopulator" />
+	<bean id="defaultIdentityTypeDataPopulator" class="com.adnoc.facades.user.populators.AdnocIdentityTypeDataPopulator">
+		<property name="typeService" ref="typeService" />
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+	<!-- IdentityType Ends-->
+	<!--IncoTerms Start-->
+	<bean id="incoTermsTypeData" class="com.adnoc.facades.company.data.IncoTermsData" scope="prototype"/>
+
+	<alias name="adnocIncoTermsDataConverter" alias="incoTermsTypeDataConverter" />
+	<bean id="adnocIncoTermsDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="incoTermsTypeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="incoTermsDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="adnocIncoTermsDataPopulator" alias="incoTermsDataPopulator" />
+	<bean id="adnocIncoTermsDataPopulator" class="com.adnoc.facades.user.populators.AdnocIncoTermsDataPopulator">
+		<property name="typeService" ref="typeService" />
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+	<!--IncoTerms End-->
+
+	<!-- Designation starts-->
+	<bean id="adnocDesignationData" class="com.adnoc.facades.user.data.AdnocDesignationData" scope="prototype"/>
+
+	<alias name="adnocDesignationDataConverter" alias="designationDataConverter"/>
+	<bean id="adnocDesignationDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="adnocDesignationData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocDesignationDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="adnocDesignationDataPopulator" alias="adnocDesignationDataPopulator"/>
+	<bean id="adnocDesignationDataPopulator" class="com.adnoc.facades.user.populators.AdnocDesignationDataPopulator">
+		<property name="typeService" ref="typeService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+	<!-- Designation Ends-->
+
+	<!-- TradeLicenseAuthority starts-->
+	<bean id="adnocTradeLicenseAuthorityData" class="com.adnoc.facades.user.data.AdnocTradeLicenseAuthorityData"
+		  scope="prototype"/>
+
+	<alias name="adnocTradeLicenseAuthorityDataConverter" alias="tradeLicenseAuthorityDataConverter"/>
+	<bean id="adnocTradeLicenseAuthorityDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="adnocTradeLicenseAuthorityData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocTradeLicenseAuthorityDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="adnocTradeLicenseAuthorityDataPopulator" alias="adnocTradeLicenseAuthorityDataPopulator"/>
+	<bean id="adnocTradeLicenseAuthorityDataPopulator"
+		  class="com.adnoc.facades.user.populators.AdnocTradeLicenseAuthorityDataPopulator">
+		<property name="typeService" ref="typeService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+	<!-- TradeLicenseAuthority Ends-->
+	<!-- Registration End-->
+
+	<!-- ReturnReason starts -->
+
+	<bean id="returnReasonData" class="com.adnoc.facades.ordermanagement.data.ReturnReasonData" scope="prototype" />
+
+	<alias name="defaultReturnReasonDataConverter" alias="returnReasonDataConverter" />
+	<bean id="defaultReturnReasonDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="returnReasonData"/>
+		<property name="populators">
+			<list>
+				<ref bean="returnReasonDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultReturnReasonDataPopulator" alias="returnReasonDataPopulator"/>
+	<bean id="defaultReturnReasonDataPopulator"
+		  class="com.adnoc.facades.ordermanagement.populator.AdnocReturnReasonDataPopulator">
+		<property name="typeService" ref="typeService"/>
+	</bean>
+
+	<alias name="defaultAdnocReturnFacade" alias="omsReturnFacade"/>
+	<bean id="defaultAdnocReturnFacade" class="com.adnoc.facades.returnreason.impl.AdnocReturnFacadeImpl"
+		  parent="defaultOmsReturnFacade">
+		<property name="returnReasonDataConverter" ref="returnReasonDataConverter"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="allowedUploadedFormats" ref="allowedAdnocUploadedFormats"/>
+	</bean>
+	<!-- ReturnReason End-->
+
+	<alias name="adnocB2BUserFacadeImpl" alias="b2bUserFacade"/>
+	<bean id="adnocB2BUserFacadeImpl" class="com.adnoc.facades.user.impl.AdnocB2BUserFacadeImpl" parent="defaultB2BUserFacade">
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="genderDataConverter" ref="genderConverter"/>
+		<property name="nationalityDataConverter" ref="nationalityDataConverter" />
+		<property name="preferredCommunicationChannelDataConverter" ref="preferredCommunicationChannelDataConverter" />
+		<property name="identityTypeDataConverter" ref="identityTypeDataConverter" />
+		<property name="designationDataConverter" ref="designationDataConverter" />
+		<property name="tradeLicenseAuthorityDataConverter" ref="tradeLicenseAuthorityDataConverter"/>
+		<property name="adnocCustomerAccountService" ref="adnocCustomerAccountService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+	</bean>
+
+	<alias name="defaultAdnocB2BCustomerReversePopulator" alias="b2BCustomerReversePopulator"/>
+	<bean id="defaultAdnocB2BCustomerReversePopulator"
+		  class="com.adnoc.facades.b2bcustomer.populators.AdnocB2BCustomerReversePopulator"
+		  parent="defaultB2BCustomerReversePopulator">
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="allowedUploadedFormats" ref="allowedAdnocUploadedFormats"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerCreationContext"
+		  class="com.adnoc.facades.process.email.context.AdnocB2BCustomerCreationContext"
+		  parent="customerEmailContext" scope="prototype">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<alias name="adnocCommerceCartParameterBasicPopulator" alias="commerceCartParameterBasicPopulator"/>
+	<bean id="adnocCommerceCartParameterBasicPopulator"
+		  class="com.adnoc.facades.order.converter.populator.AdnocCommerceCartParameterBasicPopulator">
+		<property name="cartService" ref="cartService"/>
+		<property name="productService" ref="productService"/>
+		<property name="pointOfServiceService" ref="pointOfServiceService"/>
+	</bean>
+
+	<bean id="adnocProductPopulator" class="com.adnoc.facades.product.converters.populator.AdnocProductPopulator">
+		<property name="adnocUnitConverter" ref="adnocUnitConverter"/>
+	</bean>
+
+	<alias name="defaultAdnocUnitConverter" alias="adnocUnitConverter"/>
+	<bean id="defaultAdnocUnitConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.adnoc.facade.product.data.UnitData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocUnitPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocUnitPopulator" class="com.adnoc.facades.order.converter.populator.AdnocUnitPopulator"/>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add" ref="adnocProductPopulator"/>
+	</bean>
+
+	<bean id="adnocSearchResultProductPopulator" class="com.adnoc.facades.search.converters.populator.AdnocSearchResultProductPopulator">
+		<property name="adnocPriceRowService" ref="adnocPriceRowService"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="unitService" ref="unitService"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="commerceSearchResultProductConverter"/>
+		<property name="add" ref="adnocSearchResultProductPopulator"/>
+	</bean>
+
+	<alias name="adnocOrderEntryPopulator" alias="orderEntryPopulator"/>
+	<bean id="adnocOrderEntryPopulator" class="com.adnoc.facades.order.converter.populator.AdnocOrderEntryPopulator"
+		  parent="defaultOrderEntryPopulator">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocDateDifferenceCalculationStrategy" ref="adnocDateDifferenceCalculationStrategy"/>
+		<property name="addressConverter" ref="addressConverter"/>
+		<property name="adnocUnitConverter" ref="adnocUnitConverter"/>
+		<property name="adnocIncoTermsDataConverter" ref="adnocIncoTermsDataConverter"/>
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryConverter" />
+		<property name="add" ref="ordermanagementOrderEntryPopulator"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderEntryConverter"/>
+		<property name="add" ref="adnocOrderEntryPopulator"/>
+	</bean>
+
+	<!-- AdnocConfig Start -->
+	<alias name="adnocConfigFacadeImpl" alias="adnocConfigFacade"/>
+	<bean id="adnocConfigFacadeImpl" class="com.adnoc.facades.config.impl.AdnocConfigFacadeImpl">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocConfigDataConverter" ref="adnocConfigDataConverter" />
+		<property name="adnocCsTicketCategoryMapDataConverter" ref="adnocCsTicketCategoryMapDataConverter" />
+	</bean>
+
+	<alias name="defaultAdnocConfigDataConverter" alias="adnocConfigDataConverter" />
+	<bean id="defaultAdnocConfigDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="adnocConfigData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocConfigDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAdnocConfigDataPopulator" alias="adnocConfigDataPopulator" />
+	<bean id="defaultAdnocConfigDataPopulator" class="com.adnoc.facades.config.populators.AdnocConfigDataPopulator"/>
+
+	<bean id="adnocConfigData" class="com.adnoc.facades.config.data.AdnocConfigData" scope="prototype" />
+
+	<alias name="defaultAdnocCsTicketCategoryMapDataConverter" alias="adnocCsTicketCategoryMapDataConverter" />
+	<bean id="defaultAdnocCsTicketCategoryMapDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="adnocCsTicketCategoryMapData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocCsTicketCategoryMapDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAdnocCsTicketCategoryMapDataPopulator" alias="adnocCsTicketCategoryMapDataPopulator" />
+	<bean id="defaultAdnocCsTicketCategoryMapDataPopulator" class="com.adnoc.facades.ticket.populators.AdnocCsTicketCategoryMapDataPopulator">
+		<property name="typeService" ref="typeService" />
+	</bean>
+	<bean id="adnocCsTicketCategoryMapData" class="com.adnoc.facades.ticket.data.AdnocCsTicketCategoryMapData" scope="prototype" />
+	<!-- AdnocConfig End-->
+
+	<alias name="adnocB2BUnitFacadeImpl" alias="adnocB2BUnitFacade" />
+	<bean id="adnocB2BUnitFacadeImpl" class="com.adnoc.facades.adnocb2bfacade.AdnocB2BUnitFacadeImpl" parent="defaultB2BUnitFacade">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+		<property name="addressConverter" ref="addressConverter"/>
+		<property name="b2BCustomerService" ref="b2bCustomerService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="userService" ref="userService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="allowedUploadedFormats" ref="allowedAdnocUploadedFormats"/>
+		<property name="b2bRegistrationWorkflowFacade" ref="b2bRegistrationWorkflowFacade"/>
+		<property name="workflowTemplateService" ref="workflowTemplateService"/>
+		<property name="adnocB2BRegistrationFacade" ref="adnocB2BRegistrationFacade"/>
+		<property name="searchRestrictionService" ref="searchRestrictionService"/>
+		<property name="incoTermsTypeDataConverter" ref="incoTermsTypeDataConverter" />
+		<property name="adnocB2BRegistrationService" ref="adnocB2BRegistrationService"/>
+	</bean>
+
+	<alias name="adnocCustomerPopulator" alias="customerPopulator"/>
+	<bean id="adnocCustomerPopulator" class="com.adnoc.facades.b2bcustomer.populators.AdnocCustomerPopulator" parent="defaultCustomerPopulator">
+		<property name="enumerationService" ref="enumerationService" />
+	</bean>
+
+	<alias name="adnocTicketParameterPopulator" alias="ticketParameterPopulator"/>
+	<bean id="adnocTicketParameterPopulator" class="com.adnoc.facades.ticket.populators.AdnocCsTicketPopulator"
+		  parent="defaultTicketParameterPopulator">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<alias alias="orderCancelCallbackService" name="adnocOrderCancelService"/>
+	<alias alias="orderCancelService" name="adnocOrderCancelService"/>
+	<bean id="adnocOrderCancelService"
+		  class="de.hybris.platform.ordercancel.impl.DefaultOrderCancelService">
+		<property name="modelService" ref="modelService"/>
+		<property name="orderCancelDao" ref="orderCancelDao"/>
+		<property name="orderCancelRecordsHandler" ref="orderCancelRecordsHandler"/>
+		<property name="cancelDenialStrategies">
+			<list>
+				<ref bean="singleCancelRequestDenialStrategy"/>
+				<ref bean="defaultRequestOriginDenialStrategy"/>
+				<ref bean="partialCancelRulesViolationStrategy"/>
+				<ref bean="orderStateDenialStrategy"/>
+				<ref bean="sentToWarehouseDenialStrategy"/>
+				<ref bean="shippingDenialStrategy"/>
+				<ref bean="adnocOrderCancelDenialStrategy"/>
+				<ref bean="adnocQuotationCancelDenialStrategy"/>
+			</list>
+		</property>
+		<property name="requestExecutorsMap">
+			<map>
+				<entry key="PENDINGORHOLDINGAREA" value-ref="immediateCancelRequestExecutor"/>
+				<entry key="SENTTOWAREHOUSE" value-ref="warehouseProcessingCancelRequestExecutor"/>
+				<entry key="SHIPPING" value-ref="warehouseProcessingCancelRequestExecutor"/>
+				<entry key="PARTIALLYSHIPPED" value-ref="warehouseProcessingCancelRequestExecutor"/>
+			</map>
+		</property>
+		<property name="responseExecutorsMap">
+			<map>
+				<entry key="SENTTOWAREHOUSE" value-ref="warehouseResponseExecutor"/>
+				<entry key="SHIPPING" value-ref="warehouseResponseExecutor"/>
+				<entry key="PARTIALLYSHIPPED" value-ref="warehouseResponseExecutor"/>
+			</map>
+		</property>
+		<property name="stateMappingStrategy" ref="orderCancelStateMappingStrategy"/>
+		<property name="cancelableEntriesStrategy" ref="cancelableEntriesStrategy"/>
+	</bean>
+
+	<bean id="adnocOrderCancelDenialStrategy"
+		  class="com.adnoc.service.order.cancel.denialstrategies.AdnocOrderCancelDenialStrategy"
+		  scope="prototype">
+		<property name="adnocDateDifferenceCalculationStrategy" ref="adnocDateDifferenceCalculationStrategy"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<!-- provide a reson for the denial strategy -->
+		<!-- exemplary reason -->
+		<property name="reason">
+			<bean class="de.hybris.platform.ordercancel.DefaultOrderCancelDenialReason">
+				<property name="description"
+						  value="Request Delivery Date disapproves order entry cancellation"/>
+			</bean>
+		</property>
+		<!-- exemplary reason -->
+	</bean>
+
+	<bean id="adnocQuotationCancelDenialStrategy"
+		  class="com.adnoc.service.order.cancel.denialstrategies.AdnocQuotationCancelDenialStrategy"
+		  scope="prototype">
+		<property name="reason">
+			<bean class="de.hybris.platform.ordercancel.DefaultOrderCancelDenialReason">
+				<property name="description"
+						  value="Quotations are not allowed to be cancelled"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="adnocDateDifferenceCalculationStrategy"
+		  class="com.adnoc.service.order.util.strategy.impl.AdnocDateDifferenceCalculationStrategyImpl"
+		  scope="prototype">
+	</bean>
+
+	<alias name="adnocTicketFacadeImpl" alias="adnocTicketFacade"/>
+	<bean id="adnocTicketFacadeImpl" class="com.adnoc.facades.customerticketingfacades.impl.AdnocTicketFacadeImpl">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="userService" ref="userService"/>
+		<property name="ticketAssociationStrategiesMap" ref="ticketAssociationStrategiesMap"/>
+		<property name="ticketService" ref="ticketService"/>
+		<property name="ticketBusinessService" ref="ticketBusinessService"/>
+		<property name="ticketConverter" ref="ticketConverter"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="configurationService" ref="configurationService"/>
+		<property name="ticketPriority" ref="ticketPriority" />
+		<property name="ticketReason" ref="ticketReason" />
+	</bean>
+
+	<util:map id="ticketAssociationStrategiesMap" value-type="de.hybris.platform.customerticketingfacades.strategies.TicketAssociationStrategies">
+		<entry key="CART" value-ref="ticketCartsAssociationStrategy"/>
+		<entry key="ORDER" value-ref="ticketOrdersAssociationStrategy"/>
+		<entry key="PAYER" value-ref="ticketPayerAssociationStrategy"/>
+		<entry key="INVOICE" value-ref="ticketInvoiceAssociationStrategy"/>
+		<entry key="DELIVERY" value-ref="ticketDeliveryAssociationStrategy"/>
+		<entry key="SOLDTO_PAYER" value-ref="ticketSoldToPayerAssociationStrategy"/>
+		<entry key="NA" value-ref="ticketNAAssociationStrategy"/>
+	</util:map>
+
+	<bean id="ticketPayerAssociationStrategy"
+		  class="com.adnoc.facades.customerticketingfacades.strategies.AdnocTicketPayersAssociationStrategy">
+		<property name="adnocPayerTicketAssociationConverter" ref="adnocPayerTicketAssociationConverter"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<bean id="adnocPayerTicketAssociationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.customerticketingfacades.data.TicketAssociatedData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="adnocPayerTicketAssociationPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocPayerTicketAssociationPopulator"
+		  class="com.adnoc.facades.customerticketingfacades.converters.populators.AdnocPayerTicketAssociationPopulator"/>
+
+	<bean id="ticketInvoiceAssociationStrategy"
+		  class="com.adnoc.facades.customerticketingfacades.strategies.AdnocTicketInvoiceAssociationStrategy">
+		<property name="adnocTicketInvoiceAssociationConverter" ref="adnocTicketInvoiceAssociationConverter"/>
+		<property name="adnocB2BDocumentTypeService" ref="adnocB2BDocumentTypeService" />
+		<property name="adnocB2BDocumentService" ref="adnocB2BDocumentService" />
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService" />
+	</bean>
+
+	<bean id="adnocTicketInvoiceAssociationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.customerticketingfacades.data.TicketAssociatedData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="adnocTicketInvoiceAssociationPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocTicketInvoiceAssociationPopulator"
+		  class="com.adnoc.facades.customerticketingfacades.converters.populators.AdnocTicketInvoiceAssociationPopulator"/>
+
+	<alias name="defaultAdnocTicketPopulator" alias="adnocTicketPopulator"/>
+	<bean id="defaultAdnocTicketPopulator" class="com.adnoc.facades.ticket.populators.AdnocTicketPopulator"
+		  parent="defaultTicketPopulator">
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="ticketConverter" />
+		<property name="remove" ref="defaultTicketPopulator" />
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="ticketConverter" />
+		<property name="add" ref="adnocTicketPopulator" />
+	</bean>
+
+	<bean id="adnocTicketListPopulator" class="com.adnoc.facades.ticket.populators.AdnocTicketListPopulator"/>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="ticketListConverter"/>
+		<property name="add" ref="adnocTicketListPopulator"/>
+	</bean>
+
+	<bean id="ticketDeliveryAssociationStrategy"
+		  class="com.adnoc.facades.customerticketingfacades.strategies.AdnocTicketDeliveryAssociationStrategy">
+		<property name="adnocTicketDeliveryAssociationConverter" ref="adnocTicketDeliveryAssociationConverter"/>
+		<property name="adnocB2BDocumentTypeService" ref="adnocB2BDocumentTypeService" />
+		<property name="adnocB2BDocumentService" ref="adnocB2BDocumentService" />
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService" />
+	</bean>
+
+	<bean id="adnocTicketDeliveryAssociationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.customerticketingfacades.data.TicketAssociatedData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="adnocTicketDeliveryAssociationPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocTicketDeliveryAssociationPopulator"
+		  class="com.adnoc.facades.customerticketingfacades.converters.populators.AdnocTicketDeliveryAssociationPopulator"/>
+
+	<bean id="ticketSoldToPayerAssociationStrategy"
+		  class="com.adnoc.facades.customerticketingfacades.strategies.AdnocTicketSoldToPayersAssociationStrategy">
+		<property name="adnocTicketSoldToPayerAssociationConverter" ref="adnocTicketSoldToPayerAssociationConverter"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService" />
+	</bean>
+
+	<bean id="adnocTicketSoldToPayerAssociationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.customerticketingfacades.data.TicketAssociatedData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="adnocTicketSoldToPayerAssociationPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocTicketSoldToPayerAssociationPopulator"
+		  class="com.adnoc.facades.customerticketingfacades.converters.populators.AdnocSoldToTicketAssociationPopulator"/>
+
+	<bean id="ticketNAAssociationStrategy"
+		  class="com.adnoc.facades.customerticketingfacades.strategies.AdnocTicketNAAssociationStrategy"/>
+
+	<bean id="adnocPartialOrderCompletionEmailContext"
+		  class="com.adnoc.facades.process.email.context.AdnocPartialOrderCompletionEmailContext"
+		  parent="abstractEmailContext"
+		  scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+
+	<alias name="adnocB2BAddressFacadeImpl" alias="adnocB2BAddressFacade"/>
+	<bean id="adnocB2BAddressFacadeImpl" class="com.adnoc.facades.adnocb2bfacade.AdnocB2BAddressFacadeImpl">
+		<property name="adnocAddressService" ref="adnocAddressService"/>
+		<property name="addressConverter" ref="addressConverter"/>
+	</bean>
+
+	<alias alias="adnocCreateCartFromCartStrategy" name="adnocCreateCartFromCartStrategyImpl"/>
+	<bean id="adnocCreateCartFromCartStrategyImpl" class="com.adnoc.facades.strategies.AdnocCreateCartFromCartStrategyImpl"
+		  parent="genericAbstractOrderCloningStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="calculationService" ref="calculationService"/>
+	</bean>
+
+	<alias name="adnocB2BCheckoutFacade" alias="b2bCheckoutFacade"/>
+	<bean id="adnocB2BCheckoutFacade" class="com.adnoc.facades.checkout.impl.AdnocB2BCheckoutFacadeImpl"
+		  parent="defaultB2BCheckoutFacade">
+		<property name="adnocCreateCartFromCartStrategy" ref="adnocCreateCartFromCartStrategy"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="allowedUploadedFormats" ref="allowedAdnocUploadedFormats"/>
+		<property name="adnocPaymentInfoCreateStrategyMap" ref="adnocPaymentInfoCreateStrategyMap"/>
+		<property name="adnocPaymentTransactionStrategy" ref="adnocPaymentTransactionStrategy"/>
+	</bean>
+
+	<bean id="adnocCsTicketClosedEmailContext" class="com.adnoc.facades.process.email.context.AdnocCsTicketClosedEmailContext" parent="abstractEmailContext" scope="prototype"/>
+
+	<alias name="adnocB2BUnitPopulator" alias="b2bUnitPopulator"/>
+	<bean id="adnocB2BUnitPopulator" class="com.adnoc.facades.company.converters.populators.AdnocB2BUnitPopulator"
+		  parent="defaultB2BUnitPopulator">
+		<property name="salesOrganizationConverter" ref="salesOrganizationConverter"/>
+	</bean>
+
+	<bean id="salesOrganizationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.adnoc.facades.company.data.SAPSalesOrganizationData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="sapSalesOrganizationPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="adnocSAPSalesOrganizationPopulator" alias="sapSalesOrganizationPopulator"/>
+	<bean id="adnocSAPSalesOrganizationPopulator"
+		  class="com.adnoc.facades.company.converters.populators.AdnocSAPSalesOrganizationPopulator"/>
+
+	<alias name="adnocDownloadStatementFacadeImpl" alias="adnocDownloadStatementFacade"/>
+	<bean id="adnocDownloadStatementFacadeImpl" class="com.adnoc.facades.downloadstatement.AdnocDownloadStatementFacadeImpl">
+		<property name="adnocDownloadStatementService" ref="adnocDownloadStatementService"/>
+	</bean>
+
+	<alias name="adnocCartValidationStrategy" alias="cartValidationStrategy"/>
+	<bean id="adnocCartValidationStrategy"
+		  class="com.adnoc.facades.strategies.AdnocCartValidationStrategy"
+		  parent="defaultCartValidationStrategy"/>
+
+	<alias alias="returnService" name="warehousingReturnService"/>
+	<bean id="warehousingReturnService"
+		  class="de.hybris.platform.warehousing.returns.service.impl.WarehousingReturnService"
+		  parent="defaultReturnService">
+		<property name="returnableChecks">
+			<list>
+				<ref bean="warehousingOrderEntryBasedReturnableCheck"/>
+				<ref bean="adnocOrderCompleteDateBasedReturnableCheck"/>
+				<ref bean="adnocQuoteRefBasedReturnableCheck"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocOrderCompleteDateBasedReturnableCheck"
+		  class="com.adnoc.service.order.returnorder.check.AdnocOrderCompleteDateBasedReturnableCheck">
+		<property name="adnocDateDifferenceCalculationStrategy" ref="adnocDateDifferenceCalculationStrategy"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+	</bean>
+
+	<bean id="adnocQuoteRefBasedReturnableCheck"
+		  class="com.adnoc.service.order.returnorder.check.AdnocQuoteRefBasedReturnableCheck">
+	</bean>
+
+	<alias name="adnocQuoteFacade" alias="quoteFacade"/>
+	<bean id="adnocQuoteFacade" class="com.adnoc.facades.quote.AdnocQuoteFacadeImpl" parent="defaultQuoteFacade">
+		<property name="adnocCartFacade" ref="adnocCartFacade"/>
+		<property name="adnocQuoteService" ref="adnocQuoteService"/>
+	</bean>
+
+    <alias name="adnocQuoteUpdateExpirationTimeStrategy" alias="quoteUpdateExpirationTimeStrategy"/>
+    <bean id="adnocQuoteUpdateExpirationTimeStrategy"
+          class="com.adnoc.facades.strategies.AdnocQuoteUpdateExpirationTimeStrategy"
+          parent="defaultQuoteUpdateExpirationTimeStrategy">
+        <property name="adnocConfigService" ref="adnocConfigService"/>
+    </bean>
+
+	<alias name="adnocQuotePopulator" alias="quotePopulator"/>
+	<bean id="adnocQuotePopulator" class="com.adnoc.facades.quote.populator.AdnocQuotePopulator"
+		  parent="defaultQuotePopulator">
+	</bean>
+
+	<alias name="adnocAddressPopulator" alias="addressPopulator"/>
+	<bean id="adnocAddressPopulator" class="com.adnoc.facades.address.populator.AdnocAddressPopulator"
+		  parent="defaultAddressPopulator">
+	</bean>
+
+	<alias name="adnocOrderManagementOrderEntryPopulator" alias="ordermanagementOrderEntryPopulator"/>
+	<bean id="adnocOrderManagementOrderEntryPopulator"
+		  class="com.adnoc.facades.ordermanagement.populator.AdnocOrderManagementOrderEntryPopulator"
+		  parent="warehousingOrderEntryPopulator">
+		<property name="adnocUnitConverter" ref="adnocUnitConverter"/>
+	</bean>
+
+	<bean id="adnocOrderPopulator" class="com.adnoc.facades.order.converter.populator.AdnocOrderPopulator">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="adnocPaymentTransactionConverter" ref="adnocPaymentTransactionConverter"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderConverter"/>
+		<property name="add" ref="adnocOrderPopulator"/>
+	</bean>
+
+	<alias name="adnocOrderHistoryPopulator" alias="orderHistoryPopulator"/>
+	<bean id="adnocOrderHistoryPopulator" class="com.adnoc.facades.order.converter.populator.AdnocOrderHistoryPopulator"
+		  parent="defaultOrderHistoryPopulator">
+		<property name="adnocCategoryService" ref="adnocCategoryService"/>
+		<property name="categoryConverter" ref="categoryConverter"/>
+	</bean>
+
+	<bean id="adnocReturnLabelEmailContext" class="com.adnoc.facades.process.email.context.AdnocReturnLabelEmailContext" parent="returnLabelEmailContext" scope="prototype">
+		<property name="returnConverter" ref="ordermanagementReturnConverter"/>
+		<property name="userService" ref="userService"/>
+		<property name="csaEmployeeId" value="#{configurationService.configuration.getString('adnoc.registration.workflow.assigned.employee.uid', 'ecommmercespelicalistapprover')}"/>
+		<property name="backOfficeLink" value="#{configurationService.configuration.getString('email.backoffice.url', 'https://localhost:9002/backoffice')}"/>
+		<property name="frontendUrl" value="#{configurationService.configuration.getString('adnoc.frontend.url', 'http://localhost:4200/adnoc/en/AED')}"/>
+	</bean>
+
+	<util:map id="initiatePaymentStrategiesMap" key-type="de.hybris.platform.b2b.enums.CheckoutPaymentType"
+			  value-type="com.adnoc.facades.payment.strategies.AdnocInitiatePaymentStrategy">
+		<entry key="CARD" value-ref="adnocPaymentCardInitiateStrategy"/>
+		<entry key="BANK_TRANSFER" value-ref="adnocPaymentBankRegInitiateStrategy"/>
+	</util:map>
+
+	<bean id="adnocPaymentCardInitiateStrategy" class="com.adnoc.facades.payment.strategies.impl.AdnocPaymentCardInitiateStrategy">
+		<property name="adnocPaymentService" ref="adnocPaymentService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<bean id="adnocPaymentBankRegInitiateStrategy" class="com.adnoc.facades.payment.strategies.impl.AdnocPaymentBankRegInitiateStrategy">
+		<property name="adnocPaymentService" ref="adnocPaymentService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<alias name="adnocOverdueInvoiceFacadeImpl" alias="adnocOverdueInvoiceFacade"/>
+	<bean id="adnocOverdueInvoiceFacadeImpl" class="com.adnoc.facades.overdueinvoices.impl.AdnocOverdueInvoiceFacadeImpl">
+		<property name="adnocOverdueInvoicesService" ref="adnocOverdueInvoicesService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="b2bPaymentTypeDataConverter" ref="paymentTypeDataConverter" />
+		<property name="configurationService" ref="configurationService"/>
+		<property name="adnocPaymentFacade" ref="adnocPaymentFacade"/>
+		<property name="adnocPaymentTransactionStrategy" ref="adnocPaymentTransactionStrategy"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+		<property name="adnocPaymentInitiateRequestCreationStrategyMap" ref="adnocPaymentInitiateRequestCreationStrategyMap"/>
+	</bean>
+
+	<alias name="adnocPaymentFacadeImpl" alias="adnocPaymentFacade"/>
+	<bean id="adnocPaymentFacadeImpl" class="com.adnoc.facades.payment.AdnocPaymentFacadeImpl">
+		<property name="initiatePaymentStrategiesMap" ref="initiatePaymentStrategiesMap"/>
+		<property name="adnocPaymentService" ref="adnocPaymentService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="configurationService" ref="configurationService"/>
+		<property name="adnocPaymentInitiateRequestCreationStrategyMap" ref="adnocPaymentInitiateRequestCreationStrategyMap"/>
+		<property name="maxAttempts" value="${adnoc.banktransfer.finalization.max.attempt}"/>
+	</bean>
+
+	<alias name="adnocCreditLimitFacadeImpl" alias="adnocCreditLimitFacade"/>
+	<bean id="adnocCreditLimitFacadeImpl" class="com.adnoc.facades.user.creditlimit.impl.AdnocCreditLimitFacadeImpl">
+		<property name="adnocCreditLimitService" ref="adnocCreditLimitService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<alias name="adnocAccountSummaryInfoPopulator" alias="accountSummaryInfoPopulator" />
+	<bean id="adnocAccountSummaryInfoPopulator" class="com.adnoc.facades.adnocb2bfacade.document.populator.AdnocAccountSummaryInfoPopulator"
+		  parent="defaultAccountSummaryInfoPopulator"/>
+
+	<bean id="b2bCustomerPopulator" class="com.adnoc.facades.b2bcustomer.populators.AdnocB2BCustomerPopulator">
+		<property name="b2bUnitService" ref="b2bUnitService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="currencyConverter" ref="currencyConverter"/>
+		<property name="b2BUserGroupsLookUpStrategy" ref="b2bUserGroupsLookUpStrategy"/>
+	</bean>
+
+	<alias name="adnocB2BUnitNodePopulator" alias="b2bUnitNodePopulator" />
+	<bean id="adnocB2BUnitNodePopulator" class="com.adnoc.facades.company.converters.populators.AdnocB2BUnitNodePopulator"
+		  parent="defaultB2BUnitNodePopulator">
+		<property name="adnocCategoryService" ref="adnocCategoryService"/>
+	</bean>
+
+	<alias name="adnocOrdermanagementReturnHistoryPopulator" alias="returnHistoryPopulator" />
+	<bean id="adnocOrdermanagementReturnHistoryPopulator" class="com.adnoc.facades.returns.converters.populator.AdnocOrdermanagementReturnHistoryPopulator"
+		  parent="ordermanagementReturnHistoryPopulator">
+		<property name="enumerationService" ref="enumerationService" />
+	</bean>
+
+	<alias name="adnocOrdermanagementReturnPopulator" alias="ordermanagementReturnPopulator" />
+	<bean id="adnocOrdermanagementReturnPopulator" class="com.adnoc.facades.returns.converters.populator.AdnocOrdermanagementReturnPopulator">
+		<property name="enumerationService" ref="enumerationService" />
+		<property name="returnEntryConverter" ref="ordermanagementReturnEntryConverter"/>
+		<property name="orderConverter" ref="ordermanagementOrderConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+		<property name="cancellableReturnStatusList" ref="cancellableReturnStatusList"/>
+	</bean>
+
+	<bean id="adnocCartPopulator" class="com.adnoc.facades.cart.populator.AdnocCartPopulator" parent="adnocBaseOrderPopulator"/>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="extendedCartConverter"/>
+		<property name="add" ref="adnocCartPopulator"/>
+	</bean>
+
+	<bean id="adnocSummaryPopulator" class="com.adnoc.facades.order.converter.populator.AdnocOrderSummaryPopulator" parent="adnocBaseOrderPopulator"/>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderConverter"/>
+		<property name="add" ref="adnocSummaryPopulator"/>
+	</bean>
+
+	<bean id="adnocB2BRegistrationEmailContext"
+		  class="com.adnoc.facades.process.email.context.AdnocB2BRegistrationEmailContext" parent="b2bRegistrationEmailContext" scope="prototype">
+		<property name="userService" ref="userService"/>
+		<property name="csaEmployeeId" value="#{configurationService.configuration.getString('adnoc.registration.workflow.assigned.employee.uid', 'ecommmercespelicalistapprover')}"/>
+	</bean>
+
+	<bean id="adnocBaseOrderPopulator" class="com.adnoc.facades.order.converter.populator.AdnocAbstractOrderPopulator"
+		  abstract="true" parent="baseOrderPopulator"/>
+
+	<alias name="adnocPointOfServicePopulator" alias="pointOfServicePopulator" />
+	<bean id="adnocPointOfServicePopulator" class="com.adnoc.facades.pos.populator.AdnocPointOfServicePopulator"
+		  parent="defaultPointOfServicePopulator">
+	</bean>
+
+	<alias name="adnocStoreFacadeImpl" alias="adnocStoreFacade"/>
+	<bean id="adnocStoreFacadeImpl" class="com.adnoc.facades.store.AdnocStoreFacadeImpl" parent="defaultStoreFinderFacade">
+		<property name="adnocStoreService" ref="adnocStoreService"/>
+	</bean>
+
+	<alias name="defaultCancelReasonDataConverter" alias="cancelReasonDataConverter"/>
+	<bean id="defaultCancelReasonDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.adnoc.facades.ordermanagement.data.CancelReasonData"/>
+		<property name="populators">
+			<list>
+				<ref bean="cancelReasonDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultCancelReasonDataPopulator" alias="cancelReasonDataPopulator"/>
+	<bean id="defaultCancelReasonDataPopulator" class="com.adnoc.facades.ordermanagement.populator.AdnocCancelReasonDataPopulator">
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<alias name="adnocOmsOrderFacadeImpl" alias="omsOrderFacade"/>
+	<bean id="adnocOmsOrderFacadeImpl" class="com.adnoc.facades.order.impl.AdnocOmsOrderFacadeImpl" parent="defaultOmsOrderFacade"/>
+
+	<alias name="adnocCancelReasonFacadeImpl" alias="adnocCancelReasonFacade"/>
+	<bean id="adnocCancelReasonFacadeImpl" class="com.adnoc.facades.order.impl.AdnocCancelReasonFacadeImpl">
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="cancelReasonDataConverter" ref="cancelReasonDataConverter"/>
+	</bean>
+
+	<!-- Cancellable return status list -->
+	<alias name="defaultCancellableReturnStatusList" alias="cancellableReturnStatusList"/>
+	<util:list id="defaultCancellableReturnStatusList" value-type="de.hybris.platform.basecommerce.enums.ReturnStatus">
+		<value>APPROVAL_PENDING</value>
+		<value>WAIT</value>
+		<value>PAYMENT_REVERSAL_FAILED</value>
+	</util:list>
+
+	<alias name="adnocAccountSummaryFacade" alias="adnocAccountSummaryFacade"/>
+	<bean id="adnocAccountSummaryFacade" class="com.adnoc.facades.downloadstatement.AdnocAccountSummaryFacadeImpl" parent="defaultB2BAccountSummaryFacade">
+		<property name="adnocAccountSummaryService" ref="adnocAccountSummaryService"/>
+	</bean>
+
+	<alias name="adnocProductFacade" alias="adnocProductFacade"/>
+	<bean id="adnocProductFacade" class="com.adnoc.facades.product.AdnocProductFacadeImpl" parent="defaultProductFacade">
+		<property name="adnocProductService" ref="adnocProductService"/>
+		<property name="mediaService" ref="mediaService"/>
+	</bean>
+
+	<bean id="adnocGigyaConfigPopulator" class="com.adnoc.facades.gigya.AdnocGigyaConfigPopulator">
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<alias name="defaultAdnocGigyaConfigConverter" alias="adnocGigyaConfigConverter"/>
+	<bean id="defaultAdnocGigyaConfigConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.adnoc.facades.gigya.data.GigyaConfigData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocGigyaConfigPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="adnoBaseSitePopulator" alias="baseSitePopulator"/>
+	<bean id="adnoBaseSitePopulator" class="com.adnoc.facades.gigya.AdnoBaseSitePopulator">
+		<property name="adnocGigyaConfigConverter" ref="adnocGigyaConfigConverter"/>
+		<property name="languageConverter" ref="languageConverter"/>
+		<property name="baseStoreConverter" ref="baseStoreConverter"/>
+		<property name="captchaConfigConverter" ref="captchaConfigConverter"/>
+	</bean>
+
+	<bean id="adnocGigyaLoginTokenVerificationFacade" class="com.adnoc.facades.gigya.impl.AdnocGigyaLoginTokenVerificationFacadeImpl">
+		<property name="adnocGigyaLoginTokenVerificationService" ref="adnocGigyaLoginTokenVerificationService"/>
+	</bean>
+
+	<bean id="adnocPaymentTransactionConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+				  value="de.hybris.platform.ordermanagementfacades.payment.data.PaymentTransactionData"/>
+		<property name="populators">
+			<list>
+				<ref bean="adnocPaymentTransactionPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocPaymentTransactionPopulator"
+		  class="com.adnoc.facades.order.converter.populator.AdnocPaymentTransactionPopulator">
+	</bean>
+
+	<alias name="adnocOutboundServiceFacade" alias="outboundServiceFacade"/>
+	<bean id="adnocOutboundServiceFacade" class="com.adnoc.facades.customerticketingfacades.impl.AdnocOutboundServiceFacade" parent="defaultOutboundServiceFacade">
+		<constructor-arg ref="remoteSystemClient"/>
+		<property name="requestDecoratorService" ref="requestDecoratorService"/>
+	</bean>
+
+	<util:map id="statusMapping">
+		<entry key="New" value-ref="ticket_open"/>
+		<entry key="Open" value-ref="ticket_inprocess"/>
+		<entry key="Closed" value-ref="ticket_closed"/>
+		<entry key="AwaitingCustomerInput" value-ref="ticket_awaiting_customerinput"/>
+		<entry key="InProgress" value-ref="ticket_inprogress"/>
+		<entry key="ResolutionInProgress" value-ref="ticket_resolution_inprogress"/>
+		<entry key="Resolved" value-ref="ticket_resolved"/>
+	</util:map>
+
+	<alias name="defaultProductConfiguredPopulator" alias="productConfiguredPopulator"/>
+	<bean id="defaultProductConfiguredPopulator" class="de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator">
+		<property name="populators">
+			<map key-type="de.hybris.platform.commercefacades.product.ProductOption">
+				<entry key="BASIC" value-ref="productBasicPopulatorList"/>
+				<entry key="PRICE" value-ref="productPricePopulatorList"/>
+				<entry key="GALLERY" value-ref="productGalleryPopulatorList"/>
+				<entry key="SUMMARY" value-ref="productSummaryPopulatorList"/>
+				<entry key="DESCRIPTION" value-ref="productDescriptionPopulatorList"/>
+				<entry key="CATEGORIES" value-ref="productCategoriesPopulatorList"/>
+				<entry key="PROMOTIONS" value-ref="productPromotionsPopulatorList"/>
+				<entry key="STOCK" value-ref="productStockPopulatorList"/>
+				<entry key="REFERENCES" value-ref="productReferencesPopulator"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="adnocLinkComponentModelToDataPopulator" alias="cmsLinkComponentModelToDataPopulator"/>
+	<bean id="adnocLinkComponentModelToDataPopulator"
+		  class="com.adnoc.facades.cmslink.AdnocLinkComponentModelToDataPopulator">
+		<property name="linkComponentPredicate" ref="cmsLinkComponentTypePredicate"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+</beans>

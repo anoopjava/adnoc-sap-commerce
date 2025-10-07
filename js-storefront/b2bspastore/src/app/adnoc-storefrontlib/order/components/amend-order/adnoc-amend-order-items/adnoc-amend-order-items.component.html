@@ -1,0 +1,351 @@
+<div *ngIf="form$ | async as form">
+  <div class="cancelOrderdata">
+    <p class="cancelOrderNumber">
+      {{
+        "userOrderTranslations.orderDetails.cancellationAndReturn.orderNumber"
+          | cxTranslate
+      }}
+      #{{ orderNumber }}
+    </p>
+    <button
+      *ngIf="!isConfirmation"
+      class="btn btn-link cx-action-link setAllQtyToMax"
+      (click)="setAll(form)"
+    >
+      {{ "orderDetails.cancellationAndReturn.setAll" | cxTranslate }}
+    </button>
+  </div>
+  <div class="documentAndReason">
+    <div class="uploadReturnDocument">
+      <div *ngIf="!isConfirmation">
+        <div class="inputFieldUpload">
+          <label>
+            <span class="label-content required fileUploadlabel"
+              >{{
+                "userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.label"
+                  | cxTranslate
+              }}
+              <span class="icon-container fileUploadtoolTip">
+                <span class="icon">
+                  <span
+                    class="tooltip-text"
+                    [innerHTML]="
+                      'userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.tooltip'
+                        | cxTranslate : { maxFileSize: maxFileSize }
+                    "
+                  ></span> </span></span></span
+          ></label>
+          <div class="uploadInputandLabel">
+            <label for="returnRequestDocument" tabindex="0" class="input-file-trigger"
+              >{{
+                "userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.placeholder"
+                  | cxTranslate
+              }}
+              <span class="upload"
+                >{{
+                  "userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.button"
+                    | cxTranslate
+                }}
+                <span class="uploadIcon"></span>
+              </span>
+            </label>
+            <input
+              class="form-control fileUpload returnRequestDocument"
+              type="file"
+              name="returnRequestDocument"
+              id="returnRequestDocument"
+              placeholder="{{
+                'userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.placeholder'
+                  | cxTranslate
+              }}"
+              (change)="handleFileInput($event)"
+              accept=".pdf"
+              [formControl]="returnRequestDocumentControl(form)"
+            />
+          </div>
+        </div>
+        <div *ngIf="uploadedFiles" class="file-name-display">
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.selectedFile"
+              | cxTranslate
+          }}: {{ uploadedFiles }}
+          <i
+            class="fa-solid fa-trash"
+            (click)="removeUploadedFile(form)"
+            aria-hidden="true"
+          ></i>
+        </div>
+      </div>
+      <ng-container *ngIf="isConfirmation && uploadedFiles">
+        <p>
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.returnRequestDocument.selectedFile"
+              | cxTranslate
+          }}: <span class="select-value">{{ uploadedFiles }} </span>
+        </p>
+      </ng-container>
+    </div>
+    <div class="returnReasonDropDown" *ngIf="isReturnOrder || isConfirmation">
+      <div class="return__wrap">
+        <label class="return__label"
+          >{{
+            "userOrderTranslations.returnReasonLabel" | cxTranslate
+          }}
+          *</label
+        >
+        <div>
+          <ng-container *ngIf="returnReasons$ | async as returnList">
+            <span *ngIf="!isConfirmation" class="return__select-wrap">
+              <select
+                class="return__select"
+                name="reason"
+                id="returnReason"
+                [formControl]="returnReasonControl(form)"
+              >
+                <option disabled selected value="">
+                  {{ "userOrderTranslations.selectReturnLabel" | cxTranslate }}
+                </option>
+                <option
+                  *ngFor="let reason of returnList"
+                  [value]="reason.name + '|' + reason.code"
+                >
+                  {{ reason.name }}
+                </option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i
+            ></span>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="isConfirmation">
+          <span class="select-value">{{ selectedReturnReason }}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <table class="cx-amend-order-items">
+    <caption class="cx-visually-hidden">
+      {{
+        "orderDetails.caption" | cxTranslate
+      }}
+    </caption>
+    <thead>
+      <tr>
+        <th role="columnheader" class="cx-item-list-slnum">
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.slNum"
+              | cxTranslate
+          }}
+        </th>
+        <th role="columnheader" class="cx-item-list-desc">
+          {{ "orderDetails.cancellationAndReturn.item" | cxTranslate }}
+        </th>
+        <th role="columnheader" class="cx-request-delivery-date">
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.requestDeliverydate"
+              | cxTranslate
+          }}
+        </th>
+        <th role="columnheader" class="cx-unit-of-measure">
+          {{ "userOrderTranslations.uomLable" | cxTranslate }}
+        </th>
+        <th
+          *ngIf="!isConfirmation"
+          role="columnheader"
+          class="cx-item-list-ordered-qty"
+        >
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.orderedQuantity"
+              | cxTranslate
+          }}
+        </th>
+        <th
+          *ngIf="!isConfirmation"
+          role="columnheader"
+          class="cx-item-list-delivered-qty"
+        >
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.deliveredQuantity"
+              | cxTranslate
+          }}
+        </th>
+        <th
+          *ngIf="!isConfirmation"
+          role="columnheader"
+          class="cx-item-list-returned-qty"
+        >
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.returnedQuantity"
+              | cxTranslate
+          }}
+        </th>
+        <th
+          *ngIf="!isConfirmation"
+          role="columnheader"
+          class="cx-item-list-remaining-qty"
+        >
+          {{
+            "userOrderTranslations.orderDetails.cancellationAndReturn.remainingQuantity"
+              | cxTranslate
+          }}
+        </th>
+        <th role="columnheader" class="cx-item-list-qty">
+          {{
+            (isCancellation()
+              ? "orderDetails.cancellationAndReturn.cancelQty"
+              : "orderDetails.cancellationAndReturn.returnQty"
+            ) | cxTranslate
+          }}
+        </th>
+        <th
+          *ngIf="isConfirmation"
+          role="columnheader"
+          class="cx-item-list-total"
+        >
+          {{ "orderDetails.cancellationAndReturn.totalPrice" | cxTranslate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody class="cx-item-list-items">
+      <ng-container *ngFor="let item of entries; let i = index">
+        <tr class="cx-item-list-row cx-amend-order-item-row">
+          <td>
+            <span>{{ i + 1 }} </span>
+          </td>
+          <td role="cell">
+            <div class="cx-table-item-container">
+              <cx-media
+                [container]="item.product?.images?.['PRIMARY']"
+                format="thumbnail"
+              ></cx-media>
+
+              <div class="cx-info">
+                <div class="cx-name">
+                  {{ item.product?.name }}
+                </div>
+
+                <div *ngIf="item.product?.code" class="cx-code">
+                  {{
+                    "userOrderTranslations.orderDetails.cancellationAndReturn.productIdlabel"
+                      | cxTranslate
+                  }}
+                  {{ item.product?.code }}
+                </div>
+                <div class="cx-value">
+                  {{ item.basePrice!.formattedValue }}
+                  <span *ngIf="item.unit?.name">
+                    {{ "userOrderTranslations.unitOfMeasurePer" | cxTranslate }}
+                    {{ item.unit?.name }}
+                    {{ "cartLabels.exclVat" | cxTranslate }}
+                  </span>
+                </div>
+              </div>
+
+              <ng-container *ngIf="item.product?.baseOptions?.length">
+                <div
+                  *ngFor="
+                    let variant of item?.product?.baseOptions?.[0]?.selected
+                      ?.variantOptionQualifiers
+                  "
+                  class="cx-property"
+                >
+                  <div class="cx-label" *ngIf="variant.name">
+                    {{ variant.name }}:
+                  </div>
+                  <div class="cx-value" *ngIf="variant.value">
+                    {{ variant.value }}
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </td>
+
+          <td role="cell" class="cx-price" *ngIf="item.namedDeliveryDate">
+            <div class="cx-mobile-header">
+              {{
+                "userOrderTranslations.orderDetails.cancellationAndReturn.requestDeliverydate"
+                  | cxTranslate
+              }}
+            </div>
+            <div class="cx-name">
+              {{ item.namedDeliveryDate | cxDate }}
+            </div>
+          </td>
+
+          <td role="cell" class="cx-unit-of-measure">
+            <div class="cx-mobile-header">
+              {{ "userOrderTranslations.uomLable" | cxTranslate }}
+            </div>
+            <div class="cx-name">
+              {{ item?.unit?.name }}
+            </div>
+          </td>
+
+          <td role="cell" *ngIf="!isConfirmation" class="cx-delivered-qty">
+            <div class="cx-value box-value">
+              {{ item?.quantity }}
+            </div>
+          </td>
+
+          <td role="cell" *ngIf="!isConfirmation" class="cx-delivered-qty">
+            <div class="cx-value box-value">
+              {{ item?.quantityShipped }}
+            </div>
+          </td>
+
+          <td role="cell" *ngIf="!isConfirmation" class="cx-delivered-qty">
+            <div class="cx-value box-value">
+              {{ item?.quantityReturned }}
+            </div>
+          </td>
+
+          <td role="cell" *ngIf="!isConfirmation" class="cx-request-qty">
+            <div
+              class="cx-mobile-header"
+              title="{{ 'cartItems.quantityTitle' | cxTranslate }}"
+            >
+              {{ "orderDetails.cancellationAndReturn.quantity" | cxTranslate }}
+            </div>
+            <div class="cx-value box-value active">
+              {{ getMaxAmendQuantity(item) }}
+            </div>
+          </td>
+
+          <td role="cell" class="cx-quantity">
+            <div class="cx-mobile-header">
+              {{
+                (isCancellation()
+                  ? "orderDetails.cancellationAndReturn.cancelQty"
+                  : "orderDetails.cancellationAndReturn.returnQty"
+                ) | cxTranslate
+              }}
+            </div>
+            <div class="cx-value">
+              <ng-container *ngIf="isConfirmation">
+                {{ getControl(form, item).control.value }}
+              </ng-container>
+              <cx-item-counter
+                *ngIf="!isConfirmation"
+                [min]="0"
+                [max]="getMaxAmendQuantity(item)"
+                [control]="getControl(form, item).control"
+              ></cx-item-counter>
+            </div>
+          </td>
+
+          <td role="cell" *ngIf="isConfirmation" class="cx-total">
+            <div class="cx-mobile-header">
+              {{
+                "orderDetails.cancellationAndReturn.totalPrice" | cxTranslate
+              }}
+            </div>
+            <div class="cx-value">
+              {{ getItemPrice(item).formattedValue }}
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

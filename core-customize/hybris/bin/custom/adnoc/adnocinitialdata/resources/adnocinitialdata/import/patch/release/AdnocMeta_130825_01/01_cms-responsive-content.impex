@@ -1,0 +1,30 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$language = en
+
+REMOVE CMSNavigationEntry; uid[unique = true] ; $contentCV[unique = true]
+                         ; QuotesNavNodeEntry ;
+
+REMOVE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]
+                        ; QuotesNavNode     ;
+
+REMOVE CMSLinkComponent; uid[unique = true]; $contentCV[unique = true]
+                       ; QuotesLink        ;
+
+###### Footer ######
+# Footer notice
+INSERT_UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]  ; name                  ; &componentRef       ; visible;
+                                   ;                          ; NoticeTextParagraph ; Notice Text Paragraph ; NoticeTextParagraph ; false  ;
+
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]              ; content[lang = en]
+                            ;                          ; FindOurOfficeParagraphComponent ; "<style>.contactUsDiv{margin-bottom:50px}.contactUsDiv .row>[class*='col-']{display:flex;margin-bottom:30px}.contactUsDiv .our-offices__card{width:100%;height:100%;background-color:#fff;border-radius:8px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);display:flex;flex-direction:column;justify-content:space-between}.contactUsDiv .text-video__title{display:block;width:100%;margin-bottom:20px} </style> <div class=""contactUsDiv""> <div class=""col-md-12""> <h1 class=""primary-c text-video__title mb-3"">Our Offices</h1> <div class=""row""> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Khalifa Energy Complex Tower 1 next to Sofitel Corniche, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 50055</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Zayed Street next to ADCB Building, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Al Ain</h3> <p class=""mb-3"">Ayla Hotel Building (Mezzanine 1), Al Muwaiji Area, Al Ain</p><span class=""d-block mb-3"">P.O.Box: 1099</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">SS 742 Maraba Al Dhafra along Sheikha Salama Bint Butti Road, Al Dhafra, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Sharjah</h3> <p class=""mb-3"">City Gate Tower (Level 10), Al Ittihad Street, Sharjah</p><span class=""d-block mb-3"">P.O.Box: 1336</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Saudi Arabia</h3> <p class=""mb-3"">6188, King Faisal Rd, Al Bandariyah Dist. , Al Khobar</p><span class=""d-block mb-3"">P.O.Box: 34423</span></div> </div> </div> </div> </div> </div>"
+
+# Content Pages
+INSERT_UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]; title[lang = $language]
+                         ;                          ; findOurOffice     ; " Find Our Office"
+
+REMOVE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]   ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'AccountPageTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                             ;                          ; MiniCart-AccountPage ; MiniCart               ;                                                                              ; MiniCartSlot                               ; true
+
+

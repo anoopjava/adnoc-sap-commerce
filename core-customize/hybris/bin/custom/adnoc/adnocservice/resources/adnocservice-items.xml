@@ -1,0 +1,2097 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <collectiontypes>
+        <collectiontype code="DeliveryTypeCollection" elementtype="DeliveryType" type="set"/>
+    </collectiontypes>
+
+    <enumtypes>
+        <enumtype code="PrimaryProduct" dynamic="true"/>
+
+        <enumtype code="Gender" autocreate="false" generate="false">
+            <value code="OTHER"/>
+        </enumtype>
+
+        <enumtype code="DocumentStatus" autocreate="false" generate="false">
+            <value code="cancelled" />
+        </enumtype>
+
+        <enumtype code="Nationality" dynamic="true"/>
+
+        <enumtype code="IdentityType" dynamic="true"/>
+
+        <enumtype code="PreferredCommunicationChannel" dynamic="true"/>
+
+        <enumtype code="CustomerCategory" dynamic="true"/>
+
+        <enumtype code="DeliveryType" dynamic="true"/>
+
+        <enumtype code="IncoTerms" dynamic="true">
+            <value code="PICKUP"/>
+        </enumtype>
+
+        <enumtype code="Plant" dynamic="true"/>
+
+        <enumtype code="PaymentTerms" dynamic="true"/>
+
+        <enumtype code="TaxClassification" dynamic="true"/>
+
+        <enumtype code="InvoicingDate" dynamic="true"/>
+
+        <enumtype code="CustomerGroup" dynamic="true"/>
+
+        <enumtype code="SalesOffice" dynamic="true"/>
+
+        <enumtype code="SalesGroup" dynamic="true"/>
+
+        <enumtype code="ShippingCondition" dynamic="true"/>
+
+        <enumtype code="PriceGroup" dynamic="true"/>
+
+        <enumtype code="PriceListType" dynamic="true"/>
+
+        <enumtype code="ReconciliationAccount" dynamic="true"/>
+
+        <enumtype code="SortKey" dynamic="true"/>
+
+        <enumtype code="PlanningGroup" dynamic="true"/>
+
+        <enumtype code="PaymentMethods" dynamic="true"/>
+
+        <enumtype code="DunningClerk" dynamic="true"/>
+
+        <enumtype code="AccountingClerk" dynamic="true"/>
+
+        <enumtype code="VirtualIBANRequired" dynamic="true"/>
+
+        <enumtype code="VirtualIBANStatus" dynamic="true"/>
+
+        <enumtype code="HouseBankID" dynamic="true"/>
+
+        <enumtype code="AccountID" dynamic="true"/>
+
+        <enumtype code="PartnerFunction">
+            <value code="SP"/>
+            <value code="PY"/>
+            <value code="SH"/>
+        </enumtype>
+
+        <enumtype code="IntegrationType" autocreate="false" generate="false">
+            <value code="OUTBOUND"/>
+        </enumtype>
+
+        <enumtype code="B2BRegistrationStatus">
+            <value code="PENDING"/>
+            <value code="APPROVED"/>
+            <value code="COMPLETED"/>
+            <value code="REJECTED"/>
+        </enumtype>
+
+        <enumtype code="CsTicketCategory" autocreate="false" generate="false">
+            <value code="Compliment"/>
+            <value code="Suggestion"/>
+        </enumtype>
+
+        <enumtype code="CsTicketRequestForCategory" dynamic="true"/>
+
+        <enumtype code="CsTicketRequestForSubCategory" dynamic="true"/>
+
+        <enumtype code="CsTicketAssociatedTo" dynamic="true"/>
+
+        <enumtype code="CsTicketState" autocreate="false" generate="false" dynamic="true"/>
+
+        <enumtype code="CsTicketTargetSystem">
+            <value code="CRM"/>
+        </enumtype>
+
+        <enumtype code="OrderStatus" autocreate="false" generate="false">
+            <value code="CONFIRMED"/>
+            <value code="PARTIAL_COMPLETED"/>
+            <value code="NOTHING_REJECTED"/>
+            <value code="PARTIAL_REJECTED"/>
+            <value code="EVERYTHING_REJECTED"/>
+        </enumtype>
+
+        <enumtype code="Designation" dynamic="true"/>
+
+        <enumtype code="TradeLicenseAuthority" dynamic="true"/>
+
+        <enumtype code="CheckoutPaymentType" autocreate="false" generate="false" dynamic="true">
+            <value code="CREDIT_LIMIT"/>
+            <value code="BANK_TRANSFER"/>
+        </enumtype>
+
+        <enumtype code="SAPOrderStatus" autocreate="false" generate="false"
+                  dynamic="true">
+            <value code="NOT_YET_PROCESSED" />
+            <value code="PARTIAL_COMPLETED" />
+            <value code="COMPLETED" />
+            <value code="NOTHING_REJECTED"/>
+            <value code="PARTIAL_REJECTED"/>
+            <value code="EVERYTHING_REJECTED"/>
+            <value code="CONFIRMED"/>
+            <value code="CANCELLED"/>
+            <value code="CANCELLING"/>
+        </enumtype>
+        
+        <enumtype code="CreditCardType" autocreate="false" generate="false">
+            <value code="MASTERCARD"/>
+        </enumtype>
+
+        <enumtype code="AdnocOverDueStatus" dynamic="true">
+            <value code="PAYMENT_IN_PROGRESS"/>
+            <value code="SUCCESS"/>
+        </enumtype>
+
+        <enumtype code="ConsignmentEntryStatus" autocreate="false"
+                  generate="false" dynamic="true">
+            <value code="PARTIAL_SHIPPED" />
+        </enumtype>
+
+        <enumtype code="ReturnRejectionReason" dynamic="true"/>
+
+        <enumtype code="GigyaUserManagementMode" autocreate="false" generate="false" dynamic="true">
+            <value code="standard"/>
+        </enumtype>
+        
+    </enumtypes>
+
+    <relations>
+        <relation code="AdnocOutboundRegistration2AdnocOutboundDocument" localized="false">
+            <sourceElement type="AdnocOutboundRegistration" qualifier="adnocOutboundRegistration" cardinality="one">
+                <modifiers read="true" write="true" search="true" optional="false"/>
+            </sourceElement>
+            <targetElement type="AdnocOutboundDocument" qualifier="adnocOutboundDocument" cardinality="many">
+                <modifiers read="true" write="true" search="true"/>
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocOverduePaymentTransaction2OverdueInvoice" localized="false">
+            <sourceElement type="AdnocOverduePaymentTransaction" qualifier="adnocOverduePaymentTransaction" cardinality="one">
+                <modifiers read="true" write="true" search="true"/>
+            </sourceElement>
+            <targetElement type="AdnocOverdueInvoiceDetails" cardinality="many"
+                           qualifier="invoiceDetails">
+                <modifiers read="true" write="true" search="true"/>
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocOutboundOverduePaymentTransaction2OverdueInvoice" localized="false">
+            <sourceElement type="AdnocOutboundOverduePaymentTransaction" qualifier="adnocOutboundOverduePaymentTransaction" cardinality="one">
+                <modifiers read="true" write="true" search="true"/>
+            </sourceElement>
+            <targetElement type="AdnocOverdueInvoiceDetails" cardinality="many"
+                           qualifier="invoiceDetails">
+                <modifiers read="true" write="true" search="true"/>
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocOutboundCsTicket2IntegrationComment" localized="false">
+            <sourceElement type="AdnocOutboundCsTicket" qualifier="adnocOutboundCsTicket" cardinality="one">
+                <modifiers read="true" write="true" search="true"/>
+            </sourceElement>
+            <targetElement type="AdnocIntegrationComment" cardinality="many"
+                           qualifier="integrationComments">
+                <modifiers read="true" write="true" search="true"/>
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocIntegrationComment2AdnocAttachment" localized="false">
+            <sourceElement type="AdnocIntegrationComment" qualifier="adnocIntegrationComment" cardinality="one">
+                <modifiers read="true" write="true" search="true"/>
+            </sourceElement>
+            <targetElement type="AdnocAttachment" cardinality="many"
+                           qualifier="attachments">
+                <modifiers read="true" write="true" search="true"/>
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocOutboundQuoteItem2AdnocOutboundQuoteItem" localized="false">
+            <sourceElement type="AdnocOutboundQuote" qualifier="adnocOutboundQuote" cardinality="one" />
+            <targetElement type="AdnocOutboundQuoteItem" qualifier="adnocOutboundQuoteItem" cardinality="many" collectiontype="set">
+                <modifiers partof="true" />
+            </targetElement>
+        </relation>
+
+        <relation code="AdnocOutboundQuoteItem2AdnocQuoteOutboundPartnerRole" localized="false">
+            <sourceElement type="AdnocOutboundQuote" qualifier="adnocOutboundQuote" cardinality="one" />
+            <targetElement type="AdnocQuoteOutboundPartnerRole" qualifier="adnocQuoteOutboundPartnerRole" cardinality="many" collectiontype="set">
+                <modifiers partof="true" />
+            </targetElement>
+        </relation>
+    </relations>
+
+    <itemtypes>
+        <typegroup name="Adnoc">
+            <itemtype code="AdnocRegistration" extends="B2BRegistration">
+                <attributes>
+                    <attribute qualifier="partnerFunction" type="PartnerFunction">
+                        <persistence type="property"/>
+                        <description>Indicates the Partner Function of the user's company.</description>
+                    </attribute>
+                    <attribute qualifier="designation" type="Designation">
+                        <persistence type="property"/>
+                        <description>designation</description>
+                    </attribute>
+                    <attribute qualifier="faxNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Fax Number</description>
+                    </attribute>
+                    <attribute qualifier="firstName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>First Name</description>
+                    </attribute>
+                    <attribute qualifier="lastName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>lastName</description>
+                    </attribute>
+                    <attribute qualifier="gender" type="Gender">
+                        <persistence type="property"/>
+                        <description>Gender</description>
+                    </attribute>
+                    <attribute qualifier="identityType" type="IdentityType">
+                        <persistence type="property"/>
+                        <description>Identity Type</description>
+                    </attribute>
+                    <attribute qualifier="identificationNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Identification Number</description>
+                    </attribute>
+                    <attribute qualifier="identificationNumberDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>identificationNumber Document</description>
+                    </attribute>
+                    <attribute qualifier="identificationValidFrom" type="java.util.Date">
+                        <description>B2B Unit valid from Time</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidTo" type="java.util.Date">
+                        <description>B2B Unit valid To Time</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="nationality" type="Nationality">
+                        <persistence type="property"/>
+                        <description>Nationality</description>
+                    </attribute>
+                    <attribute qualifier="mobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Mobile number</description>
+                    </attribute>
+                    <attribute qualifier="customerCategory" type="CustomerCategory">
+                        <persistence type="property"/>
+                        <description>Customer Type</description>
+                    </attribute>
+                    <attribute qualifier="otherDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>Other Document</description>
+                    </attribute>
+                    <attribute qualifier="supportedDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>Supported Document</description>
+                    </attribute>
+                    <attribute qualifier="status" type="B2BRegistrationStatus">
+                        <defaultvalue>em().getEnumerationValue("B2BRegistrationStatus", "PENDING")</defaultvalue>
+                        <persistence type="property"/>
+                        <description>Registration Status</description>
+                    </attribute>
+                    <attribute qualifier="taxClassification" type="TaxClassification">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customerGroup" type="CustomerGroup">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesOffice" type="SalesOffice">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesGroup" type="SalesGroup">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="paymentTerms" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Payment Terms</description>
+                    </attribute>
+                    <attribute qualifier="exported" type="boolean">
+                        <modifiers/>
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="plant" type="Plant">
+                        <persistence type="property"/>
+                        <description>Plant Details</description>
+                    </attribute>
+                    <attribute qualifier="shippingCondition" type="ShippingCondition">
+                        <persistence type="property"/>
+                        <description>Shipping Condition Types</description>
+                    </attribute>
+                    <attribute qualifier="incoTerms" type="IncoTerms">
+                        <persistence type="property"/>
+                        <description>Inco Terms</description>
+                    </attribute>
+                    <attribute qualifier="countryOfOrigin" type="Nationality">
+                        <persistence type="property"/>
+                        <description>Inco Terms</description>
+                    </attribute>
+                    <attribute qualifier="priceGroup" type="PriceGroup">
+                        <persistence type="property"/>
+                        <description>Price Group</description>
+                    </attribute>
+                    <attribute qualifier="priceListType" type="PriceListType">
+                        <persistence type="property"/>
+                        <description>Price List Type</description>
+                    </attribute>
+                    <attribute qualifier="poBox" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>PO Box</description>
+                    </attribute>
+                    <attribute qualifier="companyName2" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company Name2</description>
+                    </attribute>
+                    <attribute qualifier="sapBusinessPartnerId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Partner ID</description>
+                    </attribute>
+                    <attribute qualifier="sapErrorMessage" type="java.lang.String">
+                        <description>sapErrorMessage</description>
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocSoldToB2BRegistration" extends="AdnocRegistration">
+                <attributes>
+                    <attribute qualifier="primaryProduct" type="PrimaryProduct">
+                        <persistence type="property"/>
+                        <description>Primary Product</description>
+                    </attribute>
+                    <!--Company Details Start-->
+                    <attribute qualifier="companyEmail" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company email</description>
+                    </attribute>
+                    <attribute qualifier="companyWebsite" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company website</description>
+                    </attribute>
+                    <attribute qualifier="companyPhoneNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company Phone Number</description>
+                    </attribute>
+                    <attribute qualifier="companyMobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company Mobile Number</description>
+                    </attribute>
+                    <attribute qualifier="tradeLicenseNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Trade License Number</description>
+                    </attribute>
+                    <attribute qualifier="tlnDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>tradeLicenseNumber Document</description>
+                    </attribute>
+                    <attribute qualifier="tlnValidFrom" type="java.util.Date">
+                        <persistence type="property"/>
+                        <description>Trade License Number Valid From</description>
+                    </attribute>
+                    <attribute qualifier="tlnValidTo" type="java.util.Date">
+                        <persistence type="property"/>
+                        <description>Trade License Number Valid To</description>
+                    </attribute>
+                    <attribute qualifier="vatId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>VAT Id</description>
+                    </attribute>
+                    <attribute qualifier="vatIdDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>vatId Document</description>
+                    </attribute>
+                    <attribute qualifier="tradeLicenseAuthority" type="TradeLicenseAuthority">
+                        <persistence type="property"/>
+                        <description>Trade License Authority</description>
+                    </attribute>
+                    <!--Company Details End-->
+
+                    <!--Contact Details Start-->
+                    <attribute qualifier="preferredCommunicationChannel" type="PreferredCommunicationChannel">
+                        <persistence type="property"/>
+                        <description>Preferred Communication Channel</description>
+                    </attribute>
+                    <!--Contact Details End-->
+                    <attribute qualifier="reconciliationAccount" type="ReconciliationAccount">
+                        <persistence type="property"/>
+                        <description>Reconciliation Account</description>
+                    </attribute>
+                    <attribute qualifier="previousAccountNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Previous Account Number</description>
+                    </attribute>
+                    <attribute qualifier="sortKey" type="SortKey">
+                        <persistence type="property"/>
+                        <description>Sort Key</description>
+                    </attribute>
+                    <attribute qualifier="planningGroup" type="PlanningGroup">
+                        <persistence type="property"/>
+                        <description>Planning Group</description>
+                    </attribute>
+                    <attribute qualifier="paymentMethods" type="PaymentMethods">
+                        <persistence type="property"/>
+                        <description>Payment Methods</description>
+                    </attribute>
+                    <attribute qualifier="dunningProcedure" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Dunning Procedure</description>
+                    </attribute>
+                    <attribute qualifier="dunningClerk" type="DunningClerk">
+                        <persistence type="property"/>
+                        <description>Dunning Clerk</description>
+                    </attribute>
+                    <attribute qualifier="accountingClerk" type="AccountingClerk">
+                        <persistence type="property"/>
+                        <description>Accounting Clerk</description>
+                    </attribute>
+                    <attribute qualifier="termsOfPayment" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Terms of Payment</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANRequired" type="VirtualIBANRequired">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Required</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANStatus" type="VirtualIBANStatus">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Status</description>
+                    </attribute>
+                    <attribute qualifier="houseBankID" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>House Bank ID</description>
+                    </attribute>
+                    <attribute qualifier="accountID" type="AccountID">
+                        <persistence type="property"/>
+                        <description>Account ID</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Collection IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionHouseBank" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>Collection House Bank</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocB2BUnitRegistration" extends="AdnocRegistration"/>
+
+            <itemtype code="AdnocPayerB2BUnitRegistration" extends="AdnocB2BUnitRegistration">
+                <attributes>
+                    <attribute qualifier="salesManager" type="Employee">
+                        <persistence type="property"/>
+                        <description>Sales Manager</description>
+                    </attribute>
+                    <attribute qualifier="collector" type="Employee">
+                        <persistence type="property"/>
+                        <description>Collector</description>
+                    </attribute>
+                    <attribute qualifier="invoicingDate" type="InvoicingDate">
+                        <persistence type="property"/>
+                        <description>Invoicing Date</description>
+                    </attribute>
+                    <attribute qualifier="vatId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>VAT Id</description>
+                    </attribute>
+                    <attribute qualifier="vatIdDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>vatId Document</description>
+                    </attribute>
+                    <attribute qualifier="reconciliationAccount" type="ReconciliationAccount">
+                        <persistence type="property"/>
+                        <description>Reconciliation Account</description>
+                    </attribute>
+                    <attribute qualifier="previousAccountNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Previous Account Number</description>
+                    </attribute>
+                    <attribute qualifier="sortKey" type="SortKey">
+                        <persistence type="property"/>
+                        <description>Sort Key</description>
+                    </attribute>
+                    <attribute qualifier="planningGroup" type="PlanningGroup">
+                        <persistence type="property"/>
+                        <description>Planning Group</description>
+                    </attribute>
+                    <attribute qualifier="paymentMethods" type="PaymentMethods">
+                        <persistence type="property"/>
+                        <description>Payment Methods</description>
+                    </attribute>
+                    <attribute qualifier="dunningProcedure" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Dunning Procedure</description>
+                    </attribute>
+                    <attribute qualifier="dunningClerk" type="DunningClerk">
+                        <persistence type="property"/>
+                        <description>Dunning Clerk</description>
+                    </attribute>
+                    <attribute qualifier="accountingClerk" type="AccountingClerk">
+                        <persistence type="property"/>
+                        <description>Accounting Clerk</description>
+                    </attribute>
+                    <attribute qualifier="termsOfPayment" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Terms of Payment</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANRequired" type="VirtualIBANRequired">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Required</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANStatus" type="VirtualIBANStatus">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Status</description>
+                    </attribute>
+                    <attribute qualifier="houseBankID" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>House Bank ID</description>
+                    </attribute>
+                    <attribute qualifier="accountID" type="AccountID">
+                        <persistence type="property"/>
+                        <description>Account ID</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Collection IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionHouseBank" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>Collection House Bank</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocShipToB2BUnitRegistration" extends="AdnocB2BUnitRegistration">
+                <attributes>
+                    <attribute qualifier="latitude" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>latitude</description>
+                    </attribute>
+                    <attribute qualifier="longitude" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>longitude</description>
+                    </attribute>
+                 </attributes>
+            </itemtype>
+            
+            <itemtype code="B2BCustomer" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="preferredCommunicationChannel" type="PreferredCommunicationChannel">
+                        <persistence type="property"/>
+                        <description>Preferred Communication Channel</description>
+                    </attribute>
+                    <attribute qualifier="firstName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>first name</description>
+                    </attribute>
+                    <attribute qualifier="lastName" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>lastName</description>
+                    </attribute>
+                    <attribute qualifier="gender" type="Gender">
+                        <persistence type="property"/>
+                        <description>gender</description>
+                    </attribute>
+                    <attribute qualifier="nationality" type="Nationality">
+                        <persistence type="property"/>
+                        <description>nationality</description>
+                    </attribute>
+                    <attribute qualifier="identityType" type="IdentityType">
+                        <persistence type="property"/>
+                        <description>identityType</description>
+                    </attribute>
+                    <attribute qualifier="identificationNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>identificationNumber</description>
+                    </attribute>
+                    <attribute qualifier="designation" type="Designation">
+                        <persistence type="property"/>
+                        <description>Job title or role</description>
+                    </attribute>
+                    <attribute qualifier="mobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>mobile number</description>
+                    </attribute>
+                    <attribute qualifier="telephone" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Telephone number</description>
+                    </attribute>
+                    <attribute qualifier="identificationValidFrom" type="java.util.Date">
+                        <description>B2B Unit valid from Time</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidTo" type="java.util.Date">
+                        <description>B2B Unit valid To Time</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreet" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreetLine2" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressCountry" type="Country">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressRegion" type="Region">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressCity" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationNumberDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>identificationNumber Document</description>
+                    </attribute>
+                    <attribute qualifier="exported" type="boolean">
+                        <modifiers/>
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="countryOfOrigin" type="Nationality">
+                        <persistence type="property"/>
+                        <description>Country or Region of Origin</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="User" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="currentLoginTime" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocB2BCustomerCreationProcess" extends="StoreFrontCustomerProcess">
+                <description>B2B Customer Creation Process.</description>
+                <attributes>
+                    <attribute qualifier="password" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Attribute contains password that is used in this process.</description>
+                    </attribute>
+                    <attribute qualifier="sapBusinessPartnerID" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Contains Sap Business Partner Id</description>
+                    </attribute>
+
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocB2BRegistrationProcess" extends="BusinessProcess">
+                <attributes>
+                    <attribute qualifier="adnocRegistration" type="AdnocRegistration">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundRegistration">
+                <deployment table="adnocoutboundregis" typecode="11002"/>
+                <attributes>
+                    <attribute qualifier="companyAddressCountry" type="Country">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressRegion" type="Region">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressCity" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressPostalCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreet" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreetLine2" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="currency" type="Currency">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="partnerFunction" type="PartnerFunction">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="firstName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="lastName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="designation" type="Designation">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="title" type="Title">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="email" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="telephone" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identityType" type="IdentityType">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidFrom" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidTo" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="mobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="nationality" type="Nationality">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="name" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="genderSapCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="faxNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customerCategory" type="CustomerCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="taxClassification" type="TaxClassification">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customerGroup" type="CustomerGroup">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesOffice" type="SalesOffice">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesGroup" type="SalesGroup">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="paymentTerms" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Payment Terms</description>
+                    </attribute>
+                    <attribute qualifier="plant" type="Plant">
+                        <persistence type="property"/>
+                        <description>Plant Details</description>
+                    </attribute>
+                    <attribute qualifier="shippingCondition" type="ShippingCondition">
+                        <persistence type="property"/>
+                        <description>Shipping Condition Types</description>
+                    </attribute>
+                    <attribute qualifier="incoTerms" type="IncoTerms">
+                        <persistence type="property"/>
+                        <description>Inco Terms</description>
+                    </attribute>
+                    <attribute qualifier="countryOfOrigin" type="Nationality">
+                        <persistence type="property"/>
+                        <description>Country Of Origin</description>
+                    </attribute>
+                    <attribute qualifier="priceGroup" type="PriceGroup">
+                        <persistence type="property"/>
+                        <description>Price Group</description>
+                    </attribute>
+                    <attribute qualifier="priceListType" type="PriceListType">
+                        <persistence type="property"/>
+                        <description>Price List Type</description>
+                    </attribute>
+                    <attribute qualifier="poBox" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>PO Box</description>
+                    </attribute>
+                    <attribute qualifier="companyName2" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Company Name2</description>
+                    </attribute>
+                    <attribute qualifier="responseStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="responseMessage" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapBusinessPartnerId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Partner ID</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocSoldToOutboundB2BRegistration" extends="AdnocOutboundRegistration">
+                <attributes>
+                    <attribute qualifier="companyEmail" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyMobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyPhoneNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyWebsite" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="preferredCommunicationChannel" type="PreferredCommunicationChannel">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="vatId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="tradeLicenseNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="tradeLicenseAuthority" type="TradeLicenseAuthority">
+                        <persistence type="property"/>
+                        <description>Trade License Authority</description>
+                    </attribute>
+                    <attribute qualifier="tlnValidFrom" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="tlnValidTo" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="primaryProduct" type="PrimaryProduct">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="reconciliationAccount" type="ReconciliationAccount">
+                        <persistence type="property"/>
+                        <description>Reconciliation Account</description>
+                    </attribute>
+                    <attribute qualifier="previousAccountNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Previous Account Number</description>
+                    </attribute>
+                    <attribute qualifier="sortKey" type="SortKey">
+                        <persistence type="property"/>
+                        <description>Sort Key</description>
+                    </attribute>
+                    <attribute qualifier="planningGroup" type="PlanningGroup">
+                        <persistence type="property"/>
+                        <description>Planning Group</description>
+                    </attribute>
+                    <attribute qualifier="paymentMethods" type="PaymentMethods">
+                        <persistence type="property"/>
+                        <description>Payment Methods</description>
+                    </attribute>
+                    <attribute qualifier="dunningProcedure" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Dunning Procedure</description>
+                    </attribute>
+                    <attribute qualifier="dunningClerk" type="DunningClerk">
+                        <persistence type="property"/>
+                        <description>Dunning Clerk</description>
+                    </attribute>
+                    <attribute qualifier="accountingClerk" type="AccountingClerk">
+                        <persistence type="property"/>
+                        <description>Accounting Clerk</description>
+                    </attribute>
+                    <attribute qualifier="termsOfPayment" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Terms of Payment</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANRequired" type="VirtualIBANRequired">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Required</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANStatus" type="VirtualIBANStatus">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Status</description>
+                    </attribute>
+                    <attribute qualifier="houseBankID" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>House Bank ID</description>
+                    </attribute>
+                    <attribute qualifier="accountID" type="AccountID">
+                        <persistence type="property"/>
+                        <description>Account ID</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Collection IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionHouseBank" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>Collection House Bank</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundB2BUnitRegistration" extends="AdnocOutboundRegistration">
+                <attributes>
+                    <attribute qualifier="defaultB2BUnit" type="B2BUnit">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+            <itemtype code="AdnocPayerOutboundB2BUnitRegistration" extends="AdnocOutboundB2BUnitRegistration">
+                <attributes>
+                    <attribute qualifier="salesManager" type="Employee">
+                        <persistence type="property"/>
+                        <description>Invoicing Date</description>
+                    </attribute>
+                    <attribute qualifier="collector" type="Employee">
+                        <persistence type="property"/>
+                        <description>Collector</description>
+                    </attribute>
+                    <attribute qualifier="invoicingDate" type="InvoicingDate">
+                        <persistence type="property"/>
+                        <description>Invoicing Date</description>
+                    </attribute>
+                    <attribute qualifier="vatId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>VAT Id</description>
+                    </attribute>
+                    <attribute qualifier="vatIdDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>vatId Document</description>
+                    </attribute>
+                    <attribute qualifier="reconciliationAccount" type="ReconciliationAccount">
+                        <persistence type="property"/>
+                        <description>Reconciliation Account</description>
+                    </attribute>
+                    <attribute qualifier="previousAccountNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Previous Account Number</description>
+                    </attribute>
+                    <attribute qualifier="sortKey" type="SortKey">
+                        <persistence type="property"/>
+                        <description>Sort Key</description>
+                    </attribute>
+                    <attribute qualifier="planningGroup" type="PlanningGroup">
+                        <persistence type="property"/>
+                        <description>Planning Group</description>
+                    </attribute>
+                    <attribute qualifier="paymentMethods" type="PaymentMethods">
+                        <persistence type="property"/>
+                        <description>Payment Methods</description>
+                    </attribute>
+                    <attribute qualifier="dunningProcedure" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Dunning Procedure</description>
+                    </attribute>
+                    <attribute qualifier="dunningClerk" type="DunningClerk">
+                        <persistence type="property"/>
+                        <description>Dunning Clerk</description>
+                    </attribute>
+                    <attribute qualifier="accountingClerk" type="AccountingClerk">
+                        <persistence type="property"/>
+                        <description>Accounting Clerk</description>
+                    </attribute>
+                    <attribute qualifier="termsOfPayment" type="PaymentTerms">
+                        <persistence type="property"/>
+                        <description>Terms of Payment</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANRequired" type="VirtualIBANRequired">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Required</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANStatus" type="VirtualIBANStatus">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Status</description>
+                    </attribute>
+                    <attribute qualifier="houseBankID" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>House Bank ID</description>
+                    </attribute>
+                    <attribute qualifier="accountID" type="AccountID">
+                        <persistence type="property"/>
+                        <description>Account ID</description>
+                    </attribute>
+                    <attribute qualifier="virtualIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Virtual IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionIBANNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Collection IBAN Number</description>
+                    </attribute>
+                    <attribute qualifier="collectionHouseBank" type="HouseBankID">
+                        <persistence type="property"/>
+                        <description>Collection House Bank</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocShipToOutboundB2BUnitRegistration" extends="AdnocOutboundB2BUnitRegistration">
+                <attributes>
+                    <attribute qualifier="latitude" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>latitude</description>
+                    </attribute>
+                    <attribute qualifier="longitude" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>longitude</description>
+                    </attribute>
+                   </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundB2BCustomer">
+                <deployment table="adnocoutboundb2bcustomer" typecode="11005"/>
+                <attributes>
+                    <attribute qualifier="uid" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="firstName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="defaultB2BUnit" type="B2BUnit">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="lastName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="title" type="Title">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="nationality" type="Nationality">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="genderSapCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="email" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="mobileNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidFrom" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationValidTo" type="java.util.Date">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="telephone" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identityType" type="IdentityType">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="preferredCommunicationChannel" type="PreferredCommunicationChannel">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="description" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="designation" type="Designation">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreet" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressStreetLine2" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressCountry" type="Country">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressRegion" type="Region">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="companyAddressCity" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="identificationNumberDocument" type="AdnocOutboundDocument">
+                        <persistence type="property"/>
+                        <description>identificationNumber Document</description>
+                    </attribute>
+                    <attribute qualifier="countryOfOrigin" type="Nationality">
+                        <persistence type="property"/>
+                        <description>Country Of Origin</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocConfig">
+                <description>Adnoc Config</description>
+                <deployment table="adnocconfig" typecode="11001"/>
+                <attributes>
+                    <attribute qualifier="configKey" type="java.lang.String">
+                        <modifiers optional="false" initial="true" unique="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="configValue" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="adnocConfigIdx" unique="true">
+                        <key attribute="configKey"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="Product" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <description>division</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="productDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>Product Document Media</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Category" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <description>division</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="B2BUnit" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="salesOrg" type="SAPSalesOrganization">
+                        <persistence type="property"/>
+                        <description>SAP Sales Organization</description>
+                    </attribute>
+                    <attribute qualifier="partnerFunction" type="PartnerFunction">
+                        <persistence type="property"/>
+                        <description>Partner Function</description>
+                    </attribute>
+                    <attribute qualifier="customerCategory" type="CustomerCategory">
+                        <persistence type="property"/>
+                        <description>Customer Category</description>
+                    </attribute>
+                    <attribute qualifier="deliveryTypes" type="DeliveryTypeCollection">
+                        <persistence type="property"/>
+                        <description>Delivery Types - Maximum up-to 2 values</description>
+                    </attribute>
+                    <attribute qualifier="tradeLicenseNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Trade License Number</description>
+                    </attribute>
+                    <attribute qualifier="tlnValidFrom" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Trade License Number Valid From</description>
+                    </attribute>
+                    <attribute qualifier="tlnValidTo" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Trade License Number Valid To</description>
+                    </attribute>
+                    <attribute qualifier="childB2BUnits" type="StringSet">
+                        <persistence type="property"/>
+                        <description>Child B2BUnits</description>
+                    </attribute>
+                    <attribute qualifier="incoTerms" type="IncoTerms">
+                        <persistence type="property"/>
+                        <description>Inco Terms</description>
+                    </attribute>
+                    <attribute qualifier="shippingCondition" type="ShippingCondition">
+                        <persistence type="property"/>
+                        <description>Shipping Condition Types</description>
+                    </attribute>
+                    <attribute qualifier="salesManager" type="Employee">
+                        <persistence type="property"/>
+                        <description>Sales Manager</description>
+                    </attribute>
+                    <attribute qualifier="collector" type="Employee">
+                        <persistence type="property"/>
+                        <description>Collector</description>
+                    </attribute>
+                    <attribute qualifier="customerGroup" type="CustomerGroup">
+                        <persistence type="property"/>
+                        <description>Customer Group</description>
+                    </attribute>
+                    <attribute qualifier="plant" type="Plant">
+                        <persistence type="property"/>
+                        <description>Plant</description>
+                    </attribute>
+                     <attribute qualifier="taxClassification" type="TaxClassification">
+                        <persistence type="property"/>
+                        <description>Tax Classification</description>
+                    </attribute>
+                    <attribute qualifier="salesOffice" type="SalesOffice">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesGroup" type="SalesGroup">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="invoicingDate" type="InvoicingDate">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="paymentTerms" type="PaymentTerms">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AbstractOrder" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="poDocument" type="DocumentMedia">
+                        <persistence type="property"/>
+                        <description>PO Document</description>
+                    </attribute>
+                    <attribute qualifier="creditLimitPaymentInfo" type="CreditLimitPaymentInfo">
+                        <persistence type="property"/>
+                        <description>Credit Limit Payment Info</description>
+                    </attribute>
+                    <attribute qualifier="grossTotalPrice" type="java.lang.Double">
+                        <description>grossTotalPrice</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="netTotalPrice" type="java.lang.Double">
+                        <description>netTotalPrice</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <description>division</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="entryCode" type="java.lang.Integer">
+                        <description>entry code</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="incoTerms" type="IncoTerms">
+                        <description>IncoTerms</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="totalShippingCharges" type="java.lang.Double">
+                        <description>totalShippingCharges</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="grossTotalPrice" type="java.lang.Double">
+                        <description>grossTotalPrice</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="netTotalPrice" type="java.lang.Double">
+                        <description>netTotalPrice</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="OrderEntry" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="sapLineItemOrderStatus" type="SAPOrderStatus">
+                        <description>sapLineItemOrderStatus</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="SAPCpiOutboundOrderItem" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="incoTerms" type="IncoTerms">
+                        <persistence type="property"/>
+                        <description>Inco Terms</description>
+                    </attribute>
+                    <attribute qualifier="rejectionReason" type="java.lang.String">
+                        <description>Rejection reason for cancel order</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="lineItemOrderStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="deliveryStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Order" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="completionDate" type="java.util.Date">
+                        <description>completionDate</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapOrderCode" type="java.lang.String">
+                        <description>sapOrderCode</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapErrorMessage" type="java.lang.String">
+                        <description>sapErrorMessage</description>
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                    <attribute qualifier="sapOrderStatus" type="SAPOrderStatus">
+                        <description>completionDate</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="SAPSalesOrganization" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="salesOrgId" type="java.lang.String">
+                        <description>Sales Org Id</description>
+                        <modifiers optional="false" initial="true" unique="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="salesOrgIdIdx" unique="true">
+                        <key attribute="salesOrgId"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="AdnocSapIntegrationCodeMap">
+                <description>Adnoc Integration Code Mapping</description>
+                <deployment table="adnocsapintcodemap" typecode="11003"/>
+                <attributes>
+                    <attribute qualifier="integrationType" type="IntegrationType">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="enumType" type="java.lang.String">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="enumCode" type="java.lang.String">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapCode" type="java.lang.String">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="adnocSapCodeMapIdx" unique="true">
+                        <key attribute="integrationType"/>
+                        <key attribute="enumType"/>
+                        <key attribute="enumCode"/>
+                        <key attribute="sapCode"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="AdnocCsTicketCategoryMap">
+                <description>Adnoc Integration Code Mapping</description>
+                <deployment table="adnoccsticketcatmap" typecode="11004"/>
+                <attributes>
+                    <attribute qualifier="csTicketCategoryMapId" type="java.lang.String">
+                        <modifiers optional="false" unique="true" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="requestType" type="CsTicketCategory">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="requestFor" type="CsTicketRequestForCategory">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="subCategory" type="CsTicketRequestForSubCategory">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="associatedTo" type="CsTicketAssociatedTo">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="targetSystem" type="CsTicketTargetSystem">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="csTicketCategoryMapIdx" unique="true">
+                        <key attribute="csTicketCategoryMapId"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="CsTicket" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="requestFor" type="CsTicketRequestForCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="subCategory" type="CsTicketRequestForSubCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="targetSystem" type="CsTicketTargetSystem">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="associatedTo" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="b2bUnit" type="B2BUnit">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="externalTicketId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="exported" type="boolean">
+                        <modifiers/>
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="crmCaseId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundCsTicket">
+                <description>AdnocOutboundCsTicket</description>
+                <deployment table="adnocoutboundcsticket" typecode="11006"/>
+                <attributes>
+                    <attribute qualifier="requestFor" type="CsTicketRequestForCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="subCategory" type="CsTicketRequestForSubCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="targetSystem" type="CsTicketTargetSystem">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="associatedTo" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="b2bUnit" type="B2BUnit">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="externalTicketId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="exported" type="boolean">
+                        <modifiers/>
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="ticketID" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="customer" type="User">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="category" type="CsTicketCategory">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="priority" type="CsTicketPriority">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="state" type="CsTicketState">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="responseStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Division</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundCrmCsTicket" extends="AdnocOutboundCsTicket">
+                <attributes>
+                    <attribute qualifier="sapBusinessPartnerId" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Customer SAP Business Partner Id</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocIntegrationComment">
+                <description>Adnoc Integration Outbound Comment</description>
+                <deployment table="adnocintegrationcomment" typecode="11007"/>
+                <attributes>
+                    <attribute qualifier="code" type="java.lang.String">
+                        <modifiers optional="false" unique="true" initial="true"/>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="text" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="adnocIntegrationCommentIdx" unique="true">
+                        <key attribute="code"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+            <itemtype code="AdnocAttachment">
+                <deployment table="adnocattachment" typecode="11008"/>
+                <attributes>
+                    <attribute qualifier="attachmentBase64" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="realFileName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="PriceRow" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="deletionIndicator" type="java.lang.Boolean">
+                        <modifiers optional="false" initial="true"/>
+                        <persistence type="property"/>
+                        <defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+                        <description>Intentionally keeping Boolean instead of boolean, as it is part of inbound</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocCsTicketProcess" extends="BusinessProcess">
+                <attributes>
+                    <attribute qualifier="adnocCsTicket" type="CsTicket">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="SAPCpiOutboundOrder" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="plantCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="paymentInfo" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="deliveryType" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="poDocument" type="AdnocOutboundDocument">
+                        <persistence type="property"/>
+                        <description>PO Document</description>
+                    </attribute>
+                    <attribute qualifier="utrnNo" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="quotation" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="mop" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="mopType1" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="rrnCode1" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="authCode1" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="amount1" type="java.lang.Double">
+                        <persistence type="property">
+                            <columntype>
+                                <value>java.math.BigDecimal</value>
+                            </columntype>
+                        </persistence>
+                        <defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="mopType2" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="amount2" type="java.lang.Double">
+                        <persistence type="property">
+                            <columntype>
+                                <value>java.math.BigDecimal</value>
+                            </columntype>
+                        </persistence>
+                        <defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="totalAmount" type="java.lang.Double">
+                        <persistence type="property">
+                            <columntype>
+                                <value>java.math.BigDecimal</value>
+                            </columntype>
+                        </persistence>
+                        <defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="cardNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="cardType" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocReturnRequestOutbound" extends="ReturnRequest">
+                <attributes>
+                    <attribute qualifier="sapCpiConfig" type="SAPCpiOutboundConfig">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapOrderCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="responseStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="returnRequestOutboundDocument" type="AdnocOutboundDocument">
+                        <persistence type="property"/>
+                        <description>ReturnRequest Document</description>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="SAPCpiOutboundOrderCancellation" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="sapOrderCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="rejectionStatusHeader" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="overAllOrderStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="ReturnRequest" autocreate="false" generate="false">
+             <attributes>
+                 <attribute qualifier="sapReturnOrderCode" type="java.lang.String">
+                   <persistence type="property" />
+                 </attribute>
+                 <attribute qualifier="sapErrorMessage" type="java.lang.String">
+                     <description>sapErrorMessage</description>
+                     <persistence type="property">
+                         <columntype>
+                             <value>HYBRIS.LONG_STRING</value>
+                         </columntype>
+                     </persistence>
+                 </attribute>
+                 <attribute qualifier="exported" type="boolean">
+                     <modifiers/>
+                     <persistence type="property"/>
+                     <defaultvalue>false</defaultvalue>
+                 </attribute>
+                 <attribute qualifier="returnRequestDocument" type="DocumentMedia">
+                     <persistence type="property"/>
+                     <description>returnRequest Document</description>
+                 </attribute>
+                 <attribute qualifier="returnApprovalDocument" type="DocumentMedia">
+                     <persistence type="property"/>
+                     <description>returnRequest Approval Document</description>
+                 </attribute>
+                 <attribute qualifier="reason" type="RefundReason">
+                     <persistence type="property" />
+                     <modifiers/>
+                 </attribute>
+                 <attribute qualifier="comment" type="java.lang.String">
+                     <persistence type="property" />
+                 </attribute>
+                 <attribute qualifier="returnRejectionReason" type="ReturnRejectionReason">
+                     <persistence type="property"/>
+                     <description>Rejection reason code selected by CS Agent when rejecting return request</description>
+                 </attribute>
+             </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundDocument">
+                <deployment table="adnocoutbounddoc" typecode="11009"/>
+                <attributes>
+                    <attribute qualifier="supportedDocumentType" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="documentBase64" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="documentName" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="documentType" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CreditCardPaymentInfo" autocreate="false" generate="false">
+                <description>Extending CreditCardPaymentInfo type with additional attributes.</description>
+                <attributes>
+                    <attribute qualifier="sessionID" type="java.lang.String">
+                        <description>Session ID</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="successIndicator" type="java.lang.String">
+                        <description>Success Indicator</description>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="BankPaymentInfo" extends="PaymentInfo">
+                <attributes>
+                    <attribute qualifier="cardType" type="java.lang.String">
+                        <description>Type of Card</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="account" type="java.lang.String">
+                        <description>Account</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="CreditLimitPaymentInfo" extends="PaymentInfo"/>
+
+            <itemtype code="PaymentInfo" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="utrnNumber" type="java.lang.String">
+                        <description>Utrn Number</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="amount" type="java.lang.Double">
+                        <persistence type="property">
+                            <columntype>
+                                <value>java.math.BigDecimal</value>
+                            </columntype>
+                        </persistence>
+                        <defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+                    </attribute>
+                    <attribute qualifier="authorizationCode" type="java.lang.String">
+                        <description>Determines the Authorization code</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="rrnNumber" type="java.lang.String">
+                        <description>RRN Number</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="transactionID" type="java.lang.String">
+                        <description>TransactionID</description>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="PaymentTransaction" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="rrnNumber" type="java.lang.String">
+                        <description>RRN Number</description>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOverdueInvoiceDetails">
+                <deployment table="AdnocOverdueInvoice" typecode="11010"/>
+                <attributes>
+                    <attribute qualifier="invoiceNumber" type="java.lang.String">
+                        <description> Invoice Number</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="companyCode" type="java.lang.String">
+                        <description> Company Code</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="fiscalYear" type="java.lang.String">
+                        <description> Fiscal Year</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="overdueStatus" type="AdnocOverDueStatus">
+                        <description>Over Due Status</description>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOverduePaymentTransaction" extends="PaymentTransaction" >
+                <attributes>
+                    <attribute qualifier="payerId" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="exported" type="boolean">
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundOverduePaymentTransaction" >
+                <deployment table="adnocoutboundoverduepay" typecode="11011"/>
+                <attributes>
+                    <attribute qualifier="customer" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="totalAmount" type="java.lang.Double">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="mop" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="authCode" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="rrnCode" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="utrn" type="java.lang.String">
+                        <description> Payer Id</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="cardNumber" type="java.lang.String">
+                        <description> card Number</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="cardType" type="java.lang.String">
+                        <description> card Type</description>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="currency" type="java.lang.String">
+                        <description>currency codes(e.g.,USD,AED)</description>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="Quote" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="sellerComment" type="java.lang.String">
+                        <description>Comments when seller or agent rejecting or approving the quote</description>
+                        <persistence type="property">
+                            <columntype>
+                                <value>varchar(500)</value>
+                            </columntype>
+                            <columntype database="oracle">
+                                <value>VARCHAR2(500)</value>
+                            </columntype>
+                            <columntype database="sap">
+                                <value>NVARCHAR(500)</value>
+                            </columntype>
+                            <columntype database="hsqldb">
+                                <value>VARCHAR(500)</value>
+                            </columntype>
+                            <columntype database="mysql">
+                                <value>VARCHAR(500)</value>
+                            </columntype>
+                            <columntype database="sqlserver">
+                                <value>VARCHAR(500)</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                    <attribute qualifier="quoteDocument" type="java.lang.String">
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                    <attribute qualifier="sapOrderCode" type="java.lang.String">
+                        <description>sapOrderCode</description>
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapErrorMessage" type="java.lang.String">
+                        <description>sapErrorMessage</description>
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="OrderCancelRecordEntry" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="exported" type="boolean">
+                        <persistence type="property"/>
+                        <defaultvalue>false</defaultvalue>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundQuoteItem">
+                <deployment table="adnocquoteitem" typecode="11012"/>
+                <attributes>
+                    <attribute qualifier="deliveryDate" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="entryNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers unique="true"/>
+                    </attribute>
+                    <attribute qualifier="quantity" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="itemText" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="unit" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="productCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocQuoteOutboundPartnerRole">
+                <deployment table="AdnocQuotePartnerRole" typecode="11013"/>
+                <attributes>
+                    <attribute qualifier="quoteCode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers unique="true"/>
+                    </attribute>
+                    <attribute qualifier="entryNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers unique="true"/>
+                    </attribute>
+                    <attribute qualifier="partnerRoleCode" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="partnerId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="documentAddressId" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocOutboundQuote">
+                <description>AdnocOutboundQuote</description>
+                <deployment table="adnocOutboundQuote" typecode="11014"/>
+                <attributes>
+                    <attribute qualifier="transactionType" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="headerComments" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="salesOrg" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>SAP Sales Organization</description>
+                    </attribute>
+                    <attribute qualifier="distribution" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Distribution</description>
+                    </attribute>
+                    <attribute qualifier="division" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Division</description>
+                    </attribute>
+                    <attribute qualifier="quoteNumber" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Quote Number</description>
+                    </attribute>
+                    <attribute qualifier="validFrom" type="java.util.Date">
+                        <persistence type="property"/>
+                        <description>Quote Creation Date</description>
+                    </attribute>
+                    <attribute qualifier="validTo" type="java.util.Date">
+                        <persistence type="property"/>
+                        <description>Quote Expiry Date</description>
+                    </attribute>
+                    <attribute qualifier="responseStatus" type="java.lang.String">
+                        <persistence type="property"/>
+                    </attribute>
+                    <attribute qualifier="sapOrderCode" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Sap Order Code</description>
+                    </attribute>
+                    <attribute qualifier="sapErrorMessage" type="java.lang.String">
+                        <description>sapErrorMessage</description>
+                        <persistence type="property">
+                            <columntype>
+                                <value>HYBRIS.LONG_STRING</value>
+                            </columntype>
+                        </persistence>
+                    </attribute>
+                </attributes>
+            </itemtype>
+
+            <itemtype code="AdnocInboxView" extends="InboxView" autocreate="true" generate="false" metatype="ViewType" jaloonly="true" jaloclass="de.hybris.platform.util.ViewResultItem">
+                <custom-properties>
+                    <property name="legacyPersistence">
+                        <value>java.lang.Boolean.TRUE</value>
+                    </property>
+                    <property name="query">
+                        <value>
+                            "SELECT {actions:PK} action, {actions:activated} activated, {actions:comment} actioncomment, {workflows:PK} workflow FROM {WORKFLOWACTION AS actions}, {Workflow AS workflows} WHERE {actions:workflow} = {workflows:PK} AND {actions:status} = ?status AND ({actions:principalAssigned} = ?session.user OR {actions:principalAssigned} IN (?session.user.allgroups)) AND {actions:template} IN (?template) ORDER BY workflow, action"
+                        </value>
+                    </property>
+                </custom-properties>
+            </itemtype>
+
+            <itemtype code="AdnocBackofficeApprovalRegistrationEnumMapping">
+                <description>Mapping configuration for backoffice approval registration enumerations</description>
+                <deployment table="adnocbackofcapregenummap" typecode="11015"/>
+                <attributes>
+                    <attribute qualifier="sourceEnumType" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Source enumeration type for mapping</description>
+                    </attribute>
+                    <attribute qualifier="sourceEnumValue" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Source enumeration type for mapping</description>
+                    </attribute>
+                    <attribute qualifier="targetEnumType" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Target enumeration type for mapping</description>
+                    </attribute>
+                    <attribute qualifier="targetEnumValue" type="java.lang.String">
+                        <persistence type="property"/>
+                        <description>Target enumeration type for mapping</description>
+                    </attribute>
+                </attributes>
+                <indexes>
+                    <index name="enumMappingIdx" unique="true">
+                        <key attribute="sourceEnumValue"/>
+                        <key attribute="sourceEnumType"/>
+                        <key attribute="targetEnumType"/>
+                        <key attribute="targetEnumValue"/>
+                    </index>
+                </indexes>
+            </itemtype>
+
+        </typegroup>
+    </itemtypes>
+</items>

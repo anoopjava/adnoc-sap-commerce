@@ -1,0 +1,77 @@
+%cx-category-navigation {
+  span,
+  button:not(cx-generic-link + button),
+  cx-navigation-ui > nav > ul > li > cx-generic-link {
+    text-transform: uppercase;
+    font-weight: 600;
+    width: 100%;
+    font-family: var(--cx-font-family-bold);
+    font-weight: 700;
+    color: var(--cx-color-primary) !important;
+    &:hover {
+      color: var(--cx-color-primary) !important;
+    }
+  }
+
+  li {
+    list-style: none;
+  }
+
+  cx-navigation-ui {
+    display: flex;
+    justify-content: center;
+    background-color: var(--cx-color-background-header);
+
+    & > nav > ul {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+
+      > li {
+        list-style: none;
+        display: flex;
+        @include media-breakpoint-up(lg) {
+          padding-inline-end: 15px;
+          padding-inline-start: 15px;
+        }
+
+        > span[role="heading"] {
+          display: none;
+        }
+
+        @include media-breakpoint-up(lg) {
+          > .wrapper {
+            margin-top: $header-height;
+          }
+          button {
+            &:hover {
+              border: 0;
+              outline: none !important;
+            }
+            .cx-icon {
+              color: var(--cx-color-primary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // we hide the categories in flyout mode on mobile
+  cx-navigation-ui.flyout {
+    @include media-breakpoint-down(md) {
+      &.is-open {
+        li.is-open:not(.back) {
+          > span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  a {
+    &:hover {
+      color: var(--cx-color-primary) !important;
+    }
+  }
+}

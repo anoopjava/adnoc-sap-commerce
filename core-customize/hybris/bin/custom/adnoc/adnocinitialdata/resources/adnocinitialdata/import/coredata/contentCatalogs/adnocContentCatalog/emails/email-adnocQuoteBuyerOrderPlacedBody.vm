@@ -1,0 +1,24 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocQuoteBuyerOrderPlaced_$lang.properties
+
+<!DOCTYPE html>
+<html>
+     <body>
+     <div class="content">
+             <p>Dear ${ctx.title} ${ctx.displayName},</p>
+            <p>${ctx.messages.quoteAccept}</p>
+            <p><strong>Order Number:</strong> ${ctx.quote.orderCode}</p>
+            <p><strong>Quote ID:</strong> ${ctx.quote.code}</p>
+            <p><strong>Order Date:</strong> ${ctx.quote.creationTime} </a></p>
+            <p>${ctx.messages.requestNewQuote}</p>
+            <p><a href="${ctx.frontendUrl}" style="color:#0468b3;">${ctx.messages.requestNewQuoteHyperLink}</a></p>
+            <p>${ctx.messages.customerEnquiry}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+     </div>
+     <div class="footer">
+           <p>Best regards,</p>
+           <p>Sales Manager/Sales Co-ordinator</p>
+           <p>ADNOC</p>
+           <p>${ctx.messages.website}</p>
+      </div>
+      </body>
+</html>

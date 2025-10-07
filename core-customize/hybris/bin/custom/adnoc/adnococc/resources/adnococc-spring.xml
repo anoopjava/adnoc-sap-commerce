@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <bean class="com.adnoc.mapping.convertor.AdnocB2BRegistrationDataConverter">
+        <property name="adnocRegistrationDataConverter" ref="adnocRegistrationDataConverter"/>
+    </bean>
+
+    <bean class="com.adnoc.mapping.convertor.AdnocB2BUnitRegistrationDataConverter">
+        <property name="adnocRegistrationDataConverter" ref="adnocRegistrationDataConverter"/>
+        <property name="enumerationService" ref="enumerationService" />
+    </bean>
+
+    <bean id="adnocRegistrationDataConverter" class="com.adnoc.mapping.convertor.AdnocRegistrationDataConverter"/>
+
+    <bean id="adnocB2BUserRegistrationDataConverter"
+          class="com.adnoc.mapping.convertor.AdnocB2BUserRegistrationDataConverter"/>
+</beans>

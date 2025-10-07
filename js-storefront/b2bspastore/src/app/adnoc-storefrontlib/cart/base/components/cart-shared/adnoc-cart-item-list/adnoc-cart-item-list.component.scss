@@ -1,0 +1,324 @@
+@import "@spartacus/styles/scss/cxbase/mixins";
+
+adnoc-cart-item-list .cx-table-item-container {
+  display: inline-grid;
+  grid-template-columns: 5rem auto;
+  gap: 0.5rem;
+  text-indent: 0;
+  cx-media {
+    img {
+      border-radius: 16px;
+    }
+  }
+}
+
+adnoc-cart-item-list {
+  thead {
+    tr {
+      background: var(--cx-adnoc-rwhite-color);
+      border-radius: 20px;
+    }
+  }
+
+  th {
+    color: var(--cx-color-text);
+  }
+
+  tr {
+    border: none;
+
+    td {
+      padding: 1.25rem 0.5rem;
+      &:nth-of-type(2) {
+        text-align: start;
+      }
+    }
+  }
+}
+
+.adnoc-item-list-row {
+  border-bottom: 1px solid var(--cx-color-medium);
+
+  td {
+    padding: 0 0 1.25rem;
+  }
+}
+
+.select-payer-wrap {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .selector {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    max-width: 250px;
+    justify-content: center;
+    align-items: baseline;
+
+    adnoc-calendar {
+      width: 100%;
+
+      mat-form-field {
+        width: inherit;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+    }
+  }
+
+  .disclaimer {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+
+    i {
+      font-size: 25px;
+    }
+  }
+
+  .select {
+    display: inline-block;
+    width: 100%;
+    max-width: 25rem;
+    height: 55px;
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 1.5;
+    color: var(--cx-black);
+    vertical-align: middle;
+    border: 1px solid var(--cx-adnoc-lgray-color);
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 19'%3e%3cpath fill='none' stroke='%230000ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-position-y: center;
+    background-size: 30px 15px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+}
+
+.select-wrap {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem;
+  gap: 10px;
+  align-items: baseline;
+  @include media-breakpoint-down(sm) {
+    flex-wrap: wrap;
+  }
+  .selector {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: baseline;
+    text-align: left;
+
+    adnoc-calendar {
+      width: 100%;
+      background-color: var(--cx-white);
+
+      mat-form-field {
+        width: inherit;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+    }
+  }
+
+  .select {
+    display: inline-block;
+    width: 100%;
+    height: 55px;
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 1.5;
+    color: var(--cx-black);
+    vertical-align: middle;
+    border: 1px solid var(--cx-adnoc-lgray-color);
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 19'%3e%3cpath fill='none' stroke='%230000ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-position-y: center;
+    background-size: 30px 15px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.mdc-text-field--filled {
+  border: 1px solid var(--cx-adnoc-lgray-color);
+  border-radius: 8px !important;
+}
+
+.mat-mdc-form-field-flex {
+  display: inline-flex;
+  align-items: baseline;
+  box-sizing: border-box;
+  width: 100%;
+  height: 55px;
+}
+
+.mat-mdc-form-field-bottom-align::before {
+  content: unset !important;
+  height: 0 !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent !important;
+}
+
+.mdc-line-ripple {
+  &::before,
+  &::after {
+    border-bottom-width: 0 !important;
+  }
+}
+
+.mdc-floating-label {
+  color: var(--cx-black) !important;
+}
+
+.mat-datepicker-toggle-default-icon {
+  fill: var(--cx-color-primary);
+}
+
+input {
+  &:focus,
+  &:active,
+  &:focus-within {
+    box-shadow: none !important;
+    outline: unset !important;
+  }
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent;
+
+  &:focus {
+    background-color: transparent;
+  }
+}
+
+.mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
+  opacity: 0 !important;
+}
+
+cx-item-counter {
+  border: 0 !important;
+  gap: 5px;
+
+  button,
+  input {
+    border: 1.5px solid var(--cx-color-primary) !important;
+    border-radius: 8px;
+  }
+}
+
+.adnoc-item-list-row {
+  border-top: 0;
+}
+
+.groupCheckbox {
+  display: flex;
+  margin: 0.5rem;
+  @include media-breakpoint-down(xs) {
+    text-align: start;
+  }
+
+  input[type="checkbox"] {
+    position: relative;
+    margin: 0 5px;
+    margin-inline-start: unset;
+  }
+
+  &.disabled {
+    display: none;
+    cursor: not-allowed;
+
+    input[type="checkbox"] {
+      pointer-events: none;
+    }
+  }
+}
+
+.item-list-row {
+  &-31 {
+    background: var(--cx-adnoc-lblue-color);
+    padding: 1.25rem 1rem;
+  }
+
+  &-41 {
+    background: var(--cx-adnoc-lgreen-color);
+    padding: 1.25rem 1rem;
+  }
+
+  &-51 {
+    background: var(--cx-adnoc-water-color);
+  }
+}
+
+.readonly-value {
+  .selector {
+    cursor: not-allowed;
+
+    select {
+      background-color: var(--cx-adnoc-lgray-color);
+      pointer-events: none;
+    }
+
+    adnoc-calendar {
+      background-color: var(--cx-adnoc-lgray-color);
+      border-radius: 8px;
+
+      .mat-mdc-form-field-icon-suffix,
+      mat-form-field {
+        .mat-datepicker-toggle {
+          cursor: not-allowed;
+          fill: var(--cx-adnoc-lgray-color);
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}
+
+.cx-add-to-saved-cart-container {
+  .cx-action-link {
+    text-decoration: none;
+    z-index: 1;
+  }
+}
+
+.delivery-mode {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.tooltip-btn {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  cx-icon {
+    pointer-events: none;
+  }
+}

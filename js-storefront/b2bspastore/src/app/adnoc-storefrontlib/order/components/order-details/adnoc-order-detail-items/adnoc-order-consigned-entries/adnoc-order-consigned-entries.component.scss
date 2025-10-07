@@ -1,0 +1,41 @@
+@import "../../../../../../../styles/scss/utilities/mixins";
+.adnoc-order-consigned-entries {
+  .cx-list-item {
+    adnoc-cart-item-list {
+      table {
+        tr {
+          th,
+          td {
+            &.d-none.orderSummaryToShow {
+              display: table-cell !important;
+              @include media-breakpoint-down(md) {
+                display: flex !important;
+              }
+            }
+            &.orderSummaryNotToShow {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+adnoc-cart-item-list {
+  table {
+    tr {
+      th,
+      td {
+        &.d-none.orderSummaryToShow {
+          display: table-cell !important;
+          @include media-breakpoint-down(sm) {
+            display: flex !important;
+          }
+        }
+        &.orderSummaryNotToShow {
+          display: none;
+        }
+      }
+    }
+  }
+}

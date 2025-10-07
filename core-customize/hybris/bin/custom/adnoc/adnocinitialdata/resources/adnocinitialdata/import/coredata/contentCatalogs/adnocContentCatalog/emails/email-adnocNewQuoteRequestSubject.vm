@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocservice/messages/email-adnocNewQuoteRequest_$lang.properties
+
+${ctx.messages.getMessage('emailSubject', ${ctx.quote.code})}

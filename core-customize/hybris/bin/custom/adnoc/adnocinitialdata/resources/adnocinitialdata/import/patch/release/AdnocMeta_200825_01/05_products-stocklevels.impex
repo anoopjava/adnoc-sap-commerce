@@ -1,0 +1,162 @@
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$vendor = ERP
+
+INSERT_UPDATE StockLevel; productCode[unique = true]; warehouse(code)[unique = true, default = default]; available; inStockStatus(code); maxPreOrder[default = 1]; maxStockLevelHistoryCount[default = -1]; overSelling[default = 0]; preOrder[default = 0]; reserved[default = 0]
+#LPG
+                        ; 120009022753              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 120009022753              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 120009022753              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 120009022753              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 120009022754              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 120009022754              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 120009022754              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 120009022754              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000434              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000434              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000434              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000434              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000577              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000577              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000577              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000577              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 200009000578              ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 200009000578              ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 200009000578              ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 200009000578              ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 42                        ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 42                        ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 42                        ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 42                        ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 43                        ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 43                        ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 43                        ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 43                        ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 44                        ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 44                        ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 44                        ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 44                        ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 733                       ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 733                       ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 733                       ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 733                       ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 787                       ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 787                       ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 787                       ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 787                       ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 842                       ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 842                       ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 842                       ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 842                       ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 843                       ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 843                       ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 843                       ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 843                       ; aw_warehouse_w                                   ; 100      ; forceInStock
+#Fuel
+                        ; 14                        ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 14                        ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 14                        ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 14                        ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 15                        ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 15                        ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 15                        ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 15                        ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+                        ; 999                       ; aw_warehouse_s                                   ; 100      ; forceInStock
+                        ; 999                       ; aw_warehouse_e                                   ; 100      ; forceInStock
+                        ; 999                       ; aw_warehouse_n                                   ; 100      ; forceInStock
+                        ; 999                       ; aw_warehouse_w                                   ; 100      ; forceInStock
+
+
+INSERT_UPDATE Product; code[unique = true]; stockLevels(productCode, warehouse(code)); vendors(code)[default = $vendor]; $catalogVersion
+#LPG
+                     ; 120009022753       ; 120009022753:aw_warehouse_s
+                     ; 120009022753       ; 120009022753:aw_warehouse_e
+                     ; 120009022753       ; 120009022753:aw_warehouse_n
+                     ; 120009022753       ; 120009022753:aw_warehouse_w
+
+                     ; 120009022754       ; 120009022754:aw_warehouse_s
+                     ; 120009022754       ; 120009022754:aw_warehouse_e
+                     ; 120009022754       ; 120009022754:aw_warehouse_n
+                     ; 120009022754       ; 120009022754:aw_warehouse_w
+
+                     ; 200009000434       ; 200009000434:aw_warehouse_s
+                     ; 200009000434       ; 200009000434:aw_warehouse_e
+                     ; 200009000434       ; 200009000434:aw_warehouse_n
+                     ; 200009000434       ; 200009000434:aw_warehouse_w
+
+                     ; 200009000577       ; 200009000577:aw_warehouse_s
+                     ; 200009000577       ; 200009000577:aw_warehouse_e
+                     ; 200009000577       ; 200009000577:aw_warehouse_n
+                     ; 200009000577       ; 200009000577:aw_warehouse_w
+
+                     ; 200009000578       ; 200009000578:aw_warehouse_s
+                     ; 200009000578       ; 200009000578:aw_warehouse_e
+                     ; 200009000578       ; 200009000578:aw_warehouse_n
+                     ; 200009000578       ; 200009000578:aw_warehouse_w
+
+                     ; 42                 ; 42:aw_warehouse_s
+                     ; 42                 ; 42:aw_warehouse_e
+                     ; 42                 ; 42:aw_warehouse_n
+                     ; 42                 ; 42:aw_warehouse_w
+
+                     ; 43                 ; 43:aw_warehouse_s
+                     ; 43                 ; 43:aw_warehouse_e
+                     ; 43                 ; 43:aw_warehouse_n
+                     ; 43                 ; 43:aw_warehouse_w
+
+                     ; 44                 ; 44:aw_warehouse_s
+                     ; 44                 ; 44:aw_warehouse_e
+                     ; 44                 ; 44:aw_warehouse_n
+                     ; 44                 ; 44:aw_warehouse_w
+
+                     ; 733                ; 733:aw_warehouse_s
+                     ; 733                ; 733:aw_warehouse_e
+                     ; 733                ; 733:aw_warehouse_n
+                     ; 733                ; 733:aw_warehouse_w
+
+                     ; 787                ; 787:aw_warehouse_s
+                     ; 787                ; 787:aw_warehouse_e
+                     ; 787                ; 787:aw_warehouse_n
+                     ; 787                ; 787:aw_warehouse_w
+
+                     ; 842                ; 842:aw_warehouse_s
+                     ; 842                ; 842:aw_warehouse_e
+                     ; 842                ; 842:aw_warehouse_n
+                     ; 842                ; 842:aw_warehouse_w
+
+                     ; 843                ; 843:aw_warehouse_s
+                     ; 843                ; 843:aw_warehouse_e
+                     ; 843                ; 843:aw_warehouse_n
+                     ; 843                ; 843:aw_warehouse_w
+#Fuel
+                     ; 14                 ; 14:aw_warehouse_s
+                     ; 14                 ; 14:aw_warehouse_e
+                     ; 14                 ; 14:aw_warehouse_n
+                     ; 14                 ; 14:aw_warehouse_w
+
+                     ; 15                 ; 15:aw_warehouse_s
+                     ; 15                 ; 15:aw_warehouse_e
+                     ; 15                 ; 15:aw_warehouse_n
+                     ; 15                 ; 15:aw_warehouse_w
+
+                     ; 999                ; 999:aw_warehouse_s
+                     ; 999                ; 999:aw_warehouse_e
+                     ; 999                ; 999:aw_warehouse_n
+                     ; 999                ; 999:aw_warehouse_w
+
+

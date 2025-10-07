@@ -1,0 +1,82 @@
+<div
+  class="adnoc-suggested-payers-container cx-modal-container"
+  role="dialog"
+  [cxFocus]="focusConfig"
+  aria-labelledby="adnoc-suggested-payers-title"
+>
+  <div class="cx-modal-content">
+    <!-- Modal Header -->
+    <div class="cx-dialog-header modal-header">
+      <div>
+        <h3
+          *cxFeature="'!a11yDialogsHeading'"
+          id="adnoc-suggested-payers-title"
+          class="title modal-title"
+        >
+          {{ "loginTranslation.PayerInfoDialog.title" | cxTranslate }}
+        </h3>
+      </div>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="cx-dialog-body modal-body">
+      <div class="cx-dialog-item payer-info mb-4">
+        <p *ngIf="isError" class="alert alert-danger">
+          {{ isError }}
+        </p>
+        <div class="payer-head mb-3">
+          {{ "loginTranslation.PayerInfoDialog.subTitle" | cxTranslate }}
+        </div>
+        <label>
+          <select
+            class="form-control payer-dropdown"
+            (change)="onPayerIdChange($event)"
+          >
+            <option value="" disabled selected>
+              {{ "loginTranslation.PayerInfoDialog.placeholder" | cxTranslate }}
+            </option>
+            <option
+              *ngFor="let payer of payers"
+              [value]="payer.uid"
+              [selected]="
+                payer.uid === (selectedPayerObject && selectedPayerObject?.uid)
+              "
+            >
+              {{ payer.uid }} - {{ payer.name }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="cx-dialog-item note-info">
+        <span class="note-head"
+          >{{ "loginTranslation.PayerInfoDialog.note" | cxTranslate }}:
+        </span>
+        <span class="note-text">{{
+          "loginTranslation.PayerInfoDialog.description" | cxTranslate
+        }}</span>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="cx-dialog-footer modal-footer">
+      <button
+        (click)="closeModal('Cancel click')"
+        [attr.aria-label]="'common.close' | cxTranslate"
+        class="btn btn-secondary"
+        type="button"
+      >
+        {{ "common.cancel" | cxTranslate }}
+      </button>
+      <button
+        [attr.aria-label]="'common.continue' | cxTranslate"
+        class="btn btn-primary"
+        type="submit"
+        cxAutoFocus
+        [disabled]="isDisabled"
+        (click)="onPayerSubmit()"
+      >
+        {{ "common.continue" | cxTranslate }}
+      </button>
+    </div>
+  </div>
+</div>

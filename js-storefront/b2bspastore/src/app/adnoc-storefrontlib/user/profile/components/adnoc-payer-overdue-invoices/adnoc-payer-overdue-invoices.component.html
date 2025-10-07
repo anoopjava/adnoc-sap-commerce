@@ -1,0 +1,289 @@
+<div class="adnoc-payer-overdue-invoice-container">
+  <div *ngIf="isError" class="alert alert-danger" role="alert">
+    <span class="text-danger">{{ isError }}</span>
+  </div>
+  <div class="adnoc-payer-overdue-invoice-form">
+    <div class="adnoc-items-list">
+      <div class="adnoc-item-info">
+        <span class="label-content">
+          {{ "common.payerOverdueInovice.fields.payer.label" | cxTranslate }}
+          <ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template>
+        </span>
+        <select
+          #selectPayer
+          class="form-control payerOverdueInovice"
+          id="payerOverdueInovice"
+          [value]="payer"
+          (change)="onPayerChange($event)"
+        >
+          <option [value]="" disabled selected>
+            {{ "common.statementOfAccount.selectDefaultOption" | cxTranslate }}
+          </option>
+          <option *ngFor="let payer of payersList" [value]="payer.uid">
+            {{ payer.uid }} - {{ payer.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-group">
+      <div class="adnoc-button-group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="validateFields()"
+          (click)="getInvoicesList()"
+        >
+          {{ "common.payerOverdueInovice.search" | cxTranslate }}
+        </button>
+        <a
+          class="btn btn-block btn-secondary"
+          [routerLink]="{ cxRoute: 'home' } | cxUrl"
+        >
+          {{ "common.statementOfAccount.backToHome" | cxTranslate }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="custom-spinner-overlay" *ngIf="isLoading">
+    <cx-spinner></cx-spinner>
+  </div>
+  <div class="showInvoiceList" *ngIf="showInvoiceList && !isLoading">
+    <div class="table-container" *ngIf="hasInvoices; else noData">
+      <table
+        mat-table
+        [dataSource]="invoices"
+        class="mat-elevation-z8 custom-table"
+      >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="onSelectAllChange()"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [disabled]="!isAnyInvoiceSelected"
+            >
+              {{ "common.payerOverdueInovice.table.selectAll" | cxTranslate }}
+            </mat-checkbox>
+            <button
+              *ngIf="disableSelectAll"
+              [cxPopover]="detailHint"
+              class="btn currencyInfo"
+              [cxPopoverOptions]="{
+                placement: 'auto',
+                class: 'invoice-popover',
+                displayCloseButton: true
+              }"
+              [attr.aria-label]="'organization.information' | cxTranslate"
+            >
+              <cx-icon class="text-primary" [type]="iconTypes.INFO"></cx-icon>
+            </button>
+            <ng-template #detailHint>
+              <p>
+                {{
+                  "common.payerOverdueInovice.table.selectAllHint" | cxTranslate
+                }}
+              </p>
+            </ng-template>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              *ngIf="
+                row.status === 'Open' || row.status === 'Overdue';
+                else disabledCheckbox
+              "
+              (click)="$event.stopPropagation()"
+              (change)="toggleRowSelection(row)"
+              [checked]="selection.isSelected(row)"
+              [disabled]="isCurrencyDisabled(row)"
+            >
+            </mat-checkbox>
+            <ng-template #disabledCheckbox>
+              <mat-checkbox [disabled]="true"></mat-checkbox>
+            </ng-template>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="documentNumber">
+          <th mat-header-cell *matHeaderCellDef>
+            {{
+              "common.payerOverdueInovice.table.documentNumber" | cxTranslate
+            }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.documentNumber }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="documentDate">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.documentDate" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.documentDate | date : "MMMM d, y" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="productGroup">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.productGroup" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.division || "N/A" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="fiscalYear">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.fiscalYear" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.fiscalYear }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="invoiceValue">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.invoiceValue" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.invoiceAmount | number : "1.2-2" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="openValue">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.openValue" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.dueAmount | number : "1.2-2" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="currency">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.currency" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.currency }}</td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "common.payerOverdueInovice.table.status" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element" [ngClass]="element.status">
+            {{ element.status }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef class="totalDue totalLabel">
+            {{ "common.payerOverdueInovice.table.totalDue" | cxTranslate }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="netDueDate">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ "common.payerOverdueInovice.table.netDueDate" | cxTranslate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.netDueDate | date : "MMMM d, y" }}
+          </td>
+          <td mat-footer-cell *matFooterCellDef="let element" class="totalDue">
+            {{
+              calculateTotalDue()
+                | currency
+                  : selectedCurrency || invoices.data[0].currency
+                  : "symbol"
+                  : "1.2-2"
+            }}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="!isCurrencyDisabled(row) && toggleRowSelection(row)"
+        ></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+  <div
+    class="payment-container"
+    *ngIf="showInvoiceList && hasInvoices && hasPaymentOptions"
+  >
+    <h3 class="payment-head">
+      {{ "common.payment.gateway.headTitle" | cxTranslate }}
+    </h3>
+    <p class="sub-text">
+      {{ "common.payment.gateway.subHeadTitle" | cxTranslate }}
+    </p>
+    <div class="form-check" *ngFor="let paymentType of paymentOptions">
+      <input
+        type="radio"
+        class="form-check-input"
+        [id]="paymentType.code"
+        name="paymentMethod"
+        [(ngModel)]="selectedPayment"
+        [value]="paymentType.code"
+        [disabled]="validateInvSelection(paymentType.code ?? '')"
+      />
+      <label class="form-check-label" [for]="paymentType.code">
+        <div class="invoice-payment-type payment__method">
+          <span class="creditCard" *ngIf="paymentType.code === 'CARD'">
+            <i class="fa-regular fa-credit-card cardIcon"></i>
+          </span>
+          <span class="creditCard" *ngIf="paymentType.code === 'BANK_TRANSFER'">
+            <ng-container
+              *ngFor="let image of paymentTypeImages[paymentType.code]"
+            >
+              <img [src]="image" alt="{{ paymentType?.code }}" />
+            </ng-container>
+          </span>
+          <span>{{ "payments." + paymentType?.code | cxTranslate }}</span>
+          <span
+            class="creditCard"
+            *ngIf="
+              paymentType.code === 'CARD' && paymentTypeImages[paymentType.code]
+            "
+          >
+            <ng-container
+              *ngFor="let image of paymentTypeImages[paymentType.code]"
+            >
+              <img [src]="image" alt="{{ paymentType?.code }}" />
+            </ng-container>
+          </span>
+        </div>
+        <div
+          class="text-warning mx-2 my-1"
+          *ngIf="
+            paymentType.code === 'BANK_TRANSFER' && selectedCurrency === 'USD'
+          "
+        >
+          <i class="fa-solid fa-exclamation"></i
+          >{{ "common.payerOverdueInovice.noOption" | cxTranslate }}
+        </div>
+      </label>
+      <i class="fa-solid fa-chevron-right text-primary"></i>
+    </div>
+  </div>
+  <div class="btn-group" *ngIf="showInvoiceList && hasInvoices">
+    <div class="adnoc-button-group paynowBtn">
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="validatePayNow()"
+        (click)="payNow()"
+      >
+        {{ "common.payerOverdueInovice.paynow" | cxTranslate }}
+      </button>
+    </div>
+  </div>
+  <ng-template #noData>
+    <p class="noDataInfo">
+      {{ "common.payerOverdueInovice.noInvoices" | cxTranslate }}
+    </p>
+  </ng-template>
+  <ng-template #requiredAsterisk>
+    <abbr
+      *cxFeature="'a11yRequiredAsterisks'"
+      class="text-decoration-none"
+      title="{{ 'common.required' | cxTranslate }}"
+      >*</abbr
+    >
+  </ng-template>
+</div>

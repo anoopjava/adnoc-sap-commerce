@@ -1,0 +1,29 @@
+INSERT_UPDATE SalesGroup; code[unique = true]; name[lang = en]
+                        ; 70                 ; 70-Retail
+
+
+INSERT_UPDATE CustomerGroup; code[unique = true]
+                           ; 40
+                           ; 41
+                           ; 42
+                           ; 43
+                           ; 44
+                           ; 45
+                           ; 46
+                           ; 47
+                           ; 48
+                           ; 49
+                           ; 50
+
+UPDATE CustomerGroup; code[unique = true]; name[lang = en]
+                    ; 40                 ; Construction Companies
+                    ; 41                 ; Educational Institute
+                    ; 42                 ; Own filling stations
+                    ; 43                 ; General Contracting
+                    ; 44                 ; Oil Field Supplies
+                    ; 45                 ; King and Rulers
+                    ; 46                 ; International Airline
+                    ; 47                 ; Municipal bodies
+                    ; 48                 ; Other oil companies
+                    ; 49                 ; Power Generation Uni
+                    ; 50                 ; Commercial Airlines

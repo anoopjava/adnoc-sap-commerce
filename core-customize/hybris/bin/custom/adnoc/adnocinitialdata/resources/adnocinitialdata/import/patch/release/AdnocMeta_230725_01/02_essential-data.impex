@@ -1,0 +1,19 @@
+REMOVE SalesOffice; code[unique = true]
+                  ; 2510
+                  ; 2520
+                  ; 2530
+                  ; 2540
+                  ; 5310
+                  ; 5320
+                  ; 5330
+                  ; 5340
+
+REMOVE SalesOffice; code[unique = true]; name[lang = en]
+                  ; 2510               ; 2510-Vehic Insp Al Dhabi
+                  ; 2520               ; 2520-Vehicle Insp Al Ain
+                  ; 2530               ; 2530-Vehic Insp Al Dhabi
+                  ; 2540               ; 2540-Veh Ins Northern Emi
+                  ; 5310               ; 5310-Car wash Abu Dhabi
+                  ; 5320               ; 5320-Car wash Al Ain
+                  ; 5330               ; 5330-Car wash Al Dhafra
+                  ; 5340               ; 5340-Car wash Nrthn Emrte

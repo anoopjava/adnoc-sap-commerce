@@ -1,0 +1,65 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Categories into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = source(code, $catalogVersion)[unique = true]
+$categories = target(code, $catalogVersion)[unique = true]
+
+$lang = en
+#    Division needs to create
+
+# Insert Categories
+INSERT_UPDATE Category; code[unique = true]; division; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+                      ; A02                ;         ;
+                      ; B01                ;         ;
+                      ; B02                ;         ;                                                  ;
+                      ; B03                ;         ;
+                      ; B04                ; 31      ;                                                  ;
+                      ; B05                ; 31      ;
+                      ; B06                ; 31      ;                                                  ;
+                      ; C01                ; 21      ;                                                  ;
+                      ; C02                ; 21      ;                                                  ;
+                      ; C03                ; 21      ;                                                  ;
+                      ; C04                ;         ;                                                  ;
+                      ; C05                ;         ;                                                  ;
+                      ; C06                ;         ;                                                  ;
+                      ; C07                ;         ;                                                  ;
+
+# Insert Category Structure
+INSERT_UPDATE CategoryCategoryRelation; $categories; $supercategories
+                                      ; A02        ; lpg
+                                      ; B01        ; fuel
+                                      ; B02        ; fuel
+                                      ; B03        ; fuel
+                                      ; B04        ; A02
+                                      ; B05        ; A02
+                                      ; B06        ; A02
+                                      ; C01        ; B01
+                                      ; C02        ; B02
+                                      ; C03        ; B03
+                                      ; C04        ; B04
+                                      ; C05        ; B05
+                                      ; C06        ; B05
+                                      ; C07        ; B06
+
+
+INSERT_UPDATE Category; $catalogVersion; code[unique = true]; name[lang = $lang]       ; description[lang = $lang]
+                      ;                ; A02                ; Non-Fuel                 ;
+                      ;                ; B01                ; Gasoline                 ;
+                      ;                ; B02                ; Gas Oil                  ;
+                      ;                ; B03                ; Other Petroleum Products ;
+                      ;                ; B04                ; LPG - Bulk               ;
+                      ;                ; B05                ; LPG - Cylinders          ;
+                      ;                ; B06                ; LPG - Accessories        ;
+                      ;                ; C01                ; ULG                      ;
+                      ;                ; C02                ; Gas Oil                  ;
+                      ;                ; C03                ; Other Petroleum Products ;
+                      ;                ; C04                ; LPG - Bulk               ;
+                      ;                ; C05                ; LPG - Cylinders - Filled ;
+                      ;                ; C06                ; LPG - Cylinders - Empty  ;
+                      ;                ; C07                ; LPG - Accessories        ;

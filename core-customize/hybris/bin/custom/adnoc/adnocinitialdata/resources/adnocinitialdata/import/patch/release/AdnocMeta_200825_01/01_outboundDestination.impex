@@ -1,0 +1,13 @@
+REMOVE ConsumedDestination; id[unique = true]
+                          ; adnocS4CsTicketDestination
+
+REMOVE Endpoint; id[unique = true]
+               ; adnocS4CsTicket
+
+REMOVE DestinationTarget; id[unique = true]
+                        ; adnoc-s4-csticket-destination-target
+
+REMOVE ConsumedOAuthCredential; id[unique = true]
+                              ; adnoc-s4-csticket-credentail
+
+

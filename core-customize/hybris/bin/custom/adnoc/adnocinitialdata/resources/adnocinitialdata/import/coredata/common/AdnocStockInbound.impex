@@ -1,0 +1,15 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; AdnocStockInbound  ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code) ; root[default = false]; itemTypeMatch(code)
+                                   ; AdnocStockInbound                     ; Warehouse          ; Warehouse  ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocStockInbound                     ; StockLevel         ; StockLevel ; true                 ; ALL_SUB_AND_SUPER_TYPES ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; AdnocStockInbound:Warehouse                                        ; code                        ; Warehouse:code                                     ;                                                           ; true                   ;
+                                            ; AdnocStockInbound:StockLevel                                       ; productCode                 ; StockLevel:productCode                             ;                                                           ; true                   ;
+                                            ; AdnocStockInbound:StockLevel                                       ; available                   ; StockLevel:available                               ;                                                           ;                        ;
+                                            ; AdnocStockInbound:StockLevel                                       ; warehouse                   ; StockLevel:warehouse                               ; AdnocStockInbound:Warehouse                               ;                        ;
+
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; AdnocStockInbound                     ; OAUTH                   ;

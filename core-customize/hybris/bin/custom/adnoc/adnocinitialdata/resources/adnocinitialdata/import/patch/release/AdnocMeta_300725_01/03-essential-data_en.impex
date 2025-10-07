@@ -1,0 +1,8 @@
+UPDATE PrimaryProduct; code[unique = true]; name[lang = en]
+                     ; 41                 ; Lubricants
+
+
+REMOVE PrimaryProduct; code[unique = true]; name[lang = en]
+                     ; 25                 ; Vehicle Inspection
+                     ; 53                 ; Car Wash
+

@@ -1,0 +1,76 @@
+$contentCatalog = adnocContentCatalog
+$contentCatalogName = Adnoc Content Catalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$lang = en
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]           ; $contentCV[unique = true]; name                          ; parent(uid, $contentCV); links(&linkRef); &nodeRef                     ; visible;
+                               ; SAPCommerceNavNode           ;                          ; SAP Commerce Cloud Pages      ; FooterNavNode          ;                ; SAPCommerceNavNode           ; true   ;
+                               ; SAPCustomerExperienceNavNode ;                          ; SAP Customer Experience Pages ; FooterNavNode          ;                ; SAPCustomerExperienceNavNode ; false  ;
+                               ; FollowUsNavNode              ;                          ; Follow Us Pages               ; FooterNavNode          ;                ; FollowUsNavNode              ; true   ;
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]   ; $contentCV[unique = true]; name               ; parent(uid, $contentCV); links(&linkRef); &nodeRef             ; visible;
+                               ; DocumentationNavNode ;                          ; Documentation Page ; SAPCommerceNavNode     ;                ; DocumentationNavNode ; false  ;
+
+## links of the above navigation nodes ##
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; name                          ; url                                                       ; &linkRef             ; &componentRef        ; target(code)[default = 'sameWindow']
+                              ;                          ; AboutSAPCommerceLink ; About SAP Commerce Cloud Link ; "https://www.adnocdistribution.ae/en/corporate/our-story" ; AboutSAPCommerceLink ; AboutSAPCommerceLink ; newWindow
+
+
+##----- level 5. children of FollowUsNavNode -----##
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]       ; $contentCV[unique = true]; name                     ; parent(uid, $contentCV); links(&linkRef); &nodeRef                 ; visible;
+                               ; AgileCommerceBlogNavNode ;                          ; Agile Commerce Blog Page ; FollowUsNavNode        ;                ; AgileCommerceBlogNavNode ; false  ;
+                               ; InstagramNavNode         ;                          ; Instagram Page           ; FollowUsNavNode        ;                ; InstagramNavNode         ; true   ;
+                               ; YoutubeNavNode           ;                          ; Youtube Page             ; FollowUsNavNode        ;                ; YoutubeNavNode           ; true   ;
+
+##
+## entries of the above navigation nodes ##
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]    ; $contentCV[unique = true]; name                            ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; InstagramNavNodeEntry ;                          ; Instagram Navigation Node Entry ; InstagramNavNode        ; InstagramLink                                          ;
+                                ; YoutubeNavNodeEntry   ;                          ; Youtube Navigation Node Entry   ; YoutubeNavNode          ; YoutubeLink                                            ;
+
+## links of the above navigation nodes ##
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]    ; name                     ; url                                                        ; &linkRef              ; &componentRef         ; target(code)[default = 'sameWindow']
+                              ;                          ; AgileCommerceBlogLink ; Agile Commerce Blog Link ; "http://www.agile-commerce.com/"                           ; AgileCommerceBlogLink ; AgileCommerceBlogLink ; newWindow
+                              ;                          ; LinkedInLink          ; Linked In Link           ; "https://www.linkedin.com/company/adnoc-distribution/"     ; LinkedInLink          ; LinkedInLink          ; newWindow
+                              ;                          ; FacebookLink          ; Facebook Link            ; "https://www.facebook.com/adnocdistribution"               ; FacebookLink          ; FacebookLink          ; newWindow
+                              ;                          ; TwitterLink           ; Twitter Link             ; "https://www.twitter.com/adnocdist"                        ; TwitterLink           ; TwitterLink           ; newWindow
+                              ;                          ; InstagramLink         ; Twitter Link             ; "https://www.instagram.com/adnocdistribution/"             ; InstagramLink         ; InstagramLink         ; newWindow
+                              ;                          ; YoutubeLink           ; Youtube Link             ; "https://www.youtube.com/channel/UCK0kSlivEFUWzo00BO7hGew" ; YoutubeLink           ; YoutubeLink           ; newWindow
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; linkName[lang = $lang]
+                       ;                          ; AboutSAPCommerceLink ; "About Us"
+                       ;                          ; YoutubeLink          ; "Youtube"
+                       ;                          ; InstagramLink        ; "Instagram"
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode; $contentCV[unique = true]; uid[unique = true] ; title[lang = $lang]
+                        ;                          ; SAPCommerceNavNode ; "About Us"
+
+# Create the missing pages
+INSERT_UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]; name                 ; masterTemplate(uid, $contentCV); label; defaultPage[default = 'true']; approvalStatus(code)[default = 'approved']; homepage[default = 'false']
+                         ;                          ; findOurOffice     ; Find Our Office Page ; ContentPage1Template           ; /office-finder
+
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; name                     ; active; cmsComponents(uid, $contentCV)                                         ;
+                         ;                          ; SiteLinksSlot     ; Slot contains some links ; true  ; OrdersLink,UnitLevelOrderLink,ContactUsLink,HelpLink,FindOurOfficeLink ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name                 ; url            ; &linkRef          ; &componentRef     ; target(code)[default = 'sameWindow']; restrictions(uid, $contentCV)
+                              ;                          ; FindOurOfficeLink ; Find Our Office Link ; /office-finder ; FindOurOfficeLink ; FindOurOfficeLink ;
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; linkName[lang = $lang]
+                       ;                          ; FindOurOfficeLink ; "Find Our Offices"
+
+INSERT_UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]              ; name                              ; content
+                                   ;                          ; FindOurOfficeParagraphComponent ; FindOurOffice Paragraph Component ; "Find Our Office"
+
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]              ; content[lang = en]
+                            ;                          ; FindOurOfficeParagraphComponent ; "<style>.contactUsDiv{margin-bottom:50px}.contactUsDiv .row>[class*='col-']{display:flex;margin-bottom:30px}.contactUsDiv .our-offices__card{width:100%;height:100%;background-color:#fff;border-radius:8px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);display:flex;flex-direction:column;justify-content:space-between}.contactUsDiv .text-video__title{display:block;width:100%;margin-bottom:20px} </style> <div class=""contactUsDiv""> <div class=""col-md-12""> <h1 class=""primary-c text-video__title mb-3"">Our offices</h1> <div class=""row""> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Khalifa Energy Complex Tower 1 next to Sofitel Corniche, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 50055</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Zayed Street next to ADCB Building, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Al Ain</h3> <p class=""mb-3"">Ayla Hotel Building (Mezzanine 1), Al Muwaiji Area, Al Ain</p><span class=""d-block mb-3"">P.O.Box: 1099</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">SS 742 Maraba Al Dhafra along Sheikha Salama Bint Butti Road, Al Dhafra, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Sharjah</h3> <p class=""mb-3"">City Gate Tower (Level 10), Al Ittihad Street, Sharjah</p><span class=""d-block mb-3"">P.O.Box: 1336</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Saudi Arabia</h3> <p class=""mb-3"">6188, King Faisal Rd, Al Bandariyah Dist. , Al Khobar</p><span class=""d-block mb-3"">P.O.Box: 34423</span></div> </div> </div> </div> </div> </div>"
+
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]      ; name                                     ; active; cmsComponents(uid, $contentCV)
+                         ;                          ; Section2A-FindOurOffice ; Section 2A Slot for Find Our Office Page ; true  ; FindOurOfficeParagraphComponent
+
+INSERT_UPDATE ContentSlotForPage; $contentCV[unique = true]; uid[unique = true]      ; position[unique = true]; page(uid, $contentCV)[unique = true]; contentSlot(uid, $contentCV)[unique = true]
+                                ;                          ; Section2A-FindOurOffice ; Section2A              ; findOurOffice                       ; Section2A-FindOurOffice
+
+

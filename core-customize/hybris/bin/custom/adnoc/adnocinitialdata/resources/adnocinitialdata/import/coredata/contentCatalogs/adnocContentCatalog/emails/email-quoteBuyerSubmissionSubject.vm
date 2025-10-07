@@ -1,0 +1,2 @@
+﻿
+${ctx.messages.emailSubject} ${ctx.quote.code}

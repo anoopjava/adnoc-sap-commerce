@@ -1,0 +1,23 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$picture = media(code, $contentCV)
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+$lang = en
+
+# CMSParagraphComponent
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]          ; content[lang = en]
+                            ;                          ; ContactUsParagraphComponent ; "<div class=""textpage textpage-faqs""><div class=""item_container""><h2><u>E-Commerce Technical Support</u></h2><p style=""margin:0""><u>Business Hours:</u></br> Sunday–Thursday, 8:00 AM – 5:00 PM (UAE Time)</p></br><p style=""margin:2px 0 0 0""><u>Our Call Centres:</u></br> 7 AM – 12 AM daily</p></br><p style=""margin:2px 0 0 0"">United Arab Emirates &nbsp; <a href=""tel:800300""></br> <i class=""fa fa-phone"" style=""margin-right:5px;"" aria-hidden=""true""></i><span dir=""ltr"">800300</span></a></p><p style=""margin:2px 0 0 0""><a href=""mailto:info@adnocdistribution.ae""><i class=""fa-solid fa-at"" style=""margin-right:5px;""></i>info@adnocdistribution.ae</a></p></br><p>We're committed to providing exceptional support to our B2B customers. Technical problems or malfunctions may affect the functionality, performance, or user experience of the E-commerce business platform.</p><p tyle=""margin-top:12px"">Whether you need help with:</p><ul style=""margin-top:4px""><li><strong>Technical Issues</strong> (E-Commerce link doesn’t work, Website blocked by your organization, Data-mapping errors, Real-time updates not functioning)</li><li><strong>Website Performance & Accessibility</strong> (Slow page loads, Website downtime or crashes, Broken links, Missing pages, Browser-compatibility problems)</li><li><strong>User Account & Authentication Issues</strong> (Login failures, Password errors, Account-creation issues, Session timeouts or auto-logouts, Two-factor authentication failure)</li><li><strong>Cart & Checkout Errors</strong> (Incorrect cart updates, Checkout button failure, Payment-page refresh issues, Failure to receive order confirmation)</li><li><strong>Payment-Gateway Issues</strong> (Failed transactions, Payment method not supported, Currency-conversion errors, SSL/security certificate problems, Payment-page refresh issues)</li><li><strong>Account Management</strong> (Account-browsing errors, Credit-management refresh issues)</li></ul></br><p>Our experienced support team is here to assist you every step of the way.</p></div><div class=""item_container""><h2><u>Commercial Business Support</u></h2><p>Email: <a href=""mailto:support-b2becom@adnocdistribution.ae"">support-b2becom@adnocdistribution.ae</a></p><p>Our Commercial Support Specialists work closely with the Sales, Finance and Logistics teams to resolve more complex business-related queries throughout the supply chain. They are your go-to contacts for:</p><ul><li>Customer Statement of Account (SOA) clarifications</li><li>Product Details & Catalogue Management</li><li>Accounts & Sub-Users Management</li><li>Product Pricing & Discounts</li><li>Tax or Shipping Charges calculations</li><li>Customized Technical Solutions</li><li>Sales Orders and Overdue Invoice Details</li><li>Product and Services Catalogues Relevant Queries</li><li>Escalations and Strategic Account Support</li></ul></div></div>"
+
+REMOVE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; linkName[lang = en]
+                       ;                          ; HelpLink          ; "FAQ"
+
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; linkName[lang = en]
+                       ;                          ; CustomerGuide     ; "Customer Guide"
+
+REMOVE CMSNavigationNode; uid[unique = true]  ; $contentCV[unique = true]
+                        ; GigyaProfileNavNode ;
+
+REMOVE CMSNavigationEntry; uid[unique = true]       ; $contentCV[unique = true];
+                         ; GigyaProfileNavNodeEntry ;

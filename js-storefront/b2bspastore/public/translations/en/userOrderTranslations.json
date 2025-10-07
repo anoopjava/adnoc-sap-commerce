@@ -1,0 +1,92 @@
+{
+  "userOrderTranslations": {
+    "returnReasonLabel": "Reason for return",
+    "cancelReasonLabel": "Reason For Cancel:",
+    "comments": "Comments:",
+    "selectReturnLabel": "Select return reason",
+    "selectCancelLabel": "Select Cancel reason",
+    "unitOfMeasurePer": "per",
+    "uomLable": "Unit of Measure",
+    "orderDetails": {
+      "cancellationAndReturn": {
+        "orderNumber": "Order number:",
+        "requestDeliverydate": "Requested delivery date",
+        "orderedQuantity": "Ordered quantity",
+        "deliveredQuantity": "Delivered quantity",
+        "remainingQuantity": "Remaining quantity",
+        "returnedQuantity": "Returned quantity",
+        "noItemToCancel": "There are no items eligible for cancellation here.",
+        "slNum": "S.no",
+        "productIdlabel": "Product ID",
+        "item": "Item",
+        "returnRequestDocument": {
+          "label": "Upload document",
+          "placeholder": "Select file to upload",
+          "button": "Upload",
+          "tooltip": "1) Only pdf files are allowed <br>2) Max {{maxFileSize}} mb file size.",
+          "selectedFile": "Selected file"
+        },
+        "returnReason": "Reason For Return",
+        "setAll": "Select All Items"
+      }
+    },
+    "order": {
+      "shipTo": "Ship To:",
+      "orderCreatedBy": "Order Placed By:",
+      "orderStatus": "Order Status:",
+      "sapOrderNumber": "SAP Order Number:",
+      "orderNumber": "Order Number:",
+      "orderPlacedDateAndTime": "Placed On:",
+      "purchaseOrderNumber": "Purchase Order Number:",
+      "paymentMethod": "Method of Payment:",
+      "deliveryType": "Delivery Type: ",
+      "payerId": "Payer ID:",
+      "payerName": "Payer Name:",
+      "cardNumber": "Card Number:",
+      "transactionReference": "Transaction Reference:",
+      "cardAmount": "Card Amount:",
+      "creditUtilized": "Credit Utilized:",
+      "bankTransferAccountNumber": "Account Number:",
+      "bankTransferAmount": "Amount:",
+      "deliveryPointOfServiceDetails": {
+        "itemsToBePickUp": "To Be Picked Up"
+      },
+      "paymentMethods": {
+        "bankCard": "Bank Card",
+        "creditLimit": "Credit Limit",
+        "bankTransfer": "Bank Transfer"
+      },
+      "transactionId": "Transaction ID:",
+      "referenceNo": "Reference Number:",
+      "noPaymentInfo": "No payment transactions available."
+    },
+    "orderHistory": {
+      "orderHistory": "Order History",
+      "orderId": "Order #",
+      "emptyPurchaseOrderId": "None",
+      "date": "Creation Date",
+      "status": "Status",
+      "PONumber": "P.O. Number",
+      "total": "<div class='d-flex flex-column flex-gap'>Total <sub class='text-capitalize'>(incl. VAT)</sub></div>",
+      "shipToId":"Shipto ID",
+      "noOrders": "We have no order records for this account.",
+      "noReplenishmentOrders": "We have no replenishment order records for this account.",
+      "startShopping": "Start Shopping",
+      "sortBy": "Sort by",
+      "sortOrders": "Sort orders",
+      "replenishmentOrderHistory": "Replenishment Order History",
+      "replenishmentOrderId": "Replenishment #",
+      "purchaseOrderNumber": "PO #",
+      "costCenter": "Cost Center",
+      "startOn": "Start On",
+      "frequency": "Frequency",
+      "nextOrderDate": "Next Order Date",
+      "cancel": "Cancel",
+      "cancelled": "Cancelled",
+      "replenishmentHistory": "Replenishment History",
+      "notFound": "No Orders Found",
+      "actions": "Actions",
+      "category": "Category"
+    }
+  }
+}

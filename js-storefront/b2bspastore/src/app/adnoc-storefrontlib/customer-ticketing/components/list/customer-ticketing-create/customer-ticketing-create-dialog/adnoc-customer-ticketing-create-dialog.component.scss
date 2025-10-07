@@ -1,0 +1,119 @@
+.adnoc-customer-ticketing-create-dialog {
+    .cx-customer-ticket-form-dialog {
+        position: relative;
+        width: auto;
+        margin: 0.5rem;
+        pointer-events: none;
+      .cx-customer-ticket-form-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        background-clip: padding-box;
+        pointer-events: auto;
+        outline: 0;
+  
+        .cx-customer-ticket-form-header {
+          display: inline-flex;
+          justify-content: space-between;
+          align-items: center;
+  
+          .cx-customer-ticket-form-title {
+            color: var(--cx-color-primary);
+            font-size: 24px;
+            font-family: var(--cx-font-family-bold);
+            font-weight: var(--cx-font-weight-bold);
+          }
+        }
+  
+        .cx-customer-ticket-form-close {
+          .cx-icon {
+            border: 1.5px solid var(--cx-color-primary);
+            color: var(--cx-color-primary);
+            background-color: var(--cx-form-close-icon-color);
+            border-radius: 50%;
+            padding: 8px 10px;
+            font-size: 18px;
+          }
+        }
+  
+        .cx-customer-ticket-form-body {
+          padding: 16px 30px 30px;
+  
+          label {
+            margin-bottom: 20px;
+  
+            .cx-customer-ticket-label {
+              font-family: var(--cx-font-family-regular);
+              font-weight: var(--cx-font-weight-normal);
+              line-height: 24px;
+              color: var(--cx-black);
+            }
+  
+            .cx-customer-ticket-input-hint {
+              font-style: normal;
+            }
+          }
+  
+          .form-control {
+            border-color: var(--cx-form-control-border-color);
+            color: var(--cx-form-control-text-color);
+  
+            &.ng-invalid.ng-touched {
+              border-color: var(--cx-color-danger);
+            }
+          }
+  
+          cx-file-upload .fa-upload {
+            color: var(--cx-color-primary);
+          }
+  
+          .cx-customer-ticket-file-upload-hint {
+            font-style: normal;
+          }
+  
+          .cx-customer-ticket-form-footer {
+            .btn {
+              font-family: var(--cx-font-family-medium);
+              font-weight: var(--cx-font-weight-semi);
+            }
+          }
+        }
+      }
+  
+      @media (min-width: 576px) {
+        max-width: 500px;
+        margin: 1.75rem auto;
+      }
+    }
+  }
+  
+  // Shared structure reused across other dialogs
+  cx-customer-ticketing-reopen-dialog,
+  cx-customer-ticketing-close-dialog {
+    .cx-customer-ticket-form-dialog {
+      .cx-customer-ticket-form-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        background-clip: padding-box;
+        pointer-events: auto;
+        outline: 0;
+  
+        .cx-customer-ticket-form-body {
+          padding: 16px 30px 30px;
+        }
+      }
+  
+      @media (min-width: 576px) {
+        max-width: 500px;
+        margin: 1.75rem auto;
+      }
+    }
+  }
+  

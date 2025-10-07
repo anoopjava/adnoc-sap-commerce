@@ -1,0 +1,105 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundB2BCustomer; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]; itemTypeMatch(code)
+                                   ; InboundB2BCustomer	; Region                       	; Region                       	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; IdentityType                 	; IdentityType                 	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BCustomer	; Currency                     	; Currency                     	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; Title                        	; Title                        	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; B2BCustomer                  	; B2BCustomer                  	; true	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; B2BUnit                      	; B2BUnit                      	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; Address                      	; Address                      	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; Gender                       	; Gender                       	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BCustomer	; Language                     	; Language                     	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; UserGroup                    	; UserGroup                    	; 	; ALL_SUB_AND_SUPER_TYPES	;
+                                   ; InboundB2BCustomer	; PreferredCommunicationChannel	; PreferredCommunicationChannel	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BCustomer	; Nationality                  	; Nationality                  	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BCustomer	; Designation                  	; Designation                  	; 	; ALL_SUBTYPES           	;
+                                   ; InboundB2BCustomer	; Country                      	; Country                      	; 	; ALL_SUB_AND_SUPER_TYPES	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundB2BCustomer:Region                       	; isocode                      	; Region:isocode                           	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Region                       	; country                      	; Region:country                           	; InboundB2BCustomer:Country                      	; true	;
+                                            ; InboundB2BCustomer:IdentityType                 	; code                         	; IdentityType:code                        	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Currency                     	; isocode                      	; Currency:isocode                         	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Title                        	; code                         	; Title:code                               	;                                                 	; true	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; designation                  	; B2BCustomer:designation                  	; InboundB2BCustomer:Designation                  	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; addresses                    	; B2BCustomer:addresses                    	; InboundB2BCustomer:Address                      	; 	; true
+                                            ; InboundB2BCustomer:B2BCustomer                  	; title                        	; B2BCustomer:title                        	; InboundB2BCustomer:Title                        	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; emailPreference              	; B2BCustomer:emailPreference              	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; identificationValidTo        	; B2BCustomer:identificationValidTo        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; nationality                  	; B2BCustomer:nationality                  	; InboundB2BCustomer:Nationality                  	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; gender                       	; B2BCustomer:gender                       	; InboundB2BCustomer:Gender                       	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; customerID                   	; B2BCustomer:customerID                   	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sessionLanguage              	; B2BCustomer:sessionLanguage              	; InboundB2BCustomer:Language                     	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sapContactID                 	; B2BCustomer:sapContactID                 	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; contactEmail                 	; B2BCustomer:contactEmail                 	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; identityType                 	; B2BCustomer:identityType                 	; InboundB2BCustomer:IdentityType                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sapReplicationInfo           	; B2BCustomer:sapReplicationInfo           	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; firstName                    	; B2BCustomer:firstName                    	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sapIsReplicated              	; B2BCustomer:sapIsReplicated              	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; uid                          	; B2BCustomer:uid                          	;                                                 	; true	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; groups                       	; B2BCustomer:groups                       	; InboundB2BCustomer:UserGroup                    	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; defaultB2BUnit               	; B2BCustomer:defaultB2BUnit               	; InboundB2BCustomer:B2BUnit                      	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sapBusinessPartnerID         	; B2BCustomer:sapBusinessPartnerID         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; active                       	; B2BCustomer:active                       	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; displayName                  	; B2BCustomer:displayName                  	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; loginDisabled                	; B2BCustomer:loginDisabled                	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; lastName                     	; B2BCustomer:lastName                     	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; companyAddressCity           	; B2BCustomer:companyAddressCity           	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; identificationNumber         	; B2BCustomer:identificationNumber         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; telephone                    	; B2BCustomer:telephone                    	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; name                         	; B2BCustomer:name                         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; preferredCommunicationChannel	; B2BCustomer:preferredCommunicationChannel	; InboundB2BCustomer:PreferredCommunicationChannel	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; email                        	; B2BCustomer:email                        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; mobileNumber                 	; B2BCustomer:mobileNumber                 	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; smsPreference                	; B2BCustomer:smsPreference                	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; identificationValidFrom      	; B2BCustomer:identificationValidFrom      	;                                                 	; 	;
+                                            ; InboundB2BCustomer:B2BCustomer                  	; sessionCurrency              	; B2BCustomer:sessionCurrency              	; InboundB2BCustomer:Currency                     	; 	;
+                                            ; InboundB2BCustomer:B2BUnit                      	; uid                          	; B2BUnit:uid                              	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Address                      	; sapAddressUsageCounter       	; Address:sapAddressUsageCounter           	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; contactAddress               	; Address:contactAddress                   	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; title                        	; Address:title                            	; InboundB2BCustomer:Title                        	; 	;
+                                            ; InboundB2BCustomer:Address                      	; department                   	; Address:department                       	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; sapPublicKey                 	; Address:sapPublicKey                     	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Address                      	; email                        	; Address:email                            	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; building                     	; Address:building                         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; sapCustomerID                	; Address:sapCustomerID                    	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; gender                       	; Address:gender                           	; InboundB2BCustomer:Gender                       	; 	;
+                                            ; InboundB2BCustomer:Address                      	; publicKey                    	; Address:publicKey                        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; pobox                        	; Address:pobox                            	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; town                         	; Address:town                             	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; line1                        	; Address:line1                            	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; sapAddressUsage              	; Address:sapAddressUsage                  	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; country                      	; Address:country                          	; InboundB2BCustomer:Country                      	; 	;
+                                            ; InboundB2BCustomer:Address                      	; streetnumber                 	; Address:streetnumber                     	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; fax                          	; Address:fax                              	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; dateOfBirth                  	; Address:dateOfBirth                      	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; cellphone                    	; Address:cellphone                        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; sapAddressUUID               	; Address:sapAddressUUID                   	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; region                       	; Address:region                           	; InboundB2BCustomer:Region                       	; 	;
+                                            ; InboundB2BCustomer:Address                      	; appartment                   	; Address:appartment                       	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; district                     	; Address:district                         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; line2                        	; Address:line2                            	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; phone2                       	; Address:phone2                           	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; postalcode                   	; Address:postalcode                       	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; firstname                    	; Address:firstname                        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; streetname                   	; Address:streetname                       	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; duplicate                    	; Address:duplicate                        	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; lastname                     	; Address:lastname                         	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; phone1                       	; Address:phone1                           	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; company                      	; Address:company                          	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Address                      	; remarks                      	; Address:remarks                          	;                                                 	; 	;
+                                            ; InboundB2BCustomer:Gender                       	; code                         	; Gender:code                              	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Language                     	; isocode                      	; Language:isocode                         	;                                                 	; true	;
+                                            ; InboundB2BCustomer:UserGroup                    	; uid                          	; UserGroup:uid                            	;                                                 	; true	;
+                                            ; InboundB2BCustomer:PreferredCommunicationChannel	; code                         	; PreferredCommunicationChannel:code       	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Nationality                  	; code                         	; Nationality:code                         	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Designation                  	; code                         	; Designation:code                         	;                                                 	; true	;
+                                            ; InboundB2BCustomer:Country                      	; isocode                      	; Country:isocode                          	;                                                 	; true	;
+
+#******************************
+#*** Inbound 's ICC ****
+#******************************
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; InboundB2BCustomer                    ; OAUTH                   ;

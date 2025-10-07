@@ -1,0 +1,22 @@
+﻿## messageSource=classpath:/adnocservice/messages/email-adnocQuoteRequestResubmission_$lang.properties
+
+<!DOCTYPE html>
+<html>
+     <body>
+     <div class="content">
+             <p>Dear ${ctx.title} ${ctx.csaEmployeeName},</p>
+            <p>${ctx.messages.newQuote}</p>
+            <p><strong>Quote ID:</strong> ${ctx.quote.code}</p>
+            <p>${ctx.messages.quoteRequest}</p>
+            <p><a href="${ctx.backOfficeLink}" style="color:#0468b3;">${ctx.messages.linkQuotation}</a></p>
+            <p>${ctx.messages.customerEnquiry}</p>
+            <p>${ctx.messages.thankYouMessage}</p>
+     </div>
+             <div class="footer" style="font-family: Arial, Helvetica, sans-serif; color: #414a4f;">
+                 <p>${ctx.messages.complimentaryClosing}</p>
+                 <p>${ctx.messages.salesGroup}</p>
+                 <p>${ctx.messages.adnoc}</p>
+                <p>${ctx.messages.website}</p>
+             </div>
+    </body>
+</html>

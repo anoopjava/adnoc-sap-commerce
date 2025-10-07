@@ -1,0 +1,304 @@
+@import '../../../../../../styles/scss/utilities/mixins';
+
+cx-page-layout {
+    &.AccountPageTemplate {
+        cx-page-slot {
+            display: flex;
+            align-items: flex-start;
+            padding-inline-start: 0;
+            margin: auto;
+
+            @include media-breakpoint-down(md) {
+                padding-inline-start: 16px;
+                padding-inline-end: 16px;
+            }
+
+            @include media-breakpoint-down(sm) {
+                .mat-mdc-form-field-bottom-align {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.adnoc-payer-overdue-invoice {
+    &-container {
+        font-family: var(--cx-font-family-regular);
+
+        p.label-content {
+            margin-bottom: 0;
+        }
+
+        #payerOverdueInovice {
+            height: 59px;
+            min-width: 192px;
+        }
+
+        .adnoc-items-list {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-start;
+
+            @include media-breakpoint-down(sm) {
+                display: block;
+            }
+
+            .adnoc-item-info {
+                flex-direction: column;
+
+                @include media-breakpoint-up(md) {
+                    flex-basis: 24%;
+                }
+
+                @include media-breakpoint-down(md) {
+                    flex-basis: 44%;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    width: 100%;
+                    margin-bottom: 16px;
+                }
+
+            }
+        }
+
+        .adnoc-button-group {
+            display: flex;
+            margin: 1rem 0;
+
+            @include media-breakpoint-down(sm) {
+                display: block;
+            }
+
+            .btn {
+                margin-inline-end: 16px;
+                font-size: 18px;
+                font-weight: var(--cx-font-weight-semi);
+                width: auto;
+                text-transform: none;
+                min-width: 144px;
+                max-height: 56px;
+                min-height: 56px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @include media-breakpoint-down(sm) {
+                    display: block;
+                    width: 100%;
+                }
+
+            }
+
+            &.paynowBtn {
+                justify-content: flex-end;
+                margin: 32px 0 0;
+            }
+        }
+
+        .calendarInfo {
+            .mat-datepicker-toggle-default-icon {
+                fill: var(--cx-color-primary) !important;
+            }
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: scroll;
+
+            .custom-table {
+                width: 100%;
+                border: 1px solid var(--cx-color-invrse);
+                white-space: nowrap;
+
+                th,
+                td {
+                    padding: 12px;
+                    text-align: left;
+                    font-size: 16px;
+                    font-family: var(--cx-font-family-regular);
+                }
+
+                th {
+                    font-weight: var(--cx-font-weight-bold);
+                    background-color: var(--cx-adnoc-rwhite-color);
+                    text-transform: uppercase;
+
+                    .mdc-label {
+                        font-size: 16px;
+                        font-weight: var(--cx-font-weight-bold);
+                        font-family: var(--cx-font-family-regular);
+                        margin: 0;
+                    }
+
+                    .currencyInfo {
+                        border: 0;
+                        background-color: transparent;
+                        padding: 0;
+
+                        cx-icon {
+                            pointer-events: none;
+                        }
+                    }
+
+                    cx-popover {
+                        white-space: normal;
+                        text-transform: none;
+                    }
+                }
+
+                td {
+                    border-bottom: 1px solid var(--cx-summary-card-border);
+
+                    &.totalDue {
+                        font-weight: var(--cx-font-weight-bold);
+                        color: var(--cx-color-black);
+
+                        &.totalLabel {
+                            color: var(--cx-color-primary);
+                        }
+                    }
+                }
+
+                mat-checkbox {
+                    margin-left: 8px;
+                }
+
+                .Overdue,
+                .Open {
+                    color: var(--cx-color-danger);
+                    font-weight: var(--cx-font-weight-semi);
+                }
+
+                .Open {
+                    color: var(--cx-color-primary);
+                }
+            }
+
+            .mdc-checkbox {
+                .mdc-checkbox__native-control {
+                    &:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true]) {
+                        &~.mdc-checkbox__background {
+                            border-color: var(--cx-color-primary) !important;
+                        }
+                    }
+
+                    &:focus:checked~.mdc-checkbox__ripple,
+                    &:checked~.mdc-checkbox__ripple {
+                        background-color: var(--cx-color-primary) !important;
+                    }
+
+                    &:enabled:checked {
+                        &~.mdc-checkbox__background {
+                            border-color: var(--cx-color-primary) !important;
+                            background-color: var(--cx-color-primary) !important;
+                        }
+                    }
+
+                    &:enabled:indeterminate {
+                        &~.mdc-checkbox__background {
+                            border-color: var(--cx-color-primary) !important;
+                            background-color: var(--cx-color-primary) !important;
+                        }
+                    }
+
+                    &[data-indeterminate=true]:enabled {
+                        &~.mdc-checkbox__background {
+                            border-color: var(--cx-color-primary) !important;
+                            background-color: var(--cx-color-primary) !important;
+                        }
+                    }
+                }
+
+                &--disabled {
+                    & .mdc-checkbox__background {
+                        background-color: var(--cx-pdp-tabHead-border-color) !important;
+                    }
+                }
+            }
+
+        }
+
+        .payment-container {
+            background-color: var(--cx-summary-range-background);
+            padding: 32px 16px 16px 32px;
+            margin-top: 32px;
+
+            h3 {
+                font-size: 20px;
+                font-family: var(--cx-font-family-bold);
+                margin-bottom: 24px;
+            }
+
+            .sub-text {
+                margin: 0;
+            }
+
+            .form-check {
+                display: flex;
+                padding: 16px 0 16px 32px;
+                margin: 0;
+                border-bottom: 1px solid var(--cx-summary-range-border);
+                padding-bottom: 16px;
+                justify-content: flex-start;
+                align-items: center;
+
+                &:last-of-type {
+                    border-bottom: 0;
+                }
+
+                .cardIcon {
+                    color: var(--cx-color-primary);
+                    font-size: 18px;
+                }
+
+                .form-check-input {
+                    &+.form-check-label {
+                        margin-bottom: 0;
+                        font-size: 16px;
+                        font-family: var(--cx-font-family-bold);
+                        padding-bottom: 8px;
+                        width: 100%;
+
+                        .invoice-payment-type {
+                            .creditCard {
+                                margin: 0 10px;
+                            }
+                        }
+                    }
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        border-color: var(--cx-form-control-text-color);
+
+                        &+.form-check-label {
+                            color: var(--cx-form-control-text-color);
+                        }
+                    }
+                }
+            }
+        }
+
+        .noDataInfo {
+            display: flex;
+            justify-content: center;
+            font-family: var(--cx-font-family-medium);
+            font-size: 18px;
+        }
+
+        .custom-spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--cx-spinner-background-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: auto;
+        }
+    }
+}

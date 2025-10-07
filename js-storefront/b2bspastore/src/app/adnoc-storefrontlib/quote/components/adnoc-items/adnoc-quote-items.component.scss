@@ -1,0 +1,14 @@
+.CANCELLED {
+  adnoc-cart-item-list {
+    table {    
+      .adnoc-item-list-row {
+        display: none;
+      }
+      td{
+        .cx-price{
+          display: none;
+        }
+      }
+    }
+  }
+}

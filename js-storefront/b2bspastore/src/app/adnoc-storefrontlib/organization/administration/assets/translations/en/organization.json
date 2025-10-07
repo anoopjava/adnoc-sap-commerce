@@ -1,0 +1,842 @@
+{
+  "organization": {
+    "enabled": "Active",
+    "disabled": "Disabled",
+    "enable": "Enable",
+    "disable": "Disable",
+    "name": "Name",
+    "code": "Code",
+    "done": "done",
+    "cancel": "Cancel",
+    "add": "Add",
+    "manageUsers": "Manage Users",
+    "create": "Create {{name}}",
+    "edit": "Edit",
+    "save": "Save {{name}}",
+    "delete": "Delete",
+    "assign": "Manage",
+    "active": "Active",
+    "status": "Status",
+    "details": "Details",
+    "Active": "Active",
+    "Deactive": "Deactive",
+    "In-Progress": "In progress",
+    "Not for Login": "Not for login",
+    "InActive": "InActive",
+    "messages": {
+      "emptyList": "The list is empty"
+    },
+    "userRoles": {
+      "b2bcustomergroup": "Contact Person",
+      "b2bapprovergroup": "Approver",
+      "b2bmanagergroup": "Manager",
+      "b2badmingroup": "Admin"
+    },
+    "userRights": {
+      "unitorderviewergroup": "View Unit-Level Orders"
+    },
+    "breadcrumb": "Organization",
+    "notification": {
+      "noSufficientPermissions": "No sufficient permissions to access this page",
+      "notExist": "This item does not exist",
+      "disabled": "You cannot edit a disabled item"
+    },
+    "confirmation": {
+      "cancel": "CANCEL",
+      "confirm": "CONFIRM",
+      "disable": "DISABLE",
+      "delete": "DELETE"
+    },
+    "httpHandlers": {
+      "conflict": {
+        "budget": "Budget with code {{ code }} already exists.",
+        "costCenter": "Cost center with code {{ code }} already exists.",
+        "unit": "Organizational unit with uid {{ code }} already exists.",
+        "user": "User with email {{ code }} already exists",
+        "userGroup": "User Group with id {{ code }} already exists",
+        "permission": "Approval Permission with code {{ code }} already exists.",
+        "unknown": "Server validation error."
+      }
+    },
+    "information": "More information about {{title}}"
+  },
+  "orgCostCenter": {
+    "groupName": "Cost Centers",
+    "header": "All cost centers ({{count}})",
+    "code": "Code",
+    "active": "Status",
+    "name": "Name",
+    "currency": "Currency",
+    "unit": "Parent Unit",
+    "actions": "",
+    "sortBy": "Sort by",
+    "sort": {
+      "byName": "Name",
+      "byUnitName": "Unit",
+      "byCode": "Code"
+    },
+    "hint": "All orders placed through your organization's purchase account are linked to a cost center for tracking purposes. Each unit can have multiple cost centers. To limit spending, budgets are assigned to cost centers. A buyer selects a cost center when checking out.",
+    "disable": {
+      "confirm": "Disable"
+    },
+    "messages": {
+      "deactivateTitle": "Disable this cost center?",
+      "deactivate": "Disabled cost centers cannot be used for placing new orders. Ensure that your unit has at least one cost center. Existing orders are not affected.",
+      "confirmEnabled": "Cost Center {{ item.name }} enabled successfully",
+      "confirmDisabled": "Cost Center {{ item.name }} disabled successfully",
+      "update": "Cost Center {{ item.name }} updated successfully",
+      "create": "Cost Center {{ item.name }} created successfully"
+    },
+    "info": {
+      "disabledEdit": "Enable the cost center to allow editing.",
+      "disabledEnable": "Unit must be enabled before this cost center may be enabled."
+    },
+    "details": {
+      "title": "Cost Center Details",
+      "subtitle": "Cost Center: {{ item.name }}"
+    },
+    "edit": {
+      "title": "Edit Cost Center",
+      "subtitle": "Cost Center: {{ item.name }}"
+    },
+    "create": {
+      "title": "Create Cost Center",
+      "subtitle": ""
+    },
+    "budget": {
+      "link": "Budgets"
+    },
+    "breadcrumbs": {
+      "list": "All cost centers",
+      "details": "{{name}}",
+      "budgets": "Budgets"
+    }
+  },
+  "orgCostCenterBudgets": {
+    "title": "Manage budgets",
+    "subtitle": "Cost Center: {{ item.name }}",
+    "assigned": "Budget {{ item.name }} assigned successfully",
+    "unassigned": "Budget {{ item.name }} unassigned successfully"
+  },
+  "orgCostCenterAssignedBudgets": {
+    "title": "Assigned budgets",
+    "subtitle": "Cost Center: {{ item.name }}",
+    "assigned": "Budget {{ item.name }} assigned successfully",
+    "unassigned": "Budget {{ item.name }} unassigned successfully"
+  },
+  "orgBudget": {
+    "groupName": "Budgets",
+    "header": "All budgets ({{count}})",
+    "code": "Code",
+    "name": "Name",
+    "active": "Status",
+    "currency": "Currency",
+    "amount": "Amount",
+    "unit": "Unit",
+    "businessUnits": "Unit",
+    "dateRange": "Start - End",
+    "startDate": "Start",
+    "endDate": "End",
+    "actions": "",
+    "sortBy": "Sort by",
+    "sort": {
+      "byName": "Name",
+      "byUnitName": "Unit",
+      "byCode": "Code",
+      "byValue": "Value"
+    },
+    "hint": "Budgets set overall purchase limits and are assigned to cost centers. A buyer selects a cost center when checking out.",
+    "details": {
+      "title": "Budget Details",
+      "subtitle": "Budget: {{ item.name }}"
+    },
+    "edit": {
+      "title": "Edit Budget",
+      "subtitle": "Budget: {{ item.name }}"
+    },
+    "create": {
+      "title": "Create Budget",
+      "subtitle": ""
+    },
+    "messages": {
+      "deactivateTitle": "Disable this budget?",
+      "deactivate": "Disabled budgets no longer apply to the cost centers they are assigned to. Ensure that the associated cost center has at least one budget.",
+      "confirmEnabled": "Budget {{ item.name }} enabled successfully",
+      "confirmDisabled": "Budget {{ item.name }} disabled successfully",
+      "update": "Budget {{ item.name }} updated successfully",
+      "create": "Budget {{ item.name }} created successfully"
+    },
+    "info": {
+      "disabledEdit": "Enable the budget to allow editing.",
+      "disabledEnable": "Unit must be enabled before this budget may be enabled."
+    },
+    "links": {
+      "costCenters": "Cost Centers"
+    },
+    "breadcrumbs": {
+      "list": "All budgets",
+      "details": "{{name}}"
+    }
+  },
+  "orgBudgetAssignedCostCenters": {
+    "title": "Cost centers",
+    "subtitle": "Budget: {{ item.name }}"
+  },
+  "orgUnit": {
+    "groupName": "Units",
+    "header": "All units ({{count}})",
+    "unit": "Unit",
+    "name": "Name",
+    "uid": "ID",
+    "lob": "LoB",
+    "parent": "ID",
+    "approvalProcess": "Approval process",
+    "parentUnit": "Parent Unit",
+    "detail": "Details",
+    "active": "Status",
+    "hint": "Units represent departments, stores, regions, or any other logical grouping that makes sense to you. The cost centers and delivery addresses available to a buyer when checking out, depend on their unit. Users have access to all child units of their primary unit.",
+    "details": {
+      "title": "Unit Details",
+      "subtitle": "Unit: {{ item.name }}",
+      "hint": "A unit refers to a distinct division or department within a business, responsible for specific functions like sales, marketing, finance, or operations."
+    },
+    "edit": {
+      "title": "Edit Unit",
+      "subtitle": "Unit: {{ item.name }}"
+    },
+    "create": {
+      "title": "Create Unit",
+      "subtitle": ""
+    },
+    "messages": {
+      "deactivateTitle": "Disable this unit?",
+      "deactivate": "Disabling a unit has wide-ranging affects on your commerce organization. ALL the unit's child units, users, budgets, and cost centers will also disabled.",
+      "confirmEnabled": "Unit {{item.name}} enabled successfully",
+      "confirmDisabled": "Unit {{item.name}} disabled successfully",
+      "update": "Unit {{ item.name }} updated successfully",
+      "create": "Unit {{ item.name }} created successfully"
+    },
+    "info": {
+      "disabledEdit": "Enable the unit to allow editing.",
+      "disabledEnable": "Parent must be enabled before this unit may be enabled.",
+      "disabledDisable": "Root unit can not be disabled."
+    },
+    "links": {
+      "units": "Child Units",
+      "users": "Users",
+      "approvers": "Approvers",
+      "shippingAddresses": "Delivery Addresses",
+      "costCenters": "Cost Centers"
+    },
+    "tree": {
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all",
+      "expand": "Expand",
+      "collapse": "collapse",
+      "explore": "Explore sub-units"
+    },
+    "children": {
+      "create": {
+        "title": "Create child unit",
+        "subtitle": ""
+      },
+      "messages": {
+        "create": "Unit {{ item.name }} created successfully"
+      }
+    },
+    "costCenters": {
+      "create": {
+        "title": "Create cost center",
+        "subtitle": ""
+      }
+    },
+    "form": {
+      "parentOrgUnit": "Parent business unit",
+      "create": "Create Unit",
+      "parentOrgUnitNotes": "This unit is the top-level unit for your organization. It cannot be assigned to another unit."
+    },
+    "users": {
+      "header": "Users in {{code}}",
+      "changeUserRoles": "Change user roles",
+      "newUser": "New user"
+    },
+    "assignRoles": {
+      "header": "Manage roles in {{code}}",
+      "instructions": {
+        "check": "To assign a role to a user, select the role's check box.",
+        "uncheck": "To remove a role, clear the role's check box.",
+        "changes": "Changes are saved automatically."
+      }
+    },
+    "approvers": {
+      "header": "Approvers in {{code}}",
+      "assign": "Manage approvers",
+      "new": "New approver"
+    },
+    "assignApprovers": {
+      "header": "Manage approvers in {{code}}",
+      "instructions": {
+        "check": "To assign an approver to this unit, select the user's check box.",
+        "uncheck": "To remove an approver, clear the user's check box.",
+        "changes": "Changes are saved automatically."
+      },
+      "hint": "Users displayed under the Approvers list are assigned approval privileges for the buyers of this unit and of child units. Note that a user who has the approver role is separate from an approver who appears under the Approvers list. If an approver doesn't exist for a unit, or if approvers do not have sufficient approval purchase privileges, an approver higher up the unit hierarchy is found, until an administration is chosen."
+    },
+    "breadcrumbs": {
+      "list": "All units",
+      "details": "{{name}}",
+      "children": "Child units",
+      "users": "Users",
+      "approvers": "Approvers",
+      "addresses": "Delivery addresses",
+      "addressDetails": "{{formattedAddress}}",
+      "costCenters": "Cost Centers"
+    },
+    "personalDetailsTitle": "Contact person",
+    "payerShippingForm": {
+      "payerTitle": "Payer information",
+      "shipoTitle": "Ship to address"
+    },
+    "button": {
+      "addPayer": "Add Payer",
+      "addShipto": "Add Ship To Address"
+    },
+    "unitRegistration": {
+      "successMessage": "Reference Number - {{ registrationRequestId }}. Thank you for registering! You will receive an email regarding your access information."
+    }
+  },
+  "orgUnitChildren": {
+    "title": "Child units",
+    "subtitle": "Unit: {{item.name}}",
+    "info": {
+      "disabledCreate": "Child unit can not be created for disabled unit."
+    },
+    "hint": "Units represent departments, stores, regions, or any other logical grouping that makes sense to you. Users \"inherit\" child units, meaning buyers have access to cost centers and delivery addresses of child units when checking out."
+  },
+  "orgUnitApprovers": {
+    "title": "Manage approvers",
+    "subtitle": "Unit: {{item.name}}",
+    "assigned": "User {{item.name}} assigned successfully",
+    "unassigned": "User {{item.name}} unassigned successfully"
+  },
+  "orgUnitAssignedApprovers": {
+    "title": "Assigned approvers",
+    "subtitle": "Unit: {{item.name}}",
+    "assigned": "User {{item.name}} assigned successfully",
+    "unassigned": "User {{item.name}} unassigned successfully",
+    "hint": "Users displayed under the Approvers list are assigned approval privileges for the buyers of this unit and of child units. Note that a user who has the approver role is separate from an approver who appears under the Approvers list. If an approver doesn't exist for a unit, or if approvers do not have sufficient approval purchase privileges, an approver higher up the unit hierarchy is found, until an administration is chosen."
+  },
+  "orgUnitAssignedRoles": {
+    "header": "Manage roles in {{code}}",
+    "name": "Name",
+    "email": "Email",
+    "roles": "Roles",
+    "roleCustomer": "Customer",
+    "roleApprover": "Approver",
+    "roleManager": "Manager",
+    "roleAdministrator": "Admin"
+  },
+  "orgUnitUsers": {
+    "title": "Assigned users",
+    "subtitle": "Unit: {{item.name}}",
+    "info": {
+      "disabledCreate": "User can not be created for disabled unit."
+    },
+    "hint": "Users are the buyers, approvers, managers, and administrators of your organization. Each user is assigned a role for making or approving purchases. Users \"inherit\" child units, meaning buyers have access to cost centers and delivery addresses of child units when checking out."
+  },
+  "orgUnitUserRoles": {
+    "title": "User roles and rights",
+    "subtitle": "User: {{item.name}}",
+    "messages": {
+      "rolesUpdated": "Roles successfully updated for {{item.name}}"
+    }
+  },
+  "orgUnitAssignedUsers": {
+    "title": "Assigned users",
+    "subtitle": "Unit: {{item.name}}"
+  },
+  "orgUnitCostCenters": {
+    "title": "Assigned cost centers",
+    "subtitle": "Unit: {{item.name}}",
+    "info": {
+      "disabledCreate": "Cost center can not be created for disabled unit."
+    },
+    "hint": "All orders placed through your organization's purchase account are linked to a cost center for tracking purposes. A buyer selects a cost center when checking out using the \"Account\" purchase method. Each unit can have multiple cost centers, but a single cost center can only be assigned to a single unit. To define ultimate spending limits, budgets are assigned to cost centers. "
+  },
+  "orgUnitAddress": {
+    "title": "Delivery addresses",
+    "subtitle": "Unit: {{item.name}}",
+    "country": "Country/Region",
+    "titles": "Title",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "formattedAddress": "Address",
+    "address1": "Address",
+    "address2": "2nd address (optional)",
+    "city": "City",
+    "state": "State",
+    "zipCode": "Zip code",
+    "phoneNumber": "Phone number (optional)",
+    "streetAddress": "Street Address",
+    "aptSuite": "Apartment Number",
+    "selectOne": "Select One...",
+    "hint": "When a buyer is checking out using the \"Account\" purchase method, they much choose a cost center. The delivery addresses available to the buyer depend on the unit of the cost center chosen.",
+    "details": {
+      "title": "Address details",
+      "subtitle": "Unit: {{item.name}}"
+    },
+    "edit": {
+      "title": "Edit Address"
+    },
+    "create": {
+      "title": "Create Address"
+    },
+    "form": {
+      "subtitle": "Unit: {{item.name}}"
+    },
+    "messages": {
+      "create": "Address {{ item.firstName }} {{ item.lastName }} created successfully",
+      "update": "Address {{ item.firstName }} {{ item.lastName }} updated successfully",
+      "delete": "The address cannot be brought back. Existing orders are not affected.",
+      "deleteTitle": "Delete this address?",
+      "deleted": "Address {{ item.firstName }} {{ item.lastName }} deleted successfully"
+    }
+  },
+  "orgUserGroup": {
+    "groupName": "User Groups",
+    "header": "All user groups ({{count}})",
+    "disabled": "(disabled)",
+    "uid": "Code",
+    "name": "Name",
+    "unit": "Unit",
+    "orgUnit": "Unit",
+    "actions": "",
+    "sortBy": "Sort by",
+    "sort": {
+      "byName": "Name",
+      "byUnitName": "Unit",
+      "byGroupID": "Group"
+    },
+    "hint": "User groups allow you to combine users together in one group, for the purposes of assigning purchase limits for many users at once.",
+    "details": {
+      "title": "User group Details",
+      "subtitle": "User group: {{ item.name }}"
+    },
+    "edit": {
+      "title": "Edit User group",
+      "subtitle": "User group: {{ item.name }}"
+    },
+    "create": {
+      "title": "Create User group",
+      "subtitle": ""
+    },
+    "links": {
+      "user": "Users",
+      "permission": "Purchase limits"
+    },
+    "messages": {
+      "update": "User Group {{ item.name }} updated successfully",
+      "create": "User Group {{ item.name }} created successfully",
+      "deleteTitle": "Delete this user group?",
+      "delete": "The users in this group are not affected when the user group is deleted.",
+      "deleted": "User Group {{ item.name }} deleted successfully"
+    },
+    "breadcrumbs": {
+      "list": "All user groups",
+      "details": "{{name}}",
+      "users": "Users",
+      "permissions": "Purchase limits"
+    }
+  },
+  "orgUserGroupUsers": {
+    "title": "Manage users",
+    "subtitle": "User group: {{ item.name }}",
+    "assigned": "User {{item.name}} assigned successfully",
+    "unassigned": "User {{item.name}} unassigned successfully",
+    "unassignAll": "Unassign All",
+    "unassignAllConfirmation": "All users unassigned successfully"
+  },
+  "orgUserGroupAssignedUsers": {
+    "title": "Assigned users",
+    "subtitle": "User group: {{ item.name }}",
+    "assigned": "User {{item.name}} assigned successfully",
+    "unassigned": "User {{item.name}} unassigned successfully"
+  },
+  "orgUserGroupPermissions": {
+    "title": "Manage purchase limits",
+    "subtitle": "Limit: {{ item.name }}",
+    "assigned": "Purchase limits {{item.code}} assigned successfully",
+    "unassigned": "Purchase limits {{item.code}} unassigned successfully"
+  },
+  "orgUserGroupAssignedPermissions": {
+    "title": "Assigned purchase limits",
+    "subtitle": "Limit: {{ item.name }}",
+    "assigned": "Purchase limits {{item.code}} assigned successfully",
+    "unassigned": "Purchase limits {{item.code}} unassigned successfully"
+  },
+  "orgUser": {
+    "groupName": "Users",
+    "header": "All users ({{count}})",
+    "disabled": "(disabled)",
+    "uid": "Email",
+    "active": "Status",
+    "name": "Name",
+    "orgUnit": "Unit",
+    "unit": "Unit",
+    "roles": "Roles",
+    "rights": "Rights",
+    "title": "Title",
+    "partnerId": "Contact Person ID",
+    "hint": "Users are the buyers, approvers, managers, and administrators of your organization. Each user is assigned a role for making or approving purchases. Each user belongs to a unit, and they have access to all child units of their primary unit.",
+    "unitApprover": "Unit approver",
+    "assignApprover": "Add the user to approvers for the unit",
+    "actions": "",
+    "sortBy": "Sort by",
+    "mobileNumber": "Mobile number",
+    "city": "City",
+    "designation": "Department",
+    "sort": {
+      "byName": "Name",
+      "byUnit": "Unit"
+    },
+    "details": {
+      "title": "User Details",
+      "subtitle": "User: {{ item.name }}"
+    },
+    "edit": {
+      "title": "Edit User",
+      "subtitle": "User: {{ item.name }}"
+    },
+    "create": {
+      "title": "Create User",
+      "subtitle": ""
+    },
+    "links": {
+      "password": "Change password",
+      "approvers": "Approvers",
+      "userGroup": "User groups",
+      "permission": "Purchase limits",
+      "rolesAndRights": "Roles and Rights"
+    },
+    "messages": {
+      "deactivateTitle": "Disable this user?",
+      "deactivate": "Disabled users cannot log onto the storefront and place orders.",
+      "confirmEnabled": "User {{item.firstName}} {{item.lastName}} enabled successfully",
+      "confirmDisabled": "User {{item.firstName}} {{item.lastName}} disabled successfully",
+      "update": "User {{item.firstName}} {{item.lastName}} updated successfully",
+      "create": "User {{item.firstName}} {{item.lastName}} created successfully",
+      "updatePassword": "User {{item.firstName}} {{item.lastName}} password updated successfully"
+    },
+    "info": {
+      "disabledEdit": "Enable the user to allow editing.",
+      "disabledEnable": "Unit must be enabled before this user may be enabled."
+    },
+    "approver": {
+      "link": "Approvers",
+      "header": "Approvers in {{code}}",
+      "assign": "Assign Approvers",
+      "assignHeader": "Assign Approvers in {{code}}",
+      "back": "Back",
+      "new": "New approver",
+      "instructions": {
+        "check": "To assign an approver to this user, select the user's check box.",
+        "uncheck": "To remove an approver, clear the user's check box.",
+        "changes": "Changes are saved automatically."
+      }
+    },
+    "userGroup": {
+      "link": "User groups",
+      "header": "User groups in {{code}}",
+      "assign": "Assign user groups",
+      "assignHeader": "Assign user groups in {{code}}",
+      "back": "Back",
+      "instructions": {
+        "check": "To assign an user group to this user, select the user's check box.",
+        "uncheck": "To remove aa user group, clear the user's check box.",
+        "changes": "Changes are saved automatically."
+      }
+    },
+    "permission": {
+      "link": "Purchase limits",
+      "header": "Purchase limits in {{code}}",
+      "assign": "Assign purchase limits",
+      "assignHeader": "Assign purchase limits in {{code}}",
+      "back": "Back",
+      "instructions": {
+        "check": "To assign a purchase limits to this user, select its check box.",
+        "uncheck": "To unassign a purchase limits, clear its check box.",
+        "changes": "Changes are saved automatically."
+      },
+      "per": {
+        "undefined": "",
+        "MONTH": "per Month",
+        "YEAR": "per Year",
+        "WEEK": "per Week",
+        "QUARTER": "per Quarter"
+      }
+    },
+    "password": {
+      "title": "Change password",
+      "subtitle": "User: {{ item.email }}",
+      "newPassword": "New password",
+      "confirmPassword": "Retype new password"
+    },
+    "breadcrumbs": {
+      "list": "All users",
+      "details": "{{name}}",
+      "userGroups": "User groups",
+      "approvers": "Approvers",
+      "permissions": "Purchase limits"
+    },
+    "subUserCreationTitle": "Personal information",
+    "fields": {
+      "faxNumber": {
+        "label": "Fax number",
+        "placeholder": "Enter your fax number",
+        "tooltip": "1) Should be 10 digits long <br>2) If the digits are less than 10, then add leading zeroes"
+      },
+      "otherDocument": {
+        "label": "Upload document",
+        "placeholder": "Select file to upload",
+        "button": "Upload",
+        "tooltip": "1) Only pdf files are allowed <br>2) Max {{maxFileSize}} mb file size.",
+        "selectedFile": "Selected file"
+      },
+      "companyName": {
+        "label": "Company name",
+        "placeholder": "Enter your company name"
+      },
+      "companyName2": {
+        "label": "Company name 2",
+        "placeholder": "Enter your company name 2"
+      },
+      "addressName": {
+        "label": "Address name",
+        "placeholder": "Enter your address name"
+      },
+      "addressName2": {
+        "label": "Address name 2",
+        "placeholder": "Enter your address name 2"
+      },
+      "incoTerms": {
+        "label": "Delivery mode",
+        "placeholder": "Select your delivery mode"
+      },
+      "vatId": {
+        "label": "TRN/VAT and document",
+        "label2": "TRN/VAT number",
+        "placeholder": "Enter your TRN/VAT number",
+        "fileError": "TRN/VAT document"
+      },
+      "latitude": {
+        "label": "Latitude",
+        "placeholder": "Enter your latitude",
+        "tooltip": "Please provide your exact coordinates in the following format XXXXXXXX"
+      },
+      "longitude": {
+        "label": "Longitude",
+        "placeholder": "Enter your longitude"
+      },
+      "companyAddressStreet": {
+        "label": "Street line 1",
+        "placeholder": "Enter your street details (60 characters maximum)"
+      },
+      "companyAddressStreetLine2": {
+        "label": "Street line 2",
+        "placeholder": "Enter your street details (35 characters maximum)"
+      },
+      "streetNumber": {
+        "label": "Street number",
+        "placeholder": "Enter your street number"
+      },
+      "companyAddressCountryIso": {
+        "label": "Country",
+        "placeholder": "Select your country"
+      },
+      "companyAddressRegion": {
+        "label": "Region",
+        "placeholder": "Select your region"
+      },
+      "companyAddressCity": {
+        "label": "City",
+        "placeholder": "Enter your city"
+      },
+      "poBox": {
+        "label": "PO box",
+        "placeholder": "Enter your po box"
+      },
+      "companyAddressPostalCode": {
+        "label": "Postal code",
+        "placeholder": "Enter your postal code"
+      },
+      "preferredCommunicationChannel": {
+        "label": "Preferred communication channel",
+        "placeholder": "Select your communication channel",
+        "placeholder2": "Communication channels"
+      },
+      "firstName": {
+        "label": "First name",
+        "placeholder": "First name"
+      },
+      "lastName": {
+        "label": "Last name",
+        "placeholder": "Last name"
+      },
+      "titleCode": {
+        "label": "Salutation",
+        "placeholder": "What you would like to be addressed"
+      },
+      "gender": {
+        "label": "Gender",
+        "placeholder": "Select your gender"
+      },
+      "nationality": {
+        "label": "Nationality",
+        "placeholder": "Select your nationality"
+      },
+      "countryOfOrigin": {
+        "label": "Country of residence",
+        "placeholder": "Select your country of residence"
+      },
+      "identityType": {
+        "label": "Identity type",
+        "placeholder": "Select your ID type"
+      },
+      "identificationNumber": {
+        "label": "Identification number and document",
+        "label2": "Identification number",
+        "placeholder": "Enter your identification number",
+        "fileError": "Identification number document"
+      },
+      "calender": {
+        "startDate": {
+          "label": "Identification valid from"
+        },
+        "endDate": {
+          "label": "Identification valid to"
+        },
+        "placeholder": "Select a date"
+      },
+      "designation": {
+        "label": "Department",
+        "placeholder": "Select your department"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter company email address"
+      },
+      "telephone": {
+        "label": "Phone number",
+        "placeholder": "Enter your phone number"
+      },
+      "mobileNumber": {
+        "label": "Mobile number",
+        "placeholder": "Enter your mobile number"
+      },
+      "roles": {
+        "label": "Assign Role"
+      },
+      "orgUnit": {
+        "label": "Business Unit"
+      },
+      "rights": {
+        "label": "Permissions"
+      },
+      "phoneNumberTooltip": {
+        "tooltip": "1) Should be {{length}} digits long <br>2) If the digits are less than {{length}}, then add leading zeroes"
+      }
+    }
+  },
+  "orgUserUserGroups": {
+    "title": "Manage user groups",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "User group {{item.name}} assigned successfully",
+    "unassigned": "User group {{item.name}} unassigned successfully"
+  },
+  "orgUserAssignedUserGroups": {
+    "title": "Assigned user groups",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "User group {{item.name}} assigned successfully",
+    "unassigned": "User group {{item.name}} unassigned successfully"
+  },
+  "orgUserApprovers": {
+    "title": "Manage approvers",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "Approver {{ item.name }} assigned successfully",
+    "unassigned": "Approver {{ item.name }} unassigned successfully"
+  },
+  "orgUserAssignedApprovers": {
+    "title": "Assigned approvers",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "Approver {{ item.name }} assigned successfully",
+    "unassigned": "Approver {{ item.name }} unassigned successfully"
+  },
+  "orgUserPermissions": {
+    "title": "Manage purchase limits",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "Purchase limit {{ item.code }} assigned successfully",
+    "unassigned": "Purchase limit {{ item.code }} unassigned successfully"
+  },
+  "orgUserAssignedPermissions": {
+    "title": "Assigned purchase limits",
+    "subtitle": "User: {{ item.name }}",
+    "assigned": "Purchase limit {{ item.code }} assigned successfully",
+    "unassigned": "Purchase limit {{ item.code }} unassigned successfully"
+  },
+  "orgPurchaseLimit": {
+    "groupName": "Purchase Limits",
+    "header": "All purchase limits ({{count}})",
+    "name": "Name",
+    "code": "Code",
+    "active": "Status",
+    "limit": "Limit",
+    "orderApprovalPermissionType": "Type",
+    "threshold": "Threshold",
+    "periodRange": "Period",
+    "currency": "Currency",
+    "orgUnit": "Parent Unit",
+    "unit": "Parent Unit",
+    "actions": "",
+    "hint": "Purchase limits help control spending by defining how much buyers can spend per order or per week, month, quarter, or year. Purchase limits are assigned to users or user groups. Purchase limits are also assigned to approvers, defining how much they are permitted to approve. You can assign purchase limits to many users at once with user groups.",
+    "details": {
+      "title": "Purchase Limit Details",
+      "subtitle": "Purchase Limit: {{ item.code }}"
+    },
+    "edit": {
+      "title": "Edit Purchase Limit",
+      "subtitle": "Purchase limits : {{ item.code }}"
+    },
+    "create": {
+      "title": "Create Purchase Limit",
+      "subtitle": ""
+    },
+    "sortBy": "Sort by",
+    "sort": {
+      "byName": "Name",
+      "byUnitName": "Unit"
+    },
+    "messages": {
+      "deactivateTitle": "Disable this purchase limit?",
+      "deactivate": "Disabled purchase limits can no longer be assigned to a user or user group. Current assignments will have no effect.",
+      "confirmEnabled": "Purchase Limit {{ item.code }} enabled successfully",
+      "confirmDisabled": "Purchase Limit {{ item.code }} disabled successfully",
+      "update": "Purchase Limit {{ item.code }} updated successfully",
+      "create": "Purchase Limit {{ item.code }} created successfully"
+    },
+    "info": {
+      "disabledEdit": "Enable the purchase limit to allow editing.",
+      "disabledEnable": "Unit must be enabled before this purchase limit may be enabled."
+    },
+    "per": {
+      "DAY": "per day",
+      "WEEK": "per week",
+      "MONTH": "per month",
+      "QUARTER": "per quarter",
+      "YEAR": "per year"
+    },
+    "breadcrumbs": {
+      "list": "All purchase limits",
+      "details": "{{code}}"
+    }
+  }
+}

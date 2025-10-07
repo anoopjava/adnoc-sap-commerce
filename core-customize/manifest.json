@@ -1,0 +1,145 @@
+{
+    "commerceSuiteVersion": "2211.39",
+	"extensionPacks" : [
+		{
+			"name" : "hybris-commerce-integrations",
+			"version" : "2211.34"
+		}
+	],
+    "enableImageProcessingService": true,
+    "extensions": [
+        "cloudmediaconversion",
+        "mediaconversionbackoffice",
+		"azurecloudhotfolder"
+    ],
+    "useConfig": {
+        "properties": [
+            {
+                "location": "hybris/config/environments/local-dev.properties",
+                "persona": "development"
+            },
+            {
+                "location": "hybris/config/environments/local-stage.properties",
+                "persona": "staging"
+            },
+            {
+                "location": "hybris/config/environments/local-prod.properties",
+                "persona": "production"
+            },
+            {
+                "location": "hybris/config/local.properties"
+            },
+            {
+                "aspect": "api",
+                "location": "hybris/config/environments/api.properties"
+            },
+            {
+                "aspect": "backoffice",
+                "location": "hybris/config/environments/backoffice.properties"
+            }
+        ],
+        "extensions": {
+            "location": "hybris/config/localextensions.xml",
+			"exclude": [
+				"solrserver"
+			]
+        }
+    },
+    "properties": [
+        {
+            "key": "lang.packs",
+            "value": "en"
+        }
+    ],
+    
+    "aspects": [
+        {
+            "name": "backoffice",
+            "properties": [],
+            "webapps": [
+                {
+                    "name": "hac",
+                    "contextPath": "/hac"
+                },
+                {
+                    "name": "mediaweb",
+                    "contextPath": "/medias"
+                },
+                {
+                    "name": "backoffice",
+                    "contextPath": "/backoffice"
+                }
+            ]
+        },
+        {
+            "name": "backgroundProcessing",
+            "properties": [
+                {
+                    "key": "cluster.node.groups",
+                    "value": "integration,yHotfolderCandidate,backgroundProcessing"
+                }
+            ],
+            "webapps": [
+                {
+                    "name": "hac",
+                    "contextPath": ""
+                },
+                {
+                    "name": "mediaweb",
+                    "contextPath": "/medias"
+                }
+            ]
+        },
+        {
+            "name": "api",
+            "properties": [
+                {
+                    "key": "xss.filter.header.X-Frame-Options",
+                    "value": ""
+                },
+                {
+                    "key": "ccv2.platform.tomcat.serverxml.maxThreads",
+                    "value": "1200"
+                }
+            ],
+            "webapps": [
+                {
+                    "name": "hac",
+                    "contextPath": "/hac"
+                },
+                {
+                    "name": "commercewebservices",
+                    "contextPath": "/occ"
+                },
+                {
+                    "name": "oauth2",
+                    "contextPath": "/authorizationserver"
+                },
+                {
+                    "name": "cmswebservices",
+                    "contextPath": "/cmswebservices"
+                },
+                {
+                    "name": "permissionswebservices",
+                    "contextPath": "/permissionswebservices"
+                },
+                {
+                    "name": "previewwebservices",
+                    "contextPath": "/previewwebservices"
+                },
+                {
+                    "name": "mediaweb",
+                    "contextPath": "/medias"
+                },
+                {
+                  "name":"odata2webservices",
+                  "contextPath":"/odata2webservices"
+                },
+                {
+                  "name":"adnocintegration",
+                  "contextPath":"/adnocintegration"
+                }
+            ]
+        }
+    ]
+}

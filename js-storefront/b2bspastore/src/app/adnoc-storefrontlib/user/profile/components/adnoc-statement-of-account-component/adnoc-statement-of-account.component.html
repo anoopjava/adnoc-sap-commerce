@@ -1,0 +1,68 @@
+<div class="adnoc-statement-of-account-container">
+  <div *ngIf="isError" class="alert alert-danger" role="alert">
+    <span class="text-danger">{{ isError }}</span>
+  </div>
+
+  <div class="adnoc-statement-of-account-form">
+    <div class="adnoc-items-list">
+      <div class="adnoc-item-info">
+        <span class="label-content"
+          >{{ "common.statementOfAccount.fields.payer.label" | cxTranslate
+          }}<ng-template [ngTemplateOutlet]="requiredAsterisk"></ng-template
+        ></span>
+        <select
+          #selectPayer
+          class="form-control payer"
+          id="payer"
+          [value]="b2bUnitUid"
+          (change)="onPayerChange($event)"
+        >
+          <option [value]="" disabled selected>
+            {{ "common.statementOfAccount.selectDefaultOption" | cxTranslate }}
+          </option>
+
+          <option *ngFor="let payer of payers" [value]="payer.uid">
+            {{ payer.uid }} - {{ payer.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="btn-group">
+      <div class="adnoc-button-group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [ngClass]="{
+            'pointer-event-none': loader
+          }"
+          [disabled]="validateFields()"
+          (click)="downloadAttachment()"
+        >
+          <div *ngIf="!loader">
+            {{ "common.statementOfAccount.download" | cxTranslate }}
+          </div>
+          <div class="loader-wrap" *ngIf="loader">
+            <span class="loader"></span>
+          </div>
+        </button>
+        <a
+          class="btn btn-block btn-secondary"
+          [routerLink]="{ cxRoute: 'home' } | cxUrl"
+        >
+          {{ "common.statementOfAccount.backToHome" | cxTranslate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #requiredAsterisk>
+  <abbr
+    *cxFeature="'a11yRequiredAsterisks'"
+    class="text-decoration-none"
+    title="{{ 'common.required' | cxTranslate }}"
+    >*</abbr
+  >
+</ng-template>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="checkOrder" name="order-process"
+         processClass="de.hybris.platform.orderprocessing.model.OrderProcessModel">
+
+    <action id="checkOrder" bean="checkOrderAction">
+        <transition name="OK" to="splitOrder"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="splitOrder" bean="splitOrderAction">
+        <transition name="OK" to="waitForWarehouseSubprocessEnd"/>
+    </action>
+
+    <wait id="waitForWarehouseSubprocessEnd" then="isProcessCompleted" prependProcessCode="false">
+        <event>${process.code}_ConsignmentSubprocessEnd</event>
+    </wait>
+
+    <action id="isProcessCompleted" bean="subprocessesCompletedAction">
+        <transition name="OK" to="sendOrderOutbound"/>
+        <transition name="NOK" to="waitForWarehouseSubprocessEnd"/>
+    </action>
+
+    <action id="sendOrderOutbound" bean="sapSendOrderAction">
+        <transition name="OK" to="success"/>
+    </action>
+
+    <end id="error" state="ERROR">All went wrong.</end>
+    <end id="failed" state="FAILED">Order not placed.</end>
+    <end id="success" state="SUCCEEDED">Order placed.</end>
+
+</process>

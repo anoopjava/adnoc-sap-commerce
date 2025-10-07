@@ -1,0 +1,8 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocQuoteSellerApproveOrReject_$lang.properties
+
+#set($quoteState = $ctx.quote.state.code)
+#if ($quoteState == "BUYER_OFFER")
+    ${ctx.messages.getMessage('emailSubjectQuoteApprove', $ctx.quote.code)}
+#elseif ($quoteState == "SELLERAPPROVER_REJECTED")
+    ${ctx.messages.getMessage('emailSubjectQuoteReject', $ctx.quote.code)}
+#end

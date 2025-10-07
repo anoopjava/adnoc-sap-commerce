@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Category Media into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/productCatalogs/adnocProductCatalog
+
+
+# Import Category Media
+INSERT_UPDATE Media; code[unique = true] ; realfilename; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $catalogVersion
+                   ; /thumbs/CAT953.jpg  ; CAT953.jpg  ; $siteResource/images/thumbs/CAT953.jpg                                      ;
+                   ; /thumbs/CAT1354.jpg ; CAT1354.jpg ; $siteResource/images/thumbs/CAT1354.jpg                                     ;
+                   ; /thumbs/CAT1356.jpg ; CAT1356.jpg ; $siteResource/images/thumbs/CAT1356.jpg                                     ;
+                   ; /thumbs/CAT1358.jpg ; CAT1358.jpg ; $siteResource/images/thumbs/CAT1358.jpg                                     ;
+                   ; /thumbs/CAT1359.jpg ; CAT1359.jpg ; $siteResource/images/thumbs/CAT1359.jpg                                     ;
+                   ; /thumbs/CAT1360.png ; CAT1360.png ; $siteResource/images/thumbs/CAT1360.png                                     ;
+                   ; /thumbs/CAT1386.jpg ; CAT1386.jpg ; $siteResource/images/thumbs/CAT1386.jpg                                     ;
+                   ; /thumbs/CAT1505.jpg ; CAT1505.jpg ; $siteResource/images/thumbs/CAT1505.jpg                                     ;
+                   ; /thumbs/CAT1595.png ; CAT1595.png ; $siteResource/images/thumbs/CAT1595.png                                     ;
+
+UPDATE Category; code[unique = true]; $thumbnail; allowedPrincipals(uid)[default = 'customergroup']; $catalogVersion
+               ; openCatalog        ; /thumbs/CAT953.jpg
+               ; fuel               ; /thumbs/CAT1354.jpg
+               ; gasoline           ; /thumbs/CAT1356.jpg
+               ; aviation           ; /thumbs/CAT1358.jpg
+               ; lpg                ; /thumbs/CAT1359.jpg
+               ; lpgForBusiness     ; /thumbs/CAT1360.png
+               ; lubricants         ; /thumbs/CAT1386.jpg
+               ; automotive         ; /thumbs/CAT1505.jpg
+               ; carcare            ; /thumbs/CAT1595.png

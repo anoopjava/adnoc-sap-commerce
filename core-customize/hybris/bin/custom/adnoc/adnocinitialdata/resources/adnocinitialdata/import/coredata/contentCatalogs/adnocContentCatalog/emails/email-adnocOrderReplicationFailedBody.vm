@@ -1,0 +1,19 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocOrderReplicationFailed_$lang.properties
+<html>
+<body bgcolor="#ffffff">
+<div class="content" style="font-family: Aptos Display, Arial, Helvetica, sans-serif; color: #414a4f;">
+    <p>Dear ${ctx.title} ${ctx.displayName},</p>
+    <p>${ctx.messages.replicationFailedOrder}</p>
+
+    <p><strong>${ctx.messages.orderDetails}</strong></p>
+    <p><strong>${ctx.messages.orderNumber}</strong>&nbsp;${ctx.order.code}</p>
+    <p><strong>${ctx.messages.orderDate}</strong>&nbsp;${ctx.order.created}</p>
+    <p><strong>${ctx.messages.state}</strong>&nbsp;${ctx.order.statusDisplay}</p>
+    <div class="footer">
+        <p>${ctx.messages.complimentaryClosing}</p>
+        <p>${ctx.messages.salesGroup}</p>
+        <p>${ctx.messages.adnoc}</p>
+        <p>${ctx.messages.website}</p>
+    </div>
+</body>
+</html>

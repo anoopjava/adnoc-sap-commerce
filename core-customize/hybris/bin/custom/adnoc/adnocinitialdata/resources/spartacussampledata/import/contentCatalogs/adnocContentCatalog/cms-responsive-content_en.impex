@@ -1,0 +1,125 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+# Import the CMS content for the adnoc site
+#
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.setup.AdnocStoreSystemSetup&/spartacussampledata/import/contentCatalogs/adnocContentCatalog
+$picture = media(code, $contentCV)
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+$lang = en
+
+# CMS Link Components
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]       ; linkName[lang = en]
+                       ;                          ; CartLink                 ; "Cart"
+                       ;                          ; FAQLink                  ; "Frequently Asked Questions"
+                       ;                          ; CustomerGuide            ; "Customer Guide"
+                       ;                          ; MyCompanyLink            ; "My Company"
+                       ;                          ; OrdersLink               ; "Orders"
+                       ;                          ; QuotesLink               ; "Quotes"
+                       ;                          ; SignOutLink              ; "Sign Out"
+                       ;                          ; StoreFinderLink          ; "Find a Store"
+                       ;                          ; SupportTicketHistoryLink ; "Customer Service"
+                       ;                          ; UnitLevelOrderLink       ; "Unit-Level Orders"
+
+# Site Logo Media
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]         ; realfilename  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; folder(qualifier)[default = 'images']; altText
+                   ;                          ; /images/theme/AdnocLogo.png ; AdnocLogo.png ; $siteResource/images/theme/AdnocLogo.png                                    ; image/png                   ;                                      ; "SAP Commerce"
+
+# Site Logo Component
+UPDATE SimpleBannerComponent; $contentCV[unique = true]; uid[unique = true]; $picture[lang = $lang]
+                            ;                          ; SiteLogoComponent ; /images/theme/AdnocLogo.png
+
+# CMSParagraphComponent
+UPDATE CMSParagraphComponent; $contentCV[unique = true]; uid[unique = true]              ; content[lang = en]
+                            ;                          ; ContactUsParagraphComponent     ; "<div class=""textpage textpage-faqs""><div class=""item_container""><h2><u>E-Commerce Technical Support</u></h2><p style=""margin:0""><u>Business Hours:</u></br> Sunday–Thursday, 8:00 AM – 5:00 PM (UAE Time)</p></br><p style=""margin:2px 0 0 0""><u>Our Call Centres:</u></br> 7 AM – 12 AM daily</p></br><p style=""margin:2px 0 0 0"">United Arab Emirates &nbsp; <a href=""tel:800300""></br> <i class=""fa fa-phone"" style=""margin-right:5px;"" aria-hidden=""true""></i><span dir=""ltr"">800300</span></a></p><p style=""margin:2px 0 0 0""><a href=""mailto:info@adnocdistribution.ae""><i class=""fa-solid fa-at"" style=""margin-right:5px;""></i>info@adnocdistribution.ae</a></p></br><p>We're committed to providing exceptional support to our B2B customers. Technical problems or malfunctions may affect the functionality, performance, or user experience of the E-commerce business platform.</p><p tyle=""margin-top:12px"">Whether you need help with:</p><ul style=""margin-top:4px""><li><strong>Technical Issues</strong> (E-Commerce link doesn’t work, Website blocked by your organization, Data-mapping errors, Real-time updates not functioning)</li><li><strong>Website Performance & Accessibility</strong> (Slow page loads, Website downtime or crashes, Broken links, Missing pages, Browser-compatibility problems)</li><li><strong>User Account & Authentication Issues</strong> (Login failures, Password errors, Account-creation issues, Session timeouts or auto-logouts, Two-factor authentication failure)</li><li><strong>Cart & Checkout Errors</strong> (Incorrect cart updates, Checkout button failure, Payment-page refresh issues, Failure to receive order confirmation)</li><li><strong>Payment-Gateway Issues</strong> (Failed transactions, Payment method not supported, Currency-conversion errors, SSL/security certificate problems, Payment-page refresh issues)</li><li><strong>Account Management</strong> (Account-browsing errors, Credit-management refresh issues)</li></ul></br><p>Our experienced support team is here to assist you every step of the way.</p></div><div class=""item_container""><h2><u>Commercial Business Support</u></h2><p>Email: <a href=""mailto:support-b2becom@adnocdistribution.ae"">support-b2becom@adnocdistribution.ae</a></p><p>Our Commercial Support Specialists work closely with the Sales, Finance and Logistics teams to resolve more complex business-related queries throughout the supply chain. They are your go-to contacts for:</p><ul><li>Customer Statement of Account (SOA) clarifications</li><li>Product Details & Catalogue Management</li><li>Accounts & Sub-Users Management</li><li>Product Pricing & Discounts</li><li>Tax or Shipping Charges calculations</li><li>Customized Technical Solutions</li><li>Sales Orders and Overdue Invoice Details</li><li>Product and Services Catalogues Relevant Queries</li><li>Escalations and Strategic Account Support</li></ul></div></div>"
+                            ;                          ; HelpParagraphComponent          ; "<strong>Need Help with your checkout process?</strong> <span>Contact Us or Call phone number.</span>"
+                            ;                          ; NoticeTextParagraph             ; "<div class=""cx-notice"">Copyright © 2020 SAP SE or an SAP affiliate company. All rights reserved.</div>"
+                            ;                          ; PageNotFoundParagraphComponent  ; "<h2>Oops!</h2><h3>We couldn't find the page you are looking for.</h3><p>Here are some useful links instead:</p>"
+                            ;                          ; SaleParagraphComponent          ; "Sale"
+                            ;                          ; FindOurOfficeParagraphComponent ; "<style>.contactUsDiv{margin-bottom:50px}.contactUsDiv .row>[class*='col-']{display:flex;margin-bottom:30px}.contactUsDiv .our-offices__card{width:100%;height:100%;background-color:#fff;border-radius:8px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);display:flex;flex-direction:column;justify-content:space-between}.contactUsDiv .text-video__title{display:block;width:100%;margin-bottom:20px} </style> <div class=""contactUsDiv""> <div class=""col-md-12""> <h1 class=""primary-c text-video__title mb-3"">Our Offices</h1> <div class=""row""> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Khalifa Energy Complex Tower 1 next to Sofitel Corniche, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 50055</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">Sheikh Zayed Street next to ADCB Building, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Al Ain</h3> <p class=""mb-3"">Ayla Hotel Building (Mezzanine 1), Al Muwaiji Area, Al Ain</p><span class=""d-block mb-3"">P.O.Box: 1099</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Abu Dhabi</h3> <p class=""mb-3"">SS 742 Maraba Al Dhafra along Sheikha Salama Bint Butti Road, Al Dhafra, Abu Dhabi</p><span class=""d-block mb-3"">P.O.Box: 4188</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Sharjah</h3> <p class=""mb-3"">City Gate Tower (Level 10), Al Ittihad Street, Sharjah</p><span class=""d-block mb-3"">P.O.Box: 1336</span></div> </div> </div> <div class=""col-md-6 col-lg-4""> <div class=""our-offices__card""> <div class=""our-offices__card__office""> <h3 class=""our-offices__office"">Saudi Arabia</h3> <p class=""mb-3"">6188, King Faisal Rd, Al Bandariyah Dist. , Al Khobar</p><span class=""d-block mb-3"">P.O.Box: 34423</span></div> </div> </div> </div> </div> </div>"
+
+
+# Media
+INSERT_UPDATE Media; $contentCV[unique = true]; code[unique = true]           ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]; mime[default = 'image/png']; realfilename        ; folder(qualifier)[default = 'images']; altText
+                   ;                          ; AccountSummaryHomeLinkImageEn ; $siteResource/images/organization-home/account-summary.svg                                     ;                            ; account-summary.svg ;                                      ; Account Summary
+                   ;                          ; UnitsHomeLinkImageEn          ; $siteResource/images/organization-home/units.svg                                               ;                            ; units.svg           ;                                      ; Units
+                   ;                          ; UsersHomeLinkImageEn          ; $siteResource/images/organization-home/users.svg                                               ;                            ; users.svg           ;                                      ; Users
+
+# BannerComponent
+INSERT_UPDATE BannerComponent; $contentCV[unique = true]; uid[unique = true]     ; headline[lang = en]; content[lang = en]                                                                                                                                                                                                                       ; media(code, $contentCV)[lang = en]
+                             ;                          ; AccountSummaryHomeLink ; Account Summary    ; Account summary allow you to review general information about a unit, including balances and aging summary of invoices. Here, you can also browse through a list of transaction documents for a unit.                                    ; AccountSummaryHomeLinkImageEn
+                             ;                          ; UnitsHomeLink          ; Units              ; Units represent departments, stores, regions, or any other logical grouping that makes sense to you. Approvers are assigned to units and individual users. Units also store the shipping addresses buyers can use when making purchases. ; UnitsHomeLinkImageEn
+                             ;                          ; UsersHomeLink          ; Users              ; Users are the buyers, approvers, managers, and administrators of your organization. Each user is assigned a role for making or approving purchases.                                                                                      ; UsersHomeLinkImageEn
+
+# Responsive Error page
+
+INSERT_UPDATE Media; mediaFormat(qualifier); $contentCV[unique = true]; code[unique = true]                  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]; mime[default = 'image/svg+xml']; realfilename       ; folder(qualifier)[default = 'images']; altText
+                   ; widescreen            ;                          ; Elec_1400x401_ErrorPage_EN_1400W.svg ; $siteResource/images/banners/site/Elec_ErrorPage.svg                                           ;                                ; Elec_ErrorPage.svg ;                                      ; "Page not found"
+                   ; mobile                ;                          ; Elec_480x170_ErrorPage_EN_480W.svg   ; $siteResource/images/banners/site/Elec_ErrorPage.svg                                           ;                                ; Elec_ErrorPage.svg ;                                      ; "Page not found"
+                   ; tablet                ;                          ; Elec_770x221_ErrorPage_EN_770W.svg   ; $siteResource/images/banners/site/Elec_ErrorPage.svg                                           ;                                ; Elec_ErrorPage.svg ;                                      ; "Page not found"
+                   ; desktop               ;                          ; Elec_960x275_ErrorPage_EN_960W.svg   ; $siteResource/images/banners/site/Elec_ErrorPage.svg                                           ;                                ; Elec_ErrorPage.svg ;                                      ; "Page not found"
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]     ; $medias; $contentCV[unique = true]
+                            ; adnoc-errorpage-pagenotfound ; Elec_480x170_ErrorPage_EN_480W.svg,Elec_770x221_ErrorPage_EN_770W.svg,Elec_960x275_ErrorPage_EN_960W.svg,Elec_1400x401_ErrorPage_EN_1400W.svg
+
+UPDATE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]                   ; $mediaContainer
+                                      ;                          ; AdnoctronicsErrorpageBannerComponent ; adnoc-errorpage-pagenotfound
+
+# Pages
+
+
+# Content Pages
+UPDATE ContentPage; $contentCV[unique = true]; uid[unique = true]            ; title[lang = $lang]
+                  ;                          ; AccountSummaryDetails         ; "Account Summary Details"
+                  ;                          ; CancelOrderPage               ; "Cancel Order"
+                  ;                          ; Checkout                      ; "Checkout"
+                  ;                          ; CheckoutDeliveryAddress       ; "Checkout Delivery Address"
+                  ;                          ; CheckoutDeliveryMode          ; "Checkout Delivery Mode"
+                  ;                          ; CheckoutPaymentDetails        ; "Checkout Payment Details"
+                  ;                          ; CheckoutPaymentType           ; "Checkout Payment Type"
+                  ;                          ; CheckoutReviewOrder           ; "Checkout Review Order"
+                  ;                          ; ConfirmCancelOrderPage        ; "Cancel Order Confirmation"
+                  ;                          ; ConfirmReturnOrderPage        ; "Return Order Confirmation"
+                  ;                          ; ManageAccountSummary          ; "Account Summary"
+                  ;                          ; ManageBudgets                 ; "Budgets"
+                  ;                          ; ManageCostCenters             ; "Cost Centers"
+                  ;                          ; ManagePermissions             ; "Purchase Limits"
+                  ;                          ; ManageUnits                   ; "Units"
+                  ;                          ; ManageUserGroups              ; "User Groups"
+                  ;                          ; ManageUsers                   ; "Users"
+                  ;                          ; MyCompany                     ; "My Company"
+                  ;                          ; ReturnOrderPage               ; "Return Order"
+                  ;                          ; ReturnRequestDetailsPage      ; "Return Request Details"
+                  ;                          ; UnitLevelOrderDetailsPage     ; "Unit-Level Order Details"
+                  ;                          ; UnitLevelOrderPage            ; "Unit-Level Orders History"
+                  ;                          ; contactUs                     ; "Contact Us"
+                  ;                          ; cpqConfig                     ; "CPQ Configuration"
+                  ;                          ; cpqConfigOverview             ; "CPQ Configuration Overview"
+                  ;                          ; forgotPassword                ; "Reset Password"
+                  ;                          ; help                          ; "Help"
+                  ;                          ; order-approval-dashboard      ; "Order Approval Dashboard"
+                  ;                          ; order-approval-details        ; "Order Approval"
+                  ;                          ; quickOrderPage                ; "Quick Order"
+                  ;                          ; register                      ; "Create an Account"
+                  ;                          ; replenishmentConfirmationPage ; "Replenishment Order Confirmation"
+                  ;                          ; resetPassword                 ; "Reset Password"
+                  ;                          ; sale                          ; "Sale"
+                  ;                          ; storefinderPage               ; "Find a Store"
+                  ;                          ; support-ticket-details        ; "Customer Service"
+                  ;                          ; support-tickets               ; "Customer Service"
+                  ;                          ; textfieldConfig               ; "Textfield Product Configuration"
+                  ;                          ; textfieldConfigOv             ; "Textfield Product Configuration Overview"
+                  ;                          ; downloadstatementPage         ; "Download Statement"
+                  ;                          ; overdueinvoicePage            ; "Open Invoices"
+                  ;                          ; overdueinvoiceSuccessPage     ; ""
+                  ;                          ; updatePassword                ; "Update Password"
+                  ;                          ; variantConfig                 ; "Variant Configuration"
+                  ;                          ; variantConfigOverview         ; "Variant Configuration Overview"
+                  ;                          ; findOurOffice                 ; " Find Our Office"

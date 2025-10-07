@@ -1,0 +1,110 @@
+@import "../../../../../../src/styles/scss/utilities/variables";
+.CREATED,
+.ORDER_SPLIT,
+.CHECKED_VALID,
+.COMPLETED,
+.SHIPPED,
+.CANCELLED,
+.CANCELLING,
+.RECEIVED,
+.SUSPENDED,
+.CONFIRMED,
+.PARTIAL_COMPLETED,
+.NOTHING_REJECTED,
+.PARTIAL_REJECTED,
+.EVERYTHING_REJECTED,
+.WAIT,
+.APPROVAL_PENDING,
+.APPROVING {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--cx-user-active-background);
+  padding: 8px 18px 8px 26px;
+  border: 1px solid var(--cx-active-status-circle);
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px !important;
+  font-weight: var(--cx-font-weight-normal) !important;
+  line-height: 2;
+  color: var(--cx-black);
+  @media (max-width: $breakpoint-sm) {
+    min-height: auto !important;
+    min-width: auto !important;
+    align-self: inherit;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 7.5px;
+    background-color: var(--cx-active-status-circle);
+    margin-right: 10px;
+    align-self: center;
+  }
+}
+
+// Cancelled/Rejected
+.CANCELLED,
+.CANCELLING,
+.EVERYTHING_REJECTED {
+  background: var(--cx-color-cancel-order);
+  border: 1px solid var(--cx-color-cancel-order-border);
+
+  &::before {
+    background-color: var(--cx-color-border-danger);
+  }
+}
+
+// Suspended/Partial Rejected/Shipped
+.SUSPENDED,
+.PARTIAL_REJECTED,
+.SHIPPED {
+  background: var(--cx-user-disable-background);
+  border: 1px solid var(--cx-disable-status-circle);
+
+  &::before {
+    background-color: var(--cx-disable-status-circle);
+  }
+}
+
+// Order Split/Checked Valid
+.CREATED,
+.ORDER_SPLIT,
+.CHECKED_VALID,
+.APPROVAL_PENDING,
+.WAIT {
+  background: var(--cx-user-yellow-background);
+  border: 1px solid var(--cx-user-darkyellow-background);
+
+  &::before {
+    background-color: var(--cx-user-darkyellow-background);
+  }
+}
+
+#order-history-table {
+  thead {
+    tr {
+      th {
+        background-color: var(--cx-adnoc-rwhite-color);
+        color: var(--cx-text-color);
+        font-weight: var(--cx-font-weight-light);
+      }
+    }
+  }
+}
+
+.text-transform-none {
+  text-transform: none;
+}
+
+.flex-gap {
+  gap: 7px;
+}

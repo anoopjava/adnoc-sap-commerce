@@ -1,0 +1,236 @@
+########################################## 
+$contentCatalog = adnocContentCatalog
+$contentCatalogName = Adnoc Content Catalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$productCV = catalogVersion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$picture = media(code, $contentCV);
+$image = image(code, $contentCV);
+$media = media(code, $contentCV);
+$page = page(uid, $contentCV);
+$contentPage = contentPage(uid, $contentCV);
+$product = product(code, $productCV)
+$category = category(code, $productCV)
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/adnocContentCatalog
+$jarResourceCms = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/cockpits/cmscockpit
+$productResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/productCatalogs/adnocProductCatalog
+$addonExtensionName = b2bacceleratoraddon
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV);
+$siteUid = adnoc
+$lang = en
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+
+
+REMOVE ContentSlotForPage; $contentCV[unique = true]; uid[unique = true] ; position[unique = true]; page(uid, $contentCV)[unique = true][default = 'homepage']
+                         ;                          ; Section2A-Homepage ; Section2A              ;
+                         ;                          ; Section2B-Homepage ; Section2B              ;
+
+REMOVE ContentSlot; $contentCV[unique = true]; uid[unique = true]
+                  ;                          ; Section2ASlot-Homepage
+                  ;                          ; Section2BSlot-Homepage
+
+UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]    ; cmsComponents(uid, $contentCV)
+                  ;                          ; Section1Slot-Homepage ; AdnocHompageSplashBannerComponent
+
+REMOVE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]
+                                      ;                          ; AdnocHompageBrandsBannerComponent
+
+REMOVE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]
+                                      ;                          ; AdnocHompageFuelsBannerComponent
+                                      ;                          ; AdnocHompageLubricantsBannerComponent
+
+REMOVE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true]
+                                      ;                          ; AdnocHompageLpgsBannerComponent
+                                      ;                          ; AdnocHompageCarcaresBannerComponent
+
+REMOVE SimpleResponsiveBannerComponent; $contentCV[unique = true]; uid[unique = true];
+                                      ;                          ; AdnocHompageLubricantsBannerComponent
+                                      ;                          ; AdnocHompageFuelsBannerComponent
+                                      ;                          ; AdnocHompageLpgsBannerComponent
+                                      ;                          ; AdnocHompageCarcaresBannerComponent
+                                      ;                          ; AdnocHompageBrandsBannerComponent
+
+UPDATE ProductCarouselComponent; $contentCV[unique = true]; uid[unique = true]                       ; title[lang = en]
+                               ;                          ; AdnocHomepageNewProductCarouselComponent ; "What's New"
+
+#AdnocFooterNavigationComponent Start
+
+UPDATE CMSNavigationNode; uid[unique = true]           ; $contentCV[unique = true]; name                          ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                        ; SAPCustomerExperienceNavNode ;                          ; SAP Customer Experience Pages ;           ;                ; SAPCustomerExperienceNavNode
+
+REMOVE CMSNavigationNode; uid[unique = true] ; $contentCV[unique = true]; name                     ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                        ; SAPCommerceNavNode ;                          ; SAP Commerce Cloud Pages ; FooterNavNode          ;                ; SAPCommerceNavNode
+
+##----- level 5. children of SAPCustomerExperienceNavNode -----##
+REMOVE CMSNavigationNode; uid[unique = true]      ; $contentCV[unique = true]; name                          ; parent(uid, $contentCV); links(&linkRef); &nodeRef                ; visible;
+                        ; AboutSAPCommerceNavNode ;                          ; About SAP Commerce Cloud Page ; SAPCommerceNavNode     ;                ; AboutSAPCommerceNavNode ; true   ;
+                        ; DocumentationNavNode    ;                          ; Documentation Page            ; SAPCommerceNavNode     ;                ; DocumentationNavNode    ; false  ;
+
+## entries of the above navigation nodes ##
+REMOVE CMSNavigationEntry; uid[unique = true]           ; $contentCV[unique = true]; name                                           ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                         ; AboutSAPCommerceNavNodeEntry ;                          ; About SAP Commerce Cloud Navigation Node Entry ; AboutSAPCommerceNavNode ; AboutSAPCommerceLink                                   ;
+                         ; DocumentationNavNodeEntry    ;                          ; Documentation Navigation Node Entry            ; DocumentationNavNode    ; DocumentationLink                                      ;
+
+## links of the above navigation nodes ##
+REMOVE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; name                          ; url                                                       ; &linkRef             ; &componentRef        ; target(code)[default = 'sameWindow']
+                       ;                          ; AboutSAPCommerceLink ; About SAP Commerce Cloud Link ; "https://www.adnocdistribution.ae/en/corporate/our-story" ; AboutSAPCommerceLink ; AboutSAPCommerceLink ; newWindow
+                       ;                          ; DocumentationLink    ; Documentation Link            ; "https://help.hybris.com"                                 ; DocumentationLink    ; DocumentationLink    ; newWindow
+
+##----- level 5. children of SAPCommerceNavNode -----##
+
+REMOVE CMSNavigationNode; uid[unique = true]                ; $contentCV[unique = true]; name                               ; parent(uid, $contentCV)      ; links(&linkRef); &nodeRef
+                        ; AboutSAPCustomerExperienceNavNode ;                          ; About SAP Customer Experience Page ; SAPCustomerExperienceNavNode ;                ; AboutSAPCustomerExperienceNavNode
+
+## entries of the above navigation nodes ##
+REMOVE CMSNavigationEntry; uid[unique = true]                     ; $contentCV[unique = true]; name                                                ; navigationNode(&nodeRef)          ; item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                         ; AboutSAPCustomerExperienceNavNodeEntry ;                          ; About SAP Customer Experience Navigation Node Entry ; AboutSAPCustomerExperienceNavNode ; VisitSAPLink                                           ;
+
+##----- level 5. children of FollowUsNavNode -----##
+REMOVE CMSNavigationNode; uid[unique = true]       ; $contentCV[unique = true]; name                     ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                        ; AgileCommerceBlogNavNode ;                          ; Agile Commerce Blog Page ; FollowUsNavNode        ;                ; AgileCommerceBlogNavNode
+
+## entries of the above navigation nodes ##
+REMOVE CMSNavigationEntry; uid[unique = true]            ; $contentCV[unique = true]; name                                      ; navigationNode(&nodeRef) ; item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                         ; AgileCommerceBlogNavNodeEntry ;                          ; Agile Commerce Blog Navigation Node Entry ; AgileCommerceBlogNavNode ; AgileCommerceBlogLink                                  ;
+
+## links of the above navigation nodes ##
+REMOVE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]    ; name                     ; url                              ; &linkRef              ; &componentRef         ; target(code)[default = 'sameWindow']
+                       ;                          ; AgileCommerceBlogLink ; Agile Commerce Blog Link ; "http://www.agile-commerce.com/" ; AgileCommerceBlogLink ; AgileCommerceBlogLink ; newWindow
+
+REMOVE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]    ; linkName[lang = $lang]
+                       ;                          ; AboutSAPCommerceLink  ; "About Us"
+                       ;                          ; AgileCommerceBlogLink ; "Agile Commerce Blog"
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; name      ; parentPOS; parent(uid, $contentCV)[order = position]; links(&linkRef); &nodeRef
+                               ; ConsumerNavNode   ;                          ; Consumer  ; 0        ; FooterNavNode                            ;                ; ConsumerNavNode
+                               ; BusinessNavNode   ;                          ; Business  ; 1        ; FooterNavNode                            ;                ; BusinessNavNode
+                               ; CorporateNavNode  ;                          ; Corporate ; 2        ; FooterNavNode                            ;                ; CorporateNavNode
+                               ; MoreNavNode       ;                          ; More      ; 3        ; FooterNavNode                            ;                ; MoreNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]           ; $contentCV[unique = true]; name                                      ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; FuelConsumerNavNodeEntry     ;                          ; Fuel Consumer Navigation Node Entry       ; FuelConsumerNavNode     ; FuelConsumerLink                                       ;
+                                ; CarCareConsumerNavNodeEntry  ;                          ; CarCare Consumer Navigation Node Entry    ; CarCareConsumerNavNode  ; CarCareConsumerLink                                    ;
+                                ; ShopNavNodeEntry             ;                          ; Shop Navigation Node Entry                ; ShopNavNode             ; ShopLink                                               ;
+                                ; RewardsNavNodeEntry          ;                          ; Rewards Navigation Node Entry             ; RewardsNavNode          ; RewardsLink                                            ;
+                                ; InnovationNavNodeEntry       ;                          ; Innovation Navigation Node Entry          ; InnovationNavNode       ; InnovationLink                                         ;
+                                ; AppNavNodeEntry              ;                          ; App Navigation Node Entry                 ; AppNavNode              ; AppLink                                                ;
+
+                                ; FuelBusinessNavNodeEntry     ;                          ; Fuel Business Navigation Node Entry       ; FuelBusinessNavNode     ; FuelBusinessLink                                       ;
+                                ; LubeBusinessNavNodeEntry     ;                          ; Lubricants Business Navigation Node Entry ; LubBusinessNavNode      ; LubBusinessLink                                        ;
+                                ; LPGBusinessNavNodeEntry      ;                          ; LPG Business Navigation Node Entry        ; LPGBusinessNavNode      ; LPGBusinessLink                                        ;
+                                ; DeliveryServicesNavNodeEntry ;                          ; Delivery Services Navigation Node Entry   ; DeliveryServicesNavNode ; DeliveryServicesLink                                   ;
+
+                                ; OurStoryNavNodeEntry         ;                          ; Our Story Navigation Node Entry           ; OurStoryNavNode         ; OurStoryLink                                           ;
+                                ; OurBusinessNavNodeEntry      ;                          ; Our Business Navigation Node Entry        ; OurBusinessNavNode      ; OurBusinessLink                                        ;
+                                ; NewsMediaNavNodeEntry        ;                          ; News Media Navigation Node Entry          ; NewsMediaNavNode        ; NewsMediaLink                                          ;
+
+                                ; CareersNavNodeEntry          ;                          ; Careers Navigation Node Entry             ; CareersNavNode          ; CareersLink                                            ;
+                                ; CommercialPortalNavNodeEntry ;                          ; Commercial Portal Navigation Node Entry   ; CommercialPortalNavNode ; CommercialPortalLink                                   ;
+                                ; SupplierNavNodeEntry         ;                          ; Suppliers Navigation Node Entry           ; SuppliersNavNode        ; SupplierLink                                           ;
+                                ; ContactUsMoreNavNodeEntry    ;                          ; Contact Us More Navigation Node Entry     ; ContactUsMoreNavNode    ; ContactUsMoreLink                                      ;
+                                ; FAQsNavNodeEntry             ;                          ; FAQs Navigation Node Entry                ; FAQsNavNode             ; FAQsLink                                               ;
+
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]     ; parentPOS ; $contentCV[unique = true]; name                         ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; FuelConsumerNavNode    ; 0         ;                          ; Fuel Consumer Nav Node       ; ConsumerNavNode        ;                ; FuelConsumerNavNode
+                               ; CarCareConsumerNavNode ; 1         ;                          ; Car care Consumer Nav Node   ; ConsumerNavNode        ;                ; CarCareConsumerNavNode
+                               ; ShopNavNode            ; 2         ;                          ; Shop Nav Node                ; ConsumerNavNode        ;                ; ShopNavNode
+                               ; RewardsNavNode         ; 3         ;                          ; Rewards Nav Node             ; ConsumerNavNode        ;                ; RewardsNavNode
+                               ; InnovationNavNode      ; 4         ;                          ; Innovation Nav Node          ; ConsumerNavNode        ;                ; InnovationNavNode
+                               ; AppNavNode             ; 5         ;                          ; App Nav Node                 ; ConsumerNavNode        ;                ; AppNavNode
+
+                               ; FuelBusinessNavNode    ; 0         ;                          ; Fuel Business Nav Node       ; BusinessNavNode        ;                ; FuelBusinessNavNode
+                               ; LubBusinessNavNode     ; 1         ;                          ; Lubricants Business Nav Node ; BusinessNavNode        ;                ; LubBusinessNavNode
+                               ; LPGBusinessNavNode     ; 2         ;                          ; LPG Business Nav Node        ; BusinessNavNode        ;                ; LPGBusinessNavNode
+                               ; DeliveryServicesNavNode; 3         ;                          ; Delivery Services Nav Node   ; BusinessNavNode        ;                ; DeliveryServicesNavNode
+
+                               ; OurStoryNavNode        ; 0         ;                          ; Our Story Nav Node           ; CorporateNavNode       ;                ; OurStoryNavNode
+                               ; OurBusinessNavNode     ; 1         ;                          ; Our Business Nav Node        ; CorporateNavNode       ;                ; OurBusinessNavNode
+                               ; NewsMediaNavNode       ; 2         ;                          ; News and Media Nav node      ; CorporateNavNode       ;                ; NewsMediaNavNode
+
+                               ; CareersNavNode         ; 0         ;                          ; Carrers Nav Nodes            ; MoreNavNode            ;                ; CareersNavNode
+                               ; CommercialPortalNavNode; 1         ;                          ; Commercial Portal Nav Node   ; MoreNavNode            ;                ; CommercialPortalNavNode
+                               ; SuppliersNavNode       ; 2         ;                          ; Suppliers Nav Node           ; MoreNavNode            ;                ; SuppliersNavNode
+                               ; ContactUsMoreNavNode   ; 3         ;                          ; Contact US More Nav Node     ; MoreNavNode            ;                ; ContactUsMoreNavNode
+                               ; FAQsNavNode            ; 4         ;                          ; FAQs Nav Node                ; MoreNavNode            ;                ; FAQsNavNode
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; name                      ; url                                                                 ; &linkRef             ; &componentRef        ; target(code)[default = 'sameWindow']
+                              ;                          ; FuelConsumerLink     ; Fuel Cosumer Link         ; "https://www.adnocdistribution.ae/en/consumer-fuel"                 ; FuelConsumerLink     ; FuelConsumerLink     ; newWindow
+                              ;                          ; CarCareConsumerLink  ; Car care Consumer Link    ; "https://www.adnocdistribution.ae/en/car-care"                      ; CarCareConsumerLink  ; CarCareConsumerLink  ; newWindow
+                              ;                          ; ShopLink             ; Shop Link                 ; "https://www.adnocdistribution.ae/consumer-shop"                    ; ShopLink             ; ShopLink             ; newWindow
+                              ;                          ; RewardsLink          ; Rewards Link              ; "https://www.adnocdistribution.ae/rewards"                          ; RewardsLink          ; RewardsLink          ; newWindow
+                              ;                          ; InnovationLink       ; Innovation Link           ; "https://www.adnocdistribution.ae/innovation"                       ; InnovationLink       ; InnovationLink       ; newWindow
+                              ;                          ; AppLink              ; App Link                  ; "https://www.adnocdistribution.ae/app"                              ; AppLink              ; AppLink              ; newWindow
+
+                              ;                          ; FuelBusinessLink     ; Fuel Business Link        ; "https://www.adnocdistribution.ae/en/business/fuel"                 ; FuelBusinessLink     ; FuelBusinessLink     ; newWindow
+                              ;                          ; LubBusinessLink      ; Lubricants Business  Link ; "https://www.adnocdistribution.ae/en/business/lubricants"           ; LubBusinessLink      ; LubBusinessLink      ; newWindow
+                              ;                          ; LPGBusinessLink      ; LPG Business Link         ; "https://www.adnocdistribution.ae/en/business/lpg"                  ; LPGBusinessLink      ; LPGBusinessLink      ; newWindow
+                              ;                          ; DeliveryServicesLink ; Delivery Services Link    ; "https://www.adnocdistribution.ae/en/business/delivery-services"    ; DeliveryServicesLink ; DeliveryServicesLink ; newWindow
+
+                              ;                          ; OurStoryLink         ; Our Story Link            ; "https://www.adnocdistribution.ae/corporate/our-story"              ; OurStoryLink         ; OurStoryLink         ; newWindow
+                              ;                          ; OurBusinessLink      ; Our Business Link         ; "https://www.adnocdistribution.ae/corporate/our-business"           ; OurBusinessLink      ; OurBusinessLink      ; newWindow
+                              ;                          ; NewsMediaLink        ; News Media Link           ; "https://www.adnocdistribution.ae/corporate/news-and-media"         ; NewsMediaLink        ; NewsMediaLink        ; newWindow
+
+                              ;                          ; CareersLink          ; Careers Link              ; "https://adnocgroup.phenompro.com/us/en/adnoc-distribution-careers" ; CareersLink          ; CareersLink          ; newWindow
+                              ;                          ; CommercialPortalLink ; Commercial Portal Link    ; "https://customerportal.adnocdistribution.ae/s/"                    ; CommercialPortalLink ; CommercialPortalLink ; newWindow
+                              ;                          ; SupplierLink         ; Suppliers Link            ; "https://www.adnocdistribution.ae/corporate/suppliers"              ; SupplierLink         ; SupplierLink         ; newWindow
+                              ;                          ; ContactUsMoreLink    ; Contact Us More Link      ; "https://www.adnocdistribution.ae/en/contact-us"                    ; ContactUsMoreLink    ; ContactUsMoreLink    ; newWindow
+                              ;                          ; FAQsLink             ; FAQs Link                 ; "https://www.adnocdistribution.ae/faqs"                             ; FAQsLink             ; FAQsLink             ; newWindow
+
+UPDATE CMSNavigationNode; $contentCV[unique = true]; uid[unique = true]; title[lang = $lang]
+                        ;                          ; ConsumerNavNode   ; "Consumer"
+                        ;                          ; BusinessNavNode   ; "Business"
+                        ;                          ; CorporateNavNode  ; "Corporate"
+                        ;                          ; MoreNavNode       ; "More"
+
+UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; linkName[lang = en]
+                       ;                          ; FuelConsumerLink     ; "Fuel"
+                       ;                          ; CarCareConsumerLink  ; "Car care"
+                       ;                          ; ShopLink             ; "Shop"
+                       ;                          ; RewardsLink          ; "Rewards"
+                       ;                          ; InnovationLink       ; "Innovation"
+                       ;                          ; AppLink              ; "App"
+
+                       ;                          ; FuelBusinessLink     ; "Fuel"
+                       ;                          ; LubBusinessLink      ; "Lubricants"
+                       ;                          ; LPGBusinessLink      ; "LPG"
+                       ;                          ; DeliveryServicesLink ; "Delivery Services"
+
+                       ;                          ; OurStoryLink         ; "Our Story"
+                       ;                          ; OurBusinessLink      ; "Our Business"
+                       ;                          ; NewsMediaLink        ; "News & Media"
+
+                       ;                          ; CareersLink          ; "Careers"
+                       ;                          ; CommercialPortalLink ; "Commercial Portal"
+                       ;                          ; SupplierLink         ; "Suppliers"
+                       ;                          ; ContactUsMoreLink    ; "Contact Us"
+                       ;                          ; FAQsLink             ; "FAQs"
+#AdnocFooterNavigationComponent End
+
+#Changes for Lubricants Category structure
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; name       ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; LubricantsNavNode ;                          ; Lubricants ; AdnocCategoryNavNode   ;                ; LubricantsNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]     ; $contentCV[unique = true]; name                             ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; LubricantsNavNodeEntry ;                          ; Lubricants Navigation Node Entry ; LubricantsNavNode       ; LubricantsCategoryLink                                 ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]     ; name                     ; url                                     ; &linkRef               ; &componentRef          ; target(code)[default = 'sameWindow']
+                              ;                          ; LubricantsCategoryLink ; Lubricants Category Link ; /Open-Catalogue/Lubricants/c/lubricants; LubricantsCategoryLink ; LubricantsCategoryLink ;
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]  ; $contentCV[unique = true]; name         ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; LubeNavNode         ;                          ; Lube         ; LubricantsNavNode      ;                ; LubeNavNode
+                               ; GreaseNavNode       ;                          ; Grease       ; LubricantsNavNode      ;                ; GreaseNavNode
+                               ; SpecialitiesNavNode ;                          ; Specialities ; LubricantsNavNode      ;                ; SpecialitiesNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]       ; $contentCV[unique = true]; name                          ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; LubeNavNodeEntry         ;                          ; Lube Navigation Entry         ; LubeNavNode             ; LubeLinkComponent                                      ;
+                                ; GreaseNavNodeEntry       ;                          ; Grease Navigation Entry       ; GreaseNavNode           ; GreaseLinkComponent                                    ;
+                                ; SpecialitiesNavNodeEntry ;                          ; Specialities Navigation Entry ; SpecialitiesNavNode     ; SpecialitiesLinkComponent                              ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]        ; name         ; url   ; linkName[lang = en]; styleAttributes; &linkRef            ; &componentRef       ; target(code)[default = 'sameWindow']
+                              ;                          ; LubeLinkComponent         ; Lube         ; c/B12 ; Lube               ;                ; LubeLinkRef         ; LubeCompRef         ;
+                              ;                          ; GreaseLinkComponent       ; Grease       ; c/B13 ; Grease             ;                ; GreaseLinkRef       ; GreaseCompRef       ;
+                              ;                          ; SpecialitiesLinkComponent ; Specialities ; c/B15 ; Specialities       ;                ; SpecialitiesLinkRef ; SpecialitiesCompRef ;

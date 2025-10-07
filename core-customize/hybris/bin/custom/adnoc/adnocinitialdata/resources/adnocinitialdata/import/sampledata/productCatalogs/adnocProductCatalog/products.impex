@@ -1,0 +1,72 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/accountsummary
+
+# Language
+$lang = en
+
+INSERT_UPDATE Unit; code[unique = true]; unitType; conversion; name[lang = en]
+                  ; PC                 ; PC      ; 1         ; Piece
+                  ; CTN                ; CTN     ; 1         ; Carton
+                  ; KG                 ; KG      ; 1         ; Kg
+                  ; LBS                ; LBS     ; 1         ; Lbs
+                  ; EA                 ; EA      ; 1         ; Each
+                  ; TIN                ; TIN     ; 1         ; Tin
+                  ; PL                 ; PL      ; 1         ; Pallet
+                  ; MT                 ; MT      ; 1         ; Metric Ton
+                  ; L                  ; L       ; 1         ; Litre
+                  ; TNE                ; TNE     ; 1         ; Ton
+                  ; L15                ; L15     ; 1         ; Litre
+                  ; DR                 ; DR      ; 1         ; Drum
+                  ; BT                 ; BT      ; 1         ; Bottle
+
+INSERT_UPDATE Product; code[unique = true]             ; $catalogVersion; $supercategories; unit(code); division; minOrderQuantity; maxOrderQuantity; $approved; productDocument(code, itemtype(code))
+                     ; 13                              ;                ; C01             ; L         ; 21      ;                 ;                 ;          ; ULG91:DocumentMedia
+                     ; 21                              ;                ; B03             ; L         ; 21      ;                 ;                 ;          ;
+                     ; 26                              ;                ; B02             ; L         ; 21      ;                 ;                 ;          ; GasOil:DocumentMedia
+                     ; 10013                           ;                ; gasoline        ; L         ; 21      ;                 ;                 ;          ; INPG-10013:DocumentMedia
+                     ; 10015                           ;                ; gasoline        ; L         ; 21      ;                 ;                 ;          ;
+                     ; 170013000092                    ;                ; automotive      ; DR        ; 41      ;                 ;                 ;          ;
+                     ; 33                              ;                ; automotive      ; MT        ; 41      ;                 ;                 ;          ; INPG-33:DocumentMedia
+                     ; regularCarService               ;                ; carcare         ; EA        ; 53      ;                 ;                 ;          ;
+                     ; pollutionUnderControlInspection ;                ; carcare         ; EA        ; 53      ;                 ;                 ;          ; INPG-pollutionUnderControlInspection:DocumentMedia
+                     ; 194                             ;                ; c-store         ; EA        ; 23      ;                 ;                 ;          ; INPG-194:DocumentMedia
+                     ; 120009022753                    ;                ; B06             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 120009022754                    ;                ; B06             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 200009000434                    ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 200009000577                    ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 200009000578                    ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 43                              ;                ; B04             ; MT        ; 31      ; 1               ;                 ;          ;
+                     ; 733                             ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 787                             ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 842                             ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 843                             ;                ; B05             ; EA        ; 31      ; 1               ;                 ;          ;
+                     ; 42                              ;                ; B04             ; MT        ; 31      ; 1               ;                 ;          ; INPG-44:DocumentMedia
+                     ; 44                              ;                ; B04             ; MT        ; 31      ; 1               ;                 ;          ;
+                     ; 14                              ;                ; C01             ; L         ; 21      ; 1               ;                 ;          ; ULG98:DocumentMedia
+                     ; 15                              ;                ; C01             ; L         ; 21      ; 1               ;                 ;          ; ULG95:DocumentMedia
+                     ; 999                             ;                ; B02             ; L         ; 21      ; 1               ;                 ;          ; B5:DocumentMedia
+
+INSERT_UPDATE DocumentMedia; code[unique = true]                  ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'application/pdf']
+                           ; ULG91                                ; $siteResource/documentmedias/ULG91.pdf
+                           ; ULG95                                ; $siteResource/documentmedias/ULG95.pdf
+                           ; ULG98                                ; $siteResource/documentmedias/ULG98.pdf
+                           ; B5                                   ; $siteResource/documentmedias/B5.pdf
+                           ; GasOil                               ; $siteResource/documentmedias/GasOil.pdf
+                           ; INPG-10013                           ; $siteResource/documentmedias/10013.pdf
+                           ; INPG-33                              ; $siteResource/documentmedias/33.pdf
+                           ; INPG-44                              ; $siteResource/documentmedias/44.pdf
+                           ; INPG-pollutionUnderControlInspection ; $siteResource/documentmedias/pollutionUnderControlInspection.pdf
+                           ; INPG-194                             ; $siteResource/documentmedias/194.pdf
+

@@ -1,0 +1,76 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { ICON_TYPE, ViewComponent } from '@spartacus/storefront';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { ItemService } from '../item.service';
+import { BaseItem } from '../organization.model';
+import { MessageService } from '../message/service/message.service';
+
+@Component({
+    selector: 'cx-org-card',
+    templateUrl: './adnoc-card.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { class: 'content-wrapper' },
+    providers: [MessageService],
+    standalone: false
+})
+export class AdnocCardComponent<T extends BaseItem> {
+  @Input() i18nRoot!: string;
+  @Input() previous: boolean | string = true;
+  @Input() subtitle?: string;
+  @Input() showHint? = false;
+
+  protected itemKey: string | undefined;
+
+  iconTypes = ICON_TYPE;
+
+  item$: Observable<T | undefined>;
+
+  @ViewChild(ViewComponent, { read: ViewComponent }) view!: ViewComponent;
+
+  constructor(
+    protected itemService: ItemService<T>,
+    protected messageService: MessageService
+  ) {
+    this.item$ = this.itemService.current$.pipe(
+      tap((item) => this.refreshMessages(item))
+    );
+  }
+
+  /**
+   * The views are router based, which means if we close a view, the router outlet is
+   * cleaned immediately. To prevent this, we're closing the view manually, before
+   * navigating back.
+   */
+  closeView(event: MouseEvent) {
+    event.stopPropagation();
+    this.view.toggle(true);
+
+    setTimeout(() => {
+      (event.target as HTMLElement)?.parentElement?.click();
+    }, 500);
+
+    return false;
+  }
+
+  get previousLabel(): string {
+    return this.previous as string;
+  }
+
+  protected refreshMessages(item: T | undefined) {
+    if (
+      this.itemKey !== undefined &&
+      item?.code !== this.itemKey &&
+      item?.uid !== this.itemKey &&
+      item?.customerId !== this.itemKey
+    ) {
+      this.messageService.clear();
+    }
+    this.itemKey = item?.code ?? item?.uid ?? item?.customerId;
+  }
+}

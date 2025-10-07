@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocservice/messages/email-adnocOrderCompletion_$lang.properties
+
+${ctx.messages.emailSubject}

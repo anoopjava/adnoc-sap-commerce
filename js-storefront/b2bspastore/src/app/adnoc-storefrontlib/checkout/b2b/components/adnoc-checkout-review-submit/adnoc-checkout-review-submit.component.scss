@@ -1,0 +1,76 @@
+@import "../../../../../../styles/scss/utilities/mixins";
+
+cx-review-submit {
+  .cx-review {
+    hr {
+      border: 1px solid var(--cx-summary-card-border);
+    }
+
+    &-summary {
+      background-color: var(--cx-summary-range-background);
+
+      .cx-review-payment-col {
+        border-color: var(--cx-summary-range-border);
+
+        &:nth-child(2) {
+          border-inline-end: 0;
+        }
+      }
+
+      &-card {
+        font-size: 20px;
+
+        .card-body {
+          @include media-breakpoint-up(lg) {
+            padding: 0;
+          }
+
+          .cx-card {
+            &-title {
+              font-size: 20px;
+              font-family: var(--cx-font-family-regular);
+              color: var(--cx-black);
+              font-weight: var(--cx-font-weight-normal);
+              margin: 0;
+            }
+
+            &-container {
+              .cx-card-label-bold {
+                color: var(--cx-color-primary);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-cart-item {
+      adnoc-cart-item-list {
+        tr {
+          border-top: 0;
+        }
+
+        table {
+          border: 1px solid var(--cx-color-invrse);
+
+          thead {
+            background-color: var(--cx-adnoc-rwhite-color);
+          }
+
+          tbody {
+            tr {
+              td {
+                cx-item-counter {
+                  input {
+                    border: 1px solid var(--cx-color-border-header);
+                    background-color: transparent;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

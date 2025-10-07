@@ -1,0 +1,188 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2024 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Adnoc site emails
+#
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$jarEmailResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/coredata/contentCatalogs/adnocContentCatalog/emails
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$emailResource = $config-emailResourceValue
+
+# Language
+$lang = en
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate; code[unique = true]                                 ; description[lang = $lang]                          ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; adnoc-BannerComponent-template                      ; "CMSBannerComponent Template"                      ; $emailResource/email-bannerComponentTemplate.vm
+                       ; adnoc-CMSImageComponent-template                    ; "CMSImageComponent Template"                       ; $emailResource/email-cmsImageComponentTemplate.vm
+                       ; adnoc-CMSLinkComponent-template                     ; "CMSLinkComponent Template"                        ; $emailResource/email-cmsLinkComponentTemplate.vm
+                       ; adnoc-CMSParagraphComponent-template                ; "CMSParagraphComponent Template"                   ; $emailResource/email-cmsParagraphComponentTemplate.vm
+                       ; adnoc-SimpleBannerComponent-template                ; "CMSSimpleBannerComponent Template"                ; $emailResource/email-bannerComponentTemplate.vm
+                       ; adnoc-standalone-BannerComponent-template           ; "CMSBannerComponent Template"                      ; $emailResource/email-bannerComponentTemplate.vm
+                       ; adnoc-standalone-CMSImageComponent-template         ; "CMSImageComponent Template"                       ; $emailResource/email-cmsImageComponentTemplate.vm
+                       ; adnoc-standalone-CMSLinkComponent-template          ; "CMSLinkComponent Template"                        ; $emailResource/email-cmsLinkComponentTemplate.vm
+                       ; adnoc-standalone-CMSParagraphComponent-template     ; "CMSParagraphComponent Template"                   ; $emailResource/email-cmsParagraphComponentTemplate.vm
+                       ; adnoc-standalone-SimpleBannerComponent-template     ; "CMSSimpleBannerComponent Template"                ; $emailResource/email-bannerComponentTemplate.vm
+                       ; adnoc_Email_Customer_Registration_Body              ; "Customer Registration Email Body"                 ; $emailResource/email-customerRegistrationBody.vm
+                       ; adnoc_Email_Customer_Registration_Subject           ; "Customer Registration Email Subject"              ; $emailResource/email-customerRegistrationSubject.vm
+                       ; adnoc_Email_Delivery_Sent_Body                      ; "Delivery Sent Email Body"                         ; $emailResource/email-deliverySentBody.vm
+                       ; adnoc_Email_Delivery_Sent_Subject                   ; "Delivery Sent Email Subject"                      ; $emailResource/email-deliverySentSubject.vm
+                       ; adnoc_Email_Forgotten_Password_Body                 ; "Forgotten Password Email Body"                    ; $emailResource/email-forgottenPasswordBody.vm
+                       ; adnoc_Email_Forgotten_Password_Subject              ; "Forgotten Password Email Subject"                 ; $emailResource/email-forgottenPasswordSubject.vm
+                       ; adnoc_Email_NotPickedUpConsignment_Canceled_Body    ; "Not Picked Up Consignment Canceled Email Body"    ; $emailResource/email-notPickedUpConsignmentCanceledBody.vm
+                       ; adnoc_Email_NotPickedUpConsignment_Canceled_Subject ; "Not Picked Up Consignment Canceled Email Subject" ; $emailResource/email-notPickedUpConsignmentCanceledSubject.vm
+                       ; adnoc_Email_Order_Cancelled_Body                    ; "Order Cancelled Email Body"                       ; $emailResource/email-orderCancelledBody.vm
+                       ; adnoc_Email_Order_Cancelled_Subject                 ; "Order Cancelled Email Subject"                    ; $emailResource/email-orderCancelledSubject.vm
+                       ; adnoc_Email_Order_Collection_Reminder_Body          ; "Order Collection Reminder Body"                   ; $emailResource/email-orderCollectionReminderBody.vm
+                       ; adnoc_Email_Order_Collection_Reminder_Subject       ; "Order Collection Reminder Subject"                ; $emailResource/email-orderCollectionReminderSubject.vm
+                       ; adnoc_Email_Order_Confirmation_Body                 ; "Order Confirmation Email Body"                    ; $emailResource/email-orderConfirmationBody.vm
+                       ; adnoc_Email_Order_Confirmation_Subject              ; "Order Confirmation Email Subject"                 ; $emailResource/email-orderConfirmationSubject.vm
+                       ; adnoc_Email_Order_Move_To_CS_Body                   ; "Order Move To CS Body"                            ; $emailResource/email-orderMoveToCsBody.vm
+                       ; adnoc_Email_Order_Move_To_CS_Subject                ; "Order Move To CS Subject"                         ; $emailResource/email-orderMoveToCsSubject.vm
+                       ; adnoc_Email_Order_Partially_Canceled_Body           ; "Order Partially Canceled Email Body"              ; $emailResource/email-orderPartiallyCanceledBody.vm
+                       ; adnoc_Email_Order_Partially_Canceled_Subject        ; "Order Partially Canceled Email Subject"           ; $emailResource/email-orderPartiallyCanceledSubject.vm
+                       ; adnoc_Email_Order_Partially_Refunded_Body           ; "Order Partially Refunded Email Body"              ; $emailResource/email-orderPartiallyRefundedBody.vm
+                       ; adnoc_Email_Order_Partially_Refunded_Subject        ; "Order Partially Refunded Email Subject"           ; $emailResource/email-orderPartiallyRefundedSubject.vm
+                       ; adnoc_Email_Order_Refund_Body                       ; "Order Refund Email Body"                          ; $emailResource/email-orderRefundBody.vm
+                       ; adnoc_Email_Order_Refund_Subject                    ; "Order Refund Email Subject"                       ; $emailResource/email-orderRefundSubject.vm
+                       ; adnoc_Email_Quote_Buyer_Cancellation_Body           ; "Quote Buyer Cancellation Email Body"              ; $emailResource/email-quoteBuyerCancellationBody.vm
+                       ; adnoc_Email_Quote_Buyer_Cancellation_Subject        ; "Quote Buyer Cancellation Email Subject"           ; $emailResource/email-quoteBuyerCancellationSubject.vm
+                       ; adnoc_Email_Quote_Buyer_Submission_Body             ; "Quote Buyer Submission Email Body"                ; $emailResource/email-quoteBuyerSubmissionBody.vm
+                       ; adnoc_Email_Quote_Buyer_Submission_Subject          ; "Quote Buyer Submission Email Subject"             ; $emailResource/email-quoteBuyerSubmissionSubject.vm
+                       ; adnoc_Email_Quote_Expired_Body                      ; "Quote Expired Body"                               ; $emailResource/email-quoteExpiredBody.vm
+                       ; adnoc_Email_Quote_Expired_Subject                   ; "Quote Expired Subject"                            ; $emailResource/email-quoteExpiredSubject.vm
+                       ; adnoc_Email_Quote_To_Expire_Soon_Body               ; "Quote To Expire Soon Body"                        ; $emailResource/email-quoteToExpireSoonBody.vm
+                       ; adnoc_Email_Quote_To_Expire_Soon_Subject            ; "Quote To Expire Soon Subject"                     ; $emailResource/email-quoteToExpireSoonSubject.vm
+                       ; adnoc_Email_Ready_For_Pickup_Body                   ; "Ready For Pickup Email Body"                      ; $emailResource/email-readyForPickupBody.vm
+                       ; adnoc_Email_Ready_For_Pickup_Subject                ; "Ready For Pickup Email Subject"                   ; $emailResource/email-readyForPickupSubject.vm
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate; code[unique = true]                                  ; description[lang = $lang]                        ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; adnoc_Email_Order_ApprovalRejection_Body             ; "Buyer Approval Rejection Email Body"            ; $jarEmailResource/email-orderApprovalRejectionBody.vm
+                       ; adnoc_Email_Order_ApprovalRejection_Subject          ; "Order Approval Rejection Email Subject"         ; $jarEmailResource/email-orderApprovalRejectionSubject.vm
+                       ; adnoc_Email_Order_PendingApproval_Body               ; "Order Pending Approval Email Body"              ; $jarEmailResource/email-orderPendingApprovalBody.vm
+                       ; adnoc_Email_Order_PendingApproval_Subject            ; "Order Pending Approval Email Subject"           ; $jarEmailResource/email-orderPendingApprovalSubject.vm
+                       ; adnoc_Email_Replenishment_Order_Confirmation_Body    ; "Replenishment Order Confirmation Email Body"    ; $jarEmailResource/email-replenishmentOrderConfirmationBody.vm
+                       ; adnoc_Email_Replenishment_Order_Confirmation_Subject ; "Replenishment Order Confirmation Email Subject" ; $jarEmailResource/email-replenishmentOrderConfirmationSubject.vm
+                       ; adnoc_Email_Replenishment_Order_Placed_Body          ; "Replenishment Order Placed Email Body"          ; $jarEmailResource/email-replenishmentOrderPlacedBody.vm
+                       ; adnoc_Email_Replenishment_Order_Placed_Subject       ; "Replenishment Order Placed Email Subject"       ; $jarEmailResource/email-replenishmentOrderPlacedSubject.vm
+                       ; adnoc_Email_Verification_Token_Body                  ; "Verification Token Email Body"                  ; $jarEmailResource/email-verificationTokenBody.vm
+                       ; adnoc_Email_Verification_Token_Subject               ; "Verification Token Email Subject"               ; $jarEmailResource/email-verificationTokenSubject.vm
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate; code[unique = true]                             ; description[lang = $lang]                     ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; RegistrationApprovedEmailTemplateBody           ; "Registration Approved Email Body"            ; $jarEmailResource/email-registrationApprovedBody.vm
+                       ; RegistrationApprovedEmailTemplateSubject        ; "Registration Approved Email Subject"         ; $jarEmailResource/email-registrationApprovedSubject.vm
+                       ; RegistrationPendingApprovalEmailTemplateBody    ; "Registration Pending Approval Email Body"    ; $jarEmailResource/email-registrationPendingApprovalBody.vm
+                       ; RegistrationPendingApprovalEmailTemplateSubject ; "Registration Pending Approval Email Subject" ; $jarEmailResource/email-registrationPendingApprovalSubject.vm
+                       ; RegistrationReceivedEmailTemplateBody           ; "Registration Received Email Body"            ; $jarEmailResource/email-registrationReceivedBody.vm
+                       ; RegistrationReceivedEmailTemplateSubject        ; "Registration Received Email Subject"         ; $jarEmailResource/email-registrationReceivedSubject.vm
+                       ; RegistrationRejectedEmailTemplateBody           ; "Registration Reject Email Body"              ; $jarEmailResource/email-registrationRejectedBody.vm
+                       ; RegistrationRejectedEmailTemplateSubject        ; "Registration Reject Email Subject"           ; $jarEmailResource/email-registrationRejectedSubject.vm
+
+# Email Pages
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                  ; fromEmail[lang = $lang]                   ; fromName[lang = $lang]
+                ;                          ; CustomerRegistrationEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; DeliverySentEmail                   ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; ForgottenPasswordEmail              ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderApprovalRejectionEmail         ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderCancelledEmail                 ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderCollectionReminderEmail        ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderConfirmationEmail              ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderMoveToCsEmail                  ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderPartiallyCanceledEmail         ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderPartiallyRefundedEmail         ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderPendingApprovalEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; OrderRefundEmail                    ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; QuoteBuyerCancellationEmail         ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; QuoteBuyerSubmissionEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; QuoteExpiredEmail                   ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; QuoteToExpireSoonEmail              ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; ReadyForPickupEmail                 ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; RegistrationApprovedEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; RegistrationPendingApprovalEmail    ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; RegistrationReceivedEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; RegistrationRejectedEmail           ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; ReplenishmentOrderConfirmationEmail ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; ReplenishmentOrderPlacedEmail       ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+                ;                          ; VerificationTokenEmail              ; "no-reply@adnocdistribution.ae" ; "Customer Services Team"
+
+#Adnoc Email Notitication Templates Start
+UPDATE RendererTemplate; code[unique = true]                           ; description[lang = $lang]                               ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; adnoc_AdnocB2BCustomer_Creation_Body          ; "B2BCustomer Creation Email Body"                       ; $jarEmailResource/email-adnocB2BCustomerCreationBody.vm
+                       ; adnoc_AdnocB2BCustomer_Creation_Subject       ; "B2BCustomer Creation Email Subject"                    ; $jarEmailResource/email-adnocB2BCustomerCreationSubject.vm
+
+                       ; adnoc_AdnocB2BAdmin_Created_Body              ; "B2BAdmin Created Email Body"                           ; $jarEmailResource/email-adnocB2BAdminCreatedBody.vm
+                       ; adnoc_AdnocB2BAdmin_Created_Subject           ; "B2BAdmin Created Email Subject"                        ; $jarEmailResource/email-adnocB2BAdminCreatedSubject.vm
+
+                       ; adnoc_PartialOrder_Completion_Body            ; "Adnoc Partial Order completion Email Body"             ; $jarEmailResource/email-adnocPartialOrderCompletionBody.vm
+                       ; adnoc_PartialOrder_Completion_Subject         ; "Adnoc Partial Order completion Emaill Subject"         ; $jarEmailResource/email-adnocPartialOrderCompletionSubject.vm
+
+                       ; adnoc_Order_Completed_Body                    ; "Adnoc Order completed  Email Body"                     ; $jarEmailResource/email-adnocOrderCompletedBody.vm
+                       ; adnoc_Order_Completed_Subject                 ; "Adnoc Order completed  Emaill Subject"                 ; $jarEmailResource/email-adnocOrderCompletedSubject.vm
+
+                       ; adnoc_Order_Cancelled_Body                    ; "Adnoc Order cancelled  Email Body"                     ; $jarEmailResource/email-adnocOrderCancelledBody.vm
+                       ; adnoc_Order_Cancelled_Subject                 ; "Adnoc Order cancelled  Emaill Subject"                 ; $jarEmailResource/email-adnocOrderCancelledSubject.vm
+
+                       ; adnoc_AdnocCsTicketClosed_Body                ; "Adnoc CsTicket Closed Email Body"                      ; $jarEmailResource/email-adnocCsTicketEmailBody.vm
+                       ; adnoc_AdnocCsTicketClosed_Subject             ; "Adnoc CsTicket Closed Email Subject"                   ; $jarEmailResource/email-adnocCsTicketEmailSubject.vm
+
+                       ; adnoc_QuoteBuyerOrderPlaced_Body              ; "Adnoc Quote Buyer Order Placed Email Body"             ; $jarEmailResource/email-adnocQuoteBuyerOrderPlacedBody.vm
+                       ; adnoc_QuoteBuyerOrderPlaced_Subject           ; "Adnoc Quote Buyer Order Placed Email Subject"          ; $jarEmailResource/email-adnocQuoteBuyerOrderPlacedSubject.vm
+
+                       ; adnoc_ReQuote_Buyer_Submission_Body           ; "Adnoc ReQuote Buyer Submission Email Body"             ; $jarEmailResource/email-adnocReQuoteBuyerSubmissionBody.vm
+                       ; adnoc_ReQuote_Buyer_Submission_Subject        ; "Adnoc ReQuote Buyer Submission Email Subject"          ; $jarEmailResource/email-adnocReQuoteBuyerSubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Submission_Body            ; "Adnoc Return Order Submission Email Body"              ; $jarEmailResource/email-adnocReturnOrderSubmissionBody.vm
+                       ; adnoc_Return_Order_Submission_Subject         ; "Adnoc Return Order Submission Email Subject"           ; $jarEmailResource/email-adnocReturnOrderSubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Approved_email_Body        ; "Adnoc Return Order Approved Email Body"                ; $jarEmailResource/email-adnocReturnOrderApprovalBody.vm
+                       ; adnoc_Return_Order_Approved_email_Subject     ; "Adnoc Return Order Approved Email Subject"             ; $jarEmailResource/email-adnocReturnOrderApprovalSubject.vm
+
+                       ; adnoc_New_Quote_Request_Body                  ; "Adnoc New Quote Request Email Body"                    ; $jarEmailResource/email-adnocNewQuoteRequestBody.vm
+                       ; adnoc_New_Quote_Request_Subject               ; "Adnoc New Quote Request Email Subject"                 ; $jarEmailResource/email-adnocNewQuoteRequestSubject.vm
+
+                       ; adnoc_Quote_Request_ReSubmission_Body         ; "Adnoc Quote Request ReSubmission Email Body"           ; $jarEmailResource/email-adnocQuoteRequestResubmissionBody.vm
+                       ; adnoc_Quote_Request_ReSubmission_Subject      ; "Adnoc Quote Request ReSubmission Email Subject"        ; $jarEmailResource/email-adnocQuoteRequestResubmissionSubject.vm
+
+                       ; adnoc_Return_Order_Submission_CSAgent_Body    ; "Adnoc Return Order Submission ToCsAgent Email Body"    ; $jarEmailResource/email-adnocReturnOrderSubmissionToCsAgentBody.vm
+                       ; adnoc_Return_Order_Submission_CSAgent_Subject ; "Adnoc Return Order Submission ToCsAgent Email Subject" ; $jarEmailResource/email-adnocReturnOrderSubmissionToCsAgentSubject.vm
+
+                       ; adnoc_ShipTo_Created_B2BCustomer_Body         ; "Adnoc ShipTo Created Email Body"                       ; $jarEmailResource/email-adnocShipToCreatedB2BCustomerBody.vm
+                       ; adnoc_ShipTo_Created_B2BCustomer_Subject      ; "Adnoc ShipTo Created Email Subject"                    ; $jarEmailResource/email-adnocShipToCreatedB2BCustomerSubject.vm
+
+                       ; adnoc_Return_Order_Rejected_Body              ; "Adnoc Return Rejected Email Body"                      ; $jarEmailResource/email-adnocReturnOrderRejectedBody.vm
+                       ; adnoc_Return_Order_Rejected_Subject           ; "Adnoc Return Rejected Email Subject"                   ; $jarEmailResource/email-adnocReturnOrderRejectedSubject.vm
+
+                       ; adnoc_AdnocQuoteSellerApproveOrReject_Body    ; "Adnoc Quote Seller Approve Or Reject Email Body"       ; $jarEmailResource/email-adnocQuoteSellerApproveOrRejectBody.vm
+                       ; adnoc_AdnocQuoteSellerApproveOrReject_Subject ; "Adnoc Quote Seller Approve Or Reject Email Subject"    ; $jarEmailResource/email-adnocQuoteSellerApproveOrRejectSubject.vm
+
+                       ; adnoc_Order_Replication_Failed_Body           ; "Adnoc Order Replication Failed  Email Body"            ; $jarEmailResource/email-adnocOrderReplicationFailedBody.vm
+                       ; adnoc_Order_Replication_Failed_Subject        ; "Adnoc Order Replication Failed  Emaill Subject"        ; $jarEmailResource/email-adnocOrderReplicationFailedSubject.vm
+
+                       ; adnoc_PartialOrder_Cancelled_Body             ; "Adnoc Order Partial cancelled  Email Body"             ; $jarEmailResource/email-adnocPartialOrderCancellationBody.vm
+                       ; adnoc_PartialOrder_Cancelled_Subject          ; "Adnoc Order Partial cancelled  Emaill Subject"         ; $jarEmailResource/email-adnocPartialOrderCancellationSubject.vm
+
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; fromEmail[lang = $lang]                   ; fromName[lang = $lang]
+                ;                          ; AdnocB2BCustomerCreationEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocB2BAdminCreatedEmail                       ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocPartialOrderCompletionEmail                ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocOrderCompletedEmail                        ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocOrderCancelledEmail                        ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocQuoteBuyerOrderPlacedEmail                 ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReQuoteBuyerSubmissionEmail                ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderSubmissionEmail                 ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderApprovedEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocNewQuoteRequestEmail                       ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocQuoteRequestReSubmissionEmail              ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderRequestSubmissionToCsAgentEmail ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocShipToCreatedB2BCustomerEmail              ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderRejectedEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Agent Team"
+                ;                          ; AdnocQuoteSellerApproveOrRejectEmail            ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocOrderReplicationFailedEmail                ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocPartialOrderCancellationEmail                 ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+#Adnoc Email Notitication Templates END

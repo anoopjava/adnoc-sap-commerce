@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Related Products into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'check']
+
+
+# Insert Product References
+INSERT_UPDATE ProductReference; source(code, $catalogVersion)[unique = true]; target(code, $catalogVersion)[unique = true]; referenceType(code); active; preselected
+                              ; 10015                                       ; 10013                                       ; SIMILAR            ; true  ; false
+                              ; 10013                                       ; 10015                                       ; SIMILAR            ; true  ; false
+
+                              ; 13                                          ; 10015                                       ; OTHERS             ; true  ; false
+                              ; 13                                          ; 21                                          ; SIMILAR            ; true  ; false
+                              ; 13                                          ; 26                                          ; SIMILAR            ; true  ; false
+
+                              ; 21                                          ; 10013                                       ; OTHERS             ; true  ; false
+                              ; 21                                          ; 13                                          ; SIMILAR            ; true  ; false
+                              ; 21                                          ; 26                                          ; SIMILAR            ; true  ; false
+
+                              ; 26                                          ; 10015                                       ; OTHERS             ; true  ; false
+                              ; 26                                          ; 21                                          ; SIMILAR            ; true  ; false
+                              ; 26                                          ; 13                                          ; SIMILAR            ; true  ; false
+
+                              ; 42                                          ; 44                                          ; SIMILAR            ; true  ; false
+                              ; 44                                          ; 42                                          ; SIMILAR            ; true  ; false
+
+                              ; 170013000092                                ; 33                                          ; SIMILAR            ; true  ; false
+                              ; 33                                          ; 170013000092                                ; SIMILAR            ; true  ; false
+
+                              ; regularCarService                           ; pollutionUnderControlInspection             ; SIMILAR            ; true  ; false
+                              ; pollutionUnderControlInspection             ; regularCarService                           ; SIMILAR            ; true  ; false

@@ -1,0 +1,42 @@
+﻿## messageSource=classpath:/adnocservice/messages/email-adnocReturnOrderRejected_$lang.properties
+
+ <body style="margin:0; padding:0; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; color:#414a4f; font-size:16px; line-height:1.5;">
+     <div style="background:#ffffff; max-width:600px; width:100%; border-radius:8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+    <p>Dear ${ctx.title} ${ctx.firstName},</p>
+    <p>${ctx.messages.returnRejectMessage}</p>
+
+   <!-- Customer Details Section -->
+   <div style="margin-top: 0px;"><strong>${ctx.messages.customerDetails}</strong></div>
+   <ul style="margin: 0; padding-left: 20px;">
+     <li><strong>${ctx.messages.customerName}:</strong> ${ctx.returnRequest.order.user.name}</li>
+     <li><strong>${ctx.messages.rmaNumber}:</strong> ${ctx.returnRequest.rma}</li>
+   #if($ctx.returnRequest.comment && $ctx.returnRequest.comment.trim() != "")
+     <li><strong>${ctx.messages.comments}:</strong> ${ctx.returnRequest.comment}</li>
+   #end
+   </ul>
+
+   <!-- Order Details Section -->
+   <div style="margin-top: 0px;"><strong>${ctx.messages.orderDetails}</strong></div>
+   <ul style="margin: 0; padding-left: 20px;">
+     <li><strong>${ctx.messages.orderNumber}:</strong> ${ctx.order.sapOrderCode}</li>
+     <li><strong>${ctx.messages.orderDate}:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.order.created})</li>
+     <li><strong>${ctx.messages.returnRequestDate}:</strong> $ctx.dateTool.format('MM/dd/yyyy', ${ctx.returnRequest.creationTime})</li>
+     <li><strong>${ctx.messages.returnRejectedStatus}:</strong> ${ctx.returnRequest.statusDisplay}</li>
+   </ul>
+    <p style="margin-top: 20px;">
+        ${ctx.messages.requestNewReturn}
+        <a href="${ctx.frontendUrl}" style="color:#4682B4; text-decoration: none;">${ctx.messages.link}</a>
+      </p>
+    <p>${ctx.messages.customerEnquiry}</p>
+    <p>${ctx.messages.thankYouParagraph}</p>
+
+   <!-- Footer inside the same wrapper -->
+        <div class="footer" style="color: #414a4f; margin-top: 20px;">
+        <div><Strong>${ctx.messages.complimentaryClosing}</Strong></div>
+        <div>${ctx.messages.adnocAgentEmployee}</div>
+        <div>${ctx.messages.adnoc}</div>
+        <div>${ctx.messages.website}</div>
+      </div>
+  </div>
+</body>

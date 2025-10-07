@@ -1,0 +1,18 @@
+<a
+  *ngIf="{ quantity: quantity$ | async } as data"
+  [attr.aria-label]="'miniCart.item' | cxTranslate : { count: data.quantity }"
+  [title]="'miniCart.item' | cxTranslate : { count: data.quantity }"
+  [routerLink]="{ cxRoute: 'cart' } | cxUrl"
+  class="cart-container"
+>
+  <div class="icon-container">
+    <img
+      src="images/shopping_bag.svg"
+      alt="Shopping Bag"
+      class="shopping-icon"
+    />
+    <span class="notification-bubble">{{
+      "miniCart.count" | cxTranslate : { count: entryCount$ | async }
+    }}</span>
+  </div>
+</a>

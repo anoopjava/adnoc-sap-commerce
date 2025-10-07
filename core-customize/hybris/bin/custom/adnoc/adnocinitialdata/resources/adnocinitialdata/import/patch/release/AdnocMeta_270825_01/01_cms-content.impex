@@ -1,0 +1,72 @@
+$contentCatalog = adnocContentCatalog
+$contentCatalogName = Adnoc Content Catalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$productCV = catalogVersion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$picture = media(code, $contentCV);
+$image = image(code, $contentCV);
+$media = media(code, $contentCV);
+$page = page(uid, $contentCV);
+$contentPage = contentPage(uid, $contentCV);
+$product = product(code, $productCV)
+$category = category(code, $productCV)
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/adnocContentCatalog
+$jarResourceCms = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/cockpits/cmscockpit
+$productResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/productCatalogs/adnocProductCatalog
+$addonExtensionName = b2bacceleratoraddon
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV);
+$siteUid = adnoc
+
+#Navigation Node for Fuel
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; name          ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; FuelNavNode       ;                          ; Fuel Category ; AdnocCategoryNavNode   ;                ; FuelNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]; $contentCV[unique = true]; name                       ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; FuelNavNodeEntry  ;                          ; Fuel Navigation Node Entry ; FuelNavNode             ; FuelCategoryLink                                       ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name               ; url                         ; &linkRef         ; &componentRef    ; target(code)[default = 'sameWindow']
+                              ;                          ; FuelCategoryLink  ; Fuel Category Link ; /Open-Catalogue/Fuel/c/fuel ; FuelCategoryLink ; FuelCategoryLink ;
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]  ; $contentCV[unique = true]; name                 ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; GasolineNavNode     ;                          ; Gasoline             ; FuelNavNode            ;                ; GasolineNavNode
+                               ; GasOilNavNode       ;                          ; Gas Oil              ; FuelNavNode            ;                ; GasOilNavNode
+                               ; OtherPetProdNavNode ;                          ; Other Petroleum Prod ; FuelNavNode            ;                ; OtherPetProdNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]   ; $contentCV[unique = true]; name                       ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; GasolineNavNodeEntry ;                          ; Gasoline Navigation Entry  ; GasolineNavNode         ; GasolineLinkComponent                                  ;
+                                ; GasOilNavNodeEntry   ;                          ; Gas Oil Navigation Entry   ; GasOilNavNode           ; GasOilLinkComponent                                    ;
+                                ; OtherPetProdNavEntry ;                          ; Other Petroleum Prod Entry ; OtherPetProdNavNode     ; OtherPetProdLinkComponent                              ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]        ; name                    ; url   ; linkName[lang = en]     ; styleAttributes; &linkRef            ; &componentRef       ; target(code)[default = 'sameWindow']
+                              ;                          ; GasolineLinkComponent     ; Gasoline                ; c/B01 ; Gasoline                ;                ; GasolineLinkRef     ; GasolineCompRef     ;
+                              ;                          ; GasOilLinkComponent       ; Gas Oil                 ; c/B02 ; Gas Oil                 ;                ; GasOilLinkRef       ; GasOilCompRef       ;
+                              ;                          ; OtherPetProdLinkComponent ; Other Petroleum Product ; c/B03 ; Other Petroleum Product ;                ; OtherPetProdLinkRef ; OtherPetProdCompRef ;
+
+#Navigation Node Changes f0r LPG
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; name         ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; LPGNavNode        ;                          ; LPG Category ; AdnocCategoryNavNode   ;                ; LPGNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]; $contentCV[unique = true]; name                       ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV)
+                                ; LPGNavNodeEntry   ;                          ; LPG  Navigation Node Entry ; LPGNavNode              ; LPGCategoryLink
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]; name              ; url                       ; &linkRef        ; &componentRef   ; target(code)[default = 'sameWindow']
+                              ;                          ; LPGCategoryLink   ; LPG Category Link ; /Open-Catalogue/LPG/c/lpg ; LPGCategoryLink ; LPGCategoryLink ;
+
+
+INSERT_UPDATE CMSNavigationNode; uid[unique = true]; $contentCV[unique = true]; name              ; parent(uid, $contentCV); links(&linkRef); &nodeRef
+                               ; LPGBulkNavNode    ;                          ; LPG - Bulk        ; LPGNavNode             ;                ; LPGBulkNavNode
+                               ; LPGCylNavNode     ;                          ; LPG - Cylinders   ; LPGNavNode             ;                ; LPGCylNavNode
+                               ; LPGAccNavNode     ;                          ; LPG - Accessories ; LPGNavNode             ;                ; LPGAccNavNode
+
+INSERT_UPDATE CMSNavigationEntry; uid[unique = true]; $contentCV[unique = true]; name                        ; navigationNode(&nodeRef); item(CMSLinkComponent.uid, CMSLinkComponent.$contentCV);
+                                ; LPGBulkNavEntry   ;                          ; LPG - Bulk Navigation Entry ; LPGBulkNavNode          ; LPGBulkLinkComponent                                   ;
+                                ; LPGCylNavEntry    ;                          ; LPG - Cylinders Entry       ; LPGCylNavNode           ; LPGCylLinkComponent                                    ;
+                                ; LPGAccNavEntry    ;                          ; LPG - Accessories Entry     ; LPGAccNavNode           ; LPGAccLinkComponent                                    ;
+
+INSERT_UPDATE CMSLinkComponent; $contentCV[unique = true]; uid[unique = true]   ; name              ; url   ; linkName[lang = en]; styleAttributes; &linkRef       ; &componentRef  ; target(code)[default = 'sameWindow']
+                              ;                          ; LPGBulkLinkComponent ; LPG - Bulk        ; c/B04 ; LPG - Bulk         ;                ; LPGBulkLinkRef ; LPGBulkCompRef ;
+                              ;                          ; LPGCylLinkComponent  ; LPG - Cylinders   ; c/B05 ; LPG - Cylinders    ;                ; LPGCylLinkRef  ; LPGCylCompRef  ;
+                              ;                          ; LPGAccLinkComponent  ; LPG - Accessories ; c/B06 ; LPG - Accessories  ;                ; LPGAccLinkRef  ; LPGAccCompRef  ;

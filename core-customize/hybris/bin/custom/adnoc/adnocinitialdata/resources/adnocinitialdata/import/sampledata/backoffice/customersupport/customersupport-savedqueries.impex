@@ -1,0 +1,27 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+INSERT_UPDATE BackofficeSavedQuery;typeCode[unique=true];name[lang=en,unique=true];globalOperatorCode;queryOwner(uid)[unique=true];sortAsc;&savedQueryRef;
+;adnocCsTicket;"My Assigned Adnoc Tickets";"and";ecommmercespelicalistapprover;true;adnoccsAdmin;
+;adnocFuelLubricantsCsTicket;"My Assigned Fuel Lubricants Tickets";"and";adnoccsmfuellubricants;true;adnoccsfuellubricantsMgr;
+;adnocFuelLubricantsCsTicket;"My Assigned Fuel Lubricants Tickets";"and";adnoccsafuellubricants;true;adnoccsfuellubricantsAgent;
+
+;adnocGasCarCareCsTicket;"My Assigned Adnoc Gas Car Care Tickets";"and";adnoccsmgascarcare;true;adnoccsgascarcareMgr;
+;adnocGasCarCareCsTicket;"My Assigned Adnoc Gas Car Care Tickets";"and";adnoccsagascarcare;true;adnoccsgascarcareAgent;
+
+INSERT_UPDATE BackofficeSearchCondition;value[unique=true];attribute;selected;operatorCode;valueReference(Employee.uid)[mode=replace,unique=true];savedQuery(&savedQueryRef)[unique=true];
+;;adnocassignedAgent;true;equals;ecommmercespelicalistapprover;adnoccsAdmin;
+;;adnocFuelLubricantsassignedAgent;true;equals;adnoccsmfuellubricants;adnoccsfuellubricantsMgr;
+;;adnocFuelLubricantsassignedAgent;true;equals;adnoccsafuellubricants;adnoccsfuellubricantsAgent;
+
+;adnocCsTicketState#OPEN;state;true;equals;;adnoccsAdmin;
+;adnocFuelLubricantsCsTicketState#OPEN;state;true;equals;;adnoccsfuellubricantsMgr;
+;adnocFuelLubricantsCsTicketState#OPEN;state;true;equals;;adnoccsfuellubricantsAgent;
+
+INSERT_UPDATE BackofficeSearchCondition;value[unique=true];attribute;selected;operatorCode;valueReference(Employee.uid)[mode=replace,unique=true];savedQuery(&savedQueryRef)[unique=true];
+;;adnocGasCarCareassignedAgent;true;equals;adnoccsmgascarcare;adnoccsgascarcareMgr;
+;;adnocGasCarCareassignedAgent;true;equals;adnoccsagascarcare;adnoccsgascarcareAgent;
+
+
+;adnocGasCarCareCsTicketState#OPEN;state;true;equals;;adnoccsgascarcareMgr;
+;adnocGasCarCareCsTicketState#OPEN;state;true;equals;;adnoccsgascarcareAgent;

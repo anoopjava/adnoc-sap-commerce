@@ -1,0 +1,62 @@
+<form *ngIf="productCode" [formGroup]="addToCartForm" (submit)="addToCart()">
+  <div class="quantity" *ngIf="showQuantity">
+    <label>{{ "addToCart.quantity" | cxTranslate }}</label>
+    <div class="cx-counter-stock">
+      <cx-item-counter
+        *ngIf="hasStock"
+        [min]="minQuantity"
+        [max]="maxQuantity"
+        [control]="
+          addToCartForm.get('quantity') || addToCartForm.get('quantity')?.value
+        "
+      ></cx-item-counter>
+    </div>
+  </div>
+
+  <ng-container *ngIf="hasStock">
+    <ng-template
+      [cxOutlet]="CartOutlets.ADD_TO_CART_PICKUP_OPTION"
+      [(cxComponentRef)]="pickupOptionCompRef"
+    ></ng-template>
+  </ng-container>
+
+  <button
+    *ngIf="hasStock"
+    [ngClass]="
+      optiones?.displayAddToCart
+        ? 'btn btn-tertiary'
+        : 'btn btn-primary btn-block'
+    "
+    type="submit"
+    [disabled]="quantity <= 0 || quantity > maxQuantity"
+  >
+    <span
+      *ngIf="
+        optiones?.addToCartString === ('addToCart.buyItAgain' | cxTranslate)
+      "
+      class="repeat-icon"
+      ><cx-icon [type]="iconTypes.REPEAT"></cx-icon
+    ></span>
+    <span
+      attr.aria-label="{{
+        optiones?.addToCartString ?? ('addToCart.addToCart' | cxTranslate)
+      }}"
+      [ngClass]="
+        optiones?.addToCartString === ('addToCart.buyItAgain' | cxTranslate)
+          ? 'buyItAgainLink'
+          : ''
+      "
+    >
+      <span class="grid-visible">
+        {{
+          optiones?.addToCartString ?? ("addToCart.gridToCart" | cxTranslate)
+        }}</span
+      >
+      <span class="list-visible">
+        {{
+          optiones?.addToCartString ?? ("addToCart.addToCart" | cxTranslate)
+        }}</span
+      >
+    </span>
+  </button>
+</form>

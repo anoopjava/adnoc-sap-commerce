@@ -1,0 +1,155 @@
+$defaultPassword = 12341234
+$aecurrencies = AED
+$uscurrencies = USD
+
+#### Test Data for Adnoc B2B Unit ####
+INSERT_UPDATE OrgUnit; uid[unique = true]; name                        ; description                     ; lineofbuisness(code); active; supplier
+                     ; UAE               ; United Arab Emirates Region ; United Arab Emirates Region     ; trade               ; TRUE  ; TRUE
+                     ; Asia              ; Asia sales region           ; Asia sales region               ; trade               ; TRUE  ; TRUE
+
+                     ; USA               ; United States of America    ; United States of America Region ; trade               ; TRUE  ; TRUE
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]; target(uid)[unique = true]
+                                    ; UAE                       ; Asia
+                                    ; USA                       ; Asia
+
+INSERT_UPDATE SAPSalesOrganization; salesOrgId[unique = true]; salesOrganization; distributionChannel; division
+                                  ; 9300_75_21               ; 9300             ; 75                 ; 21
+                                  ; 9300_75_31               ; 9300             ; 75                 ; 31
+                                  ; 9300_75_41               ; 9300             ; 75                 ; 41
+                                  ; 9300_75_53               ; 9300             ; 75                 ; 53
+                                  ; C300_75_23               ; C300             ; 75                 ; 23
+
+#SoldTo B2B Units#
+INSERT_UPDATE B2BUnit; uid[unique = true]  ; description                      ; name                             ; locName[lang = en]               ; groups(uid); salesOrg(salesOrgId); partnerFunction(code); customerCategory(code); deliveryTypes(code); userPriceGroup(code)
+                     ; 10016273            ; 10016273 SoldTo Root             ; 10016273 SoldTo Root             ; 10016273 SoldTo Root             ;            ;                     ; SP                   ; Z1                    ; 01                 ;
+                     ; 10016273_9300_75_21 ; 10016273_9300_75_21 SoldTo Child ; 10016273_9300_75_21 SoldTo Child ; 10016273_9300_75_21 SoldTo Child ; 10016273   ; 9300_75_21          ; SP                   ; Z1                    ; 01                 ;
+
+                     ; 10016207            ; 10016207 SoldTo Root             ; 10016207 SoldTo Root             ; 10016207 SoldTo Root             ;            ;                     ; SP                   ; Z1                    ; 01                 ; 10016207
+                     ; 10016207_9300_75_31 ; 10016207_9300_75_31 SoldTo Child ; 10016207_9300_75_31 SoldTo Child ; 10016207_9300_75_31 SoldTo Child ; 10016207   ; 9300_75_31          ; SP                   ; Z1                    ; 01                 ;
+
+                     ; 10015922            ; 10015922 SoldTo Root             ; 10015922 SoldTo Root             ; 10015922 SoldTo Root             ;            ;                     ; SP                   ; Z1                    ; 01                 ;
+                     ; 10015922_9300_75_41 ; 10015922_9300_75_41 SoldTo Child ; 10015922_9300_75_41 SoldTo Child ; 10015922_9300_75_41 SoldTo Child ; 10015922   ; 9300_75_41          ; SP                   ; Z1                    ; 01                 ;
+
+                     ; 10016334            ; 10016334 SoldTo Root             ; 10016334 SoldTo Root             ; 10016334 SoldTo Root             ;            ;                     ; SP                   ; Z1                    ; 01                 ;
+                     ; 10016334_C300_75_23 ; 10016334_C300_75_23 SoldTo Child ; 10016334_C300_75_23 SoldTo Child ; 10016334_C300_75_23 SoldTo Child ; 10016334   ; C300_75_23          ; SP                   ; Z1                    ; 01                 ;
+
+                     ; 100000              ; 100000 SoldTo Root               ; 100000 SoldTo Root               ; 100000 SoldTo Root               ;            ;                     ; SP                   ; Z1                    ; 01                 ;
+                     ; 100000_9300_75_21   ; 100000_9300_75_21 SoldTo Child   ; 100000_9300_75_21 SoldTo Child   ; 100000_9300_75_21 SoldTo Child   ; 100000     ; 9300_75_21          ; SP                   ; Z1                    ; 01                 ;
+                     ; 100000_9300_75_31   ; 100000_9300_75_31 SoldTo Child   ; 100000_9300_75_31 SoldTo Child   ; 100000_9300_75_31 SoldTo Child   ; 100000     ; 9300_75_31          ; SP                   ; Z1                    ; 01                 ;
+                     ; 100000_9300_75_41   ; 100000_9300_75_41 SoldTo Child   ; 100000_9300_75_41 SoldTo Child   ; 100000_9300_75_41 SoldTo Child   ; 100000     ; 9300_75_41          ; SP                   ; Z1                    ; 01                 ;
+                     ; 100000_9300_75_53   ; 100000_9300_75_53 SoldTo Child   ; 100000_9300_75_53 SoldTo Child   ; 100000_9300_75_53 SoldTo Child   ; 100000     ; 9300_75_53          ; SP                   ; Z1                    ; 01                 ;
+                     ; 100000_C300_75_23   ; 100000_C300_75_23 SoldTo Child   ; 100000_C300_75_23 SoldTo Child   ; 100000_C300_75_23 SoldTo Child   ; 100000     ; C300_75_23          ; SP                   ; Z1                    ; 01                 ;
+
+#Payer B2B Units#
+INSERT_UPDATE B2BUnit; uid[unique = true]  ; description                     ; name                            ; locName[lang = en]              ; groups(uid); salesOrg(salesOrgId); partnerFunction(code); customerCategory(code); deliveryTypes(code); accountManager(uid)
+                     ; 30000133            ; 30000133 Payer Parent           ; 30000133 Payer Parent           ; 30000133 Payer Parent           ; 10016273   ;                     ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 30000133_9300_75_21 ; 30000133_9300_75_21 Payer Child ; 30000133_9300_75_21 Payer Child ; 30000133_9300_75_21 Payer Child ; 30000133   ; 9300_75_21          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+
+                     ; 30000064            ; 30000064 Payer Parent           ; 30000064 Payer Parent           ; 30000064 Payer Parent           ; 10016207   ;                     ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 30000064_9300_75_31 ; 30000064_9300_75_31 Payer Child ; 30000064_9300_75_31 Payer Child ; 30000064_9300_75_31 Payer Child ; 30000064   ; 9300_75_31          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+
+                     ; 30000020            ; 30000020 Payer Parent           ; 30000020 Payer Parent           ; 30000020 Payer Parent           ; 10015922   ;                     ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 30000020_9300_75_41 ; 30000020_9300_75_41 Payer Child ; 30000020_9300_75_41 Payer Child ; 30000020_9300_75_41 Payer Child ; 30000020   ; 9300_75_41          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+
+                     ; 30000176            ; 30000176 Payer Parent           ; 30000176 Payer Parent           ; 30000176 Payer Parent           ; 10016334   ;                     ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 30000176_C300_75_23 ; 30000176_C300_75_23 Payer Child ; 30000176_C300_75_23 Payer Child ; 30000176_C300_75_23 Payer Child ; 30000176   ; C300_75_23          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+
+                     ; 300000              ; 300000 Payer Parent             ; 300000 Payer Parent             ; 300000 Payer Parent             ; 100000     ;                     ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 300000_9300_75_21   ; 300000_9300_75_21 Payer Child   ; 300000_9300_75_21 Payer Child   ; 300000_9300_75_21 Payer Child   ; 300000     ; 9300_75_21          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 300000_9300_75_31   ; 300000_9300_75_31 Payer Child   ; 300000_9300_75_31 Payer Child   ; 300000_9300_75_31 Payer Child   ; 300000     ; 9300_75_31          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 300000_9300_75_41   ; 300000_9300_75_41 Payer Child   ; 300000_9300_75_41 Payer Child   ; 300000_9300_75_41 Payer Child   ; 300000     ; 9300_75_41          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 300000_9300_75_53   ; 300000_9300_75_53 Payer Child   ; 300000_9300_75_53 Payer Child   ; 300000_9300_75_53 Payer Child   ; 300000     ; 9300_75_53          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+                     ; 300000_C300_75_23   ; 300000_C300_75_23 Payer Child   ; 300000_C300_75_23 Payer Child   ; 300000_C300_75_23 Payer Child   ; 300000     ; C300_75_23          ; PY                   ; Z1                    ; 01                 ; ecommmercespelicalistapprover
+
+
+#ShipTo B2B Units#
+INSERT_UPDATE B2BUnit; uid[unique = true]; description                    ; name                           ; locName[lang = en]             ; groups(uid); salesOrg(salesOrgId); partnerFunction(code); customerCategory(code); deliveryTypes(code); incoTerms(code); shippingCondition(code);
+                     ; 700100            ; 700100 ShipTo Parent           ; 700100 ShipTo Parent           ; 700100 ShipTo Parent           ; 30000133   ;                     ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700100_9300_75_21 ; 700100_9300_75_21 ShipTo Child ; 700100_9300_75_21 ShipTo Child ; 700100_9300_75_21 ShipTo Child ; 700100     ; 9300_75_21          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+
+                     ; 700029            ; 700029 ShipTo Parent           ; 700029 ShipTo Parent           ; 700029 ShipTo Parent           ; 30000064   ;                     ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700029_9300_75_31 ; 700029_9300_75_31 ShipTo Child ; 700029_9300_75_31 ShipTo Child ; 700029_9300_75_31 ShipTo Child ; 700029     ; 9300_75_31          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+
+                     ; 712439            ; 712439 ShipTo Parent           ; 712439 ShipTo Parent           ; 712439 ShipTo Parent           ; 30000020   ;                     ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 712439_9300_75_41 ; 712439_9300_75_41 ShipTo Child ; 712439_9300_75_41 ShipTo Child ; 712439_9300_75_41 ShipTo Child ; 712439     ; 9300_75_41          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+
+                     ; 700146            ; 700146 ShipTo Parent           ; 700146 ShipTo Parent           ; 700146 ShipTo Parent           ; 30000176   ;                     ; SH                   ; Z1                    ; 01                 ; DAP            ; Z1
+                     ; 700146_C300_75_23 ; 700146_C300_75_23 ShipTo Child ; 700146_C300_75_23 ShipTo Child ; 700146_C300_75_23 ShipTo Child ; 700146     ; C300_75_23          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+
+                     ; 700000            ; 700000 ShipTo Parent           ; 700000 ShipTo Parent           ; 700000 ShipTo Parent           ; 300000     ;                     ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700000_9300_75_21 ; 700000_9300_75_21 ShipTo Child ; 700000_9300_75_21 ShipTo Child ; 700000_9300_75_21 ShipTo Child ; 700000     ; 9300_75_21          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700000_9300_75_31 ; 700000_9300_75_31 ShipTo Child ; 700000_9300_75_31 ShipTo Child ; 700000_9300_75_31 ShipTo Child ; 700000     ; 9300_75_31          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700000_9300_75_41 ; 700000_9300_75_41 ShipTo Child ; 700000_9300_75_41 ShipTo Child ; 700000_9300_75_41 ShipTo Child ; 700000     ; 9300_75_41          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700000_9300_75_53 ; 700000_9300_75_53 ShipTo Child ; 700000_9300_75_53 ShipTo Child ; 700000_9300_75_53 ShipTo Child ; 700000     ; 9300_75_53          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+                     ; 700000_C300_75_23 ; 700000_C300_75_23 ShipTo Child ; 700000_C300_75_23 ShipTo Child ; 700000_C300_75_23 ShipTo Child ; 700000     ; C300_75_23          ; SH                   ; Z1                    ; 01                 ; DAP            ; Z2
+
+#ShipTo Address#
+INSERT_UPDATE Address; sapCustomerID; company                   ; streetname[unique = true]      ; postalcode[unique = true]; town           ; region(isocode); country(isocode); shippingAddress; firstname       ; lastname          ; email                                    ; title(code); &addId                     ; owner(&B2BUnitID)[unique = true]   ; sapaddressusage; sapaddressusagecounter
+                     ; 700100       ; 700100_9300_75_21 Company ; ShipTo Child 700100_9300_75_21 ; 90068                    ; Ras Al Khaimah ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 21 ; 700100_9300_75_21 ; fuel.customer@adnocdistribution.ae       ; 0002       ; adnocAddr700100_9300_75_21 ; adnocDistribution700100_9300_75_21 ; WE             ; 000
+
+                     ; 700029       ; 700029_9300_75_31 Company ; ShipTo Child 700029_9300_75_31 ; 90068                    ; Ras Al Khaimah ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 31 ; 700029_9300_75_31 ; lubricants.customer@adnocdistribution.ae ; 0002       ; adnocAddr700029_9300_75_31 ; adnocDistribution700029_9300_75_31 ; WE             ; 000
+
+                     ; 712439       ; 712439_9300_75_41 Company ; ShipTo Child 712439_9300_75_41 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 41 ; 712439_9300_75_41 ; gas.customer@adnocdistribution.ae        ; 0002       ; adnocAddr712439_9300_75_41 ; adnocDistribution712439_9300_75_41 ; WE             ; 000
+
+                     ; 700146       ; 700146_C300_75_23 Company ; ShipTo Child 700146_C300_75_23 ; 98763                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 23 ; 700146_C300_75_23 ; cstore.customer@adnocdistribution.ae     ; 0002       ; adnocAddr700146_C300_75_23 ; adnocDistribution700146_C300_75_23 ; WE             ; 000
+
+                     ; 700000       ; 700000_9300_75_21 Company ; ShipTo Child 700000_9300_75_21 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 21 ; 700000_9300_75_21 ; carcare.customer@adnocdistribution.ae    ; 0002       ; adnocAddr700000_9300_75_21 ; adnocDistribution700000_9300_75_21 ; WE             ; 000
+                     ; 700000       ; 700000_9300_75_31 Company ; ShipTo Child 700000_9300_75_31 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 31 ; 700000_9300_75_31 ; carcare.customer@adnocdistribution.ae    ; 0002       ; adnocAddr700000_9300_75_31 ; adnocDistribution700000_9300_75_31 ; WE             ; 000
+                     ; 700000       ; 700000_9300_75_41 Company ; ShipTo Child 700000_9300_75_41 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 41 ; 700000_9300_75_41 ; carcare.customer@adnocdistribution.ae    ; 0002       ; adnocAddr700000_9300_75_41 ; adnocDistribution700000_9300_75_41 ; WE             ; 000
+                     ; 700000       ; 700000_9300_75_53 Company ; ShipTo Child 700000_9300_75_53 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 53 ; 700000_9300_75_53 ; carcare.customer@adnocdistribution.ae    ; 0002       ; adnocAddr700000_9300_75_53 ; adnocDistribution700000_9300_75_53 ; WE             ; 000
+                     ; 700000       ; 700000_9300_75_23 Company ; ShipTo Child 700000_9300_75_23 ; 98765                    ; Fujairah       ; AE-AE          ; AE              ; TRUE           ; ShipTo Child 23 ; 700000_9300_75_23 ; carcare.customer@adnocdistribution.ae    ; 0002       ; adnocAddr700000_9300_75_23 ; adnocDistribution700000_9300_75_23 ; WE             ; 000
+
+#ShipTo Address Mapping#
+INSERT_UPDATE B2BUnit; uid[unique = true]; shippingAddresses(&addId)  ; &B2BUnitID;
+                     ; 700100_9300_75_21 ; adnocAddr700100_9300_75_21 ; adnocDistribution700100_9300_75_21
+                     ; 700029_9300_75_31 ; adnocAddr700029_9300_75_31 ; adnocDistribution700029_9300_75_31
+                     ; 712439_9300_75_41 ; adnocAddr712439_9300_75_41 ; adnocDistribution712439_9300_75_41
+                     ; 700146_C300_75_23 ; adnocAddr700146_C300_75_23 ; adnocDistribution700146_C300_75_23
+                     ; 700000_9300_75_21 ; adnocAddr700000_9300_75_21 ; adnocDistribution700000_9300_75_21
+                     ; 700000_9300_75_31 ; adnocAddr700000_9300_75_31 ; adnocDistribution700000_9300_75_31
+                     ; 700000_9300_75_41 ; adnocAddr700000_9300_75_41 ; adnocDistribution700000_9300_75_41
+                     ; 700000_9300_75_53 ; adnocAddr700000_9300_75_53 ; adnocDistribution700000_9300_75_53
+                     ; 700000_9300_75_23 ; adnocAddr700000_9300_75_23 ; adnocDistribution700000_9300_75_23
+
+#### B2BCustomer ####
+INSERT_UPDATE B2BCustomer; uid[unique = true]                     ; defaultB2BUnit(uid); customerID; originalUid                            ; email                                  ; firstName; lastName    ; name                 ; description             ; title(code); groups(uid)                                     ; sessionCurrency(isocode)[unique = true]; password[default = $defaultPassword]; loginDisabled[default = false]
+                         ; 10016273.admin@adnocdistribution.ae    ; 10016273           ; 10016273  ; 10016273.admin@adnocdistribution.ae    ; 10016273.admin@adnocdistribution.ae    ; 10016273 ; Adnoc Admin ; 10016273 Adnoc Admin ; 10016273 SoldTo Admin   ; 0002       ; b2badmingroup,10016273                          ; $aecurrencies                          ;                                     ;
+                         ; 10016207.admin@adnocdistribution.ae    ; 10016207           ; 10016207  ; 10016207.admin@adnocdistribution.ae    ; 10016207.admin@adnocdistribution.ae    ; 10016207 ; Adnoc Admin ; 10016207 Adnoc Admin ; 10016207 SoldTo Admin   ; 0002       ; b2badmingroup,10016207                          ; $aecurrencies                          ;                                     ;
+                         ; 10015922.admin@adnocdistribution.ae    ; 10015922           ; 10015922  ; 10015922.admin@adnocdistribution.ae    ; 10015922.admin@adnocdistribution.ae    ; 10015922 ; Adnoc Admin ; 10015922 Adnoc Admin ; 10015922 SoldTo Admin   ; 0002       ; b2badmingroup,10015922                          ; $aecurrencies                          ;                                     ;
+                         ; 10016334.admin@adnocdistribution.ae    ; 10016334           ; 10016334  ; 10016334.admin@adnocdistribution.ae    ; 10016334.admin@adnocdistribution.ae    ; 10016334 ; Adnoc Admin ; 10016334 Adnoc Admin ; 10016334 SoldTo Admin   ; 0002       ; b2badmingroup,10016334                          ; $aecurrencies                          ;                                     ;
+                         ; 100000.admin@adnocdistribution.ae      ; 100000             ; 100000    ; 100000.admin@adnocdistribution.ae      ; 100000.admin@adnocdistribution.ae      ; 100000   ; Adnoc Admin ; 100000 Adnoc Admin   ; 100000 SoldTo Admin     ; 0002       ; b2badmingroup,100000                            ; $uscurrencies                          ;                                     ;
+
+                         ; 30000133.customer@adnocdistribution.ae ; 30000133           ; 30000133  ; 30000133.customer@adnocdistribution.ae ; 30000133.customer@adnocdistribution.ae ; 30000133 ; Customer    ; 30000133 Customer    ; 30000133 Payer Customer ; 0002       ; b2bcustomergroup, unitorderviewergroup,30000133 ; $aecurrencies                          ;                                     ;
+                         ; 30000064.customer@adnocdistribution.ae ; 30000064           ; 30000064  ; 30000064.customer@adnocdistribution.ae ; 30000064.customer@adnocdistribution.ae ; 30000064 ; Customer    ; 30000064 Customer    ; 30000064 Payer Customer ; 0002       ; b2bcustomergroup, unitorderviewergroup,30000064 ; $aecurrencies                          ;                                     ;
+                         ; 30000020.customer@adnocdistribution.ae ; 30000020           ; 30000020  ; 30000020.customer@adnocdistribution.ae ; 30000020.customer@adnocdistribution.ae ; 30000020 ; Customer    ; 30000020 Customer    ; 30000020 Payer Customer ; 0002       ; b2bcustomergroup, unitorderviewergroup,30000020 ; $aecurrencies                          ;                                     ;
+                         ; 30000176.customer@adnocdistribution.ae ; 30000176           ; 30000176  ; 30000176.customer@adnocdistribution.ae ; 30000176.customer@adnocdistribution.ae ; 30000176 ; Customer    ; 30000176 Customer    ; 30000176 Payer Customer ; 0002       ; b2bcustomergroup, unitorderviewergroup,30000176 ; $aecurrencies                          ;                                     ;
+                         ; 300000.customer@adnocdistribution.ae   ; 300000             ; 300000    ; 300000.customer@adnocdistribution.ae   ; 300000.customer@adnocdistribution.ae   ; 300000   ; Customer    ; 300000 Customer      ; 300000 Payer Customer   ; 0002       ; b2bcustomergroup, unitorderviewergroup,300000   ; $uscurrencies                          ;                                     ;
+
+                         ; 700100.customer@adnocdistribution.ae   ; 700100             ; 700100    ; 700100.customer@adnocdistribution.ae   ; 700100.customer@adnocdistribution.ae   ; 700100   ; No Customer ; 700100 No Customer   ; 700100 ShipTo Customer  ; 0002       ; 700100                                          ; $aecurrencies                          ;                                     ; true
+                         ; 700029.customer@adnocdistribution.ae   ; 700029             ; 700029    ; 700029.customer@adnocdistribution.ae   ; 700029.customer@adnocdistribution.ae   ; 700029   ; No Customer ; 700029 No Customer   ; 700029 ShipTo Customer  ; 0002       ; 700029                                          ; $aecurrencies                          ;                                     ; true
+                         ; 712439.customer@adnocdistribution.ae   ; 712439             ; 712439    ; 712439.customer@adnocdistribution.ae   ; 712439.customer@adnocdistribution.ae   ; 712439   ; No Customer ; 712439 No Customer   ; 712439 ShipTo Customer  ; 0002       ; 712439                                          ; $aecurrencies                          ;                                     ; true
+                         ; 700146.customer@adnocdistribution.ae   ; 700146             ; 700146    ; 700146.customer@adnocdistribution.ae   ; 700146.customer@adnocdistribution.ae   ; 700146   ; No Customer ; 700146 No Customer   ; 700146 ShipTo Customer  ; 0002       ; 700146                                          ; $aecurrencies                          ;                                     ; true
+                         ; 700000.customer@adnocdistribution.ae   ; 700000             ; 700000    ; 700000.customer@adnocdistribution.ae   ; 700000.customer@adnocdistribution.ae   ; 700000   ; No Customer ; 700000 No Customer   ; 700000 ShipTo Customer  ; 0002       ; 700000                                          ; $uscurrencies                          ;                                     ; true
+
+UPDATE B2BCustomer; uid[unique = true]                     ; gender(code); identificationNumber; identificationValidFrom[dateformat = yyyy-MM-dd]; identificationValidTo[dateformat = yyyy-MM-dd]; mobileNumber; preferredCommunicationChannel(code); nationality(code); designation(code); identityType(code);
+                  ; 10016273.admin@adnocdistribution.ae    ; MALE        ; 5RSAA5XAD648        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194943  ; INT                                ; AE               ; 0005             ; FS0001
+                  ; 10016207.admin@adnocdistribution.ae    ; MALE        ; 5RSAA5XAD648        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194943  ; INT                                ; AE               ; 0005             ; FS0001
+                  ; 10015922.admin@adnocdistribution.ae    ; MALE        ; 5RSAA5XAD648        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194943  ; INT                                ; AE               ; 0005             ; FS0001
+                  ; 10016334.admin@adnocdistribution.ae    ; MALE        ; 5RSAA5XAD648        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194943  ; INT                                ; AE               ; 0005             ; FS0001
+                  ; 100000.admin@adnocdistribution.ae      ; MALE        ; 5RSAA5XAD648        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194943  ; INT                                ; AE               ; 0005             ; FS0001
+
+                  ; 30000133.customer@adnocdistribution.ae ; FEMALE      ; 5RSAA5XAD658        ; 2025-01-01                                      ; 2035-12-31                                    ; 8767332499  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 30000064.customer@adnocdistribution.ae ; FEMALE      ; 5RSAA5XAD668        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194945  ; INT                                ; AE               ; 0002             ; FS0001
+                  ; 30000020.customer@adnocdistribution.ae ; MALE        ; 5RSAA5XAD678        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194946  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 30000176.customer@adnocdistribution.ae ; MALE        ; 5RSAA5XAD678        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194946  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 300000.customer@adnocdistribution.ae   ; MALE        ; 5RSAA5XAD678        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194946  ; PAG                                ; AE               ; 0002             ; FS0002
+
+                  ; 700100.customer@adnocdistribution.ae   ; MALE        ; 5RSAA5XAD688        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194947  ; INT                                ; AE               ; 0002             ; FS0001
+                  ; 700029.customer@adnocdistribution.ae   ; FEMALE      ; 5RSAA5XAD698        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194948  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 712439.customer@adnocdistribution.ae   ; OTHER       ; 5RSAA5XAD108        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194949  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 700146.customer@adnocdistribution.ae   ; OTHER       ; 5RSAA5XAD108        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194949  ; PAG                                ; AE               ; 0002             ; FS0002
+                  ; 700000.customer@adnocdistribution.ae   ; OTHER       ; 5RSAA5XAD108        ; 2025-01-01                                      ; 2035-12-31                                    ; 8328194949  ; PAG                                ; AE               ; 0002             ; FS0002
+
+INSERT_UPDATE Address; streetname[unique = true]     ; postalcode[unique = true]; town      ; country(isocode); billingAddress; contactAddress; shippingAddress; unloadingAddress; firstname; lastname; email                             ; title(code); owner(B2BCustomer.UID)[unique = true]
+                     ; Abu Dhabi Sheikh Zayed Street ; 83281                    ; Abu Dhabi ; AE              ; TRUE          ; TRUE          ; TRUE           ; TRUE            ; 100000   ; admin   ; 100000.admin@adnocdistribution.ae ; 0002       ; 100000.admin@adnocdistribution.ae

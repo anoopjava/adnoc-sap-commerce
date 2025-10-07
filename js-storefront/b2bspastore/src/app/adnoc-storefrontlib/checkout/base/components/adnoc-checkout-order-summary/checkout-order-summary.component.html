@@ -1,0 +1,8 @@
+<ng-template
+  [cxOutlet]="cartOutlets.ORDER_SUMMARY"
+  [cxOutletContext]="cart$ | async"
+>
+</ng-template>
+<ng-container *ngIf="isReviewPage">
+  <adnoc-placeorder-button></adnoc-placeorder-button>
+</ng-container>

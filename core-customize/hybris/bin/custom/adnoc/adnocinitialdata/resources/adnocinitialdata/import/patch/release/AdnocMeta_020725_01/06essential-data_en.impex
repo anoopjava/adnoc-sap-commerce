@@ -1,0 +1,12 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+UPDATE CancelReason; code[unique = true]; name[lang = en]
+                   ; 04                 ; Competitor Better
+                   ; Y1                 ; Customer Requested: Short Close
+                   ; 01                 ; Delivery Date too Late
+                   ; Z8                 ; Discrepancy in Quantity or Price
+                   ; Z6                 ; Poor Service
+                   ; 02                 ; Poor Quality
+                   ; 03                 ; Too Expensive
+                   ; 10                 ; Unreasonable Request
+

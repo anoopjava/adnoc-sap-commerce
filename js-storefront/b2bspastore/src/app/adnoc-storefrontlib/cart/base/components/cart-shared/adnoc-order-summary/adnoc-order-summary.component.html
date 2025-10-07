@@ -1,0 +1,110 @@
+<h3 *cxFeature="'a11yCartSummaryHeadingOrder'" class="cx-summary-heading">
+  {{ "orderCost.orderSummary" | cxTranslate }}
+</h3>
+
+<div *cxFeature="'!a11yCartSummaryHeadingOrder'" class="cx-summary-heading">
+  {{ "orderCost.orderSummary" | cxTranslate }}
+</div>
+
+<div class="cx-summary-partials" *ngIf="cart">
+  <div class="cx-summary-row cartSummary">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.totalAmount" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.totalPrice?.formattedValue }}
+    </div>
+  </div>
+  <div class="cx-summary-row cartSummary">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.shippingAmount" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.deliveryCost?.formattedValue }}
+    </div>
+  </div>
+  <div class="cx-summary-row cartSummary">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.discountAmount" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount font-weight-bold">
+      {{ cart.totalDiscounts?.formattedValue }}
+    </div>
+  </div>
+  <div class="cx-summary-row">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.totalwithDiscount" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.subTotal?.formattedValue }}
+    </div>
+  </div>
+  <!-- Considering future changes and keeping this code as commented -->
+  <!-- <div class="cx-summary-row orderSummary d-none">
+    <div class="col-6 cx-summary-label">
+      {{
+        (cart.deliveryCost?.formattedValue
+          ? "cartLabels.deliveryCharges"
+          : "orderCost.estimatedShipping"
+        ) | cxTranslate
+      }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{
+        cart.deliveryCost?.formattedValue
+          ? cart.deliveryCost?.formattedValue
+          : ("orderCost.toBeDetermined" | cxTranslate)
+      }}
+    </div>
+  </div> -->
+
+  <div class="cx-summary-row salesTax" *ngIf="cart.net; else cartWithoutNet">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.salesTax" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.totalTax?.formattedValue }}
+    </div>
+  </div>
+  <div class="cx-summary-row cx-summary-total">
+    <div class="col-6 cx-summary-label">
+      {{ "cartLabels.totalPayable" | cxTranslate }}
+    </div>
+    <div class="col-6 cx-summary-amount">
+      {{ cart.totalPriceWithTax?.formattedValue }}
+    </div>
+  </div>
+  <ng-template #cartWithoutNet>
+    <div class="cx-summary-row">
+      {{
+        cart.totalPriceWithTax?.value !== cart.totalPrice?.value
+          ? ("orderCost.grossTax" | cxTranslate)
+          : ("orderCost.grossIncludeTax" | cxTranslate)
+      }}
+      {{ cart.totalTax?.formattedValue }}.
+    </div>
+  </ng-template>
+</div>
+<div *ngIf="!checkRule">
+  <div
+    class="cx-summary-row mt-3 justify-content-between"
+    *ngIf="
+      amountToBePaid ||
+      (cart?.creditLimitUsed && hasReviewOrder && reviewPageAmountToBePaid)
+    "
+  >
+    <div class="cx-summary-label">
+      {{ "payments.amountToBePaid" | cxTranslate }}
+    </div>
+    <div class="cx-summary-amount">
+      {{
+        amountToBePaid || reviewPageAmountToBePaid
+          | currency : cart?.totalPriceWithTax?.currencyIso : "symbol" : "1.2-2"
+      }}
+    </div>
+  </div>
+</div>
+<adnoc-applied-coupons
+  [vouchers]="cart?.appliedVouchers || []"
+  [isReadOnly]="true"
+></adnoc-applied-coupons>

@@ -1,0 +1,127 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+######### Item Cleanup CronJobs START #########
+INSERT_UPDATE FlexibleSearchRetentionRule; code[unique = true]                   ; searchQuery                                                                                                                                                                                                                                                          ; actionReference                            ; retentionTimeSeconds
+# Find all deactivated not processed customers owning orders and past retention date (2 days) without retention state. Remove related objects of the found customers and set the their retention state to 'PROCESSED'.
+                                         ; customersWithOrdersFSRetentionRule    ; SELECT DISTINCT {c.pk}, {c.itemtype} FROM {Customer AS c JOIN Order AS o on {c.pk} = {o.user}} WHERE {c.deactivationDate} < ?CALC_RETIREMENT_TIME and {c.retentionState} IS NULL                                                                                     ; customerCleanupRelatedObjectsAction        ; 172800
+# Find and remove all deactivated customers not owning any order currently and the current date has past deactivation date+retention date (2 days).
+                                         ; customersWithoutOrdersFSRetentionRule ; SELECT DISTINCT {c:PK}, {c.itemtype} FROM {Customer AS c} WHERE {c:PK} NOT IN ({{SELECT {c1.pk} FROM {Customer AS c1 JOIN Order AS o on {c1.pk} = {o.user}} WHERE {c1.deactivationDate} < ?CALC_RETIREMENT_TIME }}) AND {c.deactivationDate} < ?CALC_RETIREMENT_TIME ; customerNotOwningOrdersRemoveCleanupAction ; 172800
+# Find and remove all expired orders (10 years)
+                                         ; ordersFSRetentionRule                 ; SELECT DISTINCT {pk}, {itemtype} FROM {Order} WHERE {expirationTime} < ?CALC_RETIREMENT_TIME                                                                                                                                                                         ; orderRemoveCleanupAction                   ; 315576000
+# Find and remove all expired tickets (1 year from retentionDate) which customers have been processed.
+                                         ; ticketsFSRetentionRule                ; SELECT DISTINCT {t.pk}, {t.itemtype} FROM {CsTicket as t} WHERE {t.retentionDate} < ?CALC_RETIREMENT_TIME                                                                                                                                                            ; csTicketRemoveCleanupAction                ; 31557600
+# Find and close all non-closed tickets which weren't updated for some period (90 days)
+                                         ; ticketsFSStagnationRule               ; SELECT DISTINCT {t.pk}, {t.itemtype},{t.state} FROM {CsTicket as t} where {t.modifiedtime} < ?CALC_RETIREMENT_TIME AND {t.state} IN ({{SELECT {s.pk} FROM {CsTicketState as s} WHERE {s.code} IN ('New', 'Open')}})                                                  ; csTicketStagnationAction                   ; 7776000
+# Find and remove all expired price rows
+                                         ; priceRowRetentionRule                 ; SELECT DISTINCT {p.pk}, {p.itemtype} FROM {PriceRow as p} WHERE {p.endtime} < CURRENT_TIMESTAMP                                                                                                                                                                      ; csTicketRemoveCleanupAction                ; 31557600
+
+# FS JOB
+INSERT_UPDATE RetentionJob; code[unique = true]                ; retentionRule(code)                   ; batchSize[default = 100]
+                          ; customersWithOrdersRetentionJob    ; customersWithOrdersFSRetentionRule    ;
+                          ; customersWithoutOrdersRetentionJob ; customersWithoutOrdersFSRetentionRule ;
+                          ; ordersRetentionJob                 ; ordersFSRetentionRule                 ;
+                          ; ticketsRetentionJob                ; ticketsFSRetentionRule                ;
+                          ; ticketsFSStagnationJob             ; ticketsFSStagnationRule               ;
+                          ; priceRowsRetentionJob              ; priceRowRetentionRule                 ;
+
+# FS CRON JOB
+INSERT_UPDATE CronJob; code[unique = true]                    ; job(code)[unique = true]           ; sessionLanguage(isoCode)[default = en]; nodeGroup[default='integration']
+                     ; customersWithOrdersRetentionCronJob    ; customersWithOrdersRetentionJob    ; ;
+                     ; customersWithoutOrdersRetentionCronJob ; customersWithoutOrdersRetentionJob ; ;
+                     ; ordersRetentionCronJob                 ; ordersRetentionJob                 ; ;
+                     ; ticketsRetentionCronJob                ; ticketsRetentionJob                ; ;
+                     ; ticketsStagnationJob                   ; ticketsFSStagnationJob             ; ;
+                     ; priceRowRetentionJob                   ; priceRowsRetentionJob              ; ;
+
+# Run CronJobs at 3:05 AM every day
+INSERT_UPDATE Trigger; cronJob(code)[unique = true]           ; second[default = 0]; minute[default = 5]; hour[default = 3]; day[default = -1]; month[default = -1]; year[default = -1]; relative[default = false]; active[default = false]; maxAcceptableDelay[default = -1]
+                     ; customersWithOrdersRetentionCronJob    ;
+                     ; customersWithoutOrdersRetentionCronJob ;
+                     ; ordersRetentionCronJob                 ;
+                     ; ticketsRetentionCronJob                ;
+# Run the CloseStagnantServiceTicketsJob at 12:05 AM every day
+                     ; ticketsStagnationJob                   ;                    ;                    ; 12               ; 0                ;                    ;                   ;                          ; true                   ;
+                     ; priceRowRetentionJob                   ;                    ;                    ; 12               ; 0                ;                    ;                   ;                          ; true                   ;
+
+##### AdnocB2BRegistrationAutoRejectCronJob ###############
+INSERT_UPDATE ServicelayerJob; code[unique = true]               ; springId[unique = true]
+                             ; adnocB2BRegistrationAutoRejectJob ; adnocB2BRegistrationAutoRejectJob
+                             ; adnocB2BUnitRelationMappingJob    ; adnocB2BUnitRelationMappingJob
+                             ; adnocAutoProductCatalogSyncJob    ; adnocAutoProductCatalogSyncJob
+                             ; adnocUpdateCmsLinkComponentJob    ; adnocUpdateCmsLinkComponentJob
+
+
+INSERT_UPDATE CronJob; code[unique = true]                   ; job(code)                         ; singleExecutable; sessionLanguage(isocode); nodeGroup[default='integration']
+                     ; adnocB2BRegistrationAutoRejectCronJob ; adnocB2BRegistrationAutoRejectJob ; false           ; en ;
+                     ; adnocB2BUnitRelationMappingCronJob    ; adnocB2BUnitRelationMappingJob    ; false           ; en ;
+                     ; adnocAutoProductCatalogSyncCronJob    ; adnocAutoProductCatalogSyncJob    ; false           ; en ;
+
+INSERT_UPDATE Trigger; cronjob(code)[unique = true]          ; cronExpression
+                     ; adnocB2BRegistrationAutoRejectCronJob ; 0 0 0 * * ?
+                     ; adnocB2BUnitRelationMappingCronJob    ; 0 */5 * * * ?
+                     ; adnocAutoProductCatalogSyncCronJob    ; 0 0 3 * * ?
+
+#To clean up jobs which are: auto generated, without trigger, Belong to certain types (ImpExImportCronJob, CatalogVersionSyncCronJob, SolrIndexerCronJob) and older than 14 days
+$twoWeeks = 1209600
+
+INSERT_UPDATE FlexibleSearchRetentionRule;code[unique=true];searchQuery;retentionTimeSeconds;actionReference;
+                                         ; cronjobCleanupRule;"select {c:pk}, {c:itemType}
+ from {CronJob as c join ComposedType as t on {c:itemtype} = {t:pk} left join Trigger as trg on {trg:cronjob} = {c:pk} }
+ where
+   {trg:pk} is null and
+   {c:code} like '00______%' and
+   {t:code} in ( 'ImpExImportCronJob', 'CatalogVersionSyncCronJob', 'SolrIndexerCronJob' ) and
+   {c:endTime} < ?CALC_RETIREMENT_TIME"; $twoWeeks; basicRemoveCleanupAction;
+
+INSERT_UPDATE RetentionJob;code[unique=true];retentionRule(code);batchSize
+                          ; cronjobRetentionJob; cronjobCleanupRule; 1000
+
+INSERT_UPDATE CronJob;code[unique=true];job(code);sessionLanguage(isoCode)[default=en]; nodeGroup[default='integration']
+                     ; cronjobRetentionCronJob; cronjobRetentionJob;;
+
+INSERT_UPDATE Trigger; cronJob(code)[unique = true]   ; cronExpression
+                     ; cronjobRetentionCronJob ; 0 0 0 * * ?
+
+# To clean up stored HTTP sessions which are older than 1 day
+$oneDay = 86400
+INSERT_UPDATE FlexibleSearchRetentionRule;code[unique=true];searchQuery;retentionTimeSeconds;actionReference;
+                                         ;storedSessionRule;"select {s:pk}, {s:itemtype}
+   from {StoredHttpSession as s}
+   where
+   {s:modifiedTime} < ?CALC_RETIREMENT_TIME"; $oneDay; basicRemoveCleanupAction;
+
+INSERT_UPDATE RetentionJob;code[unique=true];retentionRule(code);batchSize
+                          ; storedSessionCleanupJob; storedSessionRule; 1000
+
+INSERT_UPDATE CronJob;code[unique=true];job(code);sessionLanguage(isoCode)[default=en]; nodeGroup[default='integration']
+                     ; storedSessionCleanupCronJob; storedSessionCleanupJob;;
+
+INSERT_UPDATE Trigger; cronJob(code)[unique = true]   ; cronExpression
+# every 30 minutes
+                     ; storedSessionCleanupCronJob ; 0 0/30 * * * ?
+
+# To clean up old carts which are older than 28 days and anonymous carts which are older than 14 days
+INSERT_UPDATE OldCartRemovalCronJob;code[unique=true];job(code);cartRemovalAge;anonymousCartRemovalAge;sessionLanguage(isoCode)[default=en];sites(uid)
+                                   ;oldCartRemovalCronJob;oldCartRemovalJob;2419200;1209600;;adnoc
+
+# cleanOAuthAccessTokenCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode); nodeGroup[default='integration']
+                     ;cleanOAuthAccessTokenCronJob;cleanupOAuthAccessTokenPerformable;false;en;
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthAccessTokenCronJob; 0 0/5 * ? * * *
+
+# cleanOAuthAuthorizationCodeCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode); nodeGroup[default='integration']
+                     ;cleanOAuthAuthorizationCodeCronJob;cleanupOAuthAuthorizationCodePerformable;false;en;
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthAuthorizationCodeCronJob; 0 0/5 * ? * * *
+
+# cleanOAuthRefreshTokenCronJob impex
+INSERT_UPDATE CronJob; code[unique=true];job(code);singleExecutable;sessionLanguage(isocode); nodeGroup[default='integration']
+                     ;cleanOAuthRefreshTokenCronJob;cleanupOAuthRefreshTokenPerformable;false;en;
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ; cleanOAuthRefreshTokenCronJob; 0 0/5 * ? * * *

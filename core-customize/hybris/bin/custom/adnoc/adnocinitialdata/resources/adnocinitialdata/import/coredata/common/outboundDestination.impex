@@ -1,0 +1,194 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$outboundClientId = $config-adnoc.outbound.clientid
+$outboundSecret = $config-adnoc.outbound.secret
+$outboundAuthUrl = $config-adnoc.outbound.authurl
+
+$outboundAdnocSoldToB2BRegisEndpoint = $config-adnoc.outbound.outboundadnoc.soldto.b2bregistration.endpoint
+$outboundAdnocSoldToB2BRegisEndpointCSRF = $config-adnoc.outbound.outboundadnoc.soldto.b2bregistration.csrf.endpoint
+$outboundOrderEndpointCSRF = $config-adnoc.outbound.outboundadnoc.csrf.endpoint
+
+$outboundAdnocPayerB2BUnitRegisEndpoint = $config-adnoc.outbound.outboundadnoc.payer.b2bunitregistration.endpoint
+$outboundAdnocPayerB2BUnitRegisEndpointCSRF = $config-adnoc.outbound.outboundadnoc.payer.b2bunitregistration.csrf.endpoint
+$outboundAdnocShipToB2BUnitRegisEndpoint = $config-adnoc.outbound.outboundadnoc.shipto.b2bunitregistration.endpoint
+$outboundAdnocShipToB2BUnitRegisEndpointCSRF = $config-adnoc.outbound.outboundadnoc.shipto.b2bunitregistration.csrf.endpoint
+
+$outboundAdnocQuoteDestinationEndpoint = $config-adnoc.outbound.quote.endpoint
+$outboundAdnocQuoteDestinationEndpointCSRF = $config-adnoc.outbound.quote.csrf.endpoint
+
+$outboundAdnocB2BCustEndpoint = $config-adnoc.outbound.outboundadnoc.b2bcustomer.endpoint
+$outboundAdnocB2BCustEndpointcsrfURL = $config-adnoc.outbound.outboundadnoc.b2bcustomer.csrf.endpoint
+$outboundAdnocB2BSOAEndpointUrl = $config-adnoc.account.summary.soa.destinationurl
+$outboundAdnocOverdueInvoicesUrl = $config-adnoc.account.overdue.invoices.destinationurl
+$outboundAdnocCreditSimulationUrl = $config-adnoc.account.credit.simulation.destinationurl
+
+#SMS Gateway
+$smsgatewayClientId = $config-adnoc.smsgateway.clientid
+$smsgatewaySecret = $config-adnoc.smsgateway.secret
+$smsgatewayAuthUrl = $config-adnoc.smsgateway.authurl
+$adnocSmsGatewayDestinationUrl = $config-adnoc.smsgateway.destinationurl
+$orderOutboundscpiUrl = $config-adnoc.order.outbound.scpi.url
+$orderCancelOutboundscpiUrl = $config-adnocoutbound.omm.cancelorder.scpiurl
+$orderCancelOutboundscpicsrfUrl = $config-adnocoutbound.omm.cancelorder.csrf.endpoint
+$adnocReturnDestinationUrl = $config-adnoc.return.destinationurl
+$adnocReturnDestinationcsrfUrl = $config-adnoc.return.destination.csrf.endpoint
+#CsTicket to CRM
+$adnocCrmCsTicketDestinationUrl = $config-adnoc.csticket.tocrm.destinationurl
+$adnocCrmCsTicketDestinationcsrfUrl = $config-adnoc.csticket.tocrm.destination.csrf.endpoint
+
+#Payment
+$adnocPaymentEndPointUrl = $config-adnoc.payment.card.initiatecheckout
+$adnocPaymentCardEndPointUrl = $config-adnoc.payment.card.retrievecheckout
+$adnocOverduePaymentCardEndPointUrl = $config-adnoc.overdue.payment.outbound
+$adnocOverduePaymentCardEndPointCsrfUrl = $config-adnoc.overdue.payment.outbound.csrf
+$paymentGatewayClientId = $config-adnoc.payment.card.username
+$paymentGatewaySecret = $config-adnoc.payment.card.password
+
+#Bank Transfer Changes
+$adnocPaymentBankRegistrationEndPoint = $config-adnoc.payment.banktransfer.registration.endpoint
+$adnocBankFinalizationEndPoint = $config-adnoc.payment.banktransfer.finalization.endpoint
+$adnocBankRegistrationClinetId = $config-adnoc.payment.banktransfer.uaepgs.username
+$adnocBankRegistrationSecret = $config-adnoc.payment.banktransfer.uaepgs.password
+
+#CreditLimit
+$outboundAdnocB2BCreditLimitEndpointUrl = $config-adnoc.user.payment.credit.limit.destinationurl
+#SapPricing
+$adnoc_product_sap_pricing_fetch_url = $config-adnoc.product.sap.pricing.fetch.url
+#B2BDocumentInvoice
+$adnoc_b2binvoice_document_url = $config-adnoc.b2binvoice.document.url
+
+## Gigya Configuration
+$gigyaOauthApiKey = $config-adnoc.gigya.apikey
+$gigyaOauthClientId = $config-adnoc.gigya.userkey
+$gigyaOauthSecret = $config-adnoc.gigya.usersecret
+$gigyaOAuthUrl = $config-adnoc.gigya.access.token.authurl
+
+#Login Token Verification
+$gigyaLoginVerificationDestinationUrl = $config-adnoc.gigya.login.token.destinationurl
+
+#Gigya Duplicate Check
+$gigyaDuplicateCheckEndPoint = $config-adnoc.gigya.duplicatecheck.destinationurl
+
+INSERT_UPDATE ConsumedOAuthCredential; id[unique = true]                          ; clientId                       ; clientSecret                 ; oAuthUrl
+                                     ; adnocb2bregistration-credentail            ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnocpayerb2bunitregistration-credentail   ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnocshiptob2bunitregistration-credentail  ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnocb2bcustomer-credentai                 ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-smsgateway-credentail                ; $smsgatewayClientId            ; $smsgatewaySecret            ; $smsgatewayAuthUrl
+                                     ; adnoc-order-outbound                       ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-crm-csticket-credentail              ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-downloadstatement-credential         ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnocReturn-credential                     ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-OverdueInvoices-credential           ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-creditSimulation-credential          ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-payment-credential                   ; $paymentGatewayClientId        ; $paymentGatewaySecret        ; $outboundAuthUrl
+                                     ; adnoc-creditlimit-credential               ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-sappricing-credential                ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-paymentcard-credential               ; $paymentGatewayClientId        ; $paymentGatewaySecret        ; $outboundAuthUrl
+                                     ; adnoc-B2BInvoice_Document-credential       ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-quoteoutbound-credentail             ; $outboundClientId              ; $outboundSecret              ; $outboundAuthUrl
+                                     ; adnoc-gigya-token-credential               ; $gigyaOauthClientId            ; $gigyaOauthSecret            ; $gigyaOAuthUrl
+                                     ; adnoc-payment-bank-registration-credential ; $adnocBankRegistrationClinetId ; $adnocBankRegistrationSecret ; $outboundAuthUrl
+                                     ; adnoc-payment-bank-finalization-credential ; $adnocBankRegistrationClinetId ; $adnocBankRegistrationSecret ; $outboundAuthUrl
+
+
+INSERT_UPDATE Endpoint; id[unique = true]                   ; version[unique = true]; name                                                  ; specUrl
+                      ; adnocB2BRegistration                ; v1                    ; adnoc b2b registration Integration API                ; $outboundAdnocSoldToB2BRegisEndpoint
+                      ; adnocPayerB2BUnitRegistration       ; v1                    ; adnoc b2b unit registration Integration API           ; $outboundAdnocPayerB2BUnitRegisEndpoint
+                      ; adnocShipToB2BUnitRegistration      ; v1                    ; adnoc b2b unit registration Integration API           ; $outboundAdnocShipToB2BUnitRegisEndpoint
+                      ; adnocB2BCustomerEndPoint            ; v1                    ; adnoc b2b customer Integration API                    ; $outboundAdnocB2BCustEndpoint
+                      ; adnocSmsGateway                     ; v2                    ; adnoc smsgateway Integration API                      ; $adnocSmsGatewayDestinationUrl
+                      ; orderOutboundScpi                   ; v1                    ; adnoc order outbound to scpi                          ; $orderOutboundscpiUrl
+                      ; adnocCrmCsTicket                    ; v2                    ; adnoc csticket Integration API                        ; $adnocCrmCsTicketDestinationUrl
+                      ; orderCancelOutboundScpi             ; v1                    ; adnoc cancel order outbound to scpi                   ; $orderCancelOutboundscpiUrl
+                      ; adnocDownloadStatement              ; v1                    ; adnoc b2b Statement of Account Integration API        ; $outboundAdnocB2BSOAEndpointUrl
+                      ; adnocReturnOrderDestinationdev      ; v1                    ; adnoc return Integration API                          ; $adnocReturnDestinationUrl
+                      ; adnocOverdueInvoices                ; v1                    ; adnoc b2b overdue invoices API                        ; $outboundAdnocOverdueInvoicesUrl
+                      ; adnocCreditSimulation               ; v1                    ; adnoc credit simulation API                           ; outboundAdnocCreditSimulationUrl
+                      ; adnocPayment                        ; v1                    ; adnoc b2b Statement of Account Integration API        ; $adnocPaymentEndPointUrl
+                      ; adnocCreditLimit                    ; v1                    ; adnoc b2b Credit Limit Integration API                ; $outboundAdnocB2BCreditLimitEndpointUrl
+                      ; adnocSapPricingEndPoint             ; v2                    ; adnoc endpoint for fetching sap product price         ; $adnoc_product_sap_pricing_fetch_url
+                      ; adnocPaymentCard                    ; v1                    ; adnoc b2b retrieve Order                              ; $adnocPaymentCardEndPointUrl
+                      ; adnocOverduePayment                 ; v1                    ; adnoc overdue payment                                 ; $adnocOverduePaymentCardEndPointUrl
+                      ; adnocB2BInvoiceDocument             ; v1                    ; adnoc B2B Invoice Document of Account Integration API ; $adnoc_b2binvoice_document_url
+                      ; adnocQuoteOutboundEndPoint          ; v1                    ; adnoc Quote Destination API                           ; $outboundAdnocQuoteDestinationEndpoint
+                      ; adnocGigyaTokenVerificationEndPoint ; v2                    ; adnoc Gigya Login Token Verificatio                   ; $gigyaLoginVerificationDestinationUrl
+                      ; adnocGigyaDuplicateCheckEndPoint    ; v2                    ; Adnoc Duplicate Check Endpoint                        ; $gigyaDuplicateCheckEndPoint
+                      ; adnocPaymentBankRegistration        ; v2                    ; adnoc b2b Bank Account of Account Integration API     ; $adnocPaymentBankRegistrationEndPoint
+                      ; adnocPaymentBankFinalization        ; v1                    ; adnoc b2b bank transfer finalization API              ; $adnocBankFinalizationEndPointUrl
+
+
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; dev-adnocb2bregis-cpi-target
+                               ; adnocpayerb2bunitregis-target
+                               ; adnocshiptob2bunitregis-target
+                               ; adnoc-smsgateway-destination-target
+                               ; adnoc-crm-csticket-destination-target
+                               ; adnoc-outbound-destination-target
+                               ; adnoc-donwloadstatement-destination-target
+                               ; adnoc-return-destination-target
+                               ; adnoc-overdueinvoices-destination-target
+                               ; adnoc-creditsimulation-destination-target
+                               ; adnoc-payment-destination-target
+                               ; adnoc-credit_limit-destination-target
+                               ; adnoc-sappriceinfo-destination-target
+                               ; adnoc-payment-card-destination-target
+                               ; adnoc-B2BInvoice-Document-Destination-target
+                               ; adnoc-quote-destination-target
+                               ; adnoc-gigya-login-verification-destination-target
+                               ; adnoc-gigya-duplicatecheck-destination-target
+                               ; adnoc-payment-bank-registration-destination-target
+                               ; adnoc-payment-bank-finalization-destination-target
+
+
+INSERT_UPDATE ConsumedDestination; id[unique = true]                           ; url                                      ; endpoint(id, version)                  ; credential(id)                             ; destinationTarget(id)                              ; active[default = true]; additionalProperties
+                                 ; adnocB2BRegistrationDestination             ; $outboundAdnocSoldToB2BRegisEndpoint     ; adnocB2BRegistration:v1                ; adnocb2bregistration-credentail            ; dev-adnocb2bregis-cpi-target                       ;                       ; csrfURL->$outboundAdnocSoldToB2BRegisEndpointCSRF
+                                 ; adnocPayerB2BUnitRegistrationDestination    ; $outboundAdnocPayerB2BUnitRegisEndpoint  ; adnocPayerB2BUnitRegistration:v1       ; adnocpayerb2bunitregistration-credentail   ; adnocpayerb2bunitregis-target                      ;                       ; csrfURL->$outboundAdnocPayerB2BUnitRegisEndpointCSRF
+                                 ; adnocShipToB2BUnitRegistrationDestination   ; $outboundAdnocShipToB2BUnitRegisEndpoint ; adnocShipToB2BUnitRegistration:v1      ; adnocshiptob2bunitregistration-credentail  ; adnocshiptob2bunitregis-target                     ;                       ; csrfURL->$outboundAdnocShipToB2BUnitRegisEndpointCSRF
+                                 ; adnocB2BCustomerDestination                 ; $outboundAdnocB2BCustEndpoint            ; adnocB2BCustomerEndPoint  :v1          ; adnocb2bcustomer-credentai                 ; dev-adnocb2bregis-cpi-target                       ;                       ; csrfURL->$outboundAdnocB2BCustEndpointcsrfURL
+                                 ; adnocSmsGatewayDestination                  ; $adnocSmsGatewayDestinationUrl           ; adnocSmsGateway:v2                     ; adnoc-smsgateway-credentail                ; adnoc-smsgateway-destination-target                ;                       ;
+                                 ; scpiOrderDestination                        ; $orderOutboundscpiUrl                    ; orderOutboundScpi:v1                   ; adnoc-order-outbound                       ; adnoc-outbound-destination-target                  ;                       ; csrfURL->$outboundOrderEndpointCSRF
+                                 ; adnocCrmCsTicketDestination                 ; $adnocCrmCsTicketDestinationUrl          ; adnocCrmCsTicket:v2                    ; adnoc-crm-csticket-credentail              ; adnoc-crm-csticket-destination-target              ;                       ; csrfURL->$adnocCrmCsTicketDestinationcsrfUrl
+                                 ; scpiOrderCancellationDestination            ; $orderCancelOutboundscpiUrl              ; orderCancelOutboundScpi:v1             ; adnoc-order-outbound                       ; adnoc-outbound-destination-target                  ;                       ; csrfURL->$orderCancelOutboundscpicsrfUrl ; ;
+                                 ; adnocDownloadStatementDestination           ; $outboundAdnocB2BSOAEndpointUrl          ; adnocDownloadStatement:v1              ; adnoc-downloadstatement-credential         ; adnoc-donwloadstatement-destination-target         ;                       ;
+                                 ; adnocReturnOrderDestination                 ; $adnocReturnDestinationUrl               ; adnocReturnOrderDestinationdev:v1      ; adnocReturn-credential                     ; adnoc-return-destination-target                    ;                       ; csrfURL->$adnocReturnDestinationcsrfUrl
+                                 ; adnocOverdueInvoicesDestination             ; $outboundAdnocOverdueInvoicesUrl         ; adnocOverdueInvoices:v1                ; adnoc-OverdueInvoices-credential           ; adnoc-overdueinvoices-destination-target           ;                       ;
+                                 ; adnocCreditSimulationDestination            ; $outboundAdnocCreditSimulationUrl        ; adnocCreditSimulation:v1               ; adnoc-creditSimulation-credential          ; adnoc-creditsimulation-destination-target          ;                       ;
+                                 ; adnocPaymentDestination                     ; $adnocPaymentEndPointUrl                 ; adnocPayment:v1                        ; adnoc-payment-credential                   ; adnoc-payment-destination-target                   ;                       ;
+                                 ; adnocCreditLimitDestination                 ; $outboundAdnocB2BCreditLimitEndpointUrl  ; adnocCreditLimit:v1                    ; adnoc-creditlimit-credential               ; adnoc-credit_limit-destination-target              ;                       ;
+                                 ; adnocSapPriceInfoDestination                ; $adnoc_product_sap_pricing_fetch_url     ; adnocSapPricingEndPoint:v2             ; adnoc-sappricing-credential                ; adnoc-sappriceinfo-destination-target              ;                       ;
+                                 ; adnocPaymentCardDestination                 ; $adnocPaymentCardEndPointUrl             ; adnocPaymentCard:v1                    ; adnoc-paymentcard-credential               ; adnoc-payment-card-destination-target              ;                       ;
+                                 ; adnocOverduePaymentOutboundDestination      ; $adnocOverduePaymentCardEndPointUrl      ; adnocOverduePayment:v1                 ; adnoc-OverdueInvoices-credential           ; adnoc-overdueinvoices-destination-target           ;                       ; csrfURL->$adnocOverduePaymentCardEndPointCsrfUrl
+                                 ; adnocB2BInvoiceDocumentStatementDestination ; $adnoc_b2binvoice_document_url           ; adnocB2BInvoiceDocument:v1             ; adnoc-B2BInvoice_Document-credential       ; adnoc-B2BInvoice-Document-Destination-target       ;                       ;
+                                 ; adnocQuoteOutboundDestination               ; $outboundAdnocQuoteDestinationEndpoint   ; adnocQuoteOutboundEndPoint:v1          ; adnoc-quoteoutbound-credentail             ; adnoc-quote-destination-target                     ;                       ; csrfURL->$outboundAdnocQuoteDestinationEndpointCSRF
+                                 ; gigyaLoginTokenVerificationDestination      ; $gigyaLoginVerificationDestinationUrl    ; adnocGigyaTokenVerificationEndPoint:v2 ; adnoc-gigya-token-credential               ; adnoc-gigya-login-verification-destination-target  ;                       ;
+                                 ; adnocGigyaDuplicateCheckEndPointDestination ; $gigyaDuplicateCheckEndPoint             ; adnocGigyaDuplicateCheckEndPoint:v2    ; adnoc-gigya-token-credential               ; adnoc-gigya-duplicatecheck-destination-target      ;                       ;
+                                 ; adnocPaymentBankRegistrationDestination     ; $adnocPaymentBankRegistrationEndPoint    ; adnocPaymentBankRegistration:v2        ; adnoc-payment-bank-registration-credential ; adnoc-payment-bank-registration-destination-target ;                       ;
+                                 ; adnocPaymentBankFinalizationDestination     ; $adnocBankFinalizationEndPoint           ; adnocPaymentBankFinalization:v1        ; adnoc-payment-bank-finalization-credential ; adnoc-payment-bank-finalization-destination-target ;                       ;
+
+
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$outbounds4hanaUrl = $config-adnocoutbound.omm.order.url
+
+$HTTPDestinationUser = CPI_INT_B2B
+$LOGICALSYSTEMNAME = ER6CLNT610
+$HTTPDESTINATIONNAME = ER6CLNT610
+$SENDER_NAME = HCILOGSYS
+$SENDER_PORT = COMMCLDCPI
+
+INSERT_UPDATE SAPGlobalConfiguration; &Item; core_name; replicateregistereduser[allownull = true]
+                                    ;      ; GLOBAL   ; false
+
+
+INSERT_UPDATE SAPHTTPDestination; &Item ; authenticationType(code, itemtype(code))[allownull = true]; httpDestinationName[unique = true]; password             ; targetURL          ; userid
+                                ; Item3 ; BASIC_AUTHENTICATION:HTTPAuthenticationType               ; $HTTPDESTINATIONNAME              ; $HTTPDESTINATIONNAME ; $outbounds4hanaUrl ; $HTTPDestinationUser
+
+
+INSERT_UPDATE SAPLogicalSystem; defaultLogicalSystem[allownull = true]; sapGlobalConfiguration(core_name); sapHTTPDestination(httpDestinationName); sapLogicalSystemName[unique = true]; sapSystemType(code, itemtype(code)); senderName   ; senderPort
+                              ; true                                  ; GLOBAL                           ; $LOGICALSYSTEMNAME                     ; $LOGICALSYSTEMNAME                 ;                                    ; $SENDER_NAME ; $SENDER_PORT
+
+REMOVE SAPLogicalSystem; sapLogicalSystemName[unique = true]
+                       ; MDM
+
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; InboundB2BCustomer                    ; OAUTH                   ;
+                                         ; InboundB2BUnit                        ; OAUTH                   ;

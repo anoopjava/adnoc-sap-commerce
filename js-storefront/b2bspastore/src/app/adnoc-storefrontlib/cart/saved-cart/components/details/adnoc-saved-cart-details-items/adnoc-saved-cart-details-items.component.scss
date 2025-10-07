@@ -1,0 +1,11 @@
+cx-saved-cart-details-items {
+  adnoc-cart-item-list {
+    .selectedShippingAddress,
+    .groupCheckbox {
+      display: none !important;
+    }
+    .adnoc-remove-wrap {
+      justify-content: right;
+    }
+  }
+}

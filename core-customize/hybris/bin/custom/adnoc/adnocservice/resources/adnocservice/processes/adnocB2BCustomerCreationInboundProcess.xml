@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="sendEmailToAdminGroup"
+         name="adnocB2BCustomerCreationInboundProcess"
+         processClass="com.adnoc.service.model.AdnocB2BCustomerCreationProcessModel" onError="error">
+
+    <action id="sendEmailToAdminGroup" bean="adnocAdminCreatedEmailAction">
+        <transition name="OK" to="adnocB2BCustomerCreationInboundEmailAction"/>
+        <transition name="NOK" to="failed"/>
+    </action>
+
+    <action id="adnocB2BCustomerCreationInboundEmailAction" bean="adnocB2BCustomerCreationInboundEmailAction">
+        <transition name="OK" to="sendEmail"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="sendEmail" bean="sendEmail">
+        <transition name="OK" to="removeSentEmail"/>
+        <transition name="NOK" to="failed"/>
+    </action>
+
+    <action id="removeSentEmail" bean="removeSentEmail">
+        <transition name="OK" to="sendSms"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id='sendSms' bean='adnocB2bCustomerCreationGenerateSmsAction'>
+        <transition name='OK' to='success'/>
+        <transition name='NOK' to='failed'/>
+    </action>
+
+    <end id="error" state="ERROR">Something went wrong.</end>
+    <end id="failed" state="FAILED">Could not send email for customer registration .</end>
+    <end id="success" state="SUCCEEDED">Sent customer registration email.</end>
+
+</process>

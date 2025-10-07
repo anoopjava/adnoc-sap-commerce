@@ -1,0 +1,38 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]  ; integrationType(code)
+                               ; AdnocCsTicketInbound ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)         ; root[default = false]; itemTypeMatch(code)
+                                   ; AdnocCsTicketInbound                  ; Domain             ; Domain             ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; CsInterventionType ; CsInterventionType ;                      ; ALL_SUBTYPES            ;
+                                   ; AdnocCsTicketInbound                  ; CommentType        ; CommentType        ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; CsCustomerEvent    ; CsCustomerEvent    ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; Component          ; Component          ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; User               ; User               ;                      ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; CsTicket           ; CsTicket           ; true                 ; ALL_SUB_AND_SUPER_TYPES ;
+                                   ; AdnocCsTicketInbound                  ; CsTicketState      ; CsTicketState      ;                      ; ALL_SUBTYPES            ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; AdnocCsTicketInbound:Domain                                        ; code                        ; Domain:code                                        ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:CsInterventionType                            ; code                        ; CsInterventionType:code                            ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:CommentType                                   ; domain                      ; CommentType:domain                                 ; AdnocCsTicketInbound:Domain                               ;                        ;
+                                            ; AdnocCsTicketInbound:CommentType                                   ; code                        ; CommentType:code                                   ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; commentType                 ; CsCustomerEvent:commentType                        ; AdnocCsTicketInbound:CommentType                          ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; subject                     ; CsCustomerEvent:subject                            ;                                                           ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; interventionType            ; CsCustomerEvent:interventionType                   ; AdnocCsTicketInbound:CsInterventionType                   ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; text                        ; CsCustomerEvent:text                               ;                                                           ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; author                      ; CsCustomerEvent:author                             ; AdnocCsTicketInbound:User                                 ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; component                   ; CsCustomerEvent:component                          ; AdnocCsTicketInbound:Component                            ;                        ;
+                                            ; AdnocCsTicketInbound:CsCustomerEvent                               ; code                        ; CsCustomerEvent:code                               ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:Component                                     ; domain                      ; Component:domain                                   ; AdnocCsTicketInbound:Domain                               ; true                   ;
+                                            ; AdnocCsTicketInbound:User                                          ; uid                         ; User:uid                                           ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:CsTicket                                      ; state                       ; CsTicket:state                                     ; AdnocCsTicketInbound:CsTicketState                        ;                        ;
+                                            ; AdnocCsTicketInbound:CsTicket                                      ; events                      ; CsTicket:events                                    ; AdnocCsTicketInbound:CsCustomerEvent                      ;                        ; true
+                                            ; AdnocCsTicketInbound:CsTicket                                      ; externalTicketId            ; CsTicket:externalTicketId                          ;                                                           ; true                   ;
+                                            ; AdnocCsTicketInbound:CsTicket                                      ; crmCaseId                   ; CsTicket:crmCaseId                                 ;                                                           ;                        ;
+                                            ; AdnocCsTicketInbound:CsTicketState                                 ; code                        ; CsTicketState:code                                 ;                                                           ; true                   ;
+
+#******************************
+#*** Inbound 's ICC ****
+#******************************
+INSERT_UPDATE InboundChannelConfiguration; integrationObject(code)[unique = true]; authenticationType(code);
+                                         ; AdnocCsTicketInbound                  ; OAUTH                   ;

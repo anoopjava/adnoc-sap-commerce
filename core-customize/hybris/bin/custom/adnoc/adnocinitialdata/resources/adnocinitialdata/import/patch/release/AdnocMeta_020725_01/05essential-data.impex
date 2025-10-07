@@ -1,0 +1,19 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+REMOVE CancelReason; code[unique = true]
+                   ; OutOfStock
+                   ; LateDelivery
+                   ; Warehouse
+                   ; CustomerRequest
+                   ; Other
+                   ; NA
+
+INSERT_UPDATE CancelReason; code[unique = true]
+                          ; 04
+                          ; Y1
+                          ; 01
+                          ; Z8
+                          ; Z6
+                          ; 02
+                          ; 03
+                          ; 10

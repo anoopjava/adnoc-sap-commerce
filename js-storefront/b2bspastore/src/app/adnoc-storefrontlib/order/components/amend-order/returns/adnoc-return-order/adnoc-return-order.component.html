@@ -1,0 +1,29 @@
+<ng-container *ngIf="form$ | async as form">
+  <!-- <ng-container *ngTemplateOutlet="actions"></ng-container> -->
+
+  <adnoc-amend-order-items
+    *ngIf="entries$ | async as entries"
+    [isReturnOrder]="true"
+    [entries]="entries"
+    [orderNumber]="orderCode"
+  >
+  </adnoc-amend-order-items>
+
+  <cx-form-errors
+    [control]="form.get('returnRequestDocument')"
+  ></cx-form-errors>
+  <cx-form-errors [control]="form.get('returnReason')"></cx-form-errors>
+  <cx-form-errors [control]="form.get('entries')"></cx-form-errors>
+
+  <ng-container *ngTemplateOutlet="actions"></ng-container>
+
+  <ng-template #actions>
+    <adnoc-amend-order-actions
+      *ngIf="orderCode"
+      [orderCode]="orderCode"
+      [amendOrderForm]="form"
+      backRoute="orderDetails"
+      forwardRoute="orderReturnConfirmation"
+    ></adnoc-amend-order-actions>
+  </ng-template>
+</ng-container>

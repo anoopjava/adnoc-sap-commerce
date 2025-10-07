@@ -1,0 +1,1420 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+    <bean class="com.adnoc.b2bocc.unit.data.AdnocRegistrationDataWsDTO"
+          extends="de.hybris.platform.b2bwebservicescommons.dto.company.OrgUserRegistrationDataWsDTO">
+        <property name="companyName" type="String">
+            <description>Company Name</description>
+            <hints>
+                <hint name="example">companyName</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCountryIso" type="String">
+            <description>Company Address CountryIso</description>
+            <hints>
+                <hint name="example">AE</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressPostalCode" type="String">
+            <description>Company Address PostalCode</description>
+            <hints>
+                <hint name="example">3543564364</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCity" type="String">
+            <description>Company Address City</description>
+            <hints>
+                <hint name="example">AI Ain</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressRegion" type="String">
+            <description>Company Address Region</description>
+            <hints>
+                <hint name="example">AE-AZ</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressStreet" type="String">
+            <description>Company Address Street1</description>
+            <hints>
+                <hint name="example">Street 1</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressStreetLine2" type="String">
+            <description>Company Address Street2</description>
+            <hints>
+                <hint name="example">Street 2</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="designation" type="String">
+            <description>Designation</description>
+            <hints>
+                <hint name="example">Manager</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="gender" type="String">
+            <description>gender</description>
+            <hints>
+                <hint name="example">Female</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identityType" type="String">
+            <description>Identity Type</description>
+            <hints>
+                <hint name="example">EMIRATESID</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationNumber" type="String">
+            <description>Identification Number</description>
+            <hints>
+                <hint name="example">A2096457</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationNumberDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>identificationNumber Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="identificationValidFrom" type="java.util.Date">
+            <description>B2B unit validFrom</description>
+            <hints>
+                <hint name="example">1-04-2020</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationValidTo" type="java.util.Date">
+            <description>B2B Unit valid To</description>
+            <hints>
+                <hint name="example">1-12-2035</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="mobileNumber" type="String">
+            <description>Mobile Number</description>
+            <hints>
+                <hint name="example">+9753434545353</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="telephone" type="String">
+            <description>Telephone Number</description>
+            <hints>
+                <hint name="example">+9753434545353</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="faxNumber" type="String">
+            <description>Fax Number</description>
+            <hints>
+                <hint name="example">2325423353</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="nationality" type="String">
+            <description>nationality</description>
+            <hints>
+                <hint name="example">Emirati</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="partnerFunction" type="String"/>
+        <property name="otherDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>Other Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="countryOfOrigin" type="String">
+            <description>countryOfOrigin</description>
+            <hints>
+                <hint name="example">Emirati</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="poBox" type="String">
+            <description>PO Box</description>
+            <hints>
+                <hint name="example">4188</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="companyName2" type="String">
+            <description>Company Name2</description>
+            <hints>
+                <hint name="example">companyName2</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.unit.data.AdnocB2BRegistrationDataWsDTO"
+          extends="com.adnoc.b2bocc.unit.data.AdnocRegistrationDataWsDTO">
+        <property name="primaryProduct" type="String">
+            <description>Primary Product of the Account</description>
+            <hints>
+                <hint name="example">LPG</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <!--Company Details Start-->
+        <property name="companyEmail" type="String">
+            <description>Company Email</description>
+            <hints>
+                <hint name="example">akiro.nakamura@rustic-hw.com</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyWebsite" type="String">
+            <description>Company Website</description>
+            <hints>
+                <hint name="example">adnoc.com</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="companyPhoneNumber" type="String">
+            <description>Company Phone Number</description>
+            <hints>
+                <hint name="example">+9768969797686</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyMobileNumber" type="String">
+            <description>Company Mobile Number</description>
+            <hints>
+                <hint name="example">+9768969797686</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="tradeLicenseAuthority" type="String">
+            <description>trade License Authority</description>
+            <hints>
+                <hint name="example">Industrial License</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="tradeLicenseNumber" type="String">
+            <description>Trade License Number</description>
+            <hints>
+                <hint name="example">34-543534-53-45353</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="tlnDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>tln Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="tlnValidFrom" type="java.util.Date">
+            <description>Tade LicenseNumber validFrom</description>
+            <hints>
+                <hint name="example">1-04-2020</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="tlnValidTo" type="java.util.Date">
+            <description>Tade LicenseNumber validFrom</description>
+            <hints>
+                <hint name="example">1-04-2020</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="vatId" type="String">
+            <description>Vat Id</description>
+            <hints>
+                <hint name="example">454353545345345</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="vatIdDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>VatId Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+
+        <!--Contact Details Start-->
+        <property name="preferredCommunicationChannel" type="String">
+            <description>Preferred Communication Channel</description>
+            <hints>
+                <hint name="example">EMAIL</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.unit.data.AdnocB2BUnitRegistrationDataWsDTO"
+          extends="com.adnoc.b2bocc.unit.data.AdnocRegistrationDataWsDTO">
+        <property name="parentB2BUnitUid" type="String">
+            <description>Identifier of the Parent organizational B2B unit</description>
+            <hints>
+                <hint name="example">Pronto</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="incoTerms" type="String">
+            <description>IncoTerms</description>
+        </property>
+        <property name="latitude" type="String">
+            <description>latitude</description>
+        </property>
+        <property name="longitude" type="String">
+            <description>longitude</description>
+        </property>
+        <property name="vatId" type="String">
+            <description>Vat Id</description>
+            <hints>
+                <hint name="example">454353545345345</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="vatIdDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>VatId Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <!-- PrimaryProduct Start-->
+    <bean class="com.adnoc.b2bocc.user.data.PrimaryProductWsDTO">
+        <description>Representation of a PrimaryProduct</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PrimaryProduct</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>PrimaryProduct code</description>
+        </property>
+        <property name="name" type="String">
+            <description>PrimaryProduct name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.PrimaryProductListWsDTO">
+        <description>Representation of a PrimaryProduct List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PrimaryProductList</hint>
+        </hints>
+        <property name="primaryProducts"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.PrimaryProductWsDTO>">
+            <description>List of primaryProducts</description>
+        </property>
+    </bean>
+    <!-- PrimaryProduct End-->
+
+    <!-- PreferredCommunicationChannel Start-->
+    <bean class="com.adnoc.b2bocc.user.data.PreferredCommunicationChannelWsDTO">
+        <description>Representation of a PreferredCommunicationChannel</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PreferredCommunicationChannel</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>PreferredCommunicationChannel code</description>
+        </property>
+        <property name="name" type="String">
+            <description>PreferredCommunicationChannel name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.PreferredCommunicationChannelListWsDTO">
+        <description>Representation of a PreferredCommunicationChannel List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">PreferredCommunicationChannelList</hint>
+        </hints>
+        <property name="preferredCommunicationChannels"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.PreferredCommunicationChannelWsDTO>">
+            <description>List of preferredCommunicationChannels</description>
+        </property>
+    </bean>
+    <!-- PreferredCommunicationChannel End-->
+
+    <!-- Gender Start-->
+    <bean class="com.adnoc.b2bocc.user.data.GenderWsDTO">
+        <description>Representation of a Gender</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Gender</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>Gender code</description>
+        </property>
+        <property name="name" type="String">
+            <description>Gender name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.GenderListWsDTO">
+        <description>Representation of a Gender List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Gender</hint>
+        </hints>
+        <property name="genders"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.GenderWsDTO>">
+            <description>List of genders</description>
+        </property>
+    </bean>
+    <!-- Gender End-->
+
+    <!-- Nationality Start-->
+    <bean class="com.adnoc.b2bocc.user.data.NationalityWsDTO">
+        <description>Representation of a Nationality</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Nationality</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>Nationality code</description>
+        </property>
+        <property name="name" type="String">
+            <description>Nationality name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.NationalityListWsDTO">
+        <description>Representation of a Nationality List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">NationalityList</hint>
+        </hints>
+        <property name="nationalities"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.NationalityWsDTO>">
+            <description>List of nationalities</description>
+        </property>
+    </bean>
+    <!-- Nationality End-->
+
+    <!-- IdentityType starts-->
+    <bean class="com.adnoc.b2bocc.user.data.IdentityTypeWsDTO">
+        <description>Representation of an Identity Type</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">IdentityType</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>IdentityType code</description>
+        </property>
+        <property name="name" type="String">
+            <description>IdentityType name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.IdentityTypeListWsDTO">
+        <description>Representation of IdentityType List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">IdentityType List</hint>
+        </hints>
+        <property name="identityTypes"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.IdentityTypeWsDTO>">
+            <description>List of IdentityType</description>
+        </property>
+    </bean>
+    <!-- IdentityType Ends-->
+
+    <!-- IncoTerms starts-->
+    <bean class="com.adnoc.b2bocc.user.data.IncoTermsWsDTO">
+        <description>Representation of an Identity Type</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">IncoTerms</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>IncoTerms code</description>
+        </property>
+        <property name="name" type="String">
+            <description>IncoTerms name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.IncoTermsListWsDTO">
+        <description>Representation of IdentityType List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">IncoTerms List</hint>
+        </hints>
+        <property name="incoTerms"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.IncoTermsWsDTO>">
+            <description>List of IncoTerms</description>
+        </property>
+    </bean>
+    <!-- IncoTerms Ends-->
+
+    <!-- Designation starts-->
+    <bean class="com.adnoc.b2bocc.user.data.AdnocDesignationWsDTO">
+        <description>Representation of an Designation</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Designation</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>Designation code</description>
+        </property>
+        <property name="name" type="String">
+            <description>Designation name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.AdnocDesignationTypeWsDTO">
+        <description>Representation of Designation Type</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">Designation Type</hint>
+        </hints>
+        <property name="designationTypes"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.AdnocDesignationWsDTO>">
+            <description>List of Designation Type</description>
+        </property>
+    </bean>
+    <!-- Designation Ends-->
+
+    <!-- Trade License Authority starts-->
+    <bean class="com.adnoc.b2bocc.user.data.AdnocTradeLicenseAuthorityWsDTO">
+        <description>Representation of an TradeLicenseAuthority</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">TradeLicenseAuthority</hint>
+        </hints>
+        <property name="code" type="String">
+            <description>TradeLicenseAuthority Code</description>
+        </property>
+        <property name="name" type="String">
+            <description>TradeLicenseAuthority Name</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.user.data.AdnocTradeLicenseAuthorityTypeWsDTO">
+        <description>Representation of TradeLicenseAuthority Type</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">TradeLicenseAuthority Type</hint>
+        </hints>
+        <property name="tradeLicenseAuthorityTypes"
+                  type="java.util.List&lt;com.adnoc.b2bocc.user.data.AdnocTradeLicenseAuthorityWsDTO>">
+            <description>List of TradeLicenseAuthority Type</description>
+        </property>
+    </bean>
+    <!-- Trade License Authority Ends-->
+
+    <!-- ReturnReason starts -->
+    <bean class="com.adnoc.b2bocc.ordermanagement.data.ReturnReasonWsDTO">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ordermanagement.data.ReturnReasonListWsDTO">
+        <description>Representation of ReturnReason List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ReturnReason List</hint>
+        </hints>
+        <property name="returnReasons"
+                  type="java.util.List&lt;com.adnoc.b2bocc.ordermanagement.data.ReturnReasonWsDTO>">
+            <description>List of ReturnReasons</description>
+        </property>
+    </bean>
+    <!-- ReturnReason Ends-->
+
+    <bean class="com.adnoc.b2bocc.user.data.AdnocB2BUserRegistrationDataWsDTO">
+        <property name="preferredCommunicationChannel" type="String">
+            <description>Preferred Communication Channel</description>
+            <hints>
+                <hint name="example">SMS</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="gender" type="String">
+            <description>gender</description>
+            <hints>
+                <hint name="example">Female</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="nationality" type="String">
+            <description>nationality</description>
+            <hints>
+                <hint name="example">Emirati</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identityType" type="String">
+            <description>Identity Type</description>
+            <hints>
+                <hint name="example">EMIRATESID</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationNumber" type="String">
+            <description>Identification Number</description>
+            <hints>
+                <hint name="example">A2096457</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationValidFrom" type="java.util.Date">
+            <description>B2B unit validFrom</description>
+            <hints>
+                <hint name="example">1-04-2020</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationValidTo" type="java.util.Date">
+            <description>B2B Unit valid To</description>
+            <hints>
+                <hint name="example">1-12-2035</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="designation" type="String">
+            <description>designation</description>
+            <hints>
+                <hint name="example">Manager</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="mobileNumber" type="String">
+            <description>mobileNumber</description>
+            <hints>
+                <hint name="example">971-50-9876543</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="telephone" type="String">
+            <description>telephoneNumber</description>
+            <hints>
+                <hint name="example">971-2-9876543</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="email" type="String">
+            <description>Email of the user</description>
+            <hints>
+                <hint name="example">akiro.nakamura@rustic-hw.com</hint>
+            </hints>
+        </property>
+        <property name="firstName" type="String">
+            <description>First name of the user</description>
+            <hints>
+                <hint name="example">Akiro</hint>
+            </hints>
+        </property>
+        <property name="lastName" type="String">
+            <description>Last name of the user</description>
+            <hints>
+                <hint name="example">Nakamura</hint>
+            </hints>
+        </property>
+        <property name="titleCode" type="String">
+            <description>Code of the user's title</description>
+            <hints>
+                <hint name="example">mr</hint>
+            </hints>
+        </property>
+        <property name="orgUnit" type="de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitWsDTO">
+            <description>The unit of the user</description>
+        </property>
+        <property name="roles" type="java.util.List&lt;String>">
+            <description>List of organizational approvers</description>
+        </property>
+        <property name="companyAddressStreet" type="String">
+            <description>Company Address Street1</description>
+            <hints>
+                <hint name="example">Street 1</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressStreetLine2" type="String">
+            <description>Company Address Street2</description>
+            <hints>
+                <hint name="example">Street 2</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCountryIso" type="String">
+            <description>Company Address CountryIso</description>
+            <hints>
+                <hint name="example">AE</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCity" type="String">
+            <description>Company Address City</description>
+            <hints>
+                <hint name="example">AI Ain</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressRegion" type="String">
+            <description>Company Address Region</description>
+            <hints>
+                <hint name="example">AE-AZ</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="customerId" type="String">
+            <description>customerId</description>
+            <hints>
+                <hint name="example">customerId</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="identificationNumberDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>identificationNumber Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="countryOfOrigin" type="String">
+            <description>countryOfOrigin</description>
+            <hints>
+                <hint name="example">Emirati</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <!-- AdnocConfig Start-->
+    <bean class="com.adnoc.b2bocc.config.data.AdnocConfigWsDTO">
+        <description>Representation of a AdnocConfig</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">AdnocConfig</hint>
+        </hints>
+        <property name="configKey" type="String">
+            <description>config key</description>
+        </property>
+        <property name="configValue" type="String">
+            <description>config value</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.config.data.AdnocConfigListWsDTO">
+        <description>Representation of a AdnocConfig List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">AdnocConfigList</hint>
+        </hints>
+        <property name="adnocConfigs"
+                  type="java.util.List&lt;com.adnoc.b2bocc.config.data.AdnocConfigWsDTO>">
+            <description>List of adnocconfigs</description>
+        </property>
+    </bean>
+    <!-- AdnocConfig End-->
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO">
+        <property name="division" type="String">
+            <description>division</description>
+        </property>
+        <property name="unit" type="com.adnoc.b2bocc.product.data.UnitWsDTO"/>
+        <property name="minOrderQuantity" type="Integer"/>
+        <property name="maxOrderQuantity" type="Integer"/>
+        <property name="documentMediaCode" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.ReturnRequestEntryInputListWsDTO">
+        <property name="returnRequestDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>ReturnRequest Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+        <property name="returnReason" type="com.adnoc.b2bocc.ordermanagement.data.ReturnReasonWsDTO">
+            <description>Order entry number of the returned product</description>
+            <hints>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryWsDTO">
+        <property name="division" type="String">
+            <description>division</description>
+        </property>
+        <property name="deliveryAddress" type="de.hybris.platform.commercewebservicescommons.dto.user.AddressWsDTO"/>
+        <property name="namedDeliveryDate" type="java.util.Date"/>
+        <property name="entryCode" type="Integer">
+            <description>entry code</description>
+        </property>
+        <property name="isCancellable" type="Boolean"/>
+        <property name="unit" type="com.adnoc.b2bocc.product.data.UnitWsDTO"/>
+        <property name="incoTerms" type="com.adnoc.b2bocc.user.data.IncoTermsWsDTO">
+            <description>IncoTerms</description>
+        </property>
+        <property name="sapLineItemStatus" type="String"/>
+        <property name="discounts"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO>">
+            <description>Order Entry Discounts</description>
+        </property>
+        <property name="tax" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Order Entry Tax</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.product.data.UnitWsDTO">
+        <property name="name" type="String"/>
+        <property name="code" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.config.data.B2BUnitListWsDto">
+        <property name="b2bUnitListData"
+                  type="java.util.List&lt;de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitWsDTO>"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.AbstractOrderWsDTO">
+        <property name="unitUid" type="String"/>
+        <property name="poDocument" type="org.springframework.web.multipart.MultipartFile">
+            <description>PO Document</description>
+            <hints>
+                <hint name="example">pdf or zip file to upload</hint>
+                <hint name="required">false</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <!-- AdnocCsTicketCategoryMap Start-->
+    <bean class="com.adnoc.b2bocc.ticket.data.CsTicketCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ticket.data.CsTicketRequestForCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ticket.data.CsTicketRequestForSubCategoryData">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ticket.data.AdnocCsTicketCategoryMapWsDto">
+        <property name="csTicketCategoryMapId" type="String"/>
+        <property name="requestType" type="com.adnoc.b2bocc.ticket.data.CsTicketCategoryData"/>
+        <property name="requestFor" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForCategoryData"/>
+        <property name="subCategory" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForSubCategoryData"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ticket.data.AdnocCsTicketCategoryMapListWsDto">
+        <property name="adnocCsTicketCategoryMapList"
+                  type="java.util.List&lt;com.adnoc.b2bocc.ticket.data.AdnocCsTicketCategoryMapWsDto>"/>
+    </bean>
+    <!-- AdnocCsTicketCategoryMap End-->
+
+    <bean class="de.hybris.platform.customerticketingocc.dto.ticket.TicketStarterWsDTO">
+        <description>Extra attributes information about the ticket.</description>
+        <property name="requestFor" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForCategoryData"/>
+        <property name="subCategory" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForSubCategoryData"/>
+        <property name="csTicketCategoryMapId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.customerticketingocc.dto.ticket.TicketWsDTO">
+        <property name="csTicketCategoryMapId" type="String"/>
+        <property name="crmCaseId" type="String"/>
+        <property name="requestFor" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForCategoryData"/>
+        <property name="subCategory" type="com.adnoc.b2bocc.ticket.data.CsTicketRequestForSubCategoryData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.customerticketingocc.dto.ticket.TicketListWsDTO">
+        <property name="crmCaseId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.order.data.OrderListWsDTO">
+        <property name="orders"
+                  type="java.util.List&lt;de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO>"/>
+    </bean>
+
+    <bean class="de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitWsDTO">
+        <property name="partnerFunction" type="String"/>
+        <property name="salesOrg" type="com.adnoc.b2bocc.company.data.SAPSalesOrganizationWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.data.SAPSalesOrganizationWsDTO">
+        <property name="salesOrgId" type="String"/>
+        <property name="salesOrganization" type="String"/>
+        <property name="distributionChannel" type="String"/>
+        <property name="division" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.data.DeliveryTypeWsDTO">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.data.ShippingConditionWsDTO">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.quote.QuoteStarterWsDTO">
+        <property name="orderEntryList"
+                  type="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryListWsDTO"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.quote.QuoteActionWsDTO">
+        <property name="orderEntryList"
+                  type="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryListWsDTO"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.quote.QuoteWsDTO">
+        <property name="subTotal" type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Sub total price of the quote.</description>
+        </property>
+        <property name="subTotalWithoutQuoteDiscounts"
+                  type="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+            <description>Sub total price without discounts of the quote.</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.user.AddressWsDTO">
+        <property name="sapCustomerID" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO">
+        <property name="deliveryType" type="com.adnoc.b2bocc.company.data.DeliveryTypeWsDTO"/>
+        <property name="shippingCondition" type="com.adnoc.b2bocc.company.data.ShippingConditionWsDTO"/>
+        <property name="sapOrderCode" type="String"/>
+        <property name="sapErrorMessage" type="String"/>
+        <property name="paymentTransactions"
+                  type="java.util.List&lt;de.hybris.platform.ordermanagementwebservices.dto.payment.PaymentTransactionWsDTO>"/>
+    </bean>
+
+    <!-- ADNOC Payment Start -->
+    <bean class="de.hybris.platform.ordermanagementwebservices.dto.payment.PaymentTransactionWsDTO">
+        <property name="rrnNumber" type="String"/>
+    </bean>
+
+    <!-- ADNOC Card Payment Start -->
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocPaymentInitiateCheckoutResponseWsDTO">
+        <property name="checkoutMode" type="String"/>
+        <property name="merchant" type="String"/>
+        <property name="result" type="String"/>
+        <property name="session" type="com.adnoc.b2bocc.payment.card.data.AdnocPaymentSessionWsDTO"/>
+        <property name="successIndicator" type="String"/>
+        <property name="error" type="de.hybris.platform.webservicescommons.dto.error.ErrorWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocPaymentSessionWsDTO">
+        <property name="id" type="String"/>
+        <property name="updateStatus" type="String"/>
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocPaymentResponseWsDTO">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="threeDsAcsEci" type="String">
+            <annotations>@JsonProperty("3dsAcsEci")</annotations>
+        </property>
+        <property name="amount" type="Double"/>
+        <property name="authentication" type="com.adnoc.b2bocc.payment.card.data.AdnocAuthenticationWsDTO"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="authenticationVersion" type="String"/>
+        <property name="chargeback" type="com.adnoc.b2bocc.payment.card.data.AdnocChargebackWsDTO"/>
+        <property name="creationTime" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="description" type="String"/>
+        <property name="device" type="com.adnoc.b2bocc.payment.card.data.AdnocDeviceWsDTO"/>
+        <property name="id" type="String"/>
+        <property name="lastUpdatedTime" type="String"/>
+        <property name="merchant" type="String"/>
+        <property name="merchantAmount" type="Double"/>
+        <property name="merchantCategoryCode" type="String"/>
+        <property name="merchantCurrency" type="String"/>
+        <property name="result" type="String"/>
+        <property name="sourceOfFunds" type="com.adnoc.b2bocc.payment.card.data.AdnocSourceOfFundsWsDTO"/>
+        <property name="status" type="String"/>
+        <property name="totalAuthorizedAmount" type="Double"/>
+        <property name="totalCapturedAmount" type="Double"/>
+        <property name="totalDisbursedAmount" type="Double"/>
+        <property name="totalRefundedAmount" type="Double"/>
+        <property name="transaction"
+                  type="java.util.List&lt;com.adnoc.b2bocc.payment.card.data.AdnocTransactionWsDTO>"/>
+        <property name="error" type="de.hybris.platform.webservicescommons.dto.error.ErrorWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocAuthenticationWsDTO">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <property name="threeDs" type="com.adnoc.b2bocc.payment.card.data.AdnocThreeDSWsDTO">
+            <annotations>@JsonProperty("3ds")</annotations>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocThreeDSWsDTO">
+        <property name="acsEci" type="String"/>
+        <property name="authenticationToken" type="String"/>
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocChargebackWsDTO">
+        <property name="amount" type="Double"/>
+        <property name="currency" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocDeviceWsDTO">
+        <property name="browser" type="String"/>
+        <property name="ipAddress" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocSourceOfFundsWsDTO">
+        <property name="provided" type="com.adnoc.b2bocc.payment.card.data.AdnocProvidedWsDTO"/>
+        <property name="type" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocProvidedWsDTO">
+        <property name="card" type="com.adnoc.b2bocc.payment.card.data.AdnocCardWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocCardWsDTO">
+        <property name="brand" type="String"/>
+        <property name="expiry" type="com.adnoc.b2bocc.payment.card.data.AdnocExpiryWsDTO"/>
+        <property name="fundingMethod" type="String"/>
+        <property name="nameOnCard" type="String"/>
+        <property name="number" type="String"/>
+        <property name="scheme" type="String"/>
+        <property name="storedOnFile" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocExpiryWsDTO">
+        <property name="month" type="String"/>
+        <property name="year" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocTransactionWsDTO">
+        <property name="authentication" type="com.adnoc.b2bocc.payment.card.data.AdnocTransactionAuthenticationWsDTO"/>
+        <property name="device" type="com.adnoc.b2bocc.payment.card.data.AdnocDeviceWsDTO"/>
+        <property name="merchant" type="String"/>
+        <property name="order" type="com.adnoc.b2bocc.payment.card.data.AdnocOrderWsDTO"/>
+        <property name="response" type="com.adnoc.b2bocc.payment.card.data.AdnocResponseWsDTO"/>
+        <property name="result" type="String"/>
+        <property name="sourceOfFunds" type="com.adnoc.b2bocc.payment.card.data.AdnocSourceOfFundsWsDTO"/>
+        <property name="timeOfLastUpdate" type="String"/>
+        <property name="timeOfRecord" type="String"/>
+        <property name="transaction" type="com.adnoc.b2bocc.payment.card.data.AdnocTransactionDetailsWsDTO"/>
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocTransactionAuthenticationWsDTO">
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocOrderWsDTO">
+        <property name="amount" type="Double"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="chargeback" type="com.adnoc.b2bocc.payment.card.data.AdnocChargebackWsDTO"/>
+        <property name="creationTime" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="description" type="String"/>
+        <property name="id" type="String"/>
+        <property name="lastUpdatedTime" type="String"/>
+        <property name="merchantAmount" type="Double"/>
+        <property name="merchantCategoryCode" type="String"/>
+        <property name="merchantCurrency" type="String"/>
+        <property name="status" type="String"/>
+        <property name="totalAuthorizedAmount" type="Double"/>
+        <property name="totalCapturedAmount" type="Double"/>
+        <property name="totalDisbursedAmount" type="Double"/>
+        <property name="totalRefundedAmount" type="Double"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocResponseWsDTO">
+        <property name="acquirerCode" type="String"/>
+        <property name="acquirerMessage" type="String"/>
+        <property name="gatewayCode" type="String"/>
+        <property name="gatewayRecommendation" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocTransactionDetailsWsDTO">
+        <property name="acquirer" type="com.adnoc.b2bocc.payment.card.data.AdnocAcquirerWsDTO"/>
+        <property name="amount" type="Double"/>
+        <property name="authenticationStatus" type="String"/>
+        <property name="authorizationCode" type="String"/>
+        <property name="currency" type="String"/>
+        <property name="id" type="String"/>
+        <property name="receipt" type="String"/>
+        <property name="source" type="String"/>
+        <property name="stan" type="String"/>
+        <property name="terminal" type="String"/>
+        <property name="type" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.card.data.AdnocAcquirerWsDTO">
+        <property name="batch" type="Double"/>
+        <property name="date" type="String"/>
+        <property name="id" type="String"/>
+        <property name="merchantId" type="String"/>
+        <property name="settlementDate" type="String"/>
+        <property name="timeZone" type="String"/>
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <!-- ADNOC Card Payment End -->
+    <!-- ADNOC Bank Payment Start -->
+    <bean class="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankTransactionRegistrationResponseWsDTO"
+          extends="com.adnoc.b2bocc.payment.card.data.AdnocPaymentInitiateCheckoutResponseWsDTO">
+        <property name="transaction"
+                  type="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationResponseWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationResponseWsDTO">
+        <property name="paymentPortal" type="String"/>
+        <property name="paymentPage" type="String"/>
+        <property name="responseCode" type="String"/>
+        <property name="responseClass" type="String"/>
+        <property name="responseDescription" type="String"/>
+        <property name="responseClassDescription" type="String"/>
+        <property name="transactionID" type="String"/>
+        <property name="balance" type="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationAmountWsDTO"/>
+        <property name="amount" type="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationAmountWsDTO"/>
+        <property name="fees" type="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationAmountWsDTO"/>
+        <property name="uniqueID" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationAmountWsDTO">
+        <property name="value" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankFinalizationResponseWsDTO">
+        <property name="transaction" type="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankTransactionFinalizationResponseWsDTO"/>
+        <property name="error" type="de.hybris.platform.webservicescommons.dto.error.ErrorWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankTransactionFinalizationResponseWsDTO">
+        <property name="responseCode" type="String"/>
+        <property name="responseClass" type="String"/>
+        <property name="responseDescription" type="String"/>
+        <property name="responseClassDescription" type="String"/>
+        <property name="language" type="String"/>
+        <property name="approvalCode" type="String"/>
+        <property name="account" type="String"/>
+        <property name="orderID" type="String"/>
+        <property name="cardBrand" type="String"/>
+        <property name="isWalletUsed" type="String"/>
+        <property name="isCaptured" type="String"/>
+        <property name="captureID" type="String"/>
+        <property name="uniqueID" type="String"/>
+        <property name="balance" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+        <property name="amount" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+        <property name="fees" type="com.adnoc.facades.payment.banktransfer.data.AdnocPaymentAmountData"/>
+        <property name="transactionId" type="String"/>
+    </bean>
+
+    <!-- ADNOC Bank Payment End -->
+    <!-- ADNOC CreditLimit Payment Start -->
+    <bean class="com.adnoc.b2bocc.company.response.data.AdnocCreditLimitResponseWsDTO">
+        <property name="updatedOn" type="java.util.Date"/>
+        <property name="b2BCreditLimit" type="com.adnoc.b2bocc.company.response.data.AdnocCreditLimitWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.response.data.AdnocCreditLimitWsDTO">
+        <property name="creditExposure" type="java.lang.String"/>
+        <property name="availableCl" type="java.lang.String"/>
+        <property name="message" type="java.lang.String"/>
+        <property name="unsecureCl" type="java.lang.String"/>
+        <property name="totalCl" type="java.lang.String"/>
+        <property name="letterOfCredit" type="java.lang.String"/>
+        <property name="bankGuarantee" type="java.lang.String"/>
+        <property name="utilization" type="java.lang.String"/>
+        <property name="checkRule" type="java.lang.String"/>
+        <property name="currency" type="java.lang.String"/>
+    </bean>
+    <!-- ADNOC CreditLimit Payment End -->
+    <!-- ADNOC Payment End -->
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.OrderHistoryWsDTO">
+        <property name="category" type="de.hybris.platform.commercewebservicescommons.dto.product.CategoryWsDTO">
+            <description>Order Category</description>
+        </property>
+        <property name="deliveryAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceListWsDTO">
+        <property name="adnocOverdueInvoices"
+                  type="java.util.List&lt;com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceWsDTO>"/>
+        <property name="error" type="de.hybris.platform.webservicescommons.dto.error.ErrorWsDTO"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceWsDTO">
+        <property name="payer" type="java.lang.String"/>
+        <property name="documentNumber" type="java.lang.String"/>
+        <property name="companyCode" type="java.lang.String"/>
+        <property name="fiscalYear" type="java.lang.String"/>
+        <property name="invoiceAmount" type="double"/>
+        <property name="dueAmount" type="double"/>
+        <property name="currency" type="java.lang.String"/>
+        <property name="status" type="java.lang.String"/>
+        <property name="netDueDate" type="java.util.Date"/>
+        <property name="division" type="java.lang.String"/>
+        <property name="documentDate" type="java.util.Date"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.user.UserWsDTO"
+          extends="de.hybris.platform.commercewebservicescommons.dto.user.PrincipalWsDTO">
+        <description>Representation of a User</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">User</hint>
+        </hints>
+        <property name="userRole" type="String">
+            <description>User Role code</description>
+        </property>
+        <property name="designation" type="String">
+            <description>Designation</description>
+        </property>
+        <property name="lastlogin" type="java.util.Date">
+            <description>Last Login date</description>
+        </property>
+        <property name="companyAddressStreet" type="String">
+            <description>Company Address Street1</description>
+            <hints>
+                <hint name="example">Street 1</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressStreetLine2" type="String">
+            <description>Company Address Street2</description>
+            <hints>
+                <hint name="example">Street 2</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCountryIso" type="String">
+            <description>Company Address CountryIso</description>
+            <hints>
+                <hint name="example">AE</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressRegion" type="String">
+            <description>Company Address Region</description>
+            <hints>
+                <hint name="example">AE-AZ</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="companyAddressCity" type="String">
+            <description>Company Address City</description>
+            <hints>
+                <hint name="example">AI Ain</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="countryOfOrigin" type="String">
+            <description>countryOfOrigin</description>
+            <hints>
+                <hint name="example">Emirati</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="sapBusinessPartnerID" type="String">
+            <description>SAPBusinessPartnerID</description>
+            <hints>
+                <hint name="example">8999048043</hint>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+        <property name="mobileNumber" type="String">
+            <description>Mobile Number</description>
+        </property>
+        <property name="status" type="String">
+            <description>B2B Customer Status</description>
+            <hints>
+                <hint name="example">In-Progress,Active</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.data.AdnocOrderSummaryWsDTO">
+        <property name="ordersPlacedCount" type="int"/>
+        <property name="totalOrdersValue" type="java.lang.Double"/>
+        <property name="returnOrdersCount" type="int"/>
+        <property name="configValue" type="int"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceDetailsWsDTO">
+        <property name="invoiceNumber" type="java.lang.String"/>
+        <property name="companyCode" type="java.lang.String"/>
+        <property name="fiscalYear" type="java.lang.String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverduePaymentRequestWsDTO">
+        <property name="payerId" type="java.lang.String"/>
+        <property name="paymentType" type="java.lang.String"/>
+        <property name="totalAmount" type="double"/>
+        <property name="invoiceDetails"
+                  type="java.util.List&lt;com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceDetailsWsDTO>"/>
+        <property name="currency" type="java.lang.String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.CartWsDTO">
+        <property name="creditLimitUsed" type="boolean"/>
+    </bean>
+
+    <bean class="de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitNodeWsDTO">
+        <property name="lob" type="String">
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.ReturnRequestWsDTO">
+        <property name="statusDisplay" type="String">
+            <description>Display Status of return request</description>
+        </property>
+        <property name="comment" type="String">
+            <description>Comment for return request rejection</description>
+        </property>
+        <property name="reason" type="String"/>
+        <property name="reasonDisplay" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.company.creditsimulation.data.AdnocCreditSimulationWsDTO">
+        <property name="creditSimulation" type="boolean">
+            <description>Display Credit Simulation Check</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsWsDTO">
+        <property name="amount" type="double"/>
+        <property name="rrnNumber" type="String"/>
+        <property name="creditLimitAmount" type="double"/>
+        <property name="account" type="String"/>
+        <property name="transactionId" type="String"/>
+        <property name="approvalCode" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceWsDTO">
+        <property name="id" type="String"/>
+    </bean>
+    <!-- CancelReason starts -->
+    <bean class="com.adnoc.b2bocc.ordermanagement.data.CancelReasonWsDTO">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.ordermanagement.data.CancelReasonListWsDTO">
+        <description>Representation of Cancel Reason List</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">CancelReason List</hint>
+        </hints>
+        <property name="cacelReasons" type="java.util.List&lt;com.adnoc.b2bocc.ordermanagement.data.CancelReasonWsDTO>">
+            <description>List of CancelReasons</description>
+        </property>
+    </bean>
+    <!-- CancelReason Ends-->
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.order.CancellationRequestEntryInputWsDTO">
+        <property name="cancelReason" type="com.adnoc.b2bocc.ordermanagement.data.CancelReasonWsDTO">
+            <description>Cancel reason the cancel product</description>
+            <hints>
+                <hint name="required">true</hint>
+            </hints>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO">
+        <property name="code" type="String">
+            <description>price data code</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.unit.data.AdnocB2BRegistrationRequestWsDTO">
+        <property name="registrationRequestId" type="java.lang.String">
+            <description>registrationRequestId</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.b2bocc.dto.gigya.GigyaConfigWsDTO">
+        <description>Representation of a Gigya Config</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">GigyaConfig</hint>
+        </hints>
+        <property name="cdcApiKey" type="String">
+            <description>Gigya API key</description>
+        </property>
+        <property name="cdcUserKey" type="String">
+            <description>Gigya user key</description>
+        </property>
+        <property name="cdcUserSecret" type="String">
+            <description>Gigya user secret</description>
+        </property>
+        <property name="loginMode" type="String">
+            <description>Gigya login mode</description>
+        </property>
+        <property name="sessionExpiration" type="String">
+            <description>Session duration</description>
+        </property>
+        <property name="include" type="String">
+            <description>Include Login Options</description>
+        </property>
+        <property name="dataCenter" type="String">
+            <description>Session Langugae</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.commercewebservicescommons.dto.basesite.BaseSiteWsDTO">
+        <property name="gigyaConfigData" type="com.adnoc.b2bocc.dto.gigya.GigyaConfigWsDTO">
+            <description>Gigya Config</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.service.gigya.login.verification.AdnocGigyaLoginTokenVerificationResponseWsDTO">
+        <description>Representation of a GigyaLoginTokenVerification</description>
+        <hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">GigyaLoginTokenVerification</hint>
+        </hints>
+        <property name="errorCode" type="String">
+            <description>Login Token Verification ErrorCode</description>
+        </property>
+        <property name="statusCode" type="String">
+            <description>Login Token Verification StatusCode</description>
+        </property>
+        <property name="statusReason" type="String">
+            <description>Login Token Verification StatusReason</description>
+        </property>
+        <property name="errorDetails" type="String">
+            <description>Login Token Verification errorDetails</description>
+        </property>
+    </bean>
+
+    <bean class="com.adnoc.service.gigya.login.verification.AdnocGigyaLoginVerificationRequestWsDTO">
+        <property name="UID" type="String">
+            <description>Gigya Customer Login UID</description>
+        </property>
+        <property name="UIDSignature" type="String">
+            <description>Gigya Customer login UIDSignature</description>
+        </property>
+        <property name="signatureTimestamp" type="String">
+            <description>Gigya Customer login signatureTimestamp</description>
+        </property>
+    </bean>
+
+</beans>

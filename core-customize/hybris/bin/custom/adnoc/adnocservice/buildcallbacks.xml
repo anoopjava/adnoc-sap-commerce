@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<project name="adnocservice_buildcallbacks">
+    	
+    <macrodef name="adnocservice_after_build">
+        		
+        <sequential>
+            			
+            <impexGenerate extname="adnocservice"/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="adnocservice_clean_classpath_file">
+        		
+        <sequential>
+            			
+            <copy failonerror="true" file="${ext.adnocservice.path}/.classpath" overwrite="true" tofile="${ext.adnocservice.path}/.classpath.edit">
+                				
+                <filterchain>
+                    					
+                    <linecontainsregexp negate="true">
+                        						
+                        <regexp pattern="^(\t\t\t\t|)$"/>
+                          
+                        <!-- added by script -->
+                        					
+                    </linecontainsregexp>
+                    				
+                </filterchain>
+                			
+            </copy>
+            			
+            <move failonerror="true" file="${ext.adnocservice.path}/.classpath.edit" overwrite="true" tofile="${ext.adnocservice.path}/.classpath"/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+    <macrodef name="adnocservice_after_clean">
+        		
+        <sequential>
+            			
+            <echo level="info" message="Generating .classpath file for adnocservice"/>
+            			
+            <create_extension_classpath_file extname="adnocservice"/>
+            			
+            <adnocservice_clean_classpath_file/>
+            			
+            <delete failonerror="false" file="${ext.adnocservice.path}/resources-lang/touch_impexgen"/>
+            		
+        </sequential>
+        	
+    </macrodef>
+    	
+	
+    <!-- exclude impex files from localization -->
+     
+	
+    <patternset id="adnocservice.localization.pattern">
+        		
+        <patternset refid="localization.defaultpattern"/>
+        		
+        <exclude name="**/*.impex"/>
+        	
+    </patternset>
+    	
+
+
+</project>

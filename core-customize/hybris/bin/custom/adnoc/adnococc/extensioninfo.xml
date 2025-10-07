@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        	
+    
+    <extension abstractclassprefix="Generated" classprefix="Adnococc" description="adnococc extension" jaloLogicFree="true" managername="AdnococcManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="adnococc">
+                		
+        
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+                		
+        
+        <requires-extension name="commercewebservices"/>
+        <requires-extension name="b2bwebservicescommons"/>
+        <requires-extension name="b2bocc"/>
+        <requires-extension name="adnocfacades"/>
+        <requires-extension name="customerticketingocc"/>
+
+        <coremodule generated="true" manager="com.adnoc.jalo.AdnococcManager" packageroot="com.adnoc"/>
+                		
+        
+        	
+    
+    </extension>
+        
+
+</extensioninfo>

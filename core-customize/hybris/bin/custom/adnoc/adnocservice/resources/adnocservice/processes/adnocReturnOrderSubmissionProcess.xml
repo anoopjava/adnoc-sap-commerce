@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+ -->
+
+<process xmlns="http://www.hybris.de/xsd/processdefinition"
+         start="adnocReturnOrderSubmissionEmailToCsAgentAction" name="adnocReturnOrderSubmissionProcess"
+         processClass="de.hybris.platform.returns.model.ReturnProcessModel">
+
+    <action id="adnocReturnOrderSubmissionEmailToCsAgentAction" bean="adnocReturnOrderRequestSubmissionEmailAction">
+        <transition name="OK" to="adnocReturnOrderSubmissionEmailAction"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="adnocReturnOrderSubmissionEmailAction" bean="adnocReturnOrderSubmissionEmailAction">
+        <transition name="OK" to="sendEmail"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="sendEmail" bean="sendEmail">
+        <transition name="OK" to="removeSentEmail"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <action id="removeSentEmail" bean="removeSentEmail">
+        <transition name="OK" to="success"/>
+        <transition name="NOK" to="error"/>
+    </action>
+
+    <end id="error" state="ERROR">Something went wrong.</end>
+    <end id="failed" state="FAILED">Adnoc Return Order not placed.</end>
+    <end id="success" state="SUCCEEDED">Adnoc Return Order placed.</end>
+
+</process>

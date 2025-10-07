@@ -1,0 +1,290 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+
+$productCatalog = adnocProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/productCatalogs/adnocProductCatalog
+$thumbnail = thumbnail(code, $catalogVersion)
+$picture = picture(code, $catalogVersion)
+$thumbnails = thumbnails(code, $catalogVersion)
+$detail = detail(code, $catalogVersion)
+$normal = normal(code, $catalogVersion)
+$others = others(code, $catalogVersion)
+$medias = medias(code, $catalogVersion)
+$galleryImages = galleryImages(qualifier, $catalogVersion)
+
+
+INSERT_UPDATE Media; mediaFormat(qualifier); code[unique = true]                              ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator]; mime[default = 'image/jpeg']; $catalogVersion; folder(qualifier)[default = images]
+                   ; 1200Wx1200H           ; /1200Wx1200H/super98.jpg                         ; $siteResource/images/1200Wx1200H/super98.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/super95.jpg                         ; $siteResource/images/1200Wx1200H/super95.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/ePlus91.jpg                         ; $siteResource/images/1200Wx1200H/ePlus91.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/jA8.jpg                             ; $siteResource/images/1200Wx1200H/jA8.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/jA1.jpg                             ; $siteResource/images/1200Wx1200H/jA1.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/25LPG.jpg                           ; $siteResource/images/1200Wx1200H/25LPG.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/50LPG.jpg                           ; $siteResource/images/1200Wx1200H/50LPG.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/gearOil.jpg                         ; $siteResource/images/1200Wx1200H/gearOil.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/engineOil.jpg                       ; $siteResource/images/1200Wx1200H/engineOil.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/regularCarService.jpg               ; $siteResource/images/1200Wx1200H/regularCarService.jpg
+                   ; 1200Wx1200H           ; /1200Wx1200H/pollutionUnderControlInspection.jpg ; $siteResource/images/1200Wx1200H/pollutionUnderControlInspection.jpg
+
+                   ; 515Wx515H             ; /515Wx515H/super98.jpg                           ; $siteResource/images/515Wx515H/super98.jpg
+                   ; 515Wx515H             ; /515Wx515H/super95.jpg                           ; $siteResource/images/515Wx515H/super95.jpg
+                   ; 515Wx515H             ; /515Wx515H/ePlus91.jpg                           ; $siteResource/images/515Wx515H/ePlus91.jpg
+                   ; 515Wx515H             ; /515Wx515H/jA8.jpg                               ; $siteResource/images/515Wx515H/jA8.jpg
+                   ; 515Wx515H             ; /515Wx515H/jA1.jpg                               ; $siteResource/images/515Wx515H/jA1.jpg
+                   ; 515Wx515H             ; /515Wx515H/25LPG.jpg                             ; $siteResource/images/515Wx515H/25LPG.jpg
+                   ; 515Wx515H             ; /515Wx515H/50LPG.jpg                             ; $siteResource/images/515Wx515H/50LPG.jpg
+                   ; 515Wx515H             ; /515Wx515H/gearOil.jpg                           ; $siteResource/images/515Wx515H/gearOil.jpg
+                   ; 515Wx515H             ; /515Wx515H/engineOil.jpg                         ; $siteResource/images/515Wx515H/engineOil.jpg
+                   ; 515Wx515H             ; /515Wx515H/regularCarService.jpg                 ; $siteResource/images/515Wx515H/regularCarService.jpg
+                   ; 515Wx515H             ; /515Wx515H/pollutionUnderControlInspection.jpg   ; $siteResource/images/515Wx515H/pollutionUnderControlInspection.jpg
+
+                   ; 300Wx300H             ; /300Wx300H/super98.jpg                           ; $siteResource/images/300Wx300H/super98.jpg
+                   ; 300Wx300H             ; /300Wx300H/super95.jpg                           ; $siteResource/images/300Wx300H/super95.jpg
+                   ; 300Wx300H             ; /300Wx300H/ePlus91.jpg                           ; $siteResource/images/300Wx300H/ePlus91.jpg
+                   ; 300Wx300H             ; /300Wx300H/jA8.jpg                               ; $siteResource/images/300Wx300H/jA8.jpg
+                   ; 300Wx300H             ; /300Wx300H/jA1.jpg                               ; $siteResource/images/300Wx300H/jA1.jpg
+                   ; 300Wx300H             ; /300Wx300H/25LPG.jpg                             ; $siteResource/images/300Wx300H/25LPG.jpg
+                   ; 300Wx300H             ; /300Wx300H/50LPG.jpg                             ; $siteResource/images/300Wx300H/50LPG.jpg
+                   ; 300Wx300H             ; /300Wx300H/gearOil.jpg                           ; $siteResource/images/300Wx300H/gearOil.jpg
+                   ; 300Wx300H             ; /300Wx300H/engineOil.jpg                         ; $siteResource/images/300Wx300H/engineOil.jpg
+                   ; 300Wx300H             ; /300Wx300H/regularCarService.jpg                 ; $siteResource/images/300Wx300H/regularCarService.jpg
+                   ; 300Wx300H             ; /300Wx300H/pollutionUnderControlInspection.jpg   ; $siteResource/images/300Wx300H/pollutionUnderControlInspection.jpg
+
+                   ; 96Wx96H               ; /96Wx96H/super98.jpg                             ; $siteResource/images/96Wx96H/super98.jpg
+                   ; 96Wx96H               ; /96Wx96H/super95.jpg                             ; $siteResource/images/96Wx96H/super95.jpg
+                   ; 96Wx96H               ; /96Wx96H/ePlus91.jpg                             ; $siteResource/images/96Wx96H/ePlus91.jpg
+                   ; 96Wx96H               ; /96Wx96H/jA8.jpg                                 ; $siteResource/images/96Wx96H/jA8.jpg
+                   ; 96Wx96H               ; /96Wx96H/jA1.jpg                                 ; $siteResource/images/96Wx96H/jA1.jpg
+                   ; 96Wx96H               ; /96Wx96H/25LPG.jpg                               ; $siteResource/images/96Wx96H/25LPG.jpg
+                   ; 96Wx96H               ; /96Wx96H/50LPG.jpg                               ; $siteResource/images/96Wx96H/50LPG.jpg
+                   ; 96Wx96H               ; /96Wx96H/gearOil.jpg                             ; $siteResource/images/96Wx96H/gearOil.jpg
+                   ; 96Wx96H               ; /96Wx96H/engineOil.jpg                           ; $siteResource/images/96Wx96H/engineOil.jpg
+                   ; 96Wx96H               ; /96Wx96H/regularCarService.jpg                   ; $siteResource/images/96Wx96H/regularCarService.jpg
+                   ; 96Wx96H               ; /96Wx96H/pollutionUnderControlInspection.jpg     ; $siteResource/images/96Wx96H/pollutionUnderControlInspection.jpg
+
+
+                   ; 65Wx65H               ; /65Wx65H/super98.jpg                             ; $siteResource/images/65Wx65H/super98.jpg
+                   ; 65Wx65H               ; /65Wx65H/super95.jpg                             ; $siteResource/images/65Wx65H/super95.jpg
+                   ; 65Wx65H               ; /65Wx65H/ePlus91.jpg                             ; $siteResource/images/65Wx65H/ePlus91.jpg
+                   ; 65Wx65H               ; /65Wx65H/jA8.jpg                                 ; $siteResource/images/65Wx65H/jA8.jpg
+                   ; 65Wx65H               ; /65Wx65H/jA1.jpg                                 ; $siteResource/images/65Wx65H/jA1.jpg
+                   ; 65Wx65H               ; /65Wx65H/25LPG.jpg                               ; $siteResource/images/65Wx65H/25LPG.jpg
+                   ; 65Wx65H               ; /65Wx65H/50LPG.jpg                               ; $siteResource/images/65Wx65H/50LPG.jpg
+                   ; 65Wx65H               ; /65Wx65H/gearOil.jpg                             ; $siteResource/images/65Wx65H/gearOil.jpg
+                   ; 65Wx65H               ; /65Wx65H/engineOil.jpg                           ; $siteResource/images/65Wx65H/engineOil.jpg
+                   ; 65Wx65H               ; /65Wx65H/regularCarService.jpg                   ; $siteResource/images/65Wx65H/regularCarService.jpg
+                   ; 65Wx65H               ; /65Wx65H/pollutionUnderControlInspection.jpg     ; $siteResource/images/65Wx65H/pollutionUnderControlInspection.jpg
+
+                   ; 30Wx30H               ; /30Wx30H/super98.jpg                             ; $siteResource/images/30Wx30H/super98.jpg
+                   ; 30Wx30H               ; /30Wx30H/super95.jpg                             ; $siteResource/images/30Wx30H/super95.jpg
+                   ; 30Wx30H               ; /30Wx30H/ePlus91.jpg                             ; $siteResource/images/30Wx30H/ePlus91.jpg
+                   ; 30Wx30H               ; /30Wx30H/jA8.jpg                                 ; $siteResource/images/30Wx30H/jA8.jpg
+                   ; 30Wx30H               ; /30Wx30H/jA1.jpg                                 ; $siteResource/images/30Wx30H/jA1.jpg
+                   ; 30Wx30H               ; /30Wx30H/25LPG.jpg                               ; $siteResource/images/30Wx30H/25LPG.jpg
+                   ; 30Wx30H               ; /30Wx30H/50LPG.jpg                               ; $siteResource/images/30Wx30H/50LPG.jpg
+                   ; 30Wx30H               ; /30Wx30H/gearOil.jpg                             ; $siteResource/images/30Wx30H/gearOil.jpg
+                   ; 30Wx30H               ; /30Wx30H/engineOil.jpg                           ; $siteResource/images/30Wx30H/engineOil.jpg
+                   ; 30Wx30H               ; /30Wx30H/regularCarService.jpg                   ; $siteResource/images/30Wx30H/regularCarService.jpg
+                   ; 30Wx30H               ; /30Wx30H/pollutionUnderControlInspection.jpg     ; $siteResource/images/30Wx30H/pollutionUnderControlInspection.jpg
+#LPG
+                   ; 1200Wx1200H           ; /1200Wx1200H/120009022753.jpg                    ; $siteResource/images/1200Wx1200H/120009022753.jpg
+                   ; 515Wx515H             ; /515Wx515H/120009022753.jpg                      ; $siteResource/images/515Wx515H/120009022753.jpg
+                   ; 300Wx300H             ; /300Wx300H/120009022753.jpg                      ; $siteResource/images/300Wx300H/120009022753.jpg
+                   ; 65Wx65H               ; /65Wx65H/120009022753.jpg                        ; $siteResource/images/65Wx65H/120009022753.jpg
+                   ; 96Wx96H               ; /96Wx96H/120009022753.jpg                        ; $siteResource/images/96Wx96H/120009022753.jpg
+                   ; 30Wx30H               ; /30Wx30H/120009022753.jpg                        ; $siteResource/images/30Wx30H/120009022753.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/120009022754.jpg                    ; $siteResource/images/1200Wx1200H/120009022754.jpg
+                   ; 515Wx515H             ; /515Wx515H/120009022754.jpg                      ; $siteResource/images/515Wx515H/120009022754.jpg
+                   ; 300Wx300H             ; /300Wx300H/120009022754.jpg                      ; $siteResource/images/300Wx300H/120009022754.jpg
+                   ; 65Wx65H               ; /65Wx65H/120009022754.jpg                        ; $siteResource/images/65Wx65H/120009022754.jpg
+                   ; 96Wx96H               ; /96Wx96H/120009022754.jpg                        ; $siteResource/images/96Wx96H/120009022754.jpg
+                   ; 30Wx30H               ; /30Wx30H/120009022754.jpg                        ; $siteResource/images/30Wx30H/120009022754.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/200009000434.jpg                    ; $siteResource/images/1200Wx1200H/200009000434.jpg
+                   ; 515Wx515H             ; /515Wx515H/200009000434.jpg                      ; $siteResource/images/515Wx515H/200009000434.jpg
+                   ; 300Wx300H             ; /300Wx300H/200009000434.jpg                      ; $siteResource/images/300Wx300H/200009000434.jpg
+                   ; 65Wx65H               ; /65Wx65H/200009000434.jpg                        ; $siteResource/images/65Wx65H/200009000434.jpg
+                   ; 96Wx96H               ; /96Wx96H/200009000434.jpg                        ; $siteResource/images/96Wx96H/200009000434.jpg
+                   ; 30Wx30H               ; /30Wx30H/200009000434.jpg                        ; $siteResource/images/30Wx30H/200009000434.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/200009000577.jpg                    ; $siteResource/images/1200Wx1200H/200009000577.jpg
+                   ; 515Wx515H             ; /515Wx515H/200009000577.jpg                      ; $siteResource/images/515Wx515H/200009000577.jpg
+                   ; 300Wx300H             ; /300Wx300H/200009000577.jpg                      ; $siteResource/images/300Wx300H/200009000577.jpg
+                   ; 65Wx65H               ; /65Wx65H/200009000577.jpg                        ; $siteResource/images/65Wx65H/200009000577.jpg
+                   ; 96Wx96H               ; /96Wx96H/200009000577.jpg                        ; $siteResource/images/96Wx96H/200009000577.jpg
+                   ; 30Wx30H               ; /30Wx30H/200009000577.jpg                        ; $siteResource/images/30Wx30H/200009000577.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/200009000578.jpg                    ; $siteResource/images/1200Wx1200H/200009000578.jpg
+                   ; 515Wx515H             ; /515Wx515H/200009000578.jpg                      ; $siteResource/images/515Wx515H/200009000578.jpg
+                   ; 300Wx300H             ; /300Wx300H/200009000578.jpg                      ; $siteResource/images/300Wx300H/200009000578.jpg
+                   ; 65Wx65H               ; /65Wx65H/200009000578.jpg                        ; $siteResource/images/65Wx65H/200009000578.jpg
+                   ; 96Wx96H               ; /96Wx96H/200009000578.jpg                        ; $siteResource/images/96Wx96H/200009000578.jpg
+                   ; 30Wx30H               ; /30Wx30H/200009000578.jpg                        ; $siteResource/images/30Wx30H/200009000578.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/43.jpg                              ; $siteResource/images/1200Wx1200H/43.jpg
+                   ; 515Wx515H             ; /515Wx515H/43.jpg                                ; $siteResource/images/515Wx515H/43.jpg
+                   ; 300Wx300H             ; /300Wx300H/43.jpg                                ; $siteResource/images/300Wx300H/43.jpg
+                   ; 65Wx65H               ; /65Wx65H/43.jpg                                  ; $siteResource/images/65Wx65H/43.jpg
+                   ; 96Wx96H               ; /96Wx96H/43.jpg                                  ; $siteResource/images/96Wx96H/43.jpg
+                   ; 30Wx30H               ; /30Wx30H/43.jpg                                  ; $siteResource/images/30Wx30H/43.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/44.jpg                              ; $siteResource/images/1200Wx1200H/44.jpg
+                   ; 515Wx515H             ; /515Wx515H/44.jpg                                ; $siteResource/images/515Wx515H/44.jpg
+                   ; 300Wx300H             ; /300Wx300H/44.jpg                                ; $siteResource/images/300Wx300H/44.jpg
+                   ; 65Wx65H               ; /65Wx65H/44.jpg                                  ; $siteResource/images/65Wx65H/44.jpg
+                   ; 96Wx96H               ; /96Wx96H/44.jpg                                  ; $siteResource/images/96Wx96H/44.jpg
+                   ; 30Wx30H               ; /30Wx30H/44.jpg                                  ; $siteResource/images/30Wx30H/44.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/733.jpg                             ; $siteResource/images/1200Wx1200H/733.jpg
+                   ; 515Wx515H             ; /515Wx515H/733.jpg                               ; $siteResource/images/515Wx515H/733.jpg
+                   ; 300Wx300H             ; /300Wx300H/733.jpg                               ; $siteResource/images/300Wx300H/733.jpg
+                   ; 65Wx65H               ; /65Wx65H/733.jpg                                 ; $siteResource/images/65Wx65H/733.jpg
+                   ; 96Wx96H               ; /96Wx96H/733.jpg                                 ; $siteResource/images/96Wx96H/733.jpg
+                   ; 30Wx30H               ; /30Wx30H/733.jpg                                 ; $siteResource/images/30Wx30H/733.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/787.jpg                             ; $siteResource/images/1200Wx1200H/787.jpg
+                   ; 515Wx515H             ; /515Wx515H/787.jpg                               ; $siteResource/images/515Wx515H/787.jpg
+                   ; 300Wx300H             ; /300Wx300H/787.jpg                               ; $siteResource/images/300Wx300H/787.jpg
+                   ; 65Wx65H               ; /65Wx65H/787.jpg                                 ; $siteResource/images/65Wx65H/787.jpg
+                   ; 96Wx96H               ; /96Wx96H/787.jpg                                 ; $siteResource/images/96Wx96H/787.jpg
+                   ; 30Wx30H               ; /30Wx30H/787.jpg                                 ; $siteResource/images/30Wx30H/787.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/842.jpg                             ; $siteResource/images/1200Wx1200H/842.jpg
+                   ; 515Wx515H             ; /515Wx515H/842.jpg                               ; $siteResource/images/515Wx515H/842.jpg
+                   ; 300Wx300H             ; /300Wx300H/842.jpg                               ; $siteResource/images/300Wx300H/842.jpg
+                   ; 65Wx65H               ; /65Wx65H/842.jpg                                 ; $siteResource/images/65Wx65H/842.jpg
+                   ; 96Wx96H               ; /96Wx96H/842.jpg                                 ; $siteResource/images/96Wx96H/842.jpg
+                   ; 30Wx30H               ; /30Wx30H/842.jpg                                 ; $siteResource/images/30Wx30H/842.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/843.jpg                             ; $siteResource/images/1200Wx1200H/843.jpg
+                   ; 515Wx515H             ; /515Wx515H/843.jpg                               ; $siteResource/images/515Wx515H/843.jpg
+                   ; 300Wx300H             ; /300Wx300H/843.jpg                               ; $siteResource/images/300Wx300H/843.jpg
+                   ; 65Wx65H               ; /65Wx65H/843.jpg                                 ; $siteResource/images/65Wx65H/843.jpg
+                   ; 96Wx96H               ; /96Wx96H/843.jpg                                 ; $siteResource/images/96Wx96H/843.jpg
+                   ; 30Wx30H               ; /30Wx30H/843.jpg                                 ; $siteResource/images/30Wx30H/843.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/42.jpg                              ; $siteResource/images/1200Wx1200H/42.jpg
+                   ; 515Wx515H             ; /515Wx515H/42.jpg                                ; $siteResource/images/515Wx515H/42.jpg
+                   ; 300Wx300H             ; /300Wx300H/42.jpg                                ; $siteResource/images/300Wx300H/42.jpg
+                   ; 65Wx65H               ; /65Wx65H/42.jpg                                  ; $siteResource/images/65Wx65H/42.jpg
+                   ; 96Wx96H               ; /96Wx96H/42.jpg                                  ; $siteResource/images/96Wx96H/42.jpg
+                   ; 30Wx30H               ; /30Wx30H/42.jpg                                  ; $siteResource/images/30Wx30H/42.jpg
+
+#Fuel
+                   ; 1200Wx1200H           ; /1200Wx1200H/13.jpg                              ; $siteResource/images/1200Wx1200H/13.jpg
+                   ; 515Wx515H             ; /515Wx515H/13.jpg                                ; $siteResource/images/515Wx515H/13.jpg
+                   ; 300Wx300H             ; /300Wx300H/13.jpg                                ; $siteResource/images/300Wx300H/13.jpg
+                   ; 65Wx65H               ; /65Wx65H/13.jpg                                  ; $siteResource/images/65Wx65H/13.jpg
+                   ; 96Wx96H               ; /96Wx96H/13.jpg                                  ; $siteResource/images/96Wx96H/13.jpg
+                   ; 30Wx30H               ; /30Wx30H/13.jpg                                  ; $siteResource/images/30Wx30H/13.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/14.jpg                              ; $siteResource/images/1200Wx1200H/14.jpg
+                   ; 515Wx515H             ; /515Wx515H/14.jpg                                ; $siteResource/images/515Wx515H/14.jpg
+                   ; 300Wx300H             ; /300Wx300H/14.jpg                                ; $siteResource/images/300Wx300H/14.jpg
+                   ; 65Wx65H               ; /65Wx65H/14.jpg                                  ; $siteResource/images/65Wx65H/14.jpg
+                   ; 96Wx96H               ; /96Wx96H/14.jpg                                  ; $siteResource/images/96Wx96H/14.jpg
+                   ; 30Wx30H               ; /30Wx30H/14.jpg                                  ; $siteResource/images/30Wx30H/14.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/15.jpg                              ; $siteResource/images/1200Wx1200H/15.jpg
+                   ; 515Wx515H             ; /515Wx515H/15.jpg                                ; $siteResource/images/515Wx515H/15.jpg
+                   ; 300Wx300H             ; /300Wx300H/15.jpg                                ; $siteResource/images/300Wx300H/15.jpg
+                   ; 65Wx65H               ; /65Wx65H/15.jpg                                  ; $siteResource/images/65Wx65H/15.jpg
+                   ; 96Wx96H               ; /96Wx96H/15.jpg                                  ; $siteResource/images/96Wx96H/15.jpg
+                   ; 30Wx30H               ; /30Wx30H/15.jpg                                  ; $siteResource/images/30Wx30H/15.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/21.jpg                              ; $siteResource/images/1200Wx1200H/21.jpg
+                   ; 515Wx515H             ; /515Wx515H/21.jpg                                ; $siteResource/images/515Wx515H/21.jpg
+                   ; 300Wx300H             ; /300Wx300H/21.jpg                                ; $siteResource/images/300Wx300H/21.jpg
+                   ; 65Wx65H               ; /65Wx65H/21.jpg                                  ; $siteResource/images/65Wx65H/21.jpg
+                   ; 96Wx96H               ; /96Wx96H/21.jpg                                  ; $siteResource/images/96Wx96H/21.jpg
+                   ; 30Wx30H               ; /30Wx30H/21.jpg                                  ; $siteResource/images/30Wx30H/21.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/26.jpg                              ; $siteResource/images/1200Wx1200H/26.jpg
+                   ; 515Wx515H             ; /515Wx515H/26.jpg                                ; $siteResource/images/515Wx515H/26.jpg
+                   ; 300Wx300H             ; /300Wx300H/26.jpg                                ; $siteResource/images/300Wx300H/26.jpg
+                   ; 65Wx65H               ; /65Wx65H/26.jpg                                  ; $siteResource/images/65Wx65H/26.jpg
+                   ; 96Wx96H               ; /96Wx96H/26.jpg                                  ; $siteResource/images/96Wx96H/26.jpg
+                   ; 30Wx30H               ; /30Wx30H/26.jpg                                  ; $siteResource/images/30Wx30H/26.jpg
+
+                   ; 1200Wx1200H           ; /1200Wx1200H/999.jpg                             ; $siteResource/images/1200Wx1200H/999.jpg
+                   ; 515Wx515H             ; /515Wx515H/999.jpg                               ; $siteResource/images/515Wx515H/999.jpg
+                   ; 300Wx300H             ; /300Wx300H/999.jpg                               ; $siteResource/images/300Wx300H/999.jpg
+                   ; 65Wx65H               ; /65Wx65H/999.jpg                                 ; $siteResource/images/65Wx65H/999.jpg
+                   ; 96Wx96H               ; /96Wx96H/999.jpg                                 ; $siteResource/images/96Wx96H/999.jpg
+                   ; 30Wx30H               ; /30Wx30H/999.jpg                                 ; $siteResource/images/30Wx30H/999.jpg
+
+INSERT_UPDATE MediaContainer; qualifier[unique = true]        ; $medias; $catalogVersion
+                            ; super98                         ; /1200Wx1200H/super98.jpg,/515Wx515H/super98.jpg,/300Wx300H/super98.jpg,/65Wx65H/super98.jpg,/96Wx96H/super98.jpg,/30Wx30H/super98.jpg
+                            ; super95                         ; /1200Wx1200H/super95.jpg,/515Wx515H/super95.jpg,/300Wx300H/super95.jpg ,/65Wx65H/super95.jpg ,/96Wx96H/super95.jpg,/30Wx30H/super95.jpg
+                            ; ePlus91                         ; /1200Wx1200H/ePlus91.jpg,/515Wx515H/ePlus91.jpg,/300Wx300H/ePlus91.jpg,/65Wx65H/ePlus91.jpg,/96Wx96H/ePlus91.jpg,/30Wx30H/ePlus91.jpg
+                            ; jA8                             ; /1200Wx1200H/jA8.jpg,/515Wx515H/jA8.jpg,/300Wx300H/jA8.jpg ,/65Wx65H/jA8.jpg ,/96Wx96H/jA8.jpg,/30Wx30H/jA8.jpg
+                            ; jA1                             ; /1200Wx1200H/jA1.jpg,/515Wx515H/jA1.jpg,/300Wx300H/jA1.jpg,/65Wx65H/jA1.jpg,/96Wx96H/jA1.jpg,/30Wx30H/jA1.jpg
+
+                            ; 25LPG                           ; /1200Wx1200H/25LPG.jpg,/515Wx515H/25LPG.jpg,/300Wx300H/25LPG.jpg ,/65Wx65H/25LPG.jpg ,/96Wx96H/25LPG.jpg,/30Wx30H/25LPG.jpg
+                            ; 50LPG                           ; /1200Wx1200H/50LPG.jpg,/515Wx515H/50LPG.jpg,/300Wx300H/50LPG.jpg,/65Wx65H/50LPG.jpg,/96Wx96H/50LPG.jpg,/30Wx30H/50LPG.jpg
+
+                            ; gearOil                         ; /1200Wx1200H/gearOil.jpg,/515Wx515H/gearOil.jpg,/300Wx300H/gearOil.jpg ,/65Wx65H/gearOil.jpg ,/96Wx96H/gearOil.jpg
+                            ; engineOil                       ; /1200Wx1200H/engineOil.jpg,/515Wx515H/engineOil.jpg,/300Wx300H/engineOil.jpg,/65Wx65H/engineOil.jpg,/96Wx96H/engineOil.jpg
+
+                            ; regularCarService               ; /1200Wx1200H/regularCarService.jpg,/515Wx515H/regularCarService.jpg,/300Wx300H/regularCarService.jpg ,/65Wx65H/regularCarService.jpg ,/96Wx96H/regularCarService.jpg,/30Wx30H/pollutionUnderControlInspection.jpg
+                            ; pollutionUnderControlInspection ; /1200Wx1200H/pollutionUnderControlInspection.jpg,/515Wx515H/pollutionUnderControlInspection.jpg,/300Wx300H/pollutionUnderControlInspection.jpg ,/65Wx65H/pollutionUnderControlInspection.jpg ,/96Wx96H/pollutionUnderControlInspection.jpg
+
+#LPG
+                            ; 120009022753                    ; /1200Wx1200H/120009022753.jpg,/515Wx515H/120009022753.jpg,/300Wx300H/120009022753.jpg,/65Wx65H/120009022753.jpg,/96Wx96H/120009022753.jpg,/30Wx30H/120009022753.jpg
+                            ; 120009022754                    ; /1200Wx1200H/120009022754.jpg,/515Wx515H/120009022754.jpg,/300Wx300H/120009022754.jpg,/65Wx65H/120009022754.jpg,/96Wx96H/120009022754.jpg,/30Wx30H/120009022754.jpg
+                            ; 200009000434                    ; /1200Wx1200H/200009000434.jpg,/515Wx515H/200009000434.jpg,/300Wx300H/200009000434.jpg,/65Wx65H/200009000434.jpg,/96Wx96H/200009000434.jpg,/30Wx30H/200009000434.jpg
+                            ; 200009000577                    ; /1200Wx1200H/200009000577.jpg,/515Wx515H/200009000577.jpg,/300Wx300H/200009000577.jpg,/65Wx65H/200009000577.jpg,/96Wx96H/200009000577.jpg,/30Wx30H/200009000577.jpg
+                            ; 200009000578                    ; /1200Wx1200H/200009000578.jpg,/515Wx515H/200009000578.jpg,/300Wx300H/200009000578.jpg,/65Wx65H/200009000578.jpg,/96Wx96H/200009000578.jpg,/30Wx30H/200009000578.jpg
+                            ; 43                              ; /1200Wx1200H/43.jpg,/515Wx515H/43.jpg,/300Wx300H/43.jpg,/65Wx65H/43.jpg,/96Wx96H/43.jpg,/30Wx30H/43.jpg
+                            ; 42                              ; /1200Wx1200H/42.jpg,/515Wx515H/42.jpg,/300Wx300H/42.jpg,/65Wx65H/42.jpg,/96Wx96H/42.jpg,/30Wx30H/42.jpg
+                            ; 44                              ; /1200Wx1200H/44.jpg,/515Wx515H/44.jpg,/300Wx300H/44.jpg,/65Wx65H/44.jpg,/96Wx96H/44.jpg,/30Wx30H/44.jpg
+                            ; 733                             ; /1200Wx1200H/733.jpg,/515Wx515H/733.jpg,/300Wx300H/733.jpg,/65Wx65H/733.jpg,/96Wx96H/733.jpg,/30Wx30H/733.jpg
+                            ; 787                             ; /1200Wx1200H/787.jpg,/515Wx515H/787.jpg,/300Wx300H/787.jpg,/65Wx65H/787.jpg,/96Wx96H/787.jpg,/30Wx30H/787.jpg
+                            ; 842                             ; /1200Wx1200H/842.jpg,/515Wx515H/842.jpg,/300Wx300H/842.jpg,/65Wx65H/842.jpg,/96Wx96H/842.jpg,/30Wx30H/842.jpg
+                            ; 843                             ; /1200Wx1200H/843.jpg,/515Wx515H/843.jpg,/300Wx300H/843.jpg,/65Wx65H/843.jpg,/96Wx96H/843.jpg,/30Wx30H/843.jpg
+
+                            ; 13                              ; /1200Wx1200H/13.jpg,/515Wx515H/13.jpg,/300Wx300H/13.jpg,/65Wx65H/13.jpg,/96Wx96H/13.jpg,/30Wx30H/13.jpg
+                            ; 14                              ; /1200Wx1200H/14.jpg,/515Wx515H/14.jpg,/300Wx300H/14.jpg,/65Wx65H/14.jpg,/96Wx96H/14.jpg,/30Wx30H/14.jpg
+                            ; 15                              ; /1200Wx1200H/15.jpg,/515Wx515H/15.jpg,/300Wx300H/15.jpg,/65Wx65H/15.jpg,/96Wx96H/15.jpg,/30Wx30H/15.jpg
+                            ; 21                              ; /1200Wx1200H/21.jpg,/515Wx515H/21.jpg,/300Wx300H/21.jpg,/65Wx65H/21.jpg,/96Wx96H/21.jpg,/30Wx30H/21.jpg
+                            ; 26                              ; /1200Wx1200H/26.jpg,/515Wx515H/26.jpg,/300Wx300H/26.jpg,/65Wx65H/26.jpg,/96Wx96H/26.jpg,/30Wx30H/26.jpg
+                            ; 999                             ; /1200Wx1200H/999.jpg,/515Wx515H/999.jpg,/300Wx300H/999.jpg,/65Wx65H/999.jpg,/96Wx96H/999.jpg,/30Wx30H/999.jpg
+
+
+INSERT_UPDATE Product; code[unique = true]             ; $picture                                       ; $thumbnail                                     ; $detail                                          ; $others                                                                                                                                                                                 ; $normal                                        ; $thumbnails                                  ; $galleryImages; $catalogVersion
+                     ; 10013                           ; /300Wx300H/jA8.jpg                             ; /515Wx515H/jA8.jpg                             ; /1200Wx1200H/jA8.jpg                             ; /300Wx300H/jA8.jpg,/515Wx515H/jA8.jpg,/96Wx96H/jA8.jpg ,/30Wx30H/jA8.jpg                                                                                                                ; /300Wx300H/jA8.jpg                             ; /65Wx65H/jA8.jpg                             ; jA8
+                     ; 10015                           ; /300Wx300H/jA1.jpg                             ; /515Wx515H/jA1.jpg                             ; /1200Wx1200H/jA1.jpg                             ; /300Wx300H/jA1.jpg,/515Wx515H/jA1.jpg,/96Wx96H/jA1.jpg  ,/30Wx30H/jA1.jpg                                                                                                               ; /300Wx300H/jA1.jpg                             ; /65Wx65H/jA1.jpg                             ; jA1
+                     ; 170013000092                    ; /300Wx300H/gearOil.jpg                         ; /515Wx515H/gearOil.jpg                         ; /1200Wx1200H/gearOil.jpg                         ; /300Wx300H/gearOil.jpg,/515Wx515H/gearOil.jpg,/96Wx96H/gearOil.jpg ,/30Wx30H/gearOil.jpg                                                                                                ; /300Wx300H/gearOil.jpg                         ; /65Wx65H/gearOil.jpg                         ; gearOil
+                     ; 33                              ; /300Wx300H/engineOil.jpg                       ; /515Wx515H/engineOil.jpg                       ; /1200Wx1200H/engineOil.jpg                       ; /300Wx300H/engineOil.jpg,/515Wx515H/engineOil.jpg,/96Wx96H/engineOil.jpg  ,/30Wx30H/engineOil.jpg                                                                                       ; /300Wx300H/engineOil.jpg                       ; /65Wx65H/engineOil.jpg                       ; engineOil
+                     ; regularCarService               ; /300Wx300H/regularCarService.jpg               ; /515Wx515H/regularCarService.jpg               ; /1200Wx1200H/regularCarService.jpg               ; /300Wx300H/regularCarService.jpg,/515Wx515H/regularCarService.jpg,/96Wx96H/regularCarService.jpg ,/30Wx30H/regularCarService.jpg                                                        ; /300Wx300H/regularCarService.jpg               ; /65Wx65H/regularCarService.jpg               ; regularCarService
+                     ; pollutionUnderControlInspection ; /300Wx300H/pollutionUnderControlInspection.jpg ; /515Wx515H/pollutionUnderControlInspection.jpg ; /1200Wx1200H/pollutionUnderControlInspection.jpg ; /300Wx300H/pollutionUnderControlInspection.jpg,/515Wx515H/pollutionUnderControlInspection.jpg,/96Wx96H/pollutionUnderControlInspection.jpg,/30Wx30H/pollutionUnderControlInspection.jpg ; /300Wx300H/pollutionUnderControlInspection.jpg ; /65Wx65H/pollutionUnderControlInspection.jpg ; pollutionUnderControlInspection
+
+#LPG
+                     ; 42                              ; /1200Wx1200H/42.jpg                            ; /515Wx515H/42.jpg                              ; /300Wx300H/42.jpg                                ; /65Wx65H/42.jpg,/96Wx96H/42.jpg,/30Wx30H/42.jpg                                                                                                                                          ; /1200Wx1200H/42.jpg                           ; /65Wx65H/42.jpg                              ; 42            ;
+                     ; 43                              ; /1200Wx1200H/43.jpg                            ; /515Wx515H/43.jpg                              ; /300Wx300H/43.jpg                                ; /65Wx65H/43.jpg,/96Wx96H/43.jpg,/30Wx30H/43.jpg                                                                                                                                         ; /1200Wx1200H/43.jpg                            ; /65Wx65H/43.jpg                              ; 43            ;
+                     ; 44                              ; /1200Wx1200H/44.jpg                            ; /515Wx515H/44.jpg                              ; /300Wx300H/44.jpg                                ; /65Wx65H/44.jpg,/96Wx96H/44.jpg,/30Wx30H/44.jpg                                                                                                                                         ; /1200Wx1200H/44.jpg                            ; /65Wx65H/44.jpg                              ; 44            ;
+                     ; 733                             ; /1200Wx1200H/733.jpg                           ; /515Wx515H/733.jpg                             ; /300Wx300H/733.jpg                               ; /65Wx65H/733.jpg,/96Wx96H/733.jpg,/30Wx30H/733.jpg                                                                                                                                      ; /1200Wx1200H/733.jpg                           ; /65Wx65H/733.jpg                             ; 733           ;
+                     ; 787                             ; /1200Wx1200H/787.jpg                           ; /515Wx515H/787.jpg                             ; /300Wx300H/787.jpg                               ; /65Wx65H/787.jpg,/96Wx96H/787.jpg,/30Wx30H/787.jpg                                                                                                                                      ; /1200Wx1200H/787.jpg                           ; /65Wx65H/787.jpg                             ; 787           ;
+                     ; 842                             ; /1200Wx1200H/842.jpg                           ; /515Wx515H/842.jpg                             ; /300Wx300H/842.jpg                               ; /65Wx65H/842.jpg,/96Wx96H/842.jpg,/30Wx30H/842.jpg                                                                                                                                      ; /1200Wx1200H/842.jpg                           ; /65Wx65H/842.jpg                             ; 842           ;
+                     ; 843                             ; /1200Wx1200H/843.jpg                           ; /515Wx515H/843.jpg                             ; /300Wx300H/843.jpg                               ; /65Wx65H/843.jpg,/96Wx96H/843.jpg,/30Wx30H/843.jpg                                                                                                                                      ; /1200Wx1200H/843.jpg                           ; /65Wx65H/843.jpg                             ; 843           ;
+                     ; 120009022753                    ; /1200Wx1200H/120009022753.jpg                  ; /515Wx515H/120009022753.jpg                    ; /300Wx300H/120009022753.jpg                      ; /65Wx65H/120009022753.jpg,/96Wx96H/120009022753.jpg,/30Wx30H/120009022753.jpg                                                                                                           ; /1200Wx1200H/120009022753.jpg                  ; /65Wx65H/120009022753.jpg                    ; 120009022753  ;
+                     ; 120009022754                    ; /1200Wx1200H/120009022754.jpg                  ; /515Wx515H/120009022754.jpg                    ; /300Wx300H/120009022754.jpg                      ; /65Wx65H/120009022754.jpg,/96Wx96H/120009022754.jpg,/30Wx30H/120009022754.jpg                                                                                                           ; /1200Wx1200H/120009022754.jpg                  ; /65Wx65H/120009022754.jpg                    ; 120009022754  ;
+                     ; 200009000434                    ; /1200Wx1200H/200009000434.jpg                  ; /515Wx515H/200009000434.jpg                    ; /300Wx300H/200009000434.jpg                      ; /65Wx65H/200009000434.jpg,/96Wx96H/200009000434.jpg,/30Wx30H/200009000434.jpg                                                                                                           ; /1200Wx1200H/200009000434.jpg                  ; /65Wx65H/200009000434.jpg                    ; 200009000434  ;
+                     ; 200009000577                    ; /1200Wx1200H/200009000577.jpg                  ; /515Wx515H/200009000577.jpg                    ; /300Wx300H/200009000577.jpg                      ; /65Wx65H/200009000577.jpg,/96Wx96H/200009000577.jpg,/30Wx30H/200009000577.jpg                                                                                                           ; /1200Wx1200H/200009000577.jpg                  ; /65Wx65H/200009000577.jpg                    ; 200009000577  ;
+                     ; 200009000578                    ; /1200Wx1200H/200009000578.jpg                  ; /515Wx515H/200009000578.jpg                    ; /300Wx300H/200009000578.jpg                      ; /65Wx65H/200009000578.jpg,/96Wx96H/200009000578.jpg,/30Wx30H/200009000578.jpg                                                                                                           ; /1200Wx1200H/200009000578.jpg                  ; /65Wx65H/200009000578.jpg                    ; 200009000578  ;
+#Fuel
+                     ; 13                              ; /1200Wx1200H/13.jpg                            ; /515Wx515H/13.jpg                              ; /300Wx300H/13.jpg                                ; /65Wx65H/13.jpg,/96Wx96H/13.jpg,/30Wx30H/13.jpg                                                                                                                                         ; /1200Wx1200H/13.jpg                            ; /65Wx65H/13.jpg                              ; 13
+                     ; 14                              ; /1200Wx1200H/14.jpg                            ; /515Wx515H/14.jpg                              ; /300Wx300H/14.jpg                                ; /65Wx65H/14.jpg,/96Wx96H/14.jpg,/30Wx30H/14.jpg                                                                                                                                         ; /1200Wx1200H/14.jpg                            ; /65Wx65H/14.jpg                              ; 14
+                     ; 15                              ; /1200Wx1200H/15.jpg                            ; /515Wx515H/15.jpg                              ; /300Wx300H/15.jpg                                ; /65Wx65H/15.jpg,/96Wx96H/15.jpg,/30Wx30H/15.jpg                                                                                                                                         ; /1200Wx1200H/15.jpg                            ; /65Wx65H/15.jpg                              ; 15
+                     ; 21                              ; /1200Wx1200H/21.jpg                            ; /515Wx515H/21.jpg                              ; /300Wx300H/21.jpg                                ; /65Wx65H/21.jpg,/96Wx96H/21.jpg,/30Wx30H/21.jpg                                                                                                                                         ; /1200Wx1200H/21.jpg                            ; /65Wx65H/21.jpg                              ; 21
+                     ; 26                              ; /1200Wx1200H/26.jpg                            ; /515Wx515H/26.jpg                              ; /300Wx300H/26.jpg                                ; /65Wx65H/26.jpg,/96Wx96H/26.jpg,/30Wx30H/26.jpg                                                                                                                                         ; /1200Wx1200H/26.jpg                            ; /65Wx65H/26.jpg                              ; 26
+                     ; 999                             ; /1200Wx1200H/999.jpg                           ; /515Wx515H/999.jpg                             ; /300Wx300H/999.jpg                               ; /65Wx65H/999.jpg,/96Wx96H/999.jpg,/30Wx30H/999.jpg                                                                                                                                      ; /1200Wx1200H/999.jpg                           ; /65Wx65H/999.jpg                             ; 999
+
+
+
+
+
+
+

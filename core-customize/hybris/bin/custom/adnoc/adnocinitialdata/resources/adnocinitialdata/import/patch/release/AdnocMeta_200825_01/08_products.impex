@@ -1,0 +1,23 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products into Adnoc Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog = adnocProductCatalog
+$productCatalogName = Adnoc Product Catalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = $productCatalog:Staged]
+$supercategories = supercategories(code, $catalogVersion)
+$baseProduct = baseProduct(code, $catalogVersion)
+$approved = approvalstatus(code)[default = 'approved']
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/accountsummary
+
+# Language
+$lang = en
+
+INSERT_UPDATE Product; code[unique = true]; $catalogVersion; $supercategories; unit(code); division; minOrderQuantity; maxOrderQuantity; $approved
+                     ; 999                ;                ; B02             ; L         ; 21      ; 1               ;                 ; ; B5:DocumentMedia
+                     ; 26                 ;                ; B02             ; L         ; 21      ; 1               ;                 ; ; GasOil:DocumentMedia
+                     ; 21                 ;                ; B03             ; L         ; 21      ; 1               ;                 ; ;
+

@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.product.ProductWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="purchasable,stock,name,baseProduct,availableForPickup,code,url,price,unit,minOrderQuantity,maxOrderQuantity"/>
+                <entry key="DEFAULT"
+                       value="BASIC,categories(BASIC),stock(DEFAULT),firstVariantCode,firstVariantImage,volumePricesFlag,division,documentMediaCode"/>
+                <entry key="FULL"
+                       value="DEFAULT,stock(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="orderEntryWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.OrderEntryWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="entryNumber,quantity,deliveryPointOfService,configurationInfos,statusSummaryList,entryCode,namedDeliveryDate,unit,incoTerms,sapLineItemStatus,quantityShipped,discounts,tax"/>
+                <entry key="DEFAULT"
+                       value="BASIC,totalPrice(DEFAULT),product(DEFAULT),cancellableQuantity,cancelledItemsPrice(DEFAULT),returnableQuantity,returnedItemsPrice(DEFAULT),deliveryAddress(DEFAULT),division,quantityPending,quantityShipped,isCancellable,quantityReturned,deliveryPointOfService(DEFAULT)"/>
+                <entry key="FULL"
+                       value="DEFAULT,product(FULL),deliveryPointOfService(FULL),deliveryAddress(FULL),updateable,deliveryMode(FULL),basePrice(FULL),totalPrice(FULL),configurationInfos(FULL),cancelledItemsPrice(FULL),returnedItemsPrice(FULL),arrivalSlots"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="ticketWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.customerticketingocc.dto.ticket.TicketWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="id,ticketCategory,createdAt,modifiedAt,status,csTicketCategoryMapId,requestFor,subCategory,crmCaseId"/>
+                <entry key="DEFAULT"
+                       value="BASIC,ticketEvents(DEFAULT),associatedTo,availableStatusTransitions"/>
+                <entry key="FULL"
+                       value="DEFAULT,availableStatusTransitions,customerId"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="ticketListWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.customerticketingocc.dto.ticket.TicketListWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="tickets,pagination,sorts,crmCaseId"/>
+                <entry key="DEFAULT"
+                       value="tickets(DEFAULT),pagination(DEFAULT),sorts(DEFAULT),crmCaseId"/>
+                <entry key="FULL"
+                       value="tickets(FULL),pagination(FULL),sorts(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="unitWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.product.data.UnitWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,name"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.user.data.IncoTermsWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,name"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="active,uid,name,parentOrgUnit, partnerFunction"/>
+                <entry key="DEFAULT"
+                       value="BASIC,addresses(DEFAULT),approvers(DEFAULT),managers(DEFAULT),administrators(DEFAULT),customers(DEFAULT), approvalProcess(DEFAULT), costCenters(DEFAULT), salesOrg(DEFAULT)"/>
+                <entry key="FULL"
+                       value="DEFAULT,addresses(FULL),approvers(FULL),managers(FULL),administrators(FULL),customers(FULL), approvalProcess(FULL), costCenters(DEFAULT)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.company.data.SAPSalesOrganizationWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="salesOrgId"/>
+                <entry key="DEFAULT" value="BASIC,salesOrganization,distributionChannel,division"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="orderListWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.order.data.OrderListWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="orders"/>
+                <entry key="DEFAULT" value="orders(DEFAULT)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="quoteWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.quote.QuoteWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,name,state,updatedTime"/>
+                <entry key="DEFAULT"
+                       value="BASIC,allowedActions,comments(DEFAULT),description,entries(DEFAULT,comments(DEFAULT)),orderDiscounts,previousEstimatedTotal,quoteDiscounts,sapQuoteDiscountsRate,sapQuoteDiscountsType,productDiscounts,subTotalWithDiscounts,threshold, totalItems,totalPrice,totalPriceWithTax,version,expirationTime,cartId,sapSubtotalExcludingOrderLevelDiscount,sapAttachments(FULL),subTotal,subTotalWithoutQuoteDiscounts"/>
+                <entry key="FULL" value="DEFAULT,creationTime"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean parent="fieldSetLevelMapping" id="addressWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.user.AddressWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="id"/>
+                <entry key="DEFAULT"
+                       value="BASIC,firstName,lastName,email,titleCode,phone,cellphone,line1,line2,postalCode,district,town,defaultAddress,companyName,sapCustomerID"/>
+                <entry key="FULL"
+                       value="DEFAULT,title,country(FULL),region(FULL),visibleInAddressBook,formattedAddress,shippingAddress"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean parent="fieldSetLevelMapping" id="orderWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.order.OrderWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,guid"/>
+                <entry key="DEFAULT"
+                       value="BASIC,unconsignedEntries(DEFAULT),status,created,deliveryStatusDisplay,statusDisplay,consignments(DEFAULT),guestCustomer,deliveryStatus,store,appliedOrderPromotions(DEFAULT),pickupItemsQuantity,net,calculated,appliedVouchers(DEFAULT),productDiscounts(DEFAULT),totalDiscounts(DEFAULT),subTotal(DEFAULT),orderDiscounts(DEFAULT),entries(DEFAULT),appliedProductPromotions(DEFAULT),totalPrice(DEFAULT),site,deliveryMode(DEFAULT),code,deliveryOrderGroups(DEFAULT),guid,paymentInfo(DEFAULT),pickupOrderGroups(DEFAULT),totalItems,totalPriceWithTax(DEFAULT),deliveryItemsQuantity,totalTax(DEFAULT),user(DEFAULT),deliveryAddress(DEFAULT),deliveryCost(DEFAULT),cancellable,returnable,requestedRetrievalAt,deliveryType,shippingCondition,sapOrderCode,sapErrorMessage,paymentTransactions(DEFAULT)"/>
+                <entry key="FULL"
+                       value="unconsignedEntries(FULL),status,created,deliveryStatusDisplay,statusDisplay,consignments(FULL),guestCustomer,deliveryStatus,store,appliedOrderPromotions(FULL),pickupItemsQuantity,net,calculated,appliedVouchers(FULL),productDiscounts(FULL),totalDiscounts(FULL),subTotal(FULL),orderDiscounts(FULL),entries(FULL),appliedProductPromotions(FULL),totalPrice(FULL),site,deliveryMode(FULL),code,deliveryOrderGroups(FULL),guid,paymentInfo(FULL),pickupOrderGroups(FULL),totalItems,totalPriceWithTax(FULL),deliveryItemsQuantity,totalTax(FULL),user(FULL),deliveryAddress(FULL),deliveryCost(FULL),cancellable,returnable,requestedRetrievalAt,deliveryType,shippingCondition,sapOrderCode,sapErrorMessage,paymentTransactions(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="orderHistoryWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.OrderHistoryWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="total,guid,status,statusDisplay,code,placed,purchaseOrderNumber,costCenter(DEFAULT),orgUnit(BASIC),orgCustomer(BASIC),deliveryAddress"/>
+                <entry key="DEFAULT" value="BASIC,total(DEFAULT),category(DEFAULT)"/>
+                <entry key="FULL" value="DEFAULT,total(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocPaymentInitiateCheckoutResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="checkoutMode,merchant,result,session,successIndicator,error"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- ADNOC Payment Start -->
+
+    <bean parent="fieldSetLevelMapping" id="paymentTransactionWSDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.ordermanagementwebservices.dto.payment.PaymentTransactionWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="rrnNumber,plannedAmount"/>
+                <entry key="DEFAULT"
+                       value="BASIC,paymentInfo(DEFAULT)"/>
+                <entry key="FULL"
+                       value="DEFAULT,paymentInfo(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="paymentDetailsWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="id"/>
+                <entry key="DEFAULT"
+                       value="expiryYear,id,issueNumber,startYear,expiryMonth,saved,cardType(DEFAULT),billingAddress(DEFAULT),startMonth,subscriptionId,defaultPayment,cardNumber,accountHolderName,rrnNumber,amount,creditLimitAmount,account,transactionId,approvalCode"/>
+                <entry key="FULL"
+                       value="expiryYear,id,issueNumber,startYear,expiryMonth,saved,cardType(FULL),billingAddress(FULL),startMonth,subscriptionId,defaultPayment,cardNumber,accountHolderName,rrnNumber,amount,creditLimitAmount,account,transactionId,approvalCode"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- ADNOC Card Payment Start -->
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocPaymentSessionWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="id,updateStatus,version"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocPaymentResponseWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocPaymentResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="result,status,transaction(BASIC),currency"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocTransactionWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocTransactionWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="result,transaction(BASIC),sourceOfFunds(BASIC)"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocTransactionDetailsWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocTransactionDetailsWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="authenticationStatus,type,receipt,amount"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocSourceOfFundsWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocSourceOfFundsWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="provided(BASIC)"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocProvidedWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocProvidedWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="card(BASIC)"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="adnocCardWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.card.data.AdnocCardWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="number"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- ADNOC Card Payment End -->
+    <!-- ADNOC Bank Payment Start -->
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankTransactionRegistrationResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="transaction"/>
+                <entry key="DEFAULT"
+                       value="BASIC"/>
+                <entry key="FULL"
+                       value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankRegistrationResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="paymentPortal,transactionID"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankFinalizationResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="transaction"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.payment.bank.data.AdnocPaymentBankTransactionFinalizationResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="responseCode,responseDescription,responseClassDescription,approvalCode,orderID,amount,cardBrand,captureID,uniqueID,transactionId"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- ADNOC Bank Payment End -->
+    <!-- ADNOC CreditLimit Payment Start -->
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.company.response.data.AdnocCreditLimitResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="b2BCreditLimit,updatedOn"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.b2bocc.company.response.data.AdnocCreditLimitWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="creditExposure,availableCl,message,unsecureCl,totalCl,letterOfCredit,bankGuarantee,utilization,checkRule,currency"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+    <!-- ADNOC CreditLimit Payment End -->
+    <!-- ADNOC Payment End -->
+
+    <bean id="overdueInvoicesListFieldMapper" parent="fieldMapper">
+        <property name="sourceClass"
+                  value="com.adnoc.facades.overdue.inoice.data.AdnocOverdueInvoiceResponseData"/>
+        <property name="destClass"
+                  value="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceListWsDTO"/>
+        <property name="fieldMapping">
+            <map>
+                <entry key="invoice" value="adnocOverdueInvoices"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="overDueInvoicesWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.company.overdue.invoice.data.AdnocOverdueInvoiceWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="payer,documentNumber,companyCode,fiscalYear,invoiceAmount,dueAmount,currency,status,netDueDate,documentDate,division"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="userWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.user.UserWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="uid,name,firstName,lastName,title,titleCode,displayUid,defaultAddress,language,currency,customerId,deactivationDate,defaultPointOfServiceName,companyAddressCity,mobileNumber"/>
+                <entry key="DEFAULT"
+                       value="BASIC,defaultAddress(DEFAULT),language(DEFAULT),currency(DEFAULT),userRole,designation,lastlogin,sapBusinessPartnerID,status"/>
+                <entry key="FULL"
+                       value="DEFAULT,defaultAddress(FULL),language(FULL),currency(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.order.CartWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,guid"/>
+                <entry key="DEFAULT"
+                       value="BASIC,costCenter(DEFAULT),paymentType,purchaseOrderNumber,creditLimitUsed,totalUnitCount,totalDiscounts(FULL),totalPrice(FULL),subTotal(FULL),totalTax(FULL),totalPriceWithTax(FULL),sapQuote(code)"/>
+                <entry key="FULL"
+                       value="costCenter(DEFAULT),paymentType,purchaseOrderNumber,sapQuote(code)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.b2bwebservicescommons.dto.company.B2BUnitNodeWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="active,id,name,parent,lob"/>
+                <entry key="DEFAULT" value="BASIC,children(DEFAULT)"/>
+                <entry key="FULL" value="DEFAULT,children(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Return requests -->
+    <bean parent="fieldSetLevelMapping" id="returnRequestWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.order.ReturnRequestWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="cancellable,code,creationTime,order(BASIC),rma,status,statusDisplay,comment,totalPrice(BASIC),reason,reasonDisplay"/>
+                <entry key="DEFAULT"
+                       value="BASIC,deliveryCost(DEFAULT),order(DEFAULT),refundDeliveryCost,returnEntries(DEFAULT),returnLabelDownloadUrl,subTotal(DEFAULT),totalPrice(DEFAULT)"/>
+                <entry key="FULL"
+                       value="DEFAULT,deliveryCost(FULL),order(FULL),returnEntries(FULL),subTotal(FULL),totalPrice(FULL)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="pointOfServiceWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="name,id"/>
+                <entry key="DEFAULT"
+                       value="BASIC,displayName,address(DEFAULT),geoPoint,formattedDistance,pickUpInStoreInstructions"/>
+                <entry key="FULL"
+                       value="storeImages(FULL),geoPoint(FULL),address(FULL),openingHours(FULL),description,storeContent,name,mapIcon(FULL),formattedDistance,displayName,url,distanceKm,features,pickUpInStoreInstructions,id"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="priceWsDTOFieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="de.hybris.platform.commercewebservicescommons.dto.product.PriceWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="code,value,currencyIso,formattedValue"/>
+                <entry key="DEFAULT" value="BASIC,priceType,maxQuantity,minQuantity"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="gigyaConfigWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="com.adnoc.b2bocc.dto.gigya.GigyaConfigWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC"
+                       value="cdcApiKey,cdcUserKey,cdcUserSecret,loginMode,sessionExpiration,include,dataCenter"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping" id="baseSiteWsDTOFieldSetLevelMapping">
+        <property name="dtoClass" value="de.hybris.platform.commercewebservicescommons.dto.basesite.BaseSiteWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="uid,name,channel,isolated,gigyaConfigData(BASIC)"/>
+                <entry key="DEFAULT" value="BASIC,locale,defaultLanguage(DEFAULT),theme"/>
+                <entry key="FULL"
+                       value="DEFAULT,defaultLanguage(FULL),captchaConfig,stores(BASIC,currencies(FULL),defaultCurrency(FULL),defaultDeliveryOrigin(FULL),defaultLanguage(FULL),deliveryModes(FULL),languages(FULL),expressCheckoutEnabled)"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean parent="fieldSetLevelMapping">
+        <property name="dtoClass"
+                  value="com.adnoc.service.gigya.login.verification.AdnocGigyaLoginTokenVerificationResponseWsDTO"/>
+        <property name="levelMapping">
+            <map>
+                <entry key="BASIC" value="errorCode,errorDetails,statusCode,statusReason"/>
+                <entry key="DEFAULT" value="BASIC"/>
+                <entry key="FULL" value="DEFAULT"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

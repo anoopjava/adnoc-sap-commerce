@@ -1,0 +1,95 @@
+:root {
+  --cx-color-primary: var(--950, #0047ba);
+  --cx-border-color-light: #c5c5c5;
+  --cx-buttons-border-radius: 1.2rem;
+  --cx-font-family-regular: "ADNOC_Sans_Regular";
+  --cx-font-family-light: "ADNOC_Sans_Light";
+  --cx-font-family-medium: "ADNOC_Sans_Medium";
+  --cx-font-family-bold: "ADNOC_Sans_Bold";
+  --cx-font-family-xbold: "ADNOC_Sans_XBold";
+  --cx-white: #ffffff;
+  --cx-black: #000000;
+  --cx-font-color: --cx-black;
+  --cx-video-image-background-color: #f0f0f0;
+  --cx-color-background-header: #f2f6fc;
+  --cx-color-border-header: var(--200, #ccdaf1);
+  --cx-footer-background: #002e6d;
+  --cx-footer-background-linear: #0059d3;
+  --cx-footer-list-border-color: #336cc8;
+  --cx-footer-social-icon-hover-color: #cccccc;
+  --cx-color-danger: #d50032;
+  --cx-color-invrse: var(--600, #e9eae9);
+  --cx-input-border-color: #d2d5da;
+  --cx-user-circle-color: var(--300, #b2c8ea);
+  --cx-user-active-background: var(--100, #e5f5eb);
+  --cx-user-disable-background: var(--100, #e5eaf0);
+  --cx-user-yellow-background: var(--950, #fdf7e6);
+  --cx-user-darkyellow-background: var(--950, #eaaa02);
+  --cx-active-status-circle: var(--700, #4db574);
+  --cx-disable-status-circle: var(--100, #33588a);
+  --cx-org-register-button-color: #2a3549;
+  --cx-user-table-border-color: #dee2e6;
+  --cx-summary-range-background: var(--50, #f2f5f8);
+  --cx-summary-range-border: var(--200, #ccd5e2);
+  --cx-summary-card-border: var(--100, #e5edf8);
+  --cx-summary-input-background: var(--25, #f9fafb);
+  --cx-plp-out-stock-border: var(--950, #f67599);
+  --cx-plp-out-stock-background: var(--200, #fde3eb);
+  --cx-plp-out-stock-color: var(--900, #d91a47);
+  --cx-pdp-tabHead-border-color: var(--500, #a9aaac);
+  --cx-pdp-counter-border-color: var(--400, #99b5e3);
+  --cx-pdp-stock-text-color: var(--950, #009639);
+  --cx-pdp-stock-border-color: var(--600, #66c088);
+  --cx-pdp-carousel-box-shadow: #eaeefc99;
+  --cx-progress-carousel-box-shadow: #e1e1e199;
+  --cx-spinner-background-color: #00000066;
+  --cx-pdp-carousel-box-border: #dde6f0;
+  --cx-form-control-border-color: #e0e0e0;
+  --cx-form-control-text-color: #7f7f91;
+  --cx-form-close-icon-color: #eff6ff;
+  --cx-adnoc-water-color: var(--50, #f2fafd);
+  --cx-adnoc-lgreen-color: var(--50, #f2f7f5);
+  --cx-adnoc-lblue-color: var(--50, #f2f6fc);
+  --cx-adnoc-lgray-color: var(--200, #ddddde);
+  --cx-adnoc-rwhite-color: var(--200, #f8f8f8);
+  --cx-progress-link-text-color: var(--950, #54565a);
+  --cx-font-weight-light: 300;
+  --cx-font-weight-normal: 400;
+  --cx-font-weight-semi: 500;
+  --cx-font-weight-semi-bold: 600;
+  --cx-font-weight-bold: 700;
+  --cx-table-tr-td-box-background: #ddddde;
+  --cx-cart-summary-border: #e5edf8;
+  --cx-cart-summary-background: #f9fafd;
+  --cx-dotted-border-color: #b2c8ea;
+  --cx-color-border-danger: #a6093d;
+  --cx-color-background-danger: #d50032;
+  --cx-page-width-max: 90%;
+  --cx-text-color: #002e6d;
+  --cx-color-cancel-order-border: #db9db1;
+  --cx-color-cancel-order: #f6e6ec;
+  --cx-carousal-indicator: #d9d9d9;
+  --cx-gray: #65676b;
+  --cx-checkout-payment-border: #e5e5e5;
+}
+
+// Custom Breakpoints
+$breakpoint-xs: 576px; // Extra small devices (portrait phones)
+$breakpoint-sm: 768px; // Small devices (landscape phones)
+$breakpoint-md: 992px; // Medium devices (tablets)
+$breakpoint-lg: 1200px; // Large devices (desktops)
+$breakpoint-xl: 1400px;
+// Custom Breakpoints for Specific Use Cases
+$breakpoint-ipad: 1180px; // Targeting iPads and similar tablets
+
+//Input related
+$input-background-color: #f2f5f8;
+$input-placeholder-color: #54565a;
+$horizontal-line-color: #dfdfdf;
+$background-mini-cart-count: #dd335b;
+
+@media (max-width: $breakpoint-md) {
+  :root {
+    --cx-page-width-max: 1140px;
+  }
+}

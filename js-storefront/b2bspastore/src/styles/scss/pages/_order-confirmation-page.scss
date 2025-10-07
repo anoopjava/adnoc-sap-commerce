@@ -1,0 +1,51 @@
+%OrderConfirmationPageTemplate {
+  cx-order-confirmation-shipping,
+  cx-order-detail-billing {
+    max-width: var(--cx-page-width-max);
+    padding-inline-end: 15px;
+    padding-inline-start: 15px;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      max-width: none;
+      padding: 0 15px;
+      margin: 0 25px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin: 0;
+    }
+  }
+  adnoc-order-confirmation-thank-you-message {
+    .cx-order-confirmation-message {
+      text-align: center;
+      .title {
+        color: var(--cx-color-primary);
+        font-size: 3rem;
+        font-family: var(--cx-font-family-medium);
+        font-weight: 500;
+      }
+      .message {
+        font-size: 1.2rem;
+        font-family: var(--cx-font-family-regular);
+        font-weight: 400;
+        margin: 0.3125rem;
+        .orderHistoryLink {
+          font-weight: bold;
+          border-bottom: 2px solid;
+        }
+      }
+    }
+    .continueShopping {
+      text-align: center;
+      max-width: 100%;
+      a {
+        font-size: 1.2rem;
+        font-family: var(--cx-font-family-medium);
+        font-weight: 500;
+      }
+    }
+  }
+}

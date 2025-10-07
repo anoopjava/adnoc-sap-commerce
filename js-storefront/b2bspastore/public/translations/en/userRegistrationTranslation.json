@@ -1,0 +1,19 @@
+{
+  "userRegistrationTranslation": {
+    "success": {
+      "message": "Thank you for submitting your registration. ADNOC will get back to you soon.",
+      "signIn": "Continue to sign in",
+      "signUp": "Form Submission Successful",
+      "refNumber": "Reference Number - "
+    },
+    "cancelOrder": {
+      "shipTo": "Ship To,",
+      "orderCreatedBy": "Order placed by:",
+      "orderStatus": "Order status:",
+      "orderNumber": "Order number:",
+      "orderPlacedDateAndTime": "Placed on:",
+      "purchaseOrderNumber": "Purchase order number:",
+      "paymentMethod": "Method of payment:"
+    }
+  }
+}

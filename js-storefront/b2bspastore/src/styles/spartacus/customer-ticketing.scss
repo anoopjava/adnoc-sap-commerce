@@ -1,0 +1,18 @@
+@import "../../styles-config";
+@import "@spartacus/customer-ticketing";
+
+@media (min-width: 768px) {
+    cx-customer-ticketing-list .cx-ticketing-list-table td:last-child {
+        min-width: 200px;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    cx-customer-ticketing-list .cx-ticketing-list-table td:last-child {
+        min-width:  auto;
+    }
+}
+
+.cx-text-grey {
+    color: var(--cx-color-secondary);
+}

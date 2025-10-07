@@ -1,0 +1,14 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Add Document type
+
+#% if: de.hybris.platform.servicelayer.i18n.util.LanguageUtils.isLanguagePresent("en")
+
+UPDATE B2BDocumentType; code[unique = true]; name[lang = en]
+                      ; INVOICE            ; Invoice
+                      ; Delivery           ; Delivery
+                      ; LC                 ; Letter of Credit
+                      ; BG                 ; Bank Guarantee
+
+#% endif:

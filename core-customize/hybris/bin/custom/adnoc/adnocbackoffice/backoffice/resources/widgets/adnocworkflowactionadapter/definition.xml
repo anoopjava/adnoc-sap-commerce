@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<widget-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						 xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widget-definition.xsd"
+						 id="com.hybris.cockpitng.adnocworkflowactionadapter" extends="com.hybris.cockpitng.workflowactionadapter">
+
+	<name>Adnoc Workflow Action Adapter</name>
+	<description>Adnoc Workflow Action Adapter, setting condition status, principalAssigned and template</description>
+	<defaultTitle>Adnoc Workflow Action Adapter</defaultTitle>
+	<author>hybris</author>
+	<version>1.0</version>
+
+	<sockets>
+		<input id="nodeSelected" type="com.hybris.backoffice.navigation.NavigationNode"/>
+		<input id="statuses" type="[T]" multiplicity="Set"/>
+		<output id="context" type="com.hybris.backoffice.widgets.advancedsearch.impl.AdvancedSearchInitContext"/>
+	</sockets>
+	<view src="none"/>
+	<controller class="com.adnoc.backoffice.widgets.AdnocWorkflowActionAdapterController"/>
+	<keywords>
+		<keyword>_hidden</keyword>
+	</keywords>
+</widget-definition>

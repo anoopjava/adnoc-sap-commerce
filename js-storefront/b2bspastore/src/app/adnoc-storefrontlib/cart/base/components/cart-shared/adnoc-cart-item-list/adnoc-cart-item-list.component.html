@@ -1,0 +1,367 @@
+<div class="delivery-mode" *ngIf="isPickupDivision && !readonly">
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="deliveryMode"
+      id="deliveryRadio"
+      value="delivery"
+      (change)="onDeliveryModeChange($event)"
+      [checked]="!isPickupStore"
+    />
+    <label class="form-check-label" for="deliveryRadio">
+      {{ "cartLabels.delivery" | cxTranslate }}</label
+    >
+  </div>
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="deliveryMode"
+      id="pickupRadio"
+      value="PICKUP"
+      (change)="onDeliveryModeChange($event)"
+      [checked]="isPickupStore"
+    />
+    <label class="form-check-label" for="pickupRadio">{{
+      "cartLabels.pickup" | cxTranslate
+    }}</label>
+  </div>
+</div>
+<table role="table">
+  <caption class="cx-visually-hidden">
+    {{
+      "cartItems.caption" | cxTranslate
+    }}
+  </caption>
+  <thead *ngIf="hasHeader">
+    <tr role="row" class="cx-item-list-header">
+      <th role="columnheader" class="cx-item-list-desc">
+        {{ "cartLabels.slNum" | cxTranslate }}
+      </th>
+      <th role="columnheader" class="cx-item-list-desc">
+        {{ "cartItems.item" | cxTranslate }}
+      </th>
+      <th
+        role="columnheader"
+        class="cx-item-list-desc d-none orderSummaryToShow"
+      >
+        {{ "cartLabels.deliveryLabel" | cxTranslate }}
+      </th>
+      <!-- unit start-->
+      <th role="columnheader" class="cx-item-list-unit">
+        {{ "cartLabels.uom" | cxTranslate }}
+      </th>
+      <!-- unit end -->
+      <ng-template
+        role="columnheader"
+        [cxOutlet]="CartOutlets.CPQ_QUOTE_HEADING"
+        [cxOutletContext]="items"
+      ></ng-template>
+
+      <th role="columnheader" class="cx-item-list-qty orderSummaryNotToShow">
+        {{ "cartLabels.quantity" | cxTranslate }}
+      </th>
+
+      <th
+        role="columnheader"
+        class="cx-item-list-qty d-none orderSummaryToShow"
+      >
+        {{ "cartLabels.orderedQuantity" | cxTranslate }}
+      </th>
+
+      <th
+        role="columnheader"
+        class="cx-item-list-qty d-none orderSummaryToShow"
+      >
+        {{ "cartLabels.deliveredQuantity" | cxTranslate }}
+      </th>
+
+      <ng-container *ngIf="options.isSaveForLater; else totalHeader">
+        <th role="columnheader" class="cx-item-list-total">
+          {{ "saveForLaterItems.stock" | cxTranslate }}
+        </th>
+      </ng-container>
+      <ng-container
+        *ngIf="!readonly || options.isSaveForLater || options.displayAddToCart"
+      >
+        <th
+          role="columnheader"
+          class="cx-item-list-actions orderSummaryNotToShow"
+        >
+          {{ "cartItems.actions" | cxTranslate }}
+        </th>
+      </ng-container>
+      <ng-container>
+        <th
+          role="columnheader"
+          class="cx-item-list-status d-none orderSummaryToShow"
+        >
+          {{ "cartLabels.status" | cxTranslate }}
+        </th>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody class="cx-item-list-items">
+    <ng-container
+      *ngFor="let group of groupedEntries | keyvalue; trackBy: trackByDivision"
+    >
+      <ng-container
+        *ngFor="
+          let item of group.value.entrie;
+          let i = index;
+          trackBy: trackByEntry
+        "
+      >
+        <ng-container
+          *ngIf="getControl(item) | async as control"
+          [class.is-changed]="control.get('quantity')?.disabled"
+        >
+          <tr
+            adnoc-cart-item-list-row
+            role="row"
+            class="cx-item-list-row item-list-row-{{ group.key }}"
+            [item]="item"
+            [quantityControl]="
+              control.get('quantity') || control.get('quantity')?.value
+            "
+            [readonly]="readonly"
+            [promotionLocation]="promotionLocation"
+            [options]="options"
+          ></tr>
+        </ng-container>
+        <!-- Adress & Delivery Start -->
+        <tr
+          class="adnoc-item-list-row item-list-row-{{ group.key }}"
+          *ngIf="getControl(item)"
+        >
+          <td colspan="8">
+            <div class="select-wrap" [class.readonly-value]="readonly">
+              <div class="selector selectedShippingAddress">
+                <label
+                  *ngIf="!readonly"
+                  class="subHeading"
+                  for="incoTermsCode{{ i }}"
+                  >{{ "cartLabels.incoTermsLabel" | cxTranslate }}</label
+                >
+                <select
+                  *ngIf="!readonly"
+                  id="incoTermsCode{{ i }}"
+                  class="select"
+                  [ngModel]="item.incoTermsCode || item.incoTerms?.code || null"
+                  (ngModelChange)="onIncoTermsHandler($event, group.key, i)"
+                >
+                  <option [ngValue]="null" disabled>
+                    {{ "cartLabels.selectIncoTerms" | cxTranslate }}
+                  </option>
+                  <option
+                    *ngFor="let data of incoTermsMap$()[group.key]"
+                    [ngValue]="data.code"
+                  >
+                    {{ data.name }}
+                  </option>
+                </select>
+                <!-- read only data -->
+                <ng-container *ngIf="readonly">
+                  <h5 class="subHeading">
+                    {{ "cartLabels.incoTermsLabel" | cxTranslate }}
+                  </h5>
+                  <div class="cx-value font-bold">
+                    {{ item.incoTerms?.name }}
+                  </div>
+                </ng-container>
+              </div>
+              <!-- Requested Shipping address -->
+              <div class="selector selectedShippingAddress">
+                <label
+                  *ngIf="!readonly"
+                  class="subHeading"
+                  for="shippingAddress{{ i }}"
+                >
+                  <ng-container
+                    *ngIf="
+                      selectedDeliveryMode === 'PICKUP';
+                      else deliveryTemplate
+                    "
+                    >{{ "cartLabels.pickupStore" | cxTranslate }}</ng-container
+                  >
+                  <ng-template #deliveryTemplate>
+                    {{ "cartLabels.shippingAddress" | cxTranslate }}
+                  </ng-template>
+                </label>
+                <select
+                  *ngIf="!readonly"
+                  id="shippingAddress{{ i }}"
+                  class="select"
+                  [disabled]="
+                    !(item.incoTermsAddressList || item.deliveryAddress)
+                  "
+                  [ngModel]="
+                    item.incoTerms?.code === 'PICKUP' &&
+                    item.deliveryPointOfService?.id
+                      ? item.deliveryPointOfService?.id
+                      : item.deliveryAddress?.id ||
+                        item.requestedShippingAddress ||
+                        null
+                  "
+                  (ngModelChange)="
+                    onShippingAddressHandler(
+                      $event,
+                      item,
+                      item.incoTermsAddressList || [],
+                      group.key,
+                      i
+                    )
+                  "
+                >
+                  <option [ngValue]="null" disabled>
+                    {{ "cartLabels.selectAddress" | cxTranslate }}
+                  </option>
+                  <option
+                    *ngFor="
+                      let data of item.incoTermsAddressList
+                        ? item.incoTermsAddressList
+                        : item.deliveryAddress
+                        ? [item.deliveryAddress]
+                        : []
+                    "
+                    [ngValue]="data.id"
+                  >
+                    {{ data.sapCustomerID }} | {{ data.companyName }} |
+                    {{ data.town }} | {{ data.country.isocode }}
+                  </option>
+                </select>
+                <!-- read only data -->
+                <ng-container *ngIf="readonly">
+                  <h5 class="subHeading">
+                    <ng-container
+                      *ngIf="
+                        selectedDeliveryMode === 'PICKUP';
+                        else deliveryTemplate
+                      "
+                      >{{
+                        "cartLabels.pickupStore" | cxTranslate
+                      }}</ng-container
+                    >
+                    <ng-template #deliveryTemplate>
+                      {{ "cartLabels.shippingAddress" | cxTranslate }}
+                    </ng-template>
+                  </h5>
+                  <div
+                    class="cx-value font-bold"
+                    *ngIf="!(item.incoTerms?.code === 'PICKUP')"
+                  >
+                    {{ item.deliveryAddress?.sapCustomerID }} |
+                    {{ item.deliveryAddress?.companyName }} |
+                    {{ item.deliveryAddress?.town }} |
+                    {{ item.deliveryAddress?.country?.isocode }}
+                  </div>
+                  <div
+                    class="cx-value font-bold"
+                    *ngIf="item.incoTerms?.code === 'PICKUP'"
+                  >
+                    {{ item.deliveryPointOfService.displayName }} |
+                    {{ item.deliveryPointOfService.address.town }} |
+                    {{ item.deliveryPointOfService.address.country.isocode }}
+                  </div>
+                </ng-container>
+              </div>
+              <!-- Requested delivery date -->
+              <div class="selector selectedShippingAddress">
+                <label class="subHeading"
+                  >{{ "cartLabels.deliveryLabel" | cxTranslate }}
+                  <!-- Tooltip for rquested date -->
+                  <button
+                    class="tooltip-btn"
+                    [cxPopover]="detailHint"
+                    [cxPopoverOptions]="{
+                      placement: 'auto',
+                      class: 'hint-popover',
+                      displayCloseButton: true
+                    }"
+                    [attr.aria-label]="'organization.information' | cxTranslate"
+                  >
+                    <cx-icon class="text-primary" [type]="iconTypes.INFO">
+                    </cx-icon></button
+                ></label>
+                <ng-template #detailHint>
+                  <p>
+                    {{
+                      "cartLabels.dateTooltipText"
+                        | cxTranslate
+                          : { days: (minRequestedDelieveryDays$ | async) }
+                    }}
+                  </p>
+                </ng-template>
+                <adnoc-calendar
+                  *ngIf="!readonly"
+                  [selectedDate]="item.namedDeliveryDate || null"
+                  [mindaysToDisable]="+configObject?.minRequestedDelieveryDays"
+                  [maxdaysToEnable]="+configObject?.maxRequestedDelieveryDays"
+                  (dateSelected)="onDateSelected($event, item.entryNumber, i)"
+                  [groupKey]="group.key"
+                ></adnoc-calendar>
+
+                <ng-container
+                  *ngIf="
+                    !isDateValid(item.namedDeliveryDate) &&
+                    templateName === 'CartPageTemplate'
+                  "
+                >
+                  <span class="text-danger">{{
+                    "cartLabels.cartDateError" | cxTranslate
+                  }}</span>
+                </ng-container>
+
+                <!-- read only data -->
+                <ng-container *ngIf="readonly">
+                  <div class="cx-value font-bold">
+                    {{ item.namedDeliveryDate | date : "dd/MM/yyyy" }}
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+            <div
+              [class.disabled]="readonly"
+              class="groupCheckbox"
+              *ngIf="item.checkbox"
+            >
+              <input
+                type="checkbox"
+                id="{{ i }}"
+                name="{{ group.key }}"
+                value="{{ i }}"
+                [disabled]="
+                  !(
+                    (item.namedDeliveryDate && item.requestedShippingAddress) ||
+                    (item.deliveryAddress && item.namedDeliveryDate)
+                  )
+                "
+                [checked]="item.isCheckboxChecked"
+                (change)="
+                  updateDeliveryDateForEntries(
+                    $event,
+                    group.key,
+                    item.entryNumber
+                  )
+                "
+              />
+              <label for="{{ i }}">{{
+                "cartLabels.checkboxAll" | cxTranslate
+              }}</label
+              ><br />
+            </div>
+          </td>
+        </tr>
+
+        <!-- Adress & Delivery End -->
+      </ng-container>
+    </ng-container>
+  </tbody>
+</table>
+<ng-template #totalHeader>
+  <th role="columnheader" class="cx-item-list-total">
+    {{ "cartLabels.total" | cxTranslate }}<br />
+    {{ "cartLabels.inclVat" | cxTranslate }}
+  </th>
+</ng-template>

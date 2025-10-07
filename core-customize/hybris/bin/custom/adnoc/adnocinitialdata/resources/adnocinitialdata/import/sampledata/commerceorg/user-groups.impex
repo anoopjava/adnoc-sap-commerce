@@ -1,0 +1,201 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Import Customers
+$defaultPassword = 12341234
+
+INSERT_UPDATE UserGroup; uid[unique = true]  ; groups(uid)
+                       ; SuperAccountMangers ;
+
+INSERT_UPDATE UserGroup; uid[unique = true]
+                       ; salesemployeegroup
+                       ; salesadmingroup
+                       ; salesmanagergroup
+                       ; salesapprovergroup
+
+INSERT_UPDATE Employee; uid[unique = true]    ; groups(uid)[mode = append]                                ; password[default = $defaultPassword]; loginDisabled[default = false]
+                      ; adnocacctmgr          ; employeegroup,acctmgrgroup,SuperAccountMangers,admingroup ;                                     ;
+                      ; adnocfuelacctmgr      ; employeegroup,acctmgrgroup,admingroup                     ;                                     ;
+                      ; adnoclubricantacctmgr ; employeegroup,acctmgrgroup,admingroup                     ;                                     ;
+                      ; adnocgasacctmgr       ; employeegroup,acctmgrgroup,admingroup                     ;                                     ;
+                      ; adnoccarcareacctmgr   ; employeegroup,acctmgrgroup,admingroup                     ;                                     ;
+
+INSERT_UPDATE Employee; uid[unique = true]; groups[ignorenull = false, default = ]; password[default = $defaultPassword]; loginDisabled[default = false]
+                      ; asagent           ;                                       ;                                     ;
+                      ; asagentsales      ;                                       ;                                     ;
+                      ; asagentmanager    ;                                       ;                                     ;
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]; target(uid)[unique = true]
+                                    ; asagent                   ; customermanagergroup
+
+INSERT_UPDATE Employee; UID[unique = true] ; groups(uid)[mode = append]; password[default = $defaultPassword]; loginDisabled[default = false]
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                      ; asagent-all        ; customermanagergroup      ;                                     ;
+                      ; asagentsales-all   ;                           ;                                     ;
+                      ; asagentmanager-all ;                           ;                                     ;
+
+INSERT_UPDATE CustomerList; uid[unique = true]; implementationType; priority; members(uid)[mode = append];
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+    if(!extensionNames.contains(""customersupportbackoffice"") ||  !extensionNames.contains(""assistedserviceservices""))
+    {
+        LOG.info(""Sample data for assistedserviceservices was skipped because the extensions are not included in the setup"");
+        line.clear();
+    }
+"
+                          ; instoreCustomers  ; "IN_STORE"        ; 3       ; asagent-all                ;
+                          ; bopisCustomers    ; "BOPIS"           ; 2       ; asagent-all                ;
+
+
+### Sample promotions of Promotion-Engine ###
+INSERT_UPDATE UserGroup; uid[unique = true]; groups(uid)
+"#%beforeEach:
+import de.hybris.platform.core.Registry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
+import de.hybris.platform.util.Config;
+
+Logger LOG = LoggerFactory.getLogger(""ImpExImportReader"");
+extensionNames = Registry.getCurrentTenant().getTenantSpecificExtensionNames();
+extensionName = ""couponservices"";
+if(!extensionNames.contains(extensionName))
+{
+	templateId = line.get(1);
+	LOG.info(""UserGroup [{}] was skipped because the extension [{}] is not included in the setup"", templateId, extensionName);
+	line.clear();
+}
+"
+                       ; bronzeloyalty     ;
+                       ; silverloyalty     ;
+                       ; goldloyalty       ;
+### END Sample promotions of Promotion-Engine ###
+
+
+# Associate members of salesemployeegroup to the B2B Customer List search strategy
+INSERT_UPDATE CustomerList; uid[unique = true]; implementationType; priority; members(uid)       ; additionalColumnsKeys; searchBoxEnabled
+                          ; b2bCustomerList   ; B2B               ; 0       ; salesemployeegroup ; UNIT                 ; true
+
+#
+# Overwrite the SearchRestriction of the the same name in /commerceorgsamplesaddon/import/common/user-groups.impex so that B2BUnits are taken into account
+#
+$salesEmployeeQuoteSR = EXISTS ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) AND {item:user} = {cust:pk} }})
+INSERT_UPDATE SearchRestriction; code[unique = true]                        ; query                 ; principal(UID)     ; restrictedType(code); active; generate
+                               ; salesemployeegroupQuotesOrgUnitRestriction ; $salesEmployeeQuoteSR ; salesemployeegroup ; Quote               ; true  ; true
+
+# SearchRestriction to CsTicket on OrgUnit Level
+$csTicketSR = {Customer} IN ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) }})
+INSERT_UPDATE SearchRestriction; code[unique = true]                       ; query       ; principal(UID)              ; restrictedType(code); active; generate
+                               ; csagroupCustomerTicketsOrgUnitRestriction ; $csTicketSR ; customersupportagentgroup   ; CsTicket            ; true  ; true
+                               ; csmgroupCustomerTicketsOrgUnitRestriction ; $csTicketSR ; customersupportmanagergroup ; CsTicket            ; true  ; true
+
+# SearchRestriction to Customer on OrgUnit Level
+$customerSR = EXISTS ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) AND {cust:pk} = {item:pk} }})
+INSERT_UPDATE SearchRestriction; code[unique = true]                 ; query       ; principal(UID)              ; restrictedType(code); active; generate
+                               ; csagroupCustomersOrgUnitRestriction ; $customerSR ; customersupportagentgroup   ; Customer            ; true  ; true
+                               ; csmgroupCustomersOrgUnitRestriction ; $customerSR ; customersupportmanagergroup ; Customer            ; true  ; true
+
+# SearchRestriction to Order on OrgUnit Level
+$orderSR = EXISTS ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) AND {item:user} = {cust:pk} }})
+INSERT_UPDATE SearchRestriction; code[unique = true]              ; query    ; principal(UID)              ; restrictedType(code); active; generate
+                               ; csagroupOrdersOrgUnitRestriction ; $orderSR ; customersupportagentgroup   ; Order               ; true  ; true
+                               ; csmgroupOrdersOrgUnitRestriction ; $orderSR ; customersupportmanagergroup ; Order               ; true  ; true
+
+# SearchRestriction to ReturnRequest on OrgUnit Level
+$returnRequestSR = EXISTS ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) AND {item:order} IN ({{ SELECT {ord:pk} FROM {Order as ord} WHERE {ord:user} = {cust:pk} }}) }})
+INSERT_UPDATE SearchRestriction; code[unique = true]                      ; query            ; principal(UID)              ; restrictedType(code); active; generate
+                               ; csagroupReturnRequestsOrgUnitRestriction ; $returnRequestSR ; customersupportagentgroup   ; ReturnRequest       ; true  ; true
+                               ; csmgroupReturnRequestsOrgUnitRestriction ; $returnRequestSR ; customersupportmanagergroup ; ReturnRequest       ; true  ; true
+
+# SearchRestriction to Quote on OrgUnit Level
+$quoteSR = EXISTS ({{ SELECT {cust:pk} FROM {B2BCustomer as cust JOIN PrincipalGroupRelation as rel1 ON {rel1:source} = {cust:pk} JOIN B2BUnit as b2bunit ON {b2bunit:pk} = {rel1:target} JOIN PrincipalGroupRelation as rel2 ON {rel2:source} = {b2bunit:pk} JOIN OrgUnit as salesunit ON {salesunit:pk} = {rel2:target} JOIN PrincipalGroupRelation as rel3 ON {rel3:target} = {salesunit:pk} JOIN Employee as empl ON {empl:pk} = {rel3:source}} WHERE {empl:pk} = (?session.user) AND {item:user} = {cust:pk} }})
+INSERT_UPDATE SearchRestriction; code[unique = true]              ; query    ; principal(UID)              ; restrictedType(code); active; generate
+                               ; csagroupQuotesOrgUnitRestriction ; $quoteSR ; customersupportagentgroup   ; Quote               ; true  ; true
+                               ; csmgroupQuotesOrgUnitRestriction ; $quoteSR ; customersupportmanagergroup ; Quote               ; true  ; true
+
+
+INSERT_UPDATE PrincipalGroupRelation; source(uid)[unique = true]; target(uid)[unique = true]
+                                    ; salesemployeegroup        ; orgemployeegroup     ;
+                                    ; salesadmingroup           ; salesemployeegroup   ;
+                                    ; salesmanagergroup         ; salesemployeegroup   ;
+                                    ; salesapprovergroup        ; salesemployeegroup   ;
+                                    ; salesemployeegroup        ; customermanagergroup ;
+
+#
+# Add restriction on salesemployeegroup. salesemployeegroup shall only see the employees from salesemployeegroup.
+#
+$salesEmployeeSR = EXISTS ({{ SELECT {pk} FROM {PrincipalGroupRelation as pgr LEFT JOIN UserGroup as ug ON {pgr:target} = {ug:pk}} WHERE {pgr:source} = {item:pk} AND {ug:uid} IN ('salesemployeegroup', 'salesadmingroup', 'salesmanagergroup', 'salesapprovergroup')}})
+INSERT_UPDATE SearchRestriction; code[unique = true]                   ; query            ; principal(UID)     ; restrictedType(code); active; generate
+                               ; salesemployeegroupEmployeesVisibility ; $salesEmployeeSR ; salesemployeegroup ; Employee            ; true  ; true
+
+#
+# Add restriction on salesemployeegroup. salesemployeegroup shall only see the addresses where their owners are Org Units.
+#
+$addressSR = EXISTS ({{ select {adr.pk} from {Address as adr JOIN OrgUnit as org on {org.pk} = {adr.owner} JOIN Type as type on {type.pk} = {org.itemtype}} WHERE {type.code} = 'OrgUnit' AND {org.supplier} = TRUE AND {adr.pk} = {item.pk} }})
+INSERT_UPDATE SearchRestriction; code[unique = true]           ; query      ; principal(UID)     ; restrictedType(code); active; generate
+                               ; addressesVisibilitySalesUnits ; $addressSR ; salesemployeegroup ; Address             ; true  ; true
+
+#
+# Restrict quotes so that sales employees can only see the latest versions of quotes that are linked to their sales units.
+#
+$salesQuoteSR = EXISTS (SELECT CODE_MAX_VERSION.code, CODE_MAX_VERSION.maxVersion FROM ({{ SELECT {code} as code, max({version}) as maxVersion FROM {Quote} GROUP BY {code} }}) CODE_MAX_VERSION WHERE {item:code} = CODE_MAX_VERSION.code AND {item:version} = CODE_MAX_VERSION.maxVersion)
+INSERT_UPDATE SearchRestriction; code[unique = true]                           ; query         ; principal(UID)     ; restrictedType(code); active; generate
+                               ; salesemployeegroupQuotesMaxVersionRestriction ; $salesQuoteSR ; salesemployeegroup ; Quote               ; true  ; true
+
+#
+# Restrict organizational units for member of salesemployeegroup so that they can only see units in their branch of the organization.
+#
+$orgUnitSR = NOT EXISTS({{ SELECT {unit:pk} FROM {OrgUnit! as unit} WHERE {unit:pk} = {item:pk} }}) OR EXISTS({{ SELECT {unit:pk} FROM { Employee as empl JOIN PrincipalGroupRelation as rel ON {empl:pk} = {rel:source} JOIN OrgUnit as unit ON {unit:PK} = {rel:target} } WHERE {empl:pk} = (?session.user) AND {item:path} LIKE CONCAT({unit:path}, '%') }})
+INSERT_UPDATE SearchRestriction; code[unique = true]                 ; query      ; principal(UID)     ; restrictedType(code); active; generate
+                               ; salesemployeegroupOrgUnitVisibility ; $orgUnitSR ; salesemployeegroup ; OrgUnit             ; true  ; true
+
+
+# Only show orders for division '21' to adnocSalesManagerGroup21
+$orderRequestGroup21SR = EXISTS ({{ SELECT {ord:pk} FROM {Order as ord JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division} = '21' AND {ord.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; orderRequestGroup21    ; $orderRequestGroup21SR ; adnocSalesManagerGroup21       ; Order                ; true  ; true
+
+# Only show orders for division '31' to adnocSalesManagerGroup31
+$orderRequestGroup31SR = EXISTS ({{ SELECT {ord:pk} FROM {Order as ord JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division} = '31' AND {ord.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; orderRequestGroup31    ; $orderRequestGroup31SR ; adnocSalesManagerGroup31       ; Order                ; true  ; true
+
+# Only show orders for division '41' to adnocSalesManagerGroup41
+$orderRequestGroup41SR = EXISTS ({{ SELECT {ord:pk} FROM {Order as ord JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division} = '41' AND {ord.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; orderRequestGroup41    ; $orderRequestGroup41SR ; adnocSalesManagerGroup41       ; Order                ; true  ; true
+
+
+# Only show Return Orders for division '21' to adnocSalesManagerGroup21
+$returnRequestGroup21SR = EXISTS ({{ SELECT {ro:pk} FROM {ReturnRequest as ro JOIN Order as ord on {ro.order}={ord.pk} JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division}='21' AND {ro.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; returnRequestGroup21    ; $returnRequestGroup21SR ; adnocSalesManagerGroup21       ; ReturnRequest                ; true  ; true
+
+# Only show Return orders for division '31' to adnocSalesManagerGroup31
+$returnRequestGroup31SR = EXISTS ({{ SELECT {ro:pk} FROM {ReturnRequest as ro JOIN Order as ord on {ro.order}={ord.pk} JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division}='31' AND {ro.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; returnRequestGroup31    ; $returnRequestGroup31SR ; adnocSalesManagerGroup31       ; ReturnRequest                ; true  ; true
+
+# Only show Return orders for division '41' to adnocSalesManagerGroup41
+$returnRequestGroup41SR = EXISTS ({{ SELECT {ro:pk} FROM {ReturnRequest as ro JOIN Order as ord on {ro.order}={ord.pk} JOIN SAPSalesOrganization as sapSalesOrg ON {ord.sapSalesOrganization} = {sapSalesOrg.pk}} WHERE {sapSalesOrg.division}='41' AND {ro.pk} = {item.pk}}})
+INSERT_UPDATE SearchRestriction; code[unique = true]     ; query                  ; principal(UID) ; restrictedType(code); active; generate
+                               ; returnRequestGroup41    ; $returnRequestGroup41SR ; adnocSalesManagerGroup41       ; ReturnRequest                ; true  ; true

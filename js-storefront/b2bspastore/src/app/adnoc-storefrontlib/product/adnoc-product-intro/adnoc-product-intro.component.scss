@@ -1,0 +1,24 @@
+cx-product-intro {
+  .code {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--cx-black);
+  }
+
+  .name {
+    font-size: 30px;
+    font-weight: var(--cx-font-weight-bold);
+    line-height: 45px;
+    color: var(--cx-color-primary);
+    margin: 5px 0px;
+    font-family: var(--cx-font-family-xbold);
+  }
+
+  .sku {
+    font-size: 24px;
+    font-weight: var(--cx-font-weight-bold);
+    line-height: 36px;
+    color: var(--cx-black);
+    font-family: var(--cx-font-family-bold);
+  }
+}

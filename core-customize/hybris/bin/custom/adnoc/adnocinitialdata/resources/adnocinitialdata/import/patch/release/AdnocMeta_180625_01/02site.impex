@@ -1,0 +1,12 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$siteUid = adnoc
+$gigyaAPIKey = $config-adnoc.gigya.apikey
+$gigyaUserKey = $config-adnoc.gigya.userkey
+$gigyaUserSecret = $config-adnoc.gigya.usersecret
+
+INSERT_UPDATE GigyaConfig; code[unique = true]; gigyaApiKey[unique = true]; sites(uid)[unique = true]; gigyaUserKey  ; gigyaUserSecret  ; mode(code)
+                         ; gigyaConfig        ; $gigyaAPIKey              ; $siteUid                 ; $gigyaUserKey ; $gigyaUserSecret ; standard
+
+INSERT_UPDATE GigyaSessionConfig; code[unique = true]; sessionLead(code); gigyaConfigs(code)
+                                ; gigyaSessionConfig ; commerce         ; gigyaConfig
+

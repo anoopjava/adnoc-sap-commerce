@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<action-definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   id="com.adnoc.backoffice.actions.outboundreplication"
+                   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+    <name>Outbound Replication</name>
+    <description>
+        Action providing implementation of replicating to SCPI which are failed in task runner
+    </description>
+    <author>hybris</author>
+    <version>1.0</version>
+
+
+    <inputType>java.util.Collection</inputType>
+    <outputType>java.util.Collection</outputType>
+    <actionClassName>com.adnoc.backoffice.actions.AdnocOutboundReplicationCockpitAction</actionClassName>
+	<customRendererClassName></customRendererClassName>
+
+    <iconUri>begin</iconUri>
+
+    <settings>
+        <setting key="viewMode" default-value="iconAndText"/>
+    </settings>
+
+</action-definition>

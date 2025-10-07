@@ -1,0 +1,1384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		   http://www.springframework.org/schema/beans/spring-beans.xsd
+		   http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+		   http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config/>
+
+	<!-- Spring Integration -->
+	<import resource="classpath:/adnocservice/integration/hot-folder-store-adnoc-spring.xml"/>
+	<import resource="classpath:/adnocservice/integration/hot-folder-common-spring.xml"/>
+	<import resource="adnocservice-dao-spring.xml"/>
+	<import resource="adnoc-spring-security-config.xml"/>
+
+	<!-- Solr field value providers -->
+	<bean id="volumeAwareProductPriceValueProvider" class="com.adnoc.service.search.solrfacetsearch.provider.impl.VolumeAwareProductPriceValueProvider"  parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="priceService" ref="priceService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="sessionService" ref="sessionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="priceComparator" ref="volumePriceComparator"/>
+		<property name="catalogVersionService" ref="catalogVersionService"/>
+	</bean>
+
+	<bean id="volumePriceComparator" class="com.adnoc.service.comparators.VolumeAwarePriceInformationComparator" scope="singleton"/>
+
+	<bean id="productVolumePricesProvider" class="com.adnoc.service.search.solrfacetsearch.provider.impl.ProductVolumePricesProvider"  parent="abstractPropertyFieldValueProvider">
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="priceService" ref="priceService"/>
+	</bean>
+
+	<bean id="abstractCategoryCodeValueProvider" abstract="true"
+		  class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryCodeValueProvider"
+		  parent="abstractPropertyFieldValueProvider" >
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+	<bean id="abstractCategoryNameValueProvider" abstract="true"
+		  class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.CategoryNameValueProvider"
+		  parent="abstractPropertyFieldValueProvider" >
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="image515ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="515Wx515H"/>
+	</bean>
+	<bean id="image300ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="300Wx300H"/>
+	</bean>
+	<bean id="image96ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="96Wx96H"/>
+	</bean>
+	<bean id="image65ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="65Wx65H"/>
+	</bean>
+	<bean id="image30ValueProvider" parent="abstractImageValueProvider" >
+		<property name="mediaFormat" value="30Wx30H"/>
+	</bean>
+
+	<bean id="productUrlValueProvider"
+		  class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.ProductUrlValueProvider"
+		  parent="abstractPropertyFieldValueProvider" >
+		<property name="urlResolver" ref="productModelUrlResolver"/>
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+		<property name="i18nService" ref="i18nService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="promotionCodeValueProvider"
+		  class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PromotionCodeValueProvider"
+		  parent="abstractPropertyFieldValueProvider" >
+		<property name="promotionsService" ref="promotionsService"/>
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+	</bean>
+
+	<bean id="promotionImageValueProvider"
+		  class="de.hybris.platform.commerceservices.search.solrfacetsearch.provider.impl.PrimaryPromotionImageValueProvider"
+		  parent="abstractPropertyFieldValueProvider" >
+		<property name="promotionsService" ref="promotionsService"/>
+		<property name="fieldNameProvider" ref="solrFieldNameProvider"/>
+	</bean>
+
+	<bean id="adnocPointOfServiceFacetDisplayNameProvider"
+		  class="com.adnoc.service.search.solrfacetsearch.provider.impl.PointOfServiceFacetDisplayNameProvider"
+	>
+		<property name="pointOfServiceService" ref="pointOfServiceService"/>
+	</bean>
+
+	<!--
+		Event listeners are singletons, therefore the dependency for a bean in tenant-scope
+		must be configured with a lookup method.
+	-->
+	<bean id="orderCancelledEventListener"
+		  class="com.adnoc.service.event.OrderCancelledEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="orderRefundEventListener"
+		  class="com.adnoc.service.event.OrderRefundEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="customerRegistrationEventListener"
+		  class="com.adnoc.service.event.RegistrationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="forgottenPasswordEventListener"
+		  class="com.adnoc.service.event.ForgottenPasswordEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="submitOrderEventListener" class="com.adnoc.service.event.SubmitOrderEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+	<bean id="orderConfirmationEventListener"
+		  class="com.adnoc.service.event.OrderConfirmationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendDeliveryMessageEventListener"
+		  class="com.adnoc.service.event.SendDeliveryMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendReadyForPickupMessageEventListener"
+		  class="com.adnoc.service.event.SendReadyForPickupMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendOrderPartiallyCanceledMessageEventListener"
+		  class="com.adnoc.service.event.SendOrderPartiallyCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendOrderPartiallyRefundedMessageEventListener"
+		  class="com.adnoc.service.event.SendOrderPartiallyRefundedMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledMessageEventListener"
+		  class="com.adnoc.service.event.SendNotPickedUpConsignmentCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="orderCompletedEventListener" class="com.adnoc.service.event.OrderCompletedEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<!-- Process resources definition -->
+
+	<bean id="customerRegistrationEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/customerRegistrationEmailProcess.xml"/>
+	</bean>
+	<bean id="forgottenPasswordEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/forgottenPasswordEmailProcess.xml"/>
+	</bean>
+	<bean id="orderConfirmationEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/orderConfirmationEmailProcess.xml"/>
+	</bean>
+	<bean id="sendDeliveryEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendDeliveryEmailProcess.xml"/>
+	</bean>
+	<bean id="sendReadyForPickupEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendReadyForPickupEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderCancelledEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendOrderCancelledEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderRefundEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendOrderRefundEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderPartiallyCanceledEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendOrderPartiallyCanceledEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderPartiallyRefundedEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendOrderPartiallyRefundedEmailProcess.xml"/>
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/sendNotPickedUpConsignmentCanceledEmailProcess.xml"/>
+	</bean>
+
+	<!-- Actions -->
+	<bean id="abstractAction" class="de.hybris.platform.processengine.action.AbstractAction"
+		  abstract="true">
+		<property name="modelService" ref="modelService"/>
+		<property name="processParameterHelper" ref="processParameterHelper"/>
+	</bean>
+
+	<bean id="sendEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.SendEmailAction"
+		  parent="abstractAction">
+		<property name="emailService" ref="emailService"/>
+	</bean>
+
+	<bean id="abstractGenerateEmailAction" class="de.hybris.platform.acceleratorservices.process.email.actions.GenerateEmailAction"
+		  parent="abstractAction" abstract="true">
+		<property name="modelService" ref="modelService"/>
+		<property name="cmsEmailPageService" ref="cmsEmailPageService"/>
+		<property name="contextResolutionStrategy" ref="processContextResolutionStrategy"/>
+		<property name="emailGenerationService" ref="emailGenerationService"/>
+	</bean>
+
+	<bean id="generateCustomerRegistrationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerRegistrationEmailTemplate"/>
+	</bean>
+
+	<bean id="generateForgottenPasswordEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ForgottenPasswordEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderConfirmationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderConfirmationEmailTemplate"/>
+	</bean>
+
+	<bean id="generateDeliverySentEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="DeliverySentEmailTemplate"/>
+	</bean>
+
+	<bean id="generateReadyForPickupEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ReadyForPickupEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderCancelledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderCancelledEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderRefundEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderRefundEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderPartiallyCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyCanceledEmailTemplate"/>
+	</bean>
+	<bean id="generateOrderPartiallyRefundedEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyRefundedEmailTemplate"/>
+	</bean>
+	<bean id="generateNotPickedUpConsignmentCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="NotPickedUpConsignmentCanceledEmailTemplate"/>
+	</bean>
+
+	<bean id="removeSentEmail"
+		  class="de.hybris.platform.acceleratorservices.process.email.actions.RemoveSentEmailAction"
+		  parent="abstractAction">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="markQuoteNotificationAsSent"
+		  class="com.adnoc.service.actions.quote.MarkQuoteNotificationAsSentAction"
+		  parent="abstractAction" abstract="true">
+		<property name="quoteService" ref="quoteService"/>
+	</bean>
+
+	<!-- Simple Suggestion Service -->
+	<alias alias="simpleSuggestionService" name="defaultSimpleSuggestionService"/>
+	<bean id="defaultSimpleSuggestionService"
+		  class="com.adnoc.service.suggestion.impl.DefaultSimpleSuggestionService" >
+		<property name="simpleSuggestionDao" ref="simpleSuggestionDao"/>
+	</bean>
+
+	<alias alias="simpleSuggestionDao" name="defaultSimpleSuggestionDao"/>
+	<bean id="defaultSimpleSuggestionDao"
+		  class="com.adnoc.service.suggestion.dao.impl.DefaultSimpleSuggestionDao"
+		  parent="abstractItemDao" >
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+	<!-- Sales quote process actions -->
+
+	<!-- quote-->
+	<bean id="quoteBuyerSubmitEventListener" class="com.adnoc.service.event.QuoteBuyerSubmitEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="quoteSalesRepSubmitEventListener" class="com.adnoc.service.event.QuoteSalesRepSubmitEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="quoteSellerApprovalSubmitEventListener" class="com.adnoc.service.event.QuoteSellerApprovalSubmitEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="mediaService" ref="mediaService"/>
+	</bean>
+
+	<bean id="quoteToExpireSoonEventListener" class="com.adnoc.service.event.QuoteToExpireSoonEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="quoteExpiredEventListener" class="com.adnoc.service.event.QuoteExpiredEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="quoteCancelEventListener" class="com.adnoc.service.event.QuoteCancelEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="quoteBuyerProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-buyer-process.xml"/>
+	</bean>
+
+	<bean id="quoteSalesRepProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-salesrep-process.xml"/>
+	</bean>
+
+
+	<bean id="quoteSellerApprovalProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-seller-approval-process.xml"/>
+	</bean>
+
+	<bean id="quotePostCancellationProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-post-cancellation-process.xml"/>
+	</bean>
+
+	<bean id="quoteToExpireSoonProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-to-expire-soon-email-process.xml"/>
+	</bean>
+
+	<bean id="quoteExpiredProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/adnocservice/processes/quote/quote-expired-email-process.xml"/>
+	</bean>
+
+	<!-- Quotes email notification jobs -->
+	<bean id="quoteToExpireSoonJobPerformable"
+		  class="com.adnoc.service.job.QuoteToExpireSoonJobPerformable"
+		  parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao"/>
+		<property name="eventService" ref="eventService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+
+	<bean id="quoteExpiredJobPerformable"
+		  class="com.adnoc.service.job.QuoteExpiredJobPerformable"
+		  parent="abstractJobPerformable">
+		<property name="supportedQuoteStatuses">
+			<set value-type="de.hybris.platform.core.enums.QuoteState">
+				<value>BUYER_OFFER</value>
+			</set>
+		</property>
+		<property name="commerceQuoteDao" ref="commerceQuoteDao"/>
+		<property name="eventService" ref="eventService" />
+		<property name="timeService" ref="timeService" />
+		<property name="commerceQuoteService" ref="commerceQuoteService"/>
+	</bean>
+
+	<import resource="/adnocservice/processes/quote/quote-buyer-process-spring.xml"/>
+	<import resource="/adnocservice/processes/quote/quote-salesrep-process-spring.xml"/>
+	<import resource="/adnocservice/processes/quote/quote-seller-approval-process-spring.xml"/>
+
+	<import resource="/adnocservice/processes/quote/quote-to-expire-soon-email-process-spring.xml"/>
+	<import resource="/adnocservice/processes/quote/quote-expired-email-process-spring.xml"/>
+
+	<import resource="/adnocservice/processes/quote/quote-post-cancellation-process-spring.xml"/>
+
+	<!-- Customer cleanup -->
+	<alias name="defaultCustomerCleanupRelatedObjectsAction" alias="customerCleanupRelatedObjectsAction"/>
+	<bean id="defaultCustomerCleanupRelatedObjectsAction" class="com.adnoc.service.retention.impl.DefaultCustomerCleanupRelatedObjectsAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks"/>
+	</bean>
+
+	<!-- Cleanup the customers not owning any order currently and the current date has past deactivation date+retention date. Also removes customers audit records. -->
+	<alias name="defaultCustomerNotOwningOrdersRemoveCleanupAction" alias="customerNotOwningOrdersRemoveCleanupAction"/>
+	<bean id="defaultCustomerNotOwningOrdersRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="customerCleanupHooks"/>
+	</bean>
+
+	<!-- Order cleanup -->
+	<!-- Cleanup the order related objects and then remove order and its audit records. -->
+	<alias name="defaultOrderRemoveCleanupAction" alias="orderRemoveCleanupAction"/>
+	<bean id="defaultOrderRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="orderCleanupHooks"/>
+	</bean>
+
+	<!-- CsTicket Remove action -->
+	<alias name="defaultCSTicketRemoveCleanupAction" alias="csTicketRemoveCleanupAction"/>
+	<bean id="defaultCSTicketRemoveCleanupAction" class="de.hybris.platform.retention.impl.DefaultExtensibleRemoveCleanupAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketCleanupHooks"/>
+	</bean>
+
+	<!-- CsTicket Stagnation action -->
+	<alias name="defaultCSTicketStagnationAction" alias="csTicketStagnationAction"/>
+	<bean id="defaultCSTicketStagnationAction" class="com.adnoc.service.retention.impl.DefaultCSTicketStagnationAction" parent="abstractExtensibleRemoveCleanupAction">
+		<property name="itemCleanupHooks" ref="csTicketRetentionHooks"/>
+		<property name="ticketBusinessService" ref="ticketBusinessService"/>
+	</bean>
+
+	<!-- Solr field value providers TEMPORARY FOR NOW SO DO NOT NEED TO DEPEND -->
+
+	<bean id="adnocCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="adnocCategorySource"/>
+	</bean>
+
+
+	<bean id="adnocCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="adnocCategorySource"/>
+	</bean>
+
+
+	<bean id="adnocCategorySource" parent="defaultCategorySource">
+		<property name="rootCategory" value="openCatalog"/> <!-- 'openCatalog' is the root icecat category -->
+	</bean>
+
+
+	<!-- Solr field value providers TEMPORARY FOR NOW SO DO NOT NEED TO DEPEND  -->
+
+	<alias name="adnocGigyaRestIntegrationServiceImpl" alias="adnocGigyaRestIntegrationService"/>
+	<bean id="adnocGigyaRestIntegrationServiceImpl"
+		  class="com.adnoc.service.integration.rest.impl.AdnocGigyaRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+		<property name="adnocGigyaTokenProvider" ref="adnocGigyaTokenProvider"/>
+	</bean>
+
+	<alias name="adnocB2BRegistrationServiceImpl" alias="adnocB2BRegistrationService"/>
+	<bean id="adnocB2BRegistrationServiceImpl" class="com.adnoc.service.registration.impl.AdnocB2BRegistrationServiceImpl"
+		  parent="b2bRegistrationService">
+		<property name="adnocRegistrationDao" ref="adnocB2BRegistrationDao"/>
+		<property name="adnocDuplicateCheckHelper" ref="adnocDuplicateCheckHelper"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerPostPersistHook" class="com.adnoc.service.integration.hooks.AdnocB2BCustomerPostPersistHook">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+
+	<bean id="b2bCustomerCreationProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocB2BCustomerCreationInboundProcess.xml"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerCreationInboundEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocB2BCustomerCreationEmailTemplate"/>
+	</bean>
+
+	<bean id="b2bRegistrationApprovedAutomatedWorkflowTemplateJob" class="com.adnoc.service.workflows.actions.AdnocRegistrationApprovedAutomatedWorkflowTemplateJob"
+		  parent="b2bAbstractAutomatedWorkflowTemplateJob">
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+		<property name="defaultCustomerEmailResolutionService" ref="defaultCustomerEmailResolutionService"/>
+	</bean>
+
+	<bean id="b2bRegistrationRejectedAutomatedWorkflowTemplateJob" class="com.adnoc.service.workflows.actions.AdnocRegistrationRejectedAutomatedWorkflowTemplateJob"
+		  parent="b2bAbstractAutomatedWorkflowTemplateJob"/>
+
+	<alias name="adnocSapCpiOutboundService" alias="sapCpiOutboundService" />
+	<bean id="adnocSapCpiOutboundService" class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOutboundServiceImpl" parent="sapCpiDefaultOutboundService">
+		<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<bean id="adnocB2BRegistrationOutboundTaskRunnerAction" class="com.adnoc.service.integration.outbound.AdnocB2BRegistrationOutboundTaskRunnerAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerOutboundProcessAction" parent="abstractAction" class="com.adnoc.service.integration.outbound.AdnocB2BCustomerOutboundProcessAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+	</bean>
+
+	<bean id="adnocSapCpiOutboundConversionService"
+		  class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOutboundConversionServiceImpl">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="siteBaseUrlResolutionService" ref="siteBaseUrlResolutionService"/>
+		<property name="configurationService" ref="configurationService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="mediaService" ref="mediaService"/>
+		<property name="sapCpiOrderDestinationService" ref="sapCpiOrderDestinationService"/>
+		<property name="adnocTicketService" ref="adnocTicketService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="adnocB2BQuotePartnerContributor" ref="adnocB2BQuotePartnerContributor"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<alias name="adnocConfigServiceImpl" alias="adnocConfigService"/>
+	<bean id="adnocConfigServiceImpl" class="com.adnoc.service.config.impl.AdnocConfigServiceImpl">
+		<property name="adnocConfigDao" ref="adnocConfigDao"/>
+		<property name="enumerationService" ref="enumerationService"/>
+	</bean>
+
+	<alias name="adnocWebhookServicesRetryPolicy" alias="webhookServicesRetryPolicy"/>
+	<bean id="adnocWebhookServicesRetryPolicy" class="org.springframework.retry.policy.SimpleRetryPolicy">
+		<constructor-arg  name="maxAttempts"  value="${adnoc.outbound.maximum.retryAllowed}"/>
+		<constructor-arg name="retryableExceptions" >
+			<map>
+				<entry key="de.hybris.platform.webhookservices.service.impl.WebhookRetryableException" value="true"/>
+			</map>
+		</constructor-arg>
+		<constructor-arg name="traverseCauses" value="true"/>
+	</bean>
+
+	<alias name="adnocCommerceAddToCartStrategy" alias="commerceAddToCartStrategy"/>
+	<bean id="adnocCommerceAddToCartStrategy" class="com.adnoc.service.order.strategy.AdnocCommerceAddToCartStrategy"
+		  parent="defaultCommerceAddToCartStrategy">
+		<property name="random" ref="random"/>
+	</bean>
+
+	<bean id="random" class="java.util.Random"/>
+
+	<bean id="adnocB2BRegistrationAutoRejectJob" class="com.adnoc.service.job.AdnocB2BRegistrationAutoRejectJob">
+		<property name="workflowService" ref="newestWorkflowService"/>
+		<property name="workflowProcessingService" ref="workflowProcessingService"/>
+		<property name="workflowTemplateService" ref="workflowTemplateService"/>
+		<property name="userService" ref="userService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+	</bean>
+
+	<alias name="adnocB2BUnitServiceImpl" alias="adnocB2BUnitService"/>
+	<bean id="adnocB2BUnitServiceImpl" class="com.adnoc.service.b2bunit.AdnocB2BUnitServiceImpl"
+		  parent="defaultB2BUnitService">
+		<property name="b2BCustomerService" ref="b2bCustomerService"/>
+		<property name="adnocB2BUnitDao" ref="adnocB2BUnitDao"/>
+	</bean>
+
+	<bean id="adnocOrgUnitModelValidateInterceptor"
+		  class="com.adnoc.service.b2bunit.organization.interceptor.AdnocOrgUnitModelValidateInterceptor"
+		  parent="orgUnitModelValidateInterceptor"/>
+
+	<bean id="orgUnitModelValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="adnocOrgUnitModelValidateInterceptor"/>
+		<property name="typeCode" value="OrgUnit"/>
+	</bean>
+
+	<alias name="adnocAddressServiceImpl" alias="adnocAddressService"/>
+	<bean id="adnocAddressServiceImpl" class="com.adnoc.service.address.AdnocAddressServiceImpl" parent="defaultAddressService">
+		<property name="adnocAddressDao" ref="adnocAddressDao"/>
+	</bean>
+
+	<!--  RestIntegration Start -->
+
+	<!-- Bean for CloseableHttpClient -->
+	<bean id="adnocCloseableHttpClient" class="org.apache.http.impl.client.CloseableHttpClient"
+		  factory-bean="httpClientBuilder" factory-method="build"/>
+
+	<!-- Bean for RestTemplate -->
+	<bean id="adnocRestTemplate" class="org.springframework.web.client.RestTemplate">
+		<constructor-arg>
+			<bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+				<constructor-arg ref="adnocCloseableHttpClient"/>
+				<property name="connectTimeout" value="25000"/>
+				<property name="readTimeout" value="30000"/>
+			</bean>
+		</constructor-arg>
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+				<bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>application/json</value>
+							<value>text/javascript</value>
+							<value>application/x-www-form-urlencoded</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="adnocRestTemplateFactory" class="de.hybris.platform.apiregistryservices.utils.DefaultRestTemplateFactory" scope="prototype"/>
+
+	<alias name="adnocRestIntegrationServiceImpl" alias="adnocRestIntegrationService"/>
+	<bean id="adnocRestIntegrationServiceImpl" class="com.adnoc.service.integration.rest.impl.AdnocRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="defaultRestTemplateFactory" ref="adnocRestTemplateFactory"/>
+		<property name="connectTimeout" value="30000"/>
+		<property name="readTimeout" value="30000"/>
+	</bean>
+
+	<alias name="adnocSmsRestIntegrationServiceImpl" alias="adnocSmsRestIntegrationService"/>
+	<bean id="adnocSmsRestIntegrationServiceImpl"
+		  class="com.adnoc.service.integration.rest.impl.AdnocSmsRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+		<property name="adnocSmsAccessTokenProvider" ref="adnocSmsAccessTokenProvider"/>
+	</bean>
+
+	<bean id="adnocSmsAccessTokenProvider"
+		  class="com.adnoc.service.integration.rest.access.token.provider.AdnocSmsAccessTokenProvider">
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+	</bean>
+	<!--  RestIntegration End -->
+
+	<!--  SMS Start -->
+	<alias name="adnocSmsServiceImpl" alias="adnocSmsService"/>
+	<bean id="adnocSmsServiceImpl" class="com.adnoc.service.sms.AdnocSmsServiceImpl">
+		<property name="adnocRestIntegrationService" ref="adnocSmsRestIntegrationService"/>
+	</bean>
+
+	<bean id="abstractAdnocGenerateSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AbstractAdnocB2bGenerateSmsAction"
+		  parent="abstractAction" abstract="true">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="adnocSmsService" ref="adnocSmsService"/>
+	</bean>
+
+	<bean id="adnocB2bRegistrationReceivedGenerateSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AdnocB2bRegistrationReceivedGenerateSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocB2bRegistrationRejectedGenerateSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AdnocB2bRegistrationRejectedGenerateSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocB2bCustomerCreationGenerateSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AdnocB2bCustomerCreationGenerateSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+	<!--  SMS End -->
+
+	<bean id="adnocPayerDivisionAddToCartValidator" class="com.adnoc.service.validators.AdnocPayerDivisionAddToCartValidator">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<bean id="adnocPayerDivisionAddToCartValidatorMergeDirective" depends-on="addToCartValidators" parent="listMergeDirective">
+		<property name="add" ref="adnocPayerDivisionAddToCartValidator" />
+	</bean>
+
+	<bean id="adnocDivisionGroupAddToCartValidator" class="com.adnoc.service.validators.AdnocDivisionGroupAddToCartValidator">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+	</bean>
+
+	<bean id="adnocDivisionGroupAddToCartValidatorMergeDirective" depends-on="addToCartValidators" parent="listMergeDirective">
+		<property name="add" ref="adnocDivisionGroupAddToCartValidator" />
+	</bean>
+
+	<bean id="adnocQuantityAddToCartValidator" class="com.adnoc.service.validators.AdnocQuantityAddToCartValidator"/>
+
+	<bean id="adnocQuantityAddToCartValidatorMergeDirective" depends-on="addToCartValidators" parent="listMergeDirective">
+		<property name="add" ref="adnocQuantityAddToCartValidator" />
+	</bean>
+
+
+	<!-- OMM Order Mapper -->
+	<bean id="adnocSapCpiOmmOrderMapperService" class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOmmOrderMapperService" parent="sapCpiOmmOrderMapperService">
+	</bean>
+
+	<!-- Add OMM Order Mapper -->
+	<bean id="sapCpiOmmOrderMapper" depends-on="sapCpiOrderMappers" parent="listMergeDirective">
+		<property name="add" ref="adnocSapCpiOmmOrderMapperService" />
+	</bean>
+
+	<alias name="adnocTicketBusinessService" alias="ticketBusinessService"/>
+	<bean id="adnocTicketBusinessService" class="com.adnoc.service.ticket.AdnocTicketBusinessService" parent="defaultTicketBusinessService">
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+	</bean>
+
+	<bean id="adnocCpiOutboundCsTicketTaskRunnerAction" class="com.adnoc.service.ticket.cpiexchange.task.runner.actions.AdnocCpiOutboundCsTicketTaskRunnerAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocCpiInboundPriceRowTaskRunnerAction" class="com.adnoc.service.integration.hooks.AdnocCpiInboundPriceRowTaskRunnerAction">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<alias name="adnocB2BDocumentServiceImpl" alias="adnocB2BDocumentService"/>
+	<bean id="adnocB2BDocumentServiceImpl" class="com.adnoc.service.company.service.AdnocB2BDocumentServiceImpl" parent="defaultB2BDocumentService">
+		<property name="adnocB2BDocumentDao" ref="adnocB2BDocumentDao"/>
+	</bean>
+
+	<alias name="adnocB2BDocumentTypeServiceImpl" alias="adnocB2BDocumentTypeService"/>
+	<bean id="adnocB2BDocumentTypeServiceImpl" class="com.adnoc.service.company.service.AdnocB2BDocumentTypeServiceImpl" parent="defaultB2BDocumentTypeService">
+		<property name="adnocB2BDocumentTypeDao" ref="adnocB2BDocumentTypeDao"/>
+	</bean>
+
+	<bean id="adnocPriceRowPostPersistenceHook" class="com.adnoc.service.integration.hooks.AdnocPriceRowPostPersistenceHook">
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+	</bean>
+
+	<!--    Order Process-->
+	<bean id="adnocPartialOrderCompletionEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocPartialOrderCompletionEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocPartialOrderCompletionEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+				  value="classpath:/adnocservice/processes/adnocPartialOrderCompletionEmailProcess.xml"/>
+	</bean>
+
+	<bean id="adnocOrderCompletedEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocOrderCompletedEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocOrderCompletedEmailEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+				  value="classpath:/adnocservice/processes/adnocOrderCompletedEmailProcess.xml"/>
+	</bean>
+
+	<bean id="adnocOMMOrderPostPersistHook" class="com.adnoc.service.integration.hooks.AdnocOMMOrderPostPersistHook">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+	</bean>
+
+	<bean id="adnocOrderConfirmationSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AdnocOrderConfirmationSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocOrderPartialCompletedSmsAction"
+		  class="com.adnoc.service.process.sms.actions.AdnocOrderPartialCompletedSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocOrderCompletedSmsAction" class="com.adnoc.service.process.sms.actions.AdnocOrderCompletedSmsAction"
+		  parent="abstractAdnocGenerateSmsAction"/>
+
+	<!--    Order Process END-->
+	<bean id="adnocB2BCustomerPrePersist"
+		  class="com.adnoc.service.integration.hooks.AdnocB2BCustomerPrePersist">
+		<property name="userService" ref="userService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="adnocQuotePrePersistHook"
+		  class="com.adnoc.service.integration.hooks.AdnocQuotePrePersistHook">
+	</bean>
+
+	<bean id="adnocQuotePostPersistHook"
+		  class="com.adnoc.service.integration.hooks.AdnocQuotePostPersistHook">
+		<property name="calculationService" ref="calculationService"/>
+	</bean>
+
+	<bean id="adnocB2BCartValidator" class="com.adnoc.service.validators.AdnocB2BCartValidator">
+		<property name="cartService" ref="cartService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<bean id="adnocCSTicketPostPersistenceHook"
+		  class="com.adnoc.service.integration.hooks.AdnocCSTicketPostPersistenceHook">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocCSTicketPrePersistenceHook" class="com.adnoc.service.integration.hooks.AdnocCSTicketPrePersistenceHook">
+		<property name="modelService" ref="modelService"/>
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+		<property name="enumerationService" ref="enumerationService" />
+	</bean>
+
+	<bean id="adnocCsTicketProcessContextStrategy"
+		  class="com.adnoc.service.strategies.AdnocCsTicketProcessContextStrategy"
+		  parent="abstractProcessContextStrategy"/>
+
+	<bean depends-on="processContextResolutionStrategyMap" parent="mapMergeDirective">
+		<property name="key">
+			<value type="java.lang.Class">com.adnoc.service.model.AdnocCsTicketProcessModel</value>
+		</property>
+		<property name="value" ref="adnocCsTicketProcessContextStrategy"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerCpiOutboundTaskRunner" class="com.adnoc.service.customer.AdnocB2BCustomerCpiOutboundTaskRunner">
+		<property name="adnocSapCpiOutboundService" ref="adnocSapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<alias name="adnocSapCpiOmmOrderConversionService" alias="sapCpiOrderConversionService"/>
+	<bean id="adnocSapCpiOmmOrderConversionService" class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOmmOrderConversionService" parent="sapCpiOmmOrderConversionService">
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="configurationService" ref="configurationService"/>
+		<property name="b2BUnitService" ref="b2bUnitService"/>
+		<property name="mediaService" ref="mediaService"/>
+	</bean>
+
+	<bean id="adnocQuoteBuyerOrderPlacedEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocQuoteBuyerOrderPlacedEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocQuoteBuyerOrderPlacedEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocQuoteBuyerOrderPlacedEmailProcess.xml"/>
+	</bean>
+
+	<!-- OMM Order Cancellation Mapper -->
+	<alias name="adnocSapCpiOmmOrderCancellationMapperService" alias="sapCpiOrderCancellationMappers"/>
+	<bean id="adnocSapCpiOmmOrderCancellationMapperService" class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOmmOrderCancellationMapperService" parent="sapCpiOrderCancellationMapperService">
+    </bean>
+
+	<alias name="adnocQuoteBuyerOrderPlacedEventListener" alias="quoteBuyerOrderPlacedEventListener"/>
+	<bean id="adnocQuoteBuyerOrderPlacedEventListener"
+		  class="com.adnoc.service.event.AdnocQuoteBuyerOrderPlacedEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="commerceQuoteService" ref="commerceQuoteService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<alias name="adnocReturnActionAdapter" alias="returnActionAdapter" />
+	<bean id="adnocReturnActionAdapter" class="com.adnoc.service.integration.outbound.AdnocReturnActionAdapter" parent="defaultReturnActionAdapter">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+	</bean>
+
+	<bean id="adnocRequoteBuyerSubmissionProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocRequoteBuyerSubmissionProcess.xml"/>
+	</bean>
+
+	<bean id="adnocReturnOrderSubmissionProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocReturnOrderSubmissionProcess.xml"/>
+	</bean>
+
+	<bean id="adnocReQuoteBuyerSubmissionEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocReQuoteBuyerSubmissionEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocReturnOrderSubmissionEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocReturnOrderSubmissionEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocReturnOrderAprrovedEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocReturnOrderApprovedEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocReQuoteBuyerSubmissionEventListener"
+		  class="com.adnoc.service.event.AdnocReQuoteBuyerSubmissionEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<bean id="adnocReturnOrderEventListener" class="com.adnoc.service.event.AdnocReturnOrderEventListener"
+          parent="abstractEventListener">
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="modelService" ref="modelService"/>
+    </bean>
+
+	<bean id="adnocReturnOrderOutboundTaskRunnerAction" class="com.adnoc.service.integration.outbound.AdnocReturnOrderOutboundTaskRunnerAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocOverduePaymentOutboundTaskRunnerAction" class="com.adnoc.service.integration.outbound.AdnocOverduePaymentOutboundTaskRunnerAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocQuoteOutboundTaskRunnerAction" class="com.adnoc.service.integration.outbound.AdnocQuoteOutboundTaskRunnerAction">
+		<property name="adnocSapCpiOutboundService" ref="sapCpiOutboundService"/>
+		<property name="adnocSapCpiOutboundConversionService" ref="adnocSapCpiOutboundConversionService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocReturnOrderOutboundProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocReturnOrderOutbound-process.xml"/>
+	</bean>
+
+	<alias alias="commerceQuoteService" name="adnocCommerceQuoteService"/>
+	<bean id="adnocCommerceQuoteService" class="com.adnoc.service.quote.AdnocCommerceQuoteService"
+		  parent="defaultCommerceQuoteService">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+	</bean>
+
+	<!-- SOA Statement Starts-->
+	<alias name="adnocDownloadStatementServiceImpl" alias="adnocDownloadStatementService"/>
+	<bean id="adnocDownloadStatementServiceImpl" class="com.adnoc.service.soa.AdnocDownloadStatementServiceImpl">
+		<property name="adnocRestIntegrationService" ref="adnocRestIntegrationService"/>
+	</bean>
+
+	<alias name="adnocAccountSummaryServiceImpl" alias="adnocAccountSummaryService"/>
+	<bean id="adnocAccountSummaryServiceImpl" class="com.adnoc.service.soa.AdnocAccountSummaryServiceImpl" parent="defaultB2BDocumentService">
+		<property name="adnocRestIntegrationService" ref="adnocRestIntegrationService"/>
+	</bean>
+	<!-- SOA Statement END-->
+
+	<bean id="adnocB2BDocumentPrePersist"
+		  class="com.adnoc.service.integration.hooks.AdnocB2BDocumentPrePersist">
+	</bean>
+
+	<alias name="adnocSLFindOrderDiscountValuesStrategy" alias="slFindOrderDiscountValuesStrategy"/>
+	<bean id="adnocSLFindOrderDiscountValuesStrategy"
+		  class="com.adnoc.service.calculation.impl.servicelayer.AdnocSLFindOrderDiscountValuesStrategy"
+		  parent="defaultSLFindOrderDiscountValuesStrategy">
+	</bean>
+
+	<!-- Send Outbound OMM Order Action -->
+	<alias name="adnocSapCpiOmmOrderOutboundAction" alias="sapSendOrderAction"/>
+	<bean id="adnocSapCpiOmmOrderOutboundAction" parent="sapCpiOmmOrderOutboundAction"
+		  class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOmmOrderOutboundAction">
+		<property name="eventService" ref="eventService"/>
+	</bean>
+
+	<alias name="adnocB2BCartService" alias="b2bCartService"/>
+	<bean id="adnocB2BCartService" class="com.adnoc.service.b2bcart.AdnocB2BCartService"
+		  parent="defaultB2BCartService"/>
+
+	<alias name="adnocDynamicAttributesOrderStatusDisplay" alias="dynamicAttributesOrderStatusDisplay"/>
+	<bean id="adnocDynamicAttributesOrderStatusDisplay" class="com.adnoc.service.order.handler.AdnocDynamicAttributesOrderStatusDisplay">
+		<property name="enumerationService" ref="enumerationService" />
+	</bean>
+
+	<bean id="adnocB2BUnitRelationMappingJob" class="com.adnoc.service.job.AdnocB2BUnitRelationMappingJob"
+		  parent="abstractJobPerformable">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<alias name="adnocTicketServiceImpl" alias="adnocTicketService"/>
+	<bean id="adnocTicketServiceImpl" class="com.adnoc.service.ticket.AdnocTicketServiceImpl"
+		  parent="defaultTicketService">
+		<property name="adnocTicketDao" ref="adnocTicketDao"/>
+	</bean>
+
+	<alias name="adnocCategoryServiceImpl" alias="adnocCategoryService"/>
+	<bean id="adnocCategoryServiceImpl" class="com.adnoc.service.category.impl.AdnocCategoryServiceImpl"
+		  parent="defaultCategoryService">
+		<property name="adnocCategoryDao" ref="adnocCategoryDao"/>
+	</bean>
+
+	<alias name="adnocOverdueInvoicesServiceImpl" alias="adnocOverdueInvoicesService"/>
+	<bean id="adnocOverdueInvoicesServiceImpl" class="com.adnoc.service.overdueinvoices.impl.AdnocOverdueInvoicesServiceImpl">
+		<property name="adnocRestIntegrationService" ref="adnocRestIntegrationService"/>
+		<property name="adnocOverdueInvoicesDao" ref="adnocOverdueInvoicesDao"/>
+		<property name="enumerationService" ref="enumerationService" />
+	</bean>
+
+	<alias name="adnocPaymentPostRestIntegrationServiceImpl" alias="adnocPaymentPostRestIntegrationService"/>
+	<bean id="adnocPaymentPostRestIntegrationServiceImpl" class="com.adnoc.service.integration.rest.impl.AdnocPaymentPostRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+	</bean>
+
+	<alias name="adnocPaymentServiceImpl" alias="adnocPaymentService"/>
+	<bean id="adnocPaymentServiceImpl" class="com.adnoc.service.payment.impl.AdnocPaymentServiceImpl">
+		<property name="adnocPaymentPostRestIntegrationService" ref="adnocPaymentPostRestIntegrationService"/>
+		<property name="adnocPaymentGetRestIntegrationService" ref="adnocPaymentGetRestIntegrationService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<alias name="adnocCreditLimitServiceImpl" alias="adnocCreditLimitService"/>
+	<bean id="adnocCreditLimitServiceImpl" class="com.adnoc.service.user.creditlimit.impl.AdnocCreditLimitServiceImpl">
+		<property name="adnocRestIntegrationService" ref="adnocRestIntegrationService"/>
+	</bean>
+
+	<alias name="adnocPaymentGetRestIntegrationServiceImpl" alias="adnocPaymentGetRestIntegrationService"/>
+	<bean id="adnocPaymentGetRestIntegrationServiceImpl"
+		  class="com.adnoc.service.integration.rest.impl.AdnocPaymentGetRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+	</bean>
+
+	<alias name="adnocCustomerAccountServiceImpl" alias="adnocCustomerAccountService"/>
+	<bean id="adnocCustomerAccountServiceImpl" class="com.adnoc.service.customer.impl.AdnocCustomerAccountServiceImpl" parent="defaultCustomerAccountService">
+		<property name="adnocCustomerAccountDao" ref="adnocCustomerAccountDao"/>
+		<property name="adnocDuplicateCheckHelper" ref="adnocDuplicateCheckHelper"/>
+	</bean>
+
+	<!--	Email Notification to Adnoc SalesManager(CsAdmin) Start-->
+	<bean id="adnocNewQuoteRequestEmailAction" class="com.adnoc.service.actions.quote.AdnocNewQuoteRequestEmailAction"
+		  parent="abstractGenerateEmailAction">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="emailService" ref="emailService"/>
+		<property name="frontendTemplateName" value="AdnocNewQuoteRequestEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocQuoteRequestResubmissionEmailAction" class="com.adnoc.service.actions.quote.AdnocQuoteRequestResubmissionEmailAction"
+		  parent="abstractGenerateEmailAction">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="emailService" ref="emailService"/>
+		<property name="frontendTemplateName" value="AdnocQuoteRequestResubmissionEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocReturnOrderRequestSubmissionEmailAction" class="com.adnoc.service.actions.quote.AdnocReturnOrderRequestSubmissionEmailAction"
+		  parent="abstractGenerateEmailAction">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="emailService" ref="emailService"/>
+		<property name="frontendTemplateName" value="AdnocReturnOrderRequestSubmissionToCsAgentEmailTemplate"/>
+	</bean>
+	<!--	Email Notification to Adnoc SalesManager(CsAdmin) END-->
+
+	<alias name="adnocB2BPartnerContributor" alias="sapPartnerContributor"/>
+	<bean id="adnocB2BPartnerContributor" class="com.adnoc.service.contributor.AdnocB2BPartnerContributor"
+		  parent="defaultSapB2BPartnerContributor"/>
+
+	<util:map id="adnocPaymentInfoCreateStrategyMap" key-type="java.lang.String"
+			  value-type="com.adnoc.service.order.payment.strategies.AdnocPaymentInfoCreateStrategy">
+		<entry key="CREDIT_LIMIT" value-ref="creditLimitPaymentInfoCreateStrategy"/>
+		<entry key="CARD" value-ref="adnocCreditCardPaymentInfoCreateStrategy"/>
+		<entry key="BANK_TRANSFER" value-ref="adnocBankTransferPaymentInfoCreateStrategy"/>
+	</util:map>
+
+	<alias name="adnocCreditLimitPaymentInfoCreateStrategy" alias="creditLimitPaymentInfoCreateStrategy"/>
+	<bean id="adnocCreditLimitPaymentInfoCreateStrategy" class="com.adnoc.service.order.payment.strategies.impl.AdnocCreditLimitPaymentInfoCreateStrategy">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocCreditCardPaymentInfoCreateStrategy" class="com.adnoc.service.order.payment.strategies.impl.AdnocCreditCardPaymentInfoCreateStrategy">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocBankTransferPaymentInfoCreateStrategy" class="com.adnoc.service.order.payment.strategies.impl.AdnocBankTransferPaymentInfoCreateStrategy">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocPaymentTransactionStrategy" class="com.adnoc.service.order.payment.transaction.strategies.AdnocPaymentTransactionStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="userService" ref="userService"/>
+		<property name="adnocPaymentInfoCreateStrategyMap" ref="adnocPaymentInfoCreateStrategyMap"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="adnocOutboundReplicationDirector" class="com.adnoc.service.director.AdnocOutboundReplicationDirector">
+		<property name="modelService" ref="modelService"/>
+		<property name="taskService" ref="taskService"/>
+		<property name="requestTaskRunnerMap">
+			<map>
+				<entry key="CsTicket" value="adnocCpiOutboundCsTicketTaskRunnerAction"/>
+				<entry key="B2BCustomer" value="adnocB2BCustomerCpiOutboundTaskRunner"/>
+				<entry key="AdnocSoldToB2BRegistration" value="adnocB2BRegistrationOutboundTaskRunnerAction"/>
+				<entry key="AdnocPayerB2BUnitRegistration" value="adnocB2BRegistrationOutboundTaskRunnerAction"/>
+				<entry key="AdnocShipToB2BUnitRegistration" value="adnocB2BRegistrationOutboundTaskRunnerAction"/>
+				<entry key="ReturnRequest" value="adnocReturnOrderOutboundTaskRunnerAction"/>
+				<entry key="PriceRow" value="adnocCpiInboundPriceRowTaskRunnerAction"/>
+				<entry key="AdnocOverduePaymentTransaction" value="adnocOverduePaymentOutboundTaskRunnerAction"/>
+				<entry key="OrderCancelRecordEntry" value="sapSendOrderCancelRequestAsCSVTaskRunner"/>
+				<entry key="Quote" value="adnocQuoteOutboundTaskRunnerAction"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="adnocOverdueInvoicesDaoImpl" alias="adnocOverdueInvoicesDao"/>
+	<bean id="adnocOverdueInvoicesDaoImpl" class="com.adnoc.service.overdueinvoices.dao.impl.AdnocOverdueInvoicesDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<bean id="abstractAdnocB2BAdminEmailAction" class="com.adnoc.service.actions.quote.AbstractAdnocB2BAdminEmailAction"
+		  parent="abstractGenerateEmailAction">
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+		<property name="emailService" ref="emailService"/>
+	</bean>
+
+	<bean id="adnocAdminCreatedEmailAction" class="com.adnoc.service.actions.quote.AdnocAdminCreatedEmailAction"
+		  parent="abstractAdnocB2BAdminEmailAction">
+		<property name="frontendTemplateName" value="AdnocB2BAdminCreatedEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocShipToCreatedB2BCustomerEmailAction"
+		  class="com.adnoc.service.actions.quote.AdnocShipToCreatedB2BCustomerEmailAction"
+		  parent="abstractAdnocB2BAdminEmailAction">
+		<property name="frontendTemplateName" value="AdnocShipToCreatedB2BCustomerEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocB2BCustomerCreationShipToProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocB2BCustomerCreationShipToAdminProcess.xml"/>
+	</bean>
+
+
+    <bean id="adnocReturnOrderRejectedProcessDefinitionResource"
+          class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+        <property name="resource"
+                  value="classpath:/adnocservice/processes/adnocReturnOrderRejectedProcess.xml"/>
+    </bean>
+
+    <bean id="generateAdnocReturnOrderRejectedAction" parent="abstractGenerateEmailAction">
+        <property name="frontendTemplateName" value="AdnocReturnOrderRejectedEmailTemplate"/>
+    </bean>
+
+	<bean id="adnocReturnOrderRejectedEventListener" class="com.adnoc.service.event.AdnocReturnOrderRejectedEventListener"
+		  parent="abstractEventListener">
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="adnocQuoteSellerApproveOrRejectEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocQuoteSellerApproveOrRejectEmailTemplate"/>
+	</bean>
+
+	<!-- ADNOC SAP Pricing -->
+	<alias name="adnocSLFindPriceStrategy" alias="slFindPriceStrategy" />
+	<bean id="adnocSLFindPriceStrategy"
+		  class="com.adnoc.service.order.strategies.calculation.impl.servicelayer.AdnocSLFindPriceStrategy" parent="defaultSLFindPriceStrategy">
+		<property name="adnocFindPriceValueInfoStrategy" ref="adnocFindPriceValueInfoStrategy"/>
+		<property name="adnocPDTCriteriaFactory" ref="adnocPDTCriteriaFactory"/>
+	</bean>
+
+	<alias name="adnocFindPriceValueInfoStrategy" alias="findPriceValueInfoStrategy"/>
+	<bean id="adnocFindPriceValueInfoStrategy" class="com.adnoc.service.order.strategies.calculation.pdt.impl.AdnocFindPriceValueInfoStrategy"
+		parent="defaultFindPriceValueInfoStrategy">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="adnocPriceService" ref="adnocPriceService"/>
+		<property name="adnocMockedPriceService" ref="adnocMockedPriceService"/>
+		<property name="adnocPriceValueConverter" ref="adnocPriceValueConverter"/>
+		<property name="adnocPriceInfoConverter" ref="adnocPriceInfoConverter"/>
+	</bean>
+
+	<alias name="adnocPriceServiceImpl" alias="adnocPriceService"/>
+	<bean id="adnocPriceServiceImpl" class="com.adnoc.service.price.impl.AdnocPriceServiceImpl">
+		<property name="adnocRestIntegrationService" ref="adnocRestIntegrationService"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="divisionOrderTypeMap" ref="divisionOrderTypeMap"/>
+		<property name="adnocB2BUnitService" ref="adnocB2BUnitService"/>
+	</bean>
+
+	<alias name="adnocMockedPriceServiceImpl" alias="adnocMockedPriceService"/>
+	<bean id="adnocMockedPriceServiceImpl" class="com.adnoc.service.price.impl.AdnocMockedPriceServiceImpl"/>
+
+	<util:map id="divisionOrderTypeMap">
+		<entry key="21" value="ZBRD"/>
+		<entry key="31" value="ZBRD"/>
+		<entry key="41" value="ZBRD"/>
+		<entry key="23" value="Z3P"/>
+		<entry key="53" value="ZBRD"/>
+	</util:map>
+
+	<bean id="adnocPriceValueConverter" class="com.adnoc.service.order.strategies.calculation.pdt.impl.converter.impl.AdnocPriceValueConverter"/>
+
+	<bean id="adnocPriceInfoConverter" class="com.adnoc.service.order.strategies.calculation.pdt.impl.converter.impl.AdnocPriceInfoConverter"/>
+
+	<alias name="adnocCalculationService" alias="calculationService"/>
+	<bean id="adnocCalculationService" class="com.adnoc.service.order.calculate.AdnocCalculationService"
+		  parent="defaultCalculationService">
+		<property name="orderRequiresCalculationStrategy" ref="orderRequiresCalculationStrategy"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<alias name="adnocStoreServiceImpl" alias="adnocStoreService"/>
+	<bean id="adnocStoreServiceImpl" class="com.adnoc.service.storeservice.AdnocStoreServiceImpl" parent="defaultStoreFinderService">
+		<property name="adnocStoreDao" ref="adnocStoreDao"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="stockService" ref="stockService"/>
+		<property name="productService" ref="productService"/>
+	</bean>
+
+	<alias name="adnocSapCpiOmmOrderOutboundCancellationAction" alias="sapSendOrderCancelRequestAsCSVTaskRunner"/>
+	<bean id="adnocSapCpiOmmOrderOutboundCancellationAction"
+		  class="com.adnoc.service.integration.outbound.service.impl.AdnocSapCpiOmmOrderOutboundCancellationAction" parent="sapCpiOmmOrderOutboundCancellationAction">
+		<property name="enumerationService" ref="enumerationService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+
+	<alias name="adnocDkimEmailService" alias="emailService"/>
+	<bean id="adnocDkimEmailService" class="com.adnoc.service.email.impl.AdnocDkimEmailService" parent="defaultEmailService">
+		<property name="adnocDkimSigner" ref="adnocDkimSigner"/>
+	</bean>
+
+
+	<bean id="adnocAutoProductCatalogSyncJob" class="com.adnoc.service.job.AdnocAutoProductCatalogSyncJob"
+		  parent="abstractJobPerformable">
+		<property name="catalogSynchronizationService" ref="catalogSynchronizationService"/>
+		<property name="catalogVersionService" ref="catalogVersionService"/>
+		<property name="syncConfig" ref="syncConfig"/>
+		<property name="adnocConfigService" ref="adnocConfigService"/>
+		<property name="adnocCategoryService" ref="adnocCategoryService"/>
+		<property name="productService" ref="productService"/>
+	</bean>
+
+<!--  Order Cancellation -->
+	<bean id="adnocOrderCancelledSmsAction" class="com.adnoc.service.process.sms.actions.AdnocOrderCancelledSmsAction" parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocOrderCancelledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocOrderCancelledEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocOrderCancelledEmailEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocOrderCancelledEmailProcess.xml"/>
+	</bean>
+
+	<!--  Order Partial Cancellation -->
+	<bean id="adnocPartialOrderCancellationSmsAction" class="com.adnoc.service.process.sms.actions.AdnocPartialOrderCancellationSmsAction" parent="abstractAdnocGenerateSmsAction"/>
+
+	<bean id="adnocPartialOrderCancellationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="AdnocPartialOrderCancellationEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocOrderPartiallyCancelledEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocPartialOrderCancellationEmailProcess.xml"/>
+	</bean>
+
+
+
+	<alias name="adnocSapEnterCancellingStrategyImpl" alias="enterCancellingStrategy"/>
+	<bean id="adnocSapEnterCancellingStrategyImpl" class="com.adnoc.service.cancellation.AdnocSapEnterCancellingStrategyImpl">
+		<property name="adnocOutboundReplicationDirector" ref="adnocOutboundReplicationDirector"/>
+		<property name="modelService" ref="modelService" />
+		<property name="taskService" ref="taskService" />
+	</bean>
+
+	<bean id="adnocPDTCriteriaFactory" class="com.adnoc.service.order.strategies.calculation.pdt.criteria.impl.AdnocPDTCriteriaFactory"
+		  parent="defaultPDTCriteriaFactory">
+		<property name="pdtEnumGroupsHelper" ref="pdtEnumGroupsHelper"/>
+		<property name="sessionService" ref="sessionService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+
+	<alias alias="orderCancelRecordsHandler" name="adnocOrderCancelRecordsHandlerImpl"/>
+	<bean id="adnocOrderCancelRecordsHandlerImpl" class="com.adnoc.service.cancellation.AdnocOrderCancelRecordsHandlerImpl" parent="defaultOrderCancelRecordsHandler"/>
+
+	<alias name="adnocSapOmsOrderCancelStateMappingStrategy" alias="orderCancelStateMappingStrategy" />
+	<bean id="adnocSapOmsOrderCancelStateMappingStrategy" class="com.adnoc.service.cancellation.AdnocSapOmsOrderCancelStateMappingStrategy" parent="sapOmsOrderCancelStateMappingStrategy"/>
+
+	<bean id="adnocOrderReplicationFailedEventListener" class="com.adnoc.service.event.AdnocOrderReplicationFailedEventListener" parent="abstractOrderEventListener">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+	</bean>
+
+	<bean id="adnocOrderReplicationFailedEmailAction" class="com.adnoc.service.order.action.AdnocOrderReplicationFailedEmailAction"
+		  parent="abstractGenerateEmailAction">
+		<property name="configurationService" ref="configurationService"/>
+		<property name="emailService" ref="emailService"/>
+		<property name="frontendTemplateName" value="AdnocOrderReplicationFailedEmailTemplate"/>
+	</bean>
+
+	<bean id="adnocOrderReplicationFailedEmailProcessDefinitionResource"
+		  class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/adnocservice/processes/adnocOrderReplicationFailedEmailProcess.xml"/>
+	</bean>
+
+	<alias name="adnocSapCommerceUpdateCartEntryStrategy" alias="commerceUpdateCartEntryStrategy"/>
+	<bean id="adnocSapCommerceUpdateCartEntryStrategy" class="com.adnoc.service.sap.sapmodel.services.impl.AdnocSapCommerceUpdateCartEntryStrategy"
+		  parent="defaultSapCommerceUpdateCartEntryStrategy"/>
+
+	<alias name="adnocWarehousingConsignmentEntryQuantityDaoImpl" alias="warehousingConsignmentEntryQuantityDao"/>
+	<bean id="adnocWarehousingConsignmentEntryQuantityDaoImpl" class="com.adnoc.service.order.handler.AdnocWarehousingConsignmentEntryQuantityDaoImpl"
+		  parent="defaultWarehousingConsignmentEntryQuantityDao"/>
+
+	<alias name="adnocQuoteService" alias="quoteService"/>
+	<bean id="adnocQuoteService" class="com.adnoc.service.quote.AdnocQuoteServiceImpl" parent="defaultQuoteService">
+		<property name="cartService" ref="cartService"/>
+	</bean>
+
+	<alias name="adnocProductService" alias="adnocProductService"/>
+	<bean id="adnocProductService" class="com.adnoc.service.product.service.AdnocProductServiceImpl" parent="defaultProductService">
+		<property name="adnocProductDao" ref="adnocProductDao"/>
+	</bean>
+
+	<alias name="adnocAttachmentEmailGenerationService" alias="emailGenerationService"/>
+	<bean id="adnocAttachmentEmailGenerationService"
+		  class="com.adnoc.service.email.impl.AdnocAttachmentEmailGenerationService" parent="defaultEmailGenerationService">
+		<property name="processParameterHelper" ref="processParameterHelper"/>
+	</bean>
+
+	<bean id="adnocB2BQuotePartnerContributor" class="com.adnoc.service.contributor.AdnocB2BQuotePartnerContributor">
+		<property name="b2bUnitService" ref="b2bUnitService" />
+	</bean>
+
+	<alias name="adnocCommerceSaveCartStrategy" alias="commerceSaveCartStrategy"/>
+	<bean id="adnocCommerceSaveCartStrategy" class="com.adnoc.service.savedcart.AdnocCommerceSaveCartStrategy" parent="defaultCommerceSaveCartStrategy"/>
+
+	<alias name="adnocGigyaLoginRestIntegrationServiceImpl" alias="adnocGigyaLoginRestIntegrationService"/>
+	<bean id="adnocGigyaLoginRestIntegrationServiceImpl"
+		  class="com.adnoc.service.integration.rest.impl.AdnocGigyaLoginRestIntegrationServiceImpl">
+		<property name="destinationService" ref="destinationService"/>
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+		<property name="adnocGigyaTokenProvider" ref="adnocGigyaTokenProvider"/>
+	</bean>
+
+	<bean id="adnocGigyaLoginTokenVerificationService" class="com.adnoc.service.gigya.impl.AdnocGigyaLoginTokenVerificationServiceImpl">
+		<property name="adnocGigyaLoginRestIntegrationService" ref="adnocGigyaLoginRestIntegrationService"/>
+	</bean>
+
+	<bean id="adnocGigyaTokenProvider"
+		  class="com.adnoc.service.integration.rest.access.token.provider.AdnocGigyaTokenProvider">
+		<property name="restTemplate" ref="adnocRestTemplate"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<bean id="adnocDuplicateCheckHelper" class="com.adnoc.service.duplicatecheckhelper.AdnocDuplicateCheckHelper">
+		<property name="adnocRestIntegrationService" ref="adnocGigyaRestIntegrationService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<bean id="privatekey" class="com.adnoc.service.email.impl.AdnocPrivateKeyFactoryBean">
+		<property name="path" value="${adnoc.security.private.key.path}"/>
+	</bean>
+
+	<bean id="adnocDkimSigner" class="com.adnoc.service.email.impl.AdnocDkimSigner">
+		<constructor-arg value="adnocdistribution.ae"/>
+		<constructor-arg value="${adnoc.dkim.selector}"/>
+		<constructor-arg ref="privatekey"/>
+	</bean>
+
+	<bean id="adnocWorkflowActionDao" class="com.adnoc.service.workflows.actions.impl.AdnocWorkflowActionDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<bean id="adnocWorkflowActionService" class="com.adnoc.service.workflowservice.impl.AdnocWorkflowActionServiceImpl">
+		<property name="adnocWorkflowActionDao" ref="adnocWorkflowActionDao"/>
+	</bean>
+
+	<util:map id="adnocPaymentInitiateRequestCreationStrategyMap" key-type="de.hybris.platform.b2b.enums.CheckoutPaymentType"
+			  value-type="com.adnoc.service.order.payment.transaction.AdnocPaymentInitiateRequestCreationStrategy">
+		<entry key="CARD" value-ref="adnocPaymentCardInitiateCreationStrategy"/>
+		<entry key="BANK_TRANSFER" value-ref="adnocPaymentBankRegistrationCreationStrategy"/>
+	</util:map>
+
+	<bean id="adnocPaymentCardInitiateCreationStrategy"
+		  class="com.adnoc.service.order.payment.transaction.strategies.AdnocPaymentCardInitiateCreationStrategy">
+		<property name="cartService" ref="cartService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<bean id="adnocPaymentBankRegistrationCreationStrategy"
+		  class="com.adnoc.service.order.payment.transaction.strategies.AdnocPaymentBankRegistrationCreationStrategy">
+		<property name="cartService" ref="cartService"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+
+	<alias name="adnocDefaultOrderEntryQuantityService" alias="orderEntryQuantityService"/>
+	<bean id="adnocDefaultOrderEntryQuantityService" class="com.adnoc.service.order.cancel.denialstrategies.AdnocDefaultOrderEntryQuantityService" parent="defaultOrderEntryQuantityService"/>
+
+	<alias name="adnocPriceRowServiceImpl" alias="adnocPriceRowService"/>
+	<bean id="adnocPriceRowServiceImpl" class="com.adnoc.service.price.impl.AdnocPriceRowServiceImpl">
+		<property name="adnocPriceRowDao" ref="adnocPriceRowDao"/>
+		<property name="productService" ref="productService"/>
+	</bean>
+
+    <bean id="adnocUpdateCmsLinkComponentJob" class="com.adnoc.service.job.AdnocUpdateCmsLinkComponentJob"
+          parent="abstractJobPerformable">
+        <property name="catalogVersionService" ref="catalogVersionService"/>
+        <property name="mediaService" ref="mediaService"/>
+        <property name="catalogSynchronizationService" ref="catalogSynchronizationService"/>
+        <property name="syncConfig" ref="syncConfig"/>
+        <property name="adnocLinkComponentDao" ref="adnocLinkComponentDao"/>
+        <property name="configurationService" ref="configurationService"/>
+    </bean>
+
+</beans>

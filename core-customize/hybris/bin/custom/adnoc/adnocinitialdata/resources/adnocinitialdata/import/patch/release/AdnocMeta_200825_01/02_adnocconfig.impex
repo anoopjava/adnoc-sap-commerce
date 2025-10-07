@@ -1,0 +1,118 @@
+REMOVE CsTicketCategory; code[unique = true];
+                       ; Fraud
+                       ; Note
+                       ; Incident
+                       ; Problem
+INSERT_UPDATE CsTicketRequestForCategory; code[unique = true]
+                                        ; OTHER
+
+UPDATE CsTicketRequestForCategory; code[unique = true]; name[lang = en]
+                                 ; OTHER              ; Other
+
+
+INSERT_UPDATE CsTicketRequestForSubCategory; code[unique = true]
+                                           ; IMPROVE_THE_SERVICE
+                                           ; QUALITY_OF_PRODUCT
+                                           ; OTHER
+                                           ; GOOD_SERVICE
+                                           ; FAST_RELIABLE_SERVICE
+
+INSERT_UPDATE CsTicketRequestForSubCategory; code[unique = true]   ; name[lang = en]
+                                           ; IMPROVE_THE_SERVICE   ; Improve the Service
+                                           ; QUALITY_OF_PRODUCT    ; Quality of Product
+                                           ; OTHER                 ; Other
+                                           ; GOOD_SERVICE          ; Good Service
+                                           ; FAST_RELIABLE_SERVICE ; Fast & Reliable Service
+
+REMOVE AdnocCsTicketCategoryMap; csTicketCategoryMapId[unique = true]
+                               ; CSCM001
+                               ; CSCM002
+                               ; CSCM003
+                               ; CSCM004
+                               ; CSCM005
+                               ; CSCM006
+                               ; CSCM007
+                               ; CSCM008
+                               ; CSCM009
+                               ; CSCM010
+                               ; CSCM011
+                               ; CSCM012
+                               ; CSCM013
+                               ; CSCM014
+                               ; CSCM015
+                               ; CSCM016
+                               ; CSCM017
+                               ; CSCM018
+                               ; CSCM019
+                               ; CSCM020
+                               ; CSCM021
+                               ; CSCM022
+                               ; CSCM023
+                               ; CSCM024
+                               ; CSCM025
+                               ; CSCM026
+                               ; CSCM027
+                               ; CSCM028
+                               ; CSCM029
+                               ; CSCM030
+                               ; CSCM031
+                               ; CSCM032
+                               ; CSCM033
+                               ; CSCM034
+                               ; CSCM035
+                               ; CSCM036
+                               ; CSCM037
+                               ; CSCM038
+                               ; CSCM039
+                               ; CSCM040
+                               ; CSCM041
+                               ; CSCM042
+                               ; CSCM043
+                               ; CSCM044
+                               ; CSCM045
+                               ; CSCM046
+                               ; CSCM047
+                               ; CSCM048
+                               ; CSCM049
+                               ; CSCM050
+                               ; CSCM051
+
+INSERT_UPDATE AdnocCsTicketCategoryMap; csTicketCategoryMapId[unique = true]; requestType(code); requestFor(code)   ; subCategory(code)                      ; associatedTo(code); targetSystem(code)
+                                      ; CSCM001                             ; Complaint        ; CART               ; PRODUCT_CATALOGUE                      ; CART              ; CRM
+                                      ; CSCM002                             ; Complaint        ; CART               ; PRODUCT_SELLING_PRICE                  ; CART              ; CRM
+                                      ; CSCM003                             ; Complaint        ; CART               ; DELIVERY_LOCATION_UNAVAILABILITY       ; CART              ; CRM
+                                      ; CSCM004                             ; Complaint        ; CART               ; AVAILABLE_CREDIT_LIMIT                 ; CART              ; CRM
+                                      ; CSCM005                             ; Complaint        ; CART               ; ONLINE_PAYMENT_PROCESS_FAILURE         ; CART              ; CRM
+                                      ; CSCM006                             ; Complaint        ; CUSTOMERDATA       ; DATA_CORRECTION                        ; PAYER             ; CRM
+                                      ; CSCM007                             ; Complaint        ; CUSTOMERDATA       ; CREDIT_LIMIT                           ; PAYER             ; CRM
+                                      ; CSCM008                             ; Complaint        ; CUSTOMERDATA       ; BG_LC                                  ; PAYER             ; CRM
+                                      ; CSCM009                             ; Complaint        ; CUSTOMERDATA       ; BANK_DETAILS                           ; PAYER             ; CRM
+                                      ; CSCM010                             ; Enquiry          ; DELIVERYSHIPMENTS  ; DELIVERY_STATUS_CHECK                  ; ORDER             ; CRM
+                                      ; CSCM011                             ; Complaint        ; DELIVERYSHIPMENTS  ; DELIVERY_QUANTITY_DISCREPANCY          ; DELIVERY          ; CRM
+                                      ; CSCM012                             ; Complaint        ; DELIVERYSHIPMENTS  ; WRONG_SKU_DELIVERED                    ; DELIVERY          ; CRM
+                                      ; CSCM013                             ; Complaint        ; PAYMENT            ; NOT_REFLECTING_IN_THE_CUSTOMER_ACCOUNT ; NA                ; CRM
+                                      ; CSCM014                             ; Complaint        ; PAYMENT            ; REFLECTION_IN_THE_WRONG_ACCOUNT        ; INVOICE           ; CRM
+                                      ; CSCM015                             ; Complaint        ; DELIVERYSHIPMENTS  ; SHIPMENT_DELAYED                       ; DELIVERY          ; CRM
+                                      ; CSCM016                             ; Complaint        ; PAYMENT            ; PAYMENT_AMOUNT_DISCREPANCY             ; INVOICE           ; CRM
+                                      ; CSCM017                             ; Enquiry          ; CART               ; OTHER                                  ; CART              ; CRM
+                                      ; CSCM018                             ; Enquiry          ; CUSTOMERDATA       ; OTHER                                  ; PAYER             ; CRM
+                                      ; CSCM019                             ; Enquiry          ; DELIVERYSHIPMENTS  ; OTHER                                  ; DELIVERY          ; CRM
+                                      ; CSCM020                             ; Enquiry          ; PAYMENT            ; OTHER                                  ; INVOICE           ; CRM
+                                      ; CSCM021                             ; Enquiry          ; SALESORDER         ; OTHER                                  ; ORDER             ; CRM
+                                      ; CSCM022                             ; Complaint        ; CUSTOMERLEDGER     ; RECONCILIATION_ISSUE                   ; NA                ; CRM
+                                      ; CSCM023                             ; Complaint        ; CUSTOMERLEDGER     ; DATA_CORRECTION                        ; NA                ; CRM
+                                      ; CSCM024                             ; Complaint        ; CUSTOMERLEDGER     ; FORMAT_ISSUE                           ; NA                ; CRM
+                                      ; CSCM025                             ; Complaint        ; CUSTOMERLEDGER     ; DOWNLOAD_ERROR                         ; NA                ; CRM
+                                      ; CSCM026                             ; Complaint        ; MAINTENANCE        ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM027                             ; Complaint        ; OTHER              ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM028                             ; Compliment       ; OTHER              ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM029                             ; Suggestion       ; OTHER              ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM030                             ; Complaint        ; LOGINISSUES        ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM031                             ; Complaint        ; EXPIREDCREDENTIALS ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM032                             ; Complaint        ; CALLBACKSERVICE    ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM033                             ; Complaint        ; SESSIONTERMINATION ; OTHER                                  ; NA                ; CRM
+                                      ; CSCM034                             ; Enquiry          ; SALESORDER         ; QUANTITY_UPDATE                        ; ORDER             ; CRM
+                                      ; CSCM035                             ; Enquiry          ; SALESORDER         ; DELIVERY_LOCATION_UPDATE               ; ORDER             ; CRM
+                                      ; CSCM036                             ; Enquiry          ; SALESORDER         ; SHORT_CLOSURE                          ; ORDER             ; CRM
+                                      ; CSCM037                             ; Enquiry          ; SALESORDER         ; PO_UPDATE                              ; ORDER             ; CRM
+                                      ; CSCM038                             ; Enquiry          ; SALESORDER         ; RESCHEDULING                           ; ORDER             ; CRM

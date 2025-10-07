@@ -1,0 +1,18 @@
+.yw-labelstyle
+{
+	color: var(--bo-text-color);
+}
+
+.adnocbackoffice-container {
+	background: var(--bo-base-background);
+	font-family: var(--bo-font-family);
+	font-size:  var(--bo-font-size);
+}
+
+.font-icon--recalculateQuoteTotalsAction:after {
+  content: "\e68e";
+}
+
+.cs-font-sheet-content#fd-icons a.icon_recalculateQuoteTotalsAction:before {
+  content: "\e68e";
+}

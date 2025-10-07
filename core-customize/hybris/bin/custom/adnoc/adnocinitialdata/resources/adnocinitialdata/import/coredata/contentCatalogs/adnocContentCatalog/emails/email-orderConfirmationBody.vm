@@ -1,0 +1,128 @@
+## messageSource=classpath:/adnocservice/messages/email-orderConfirmation_$lang.properties
+
+#macro( genHtmlBoldFont $text )
+<span style="color:#000000; font-size:16px; font-family: 'Aptos Narrow', Arial, Helvetica, sans-serif; font-weight: bold;">$text</span>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url" style="color:#000000; text-decoration:none;">
+#end
+#macro(genHtmlLinkEndTag)
+</a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url" style="color:$textColor; text-decoration:none;">$bodyContent</a>
+#end
+#macro(displayNegationForDiscount $priceData)
+  #if (${priceData.value} > 0)
+    -
+  #end
+  ${priceData.formattedValue}
+#end
+<html>
+ <body style="margin:0; padding:0; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; color:#414a4f; font-size:16px; line-height:1.5;">
+    <div style="background:#ffffff; max-width:600px; width:100%; border-radius:8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+      <p style="text-align: left;">Dear ${ctx.title} ${ctx.firstName},</p>
+
+      #set( $unitName = "" )
+      #if ($ctx.payerID)
+        #set($unitName = $ctx.payerID)
+      #end
+
+      #set( $paymentCode = $ctx.order.paymentType.code )
+      #set( $paymentDisplay = "" )
+      #if($paymentCode == "CREDIT_LIMIT")
+        #set( $paymentDisplay = "CREDIT LIMIT" )
+      #elseif($paymentCode == "CARD")
+        #set( $paymentDisplay = "BANK CARD" )
+      #elseif($paymentCode == "BANK_TRANSFER")
+        #set( $paymentDisplay = "BANK TRANSFER" )
+      #else
+        #set( $paymentDisplay = $paymentCode )
+      #end
+
+      #set( $msg = $ctx.messages.thankYouForOrder )
+      #set( $msg = $msg.replace("{0}", $unitName) )
+      #set( $msg = $msg.replace("{1}", $paymentDisplay) )
+
+      <div style="text-align: left;">$msg</div>
+      <div style="text-align: left;">${ctx.messages.orderDetails}</div>
+      <br/>
+      <div style="text-align: left;"><strong>Order Place Date:</strong> $ctx.dateTool.format('MM/dd/yyyy', $ctx.order.created)</div>
+      <div style="text-align: left;"><strong>Order Reference Number:</strong> ${ctx.order.sapOrderCode}</div>
+      <div style="text-align: left;"><strong>Purchase Order Number:</strong> ${ctx.order.purchaseOrderNumber}</div>
+
+      <div style="text-align: left; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; font-size:16px; color:#000000; margin-top: 30px; margin-bottom: 10px;"><Strong>Product Details:</Strong></div>
+      <table width="100%" cellpadding="10" cellspacing="0" border="0" style="border-collapse: collapse; border: 1px solid #ccc; font-size:16px;">
+        <thead>
+          <tr style="background-color: #e6f2ff; border: 1px solid #ccc;">
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.product}</th>
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.quantity}</th>
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.itemPrice}</th>
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.total}</th>
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.requestedDeliveryDate}</th>
+            <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.shipToAddress}</th>
+          </tr>
+        </thead>
+        <tbody>
+          #foreach ($entry in ${ctx.order.entries})
+            <tr style="background:#fafafa; border: 1px solid #ccc;">
+              <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.product.name.replaceAll("_", " ")</td>
+              <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.quantity</td>
+              <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.basePrice.formattedValue</td>
+              <td style="color:#555; text-align: center; border: 1px solid #ccc;">
+                #if($entry.totalPrice.value > 0)
+                  $entry.totalPrice.formattedValue
+                #else
+                  ${ctx.messages.free}
+                #end
+              </td>
+              <td style="padding:14px 10px; color:#555; text-align: center; border: 1px solid #ccc;">
+                $ctx.dateTool.format('MM/dd/yyyy', $entry.namedDeliveryDate)
+              </td>
+              <td style="padding:14px 10px; color:#555; white-space:pre-line; text-align: center; border: 1px solid #ccc;">
+                #set($addr = $ctx.order.deliveryAddress)
+                #if ($addr)
+                  #if ($addr.firstName)$addr.firstName#end
+                  #if ($addr.lastName)
+                    #if ($addr.firstName)
+                      &nbsp;$addr.lastName
+                    #else
+                      $addr.lastName
+                    #end
+                  #end
+                  <br/>
+                  #if ($addr.line1)$addr.line1<br/>#end
+                  #if ($addr.town)$addr.town<br/>#end
+                  #if ($addr.postalCode)$addr.postalCode<br/>#end
+                  #if ($addr.country && $addr.country.name)$addr.country.name#end
+                #else
+                  ${ctx.messages.notAvailable}
+                #end
+              </td>
+            </tr>
+          #end
+        </tbody>
+      </table>
+
+    <!-- Summary Section Title -->
+    <!-- NOTE: The variable names are swapped in the context map.
+         ctx.order.totalPrice actually holds the sub-total (after discount),
+         while ctx.order.subTotal contains the final grand total (payableAmount) -->
+    <div style="text-align: left; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; font-size:16px; color:#000000; margin-top: 30px; margin-bottom: 10px;"><Strong>Summary Section:</Strong></div>
+    <div style="text-align: left; margin-bottom: 20px; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; font-size:16px; color:#000000;">
+        <div><b>${ctx.messages["order.subtotal"]}:</b> ${ctx.order.totalPrice.formattedValue}</div>
+        <div><b>${ctx.messages["order.deliveryCost.shippingAmount"]}:</b> ${ctx.order.deliveryCost.formattedValue}</div>
+        <div><b>${ctx.messages["order.subtotal.afterDiscount"]}:</b> ${ctx.order.subTotal.formattedValue}</div>
+        <div><b>${ctx.messages["order.totalTax"]}:</b> ${ctx.order.totalTax.formattedValue}</div>
+        <div><b>${ctx.messages["order.totalPayableAmount"]}:</b> ${ctx.order.subTotal.formattedValue}</div>
+    </div>
+
+     <div class="footer" style="max-width:600px; margin: 30px auto 0 auto; font-family: 'Aptos Display', Arial, Helvetica, sans-serif; color: #414a4f; font-size:16px; line-height:1.5; background-color: transparent;">
+       <p style="text-align: left; margin: 0 0 8px 0; background-color: transparent;">${ctx.messages.orderStatus}</p>
+       <p style="text-align: left; margin: 0 0 8px 0; background-color: transparent;">${ctx.messages.enquiry}</p>
+       <p style="text-align: left; margin: 0; background-color: transparent;">${ctx.messages.thankYouMessage}</p>
+     </div>
+
+ </body>
+</html>

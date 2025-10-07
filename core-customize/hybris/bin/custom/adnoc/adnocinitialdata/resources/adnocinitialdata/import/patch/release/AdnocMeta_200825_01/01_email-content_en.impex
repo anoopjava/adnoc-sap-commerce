@@ -1,0 +1,43 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$jarEmailResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/coredata/contentCatalogs/adnocContentCatalog/emails
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$emailResource = $config-emailResourceValue
+
+# Language
+$lang = en
+
+UPDATE RendererTemplate; code[unique = true]                        ; description[lang = $lang]                            ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+                       ; RegistrationReceivedEmailTemplateBody      ; "Registration Received Email Body"                   ; $jarEmailResource/email-registrationReceivedBody.vm
+                       ; RegistrationRejectedEmailTemplateBody      ; "Registration Reject Email Body"                     ; $jarEmailResource/email-registrationRejectedBody.vm
+                       ; RegistrationRejectedEmailTemplateSubject   ; "Registration Reject Email Subject"                  ; $jarEmailResource/email-registrationRejectedSubject.vm
+                       ; adnoc_PartialOrder_Completion_Body         ; "Adnoc Partial Order completion Email Body"          ; $jarEmailResource/email-adnocPartialOrderCompletionBody.vm
+                       ; adnoc_Return_Order_Approved_email_Body     ; "Adnoc Return Order Approved Email Body"             ; $jarEmailResource/email-adnocReturnOrderApprovalBody.vm
+                       ; adnoc_Return_Order_Rejected_Body           ; "Adnoc Return Rejected Email Body"                   ; $jarEmailResource/email-adnocReturnOrderRejectedBody.vm
+                       ; adnoc_Return_Order_Submission_Body         ; "Adnoc Return Order Submission Email Body"           ; $jarEmailResource/email-adnocReturnOrderSubmissionBody.vm
+                       ; adnoc_Return_Order_Submission_CSAgent_Body ; "Adnoc Return Order Submission ToCsAgent Email Body" ; $jarEmailResource/email-adnocReturnOrderSubmissionToCsAgentBody.vm
+                       ; adnoc_Email_Order_Confirmation_Body        ; "Order Confirmation Email Body"                      ; $emailResource/email-orderConfirmationBody.vm
+                       ; adnoc_Order_Cancelled_Body                 ; "Adnoc Order cancelled  Email Body"                  ; $jarEmailResource/email-adnocOrderCancelledBody.vm
+                       ; adnoc_Order_Completed_Body                 ; "Adnoc Order completed  Email Body"                  ; $jarEmailResource/email-adnocOrderCompletedBody.vm
+                       ; adnoc_Order_Completed_Subject              ; "Adnoc Order completed  Emaill Subject"              ; $jarEmailResource/email-adnocOrderCompletedSubject.vm
+                       ; adnoc_PartialOrder_Completion_Subject      ; "Adnoc Partial Order completion Emaill Subject"      ; $jarEmailResource/email-adnocPartialOrderCompletionSubject.vm
+
+UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]                              ; fromEmail[lang = $lang]                   ; fromName[lang = $lang]
+                ;                          ; AdnocB2BCustomerCreationEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocB2BAdminCreatedEmail                       ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocPartialOrderCompletionEmail                ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocOrderCompletedEmail                        ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocOrderCancelledEmail                        ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"
+                ;                          ; AdnocQuoteBuyerOrderPlacedEmail                 ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReQuoteBuyerSubmissionEmail                ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderSubmissionEmail                 ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderApprovedEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocNewQuoteRequestEmail                       ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocQuoteRequestReSubmissionEmail              ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderRequestSubmissionToCsAgentEmail ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocShipToCreatedB2BCustomerEmail              ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocReturnOrderRejectedEmail                   ; "no-reply@adnocdistribution.ae" ; "Adnoc Agent Team"
+                ;                          ; AdnocQuoteSellerApproveOrRejectEmail            ; "no-reply@adnocdistribution.ae" ; "Adnoc Administrator Team"
+                ;                          ; AdnocOrderReplicationFailedEmail                ; "no-reply@adnocdistribution.ae" ; "Customer Service Team"

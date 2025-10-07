@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+           
+    
+    <extension abstractclassprefix="Generated" classprefix="Adnocintegration" managername="AdnocintegrationManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="adnocintegration" usemaven="false">
+                               
+      
+        
+        <requires-extension name="webservicescommons"/>
+                         
+       
+      
+        
+        <coremodule generated="true" manager="com.adnoc.integration.jalo.AdnocintegrationManager" packageroot="com.adnoc.integration"/>
+                      
+        
+        <webmodule jspcompile="false" webroot="/adnocintegration"/>
+                					
+		
+        
+        	
+
+   
+    
+    </extension>
+              
+
+
+</extensioninfo>

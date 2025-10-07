@@ -1,0 +1,7 @@
+# -----------------------------------------------------------------------
+$contentCatalog = adnocContentCatalog
+$contentCatalogName = Adnoc Content Catalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+
+INSERT_UPDATE CMSTabParagraphContainer; $contentCV[unique = true]; uid[unique = true]; name          ; visible; simpleCMSComponents(uid, $contentCV)                                           ; &componentRef
+                                      ;                          ; TabPanelContainer ; Tab container ; true   ; ProductDetailsTabComponent,ProductSpecsTabComponent,ProductReviewsTabComponent ; TabPanelContainer

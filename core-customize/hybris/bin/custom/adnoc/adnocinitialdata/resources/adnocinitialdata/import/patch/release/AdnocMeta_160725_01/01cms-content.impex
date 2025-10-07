@@ -1,0 +1,20 @@
+# Import the CMS content for the adnoc site
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+$jarResourceCms = $config-jarResourceCmsValue
+
+REMOVE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]               ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'LoginPageTemplate']; contentSlot(uid, $contentCV)[unique = true]
+                             ;                          ; HomepageLink-LoginPage           ; HomepageNavLink        ;                                                                            ; HomepageNavLinkSlot
+                             ;                          ; NavigationBar-LoginPage          ; NavigationBar          ;                                                                            ; NavigationBarSlot
+                             ;                          ; MiniCart-LoginPage               ; MiniCart               ;                                                                            ; MiniCartSlot
+                             ;                          ; Footer-LoginPage                 ; Footer                 ;                                                                            ; FooterSlot
+                             ;                          ; HeaderLinks-LoginPage            ; HeaderLinks            ;                                                                            ; HeaderLinksSlot
+                             ;                          ; SearchBox-LoginPage              ; SearchBox              ;                                                                            ; SearchBoxSlot
+                             ;                          ; TopHeaderSlot-LoginPage          ; TopHeaderSlot          ;                                                                            ; TopHeaderSlot
+                             ;                          ; BottomHeaderSlot-LoginPage       ; BottomHeaderSlot       ;                                                                            ; BottomHeaderSlot
+                             ;                          ; PlaceholderContentSlot-LoginPage ; PlaceholderContentSlot ;                                                                            ; PlaceholderContentSlot
+
+

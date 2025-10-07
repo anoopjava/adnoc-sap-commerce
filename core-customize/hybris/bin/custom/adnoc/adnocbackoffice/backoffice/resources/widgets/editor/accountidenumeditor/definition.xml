@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<editor-definition id="com.adnoc.backoffice.widgets.editor.accountid.enumeditor"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/editor-definition.xsd">
+
+	<name>Adnoc Account ID Enum Editor</name>
+	<description>Adnoc Account ID Enumeration Editor</description>
+	<author>hybris</author>
+	<version>0.1</version>
+
+	<type>java.lang.Enum(?:\((.*)\))?</type>
+	<editorClassName>com.adnoc.backoffice.editor.AdnocAccountIDEnumEditorImpl</editorClassName>
+</editor-definition>

@@ -1,0 +1,10 @@
+%adnoc-amend-order-items {
+  @extend %cx-cart-item-list;
+
+  .cx-table-item-container {
+    grid-template-columns: 5rem auto;
+    .cx-name {
+      word-break: break-word;
+    }
+  }
+}

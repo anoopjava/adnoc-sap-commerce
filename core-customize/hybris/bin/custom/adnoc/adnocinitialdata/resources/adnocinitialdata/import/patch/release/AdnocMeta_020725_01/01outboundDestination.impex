@@ -1,0 +1,19 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+#Login Token Verification
+$gigyaOauthApiKey = $config-adnoc.gigya.apikey
+$gigyaOauthClientId = $config-adnoc.gigya.userkey
+$gigyaOauthSecret = $config-adnoc.gigya.usersecret
+$gigyaOAuthUrl = $config-adnoc.gigya.access.token.authurl
+$gigyaLoginVerificationDestinationUrl = $config-adnoc.gigya.login.token.destinationurl
+
+INSERT_UPDATE ConsumedOAuthCredential; id[unique = true]            ; clientId            ; clientSecret      ; oAuthUrl
+                                     ; adnoc-gigya-token-credentail ; $gigyaOauthClientId ; $gigyaOauthSecret ; $gigyaOAuthUrl
+
+INSERT_UPDATE Endpoint; id[unique = true]                   ; version[unique = true]; name                                ; specUrl
+                      ; adnocGigyaTokenVerificationEndPoint ; v2                    ; adnoc Gigya Login Token Verificatio ; $gigyaLoginVerificationDestinationUrl
+
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; adnoc-gigya-login-verification-destination-target
+
+INSERT_UPDATE ConsumedDestination; id[unique = true]                      ; url                                   ; endpoint(id, version)                  ; credential(id)               ; destinationTarget(id)                             ; active[default = true]; additionalProperties
+                                 ; gigyaLoginTokenVerificationDestination ; $gigyaLoginVerificationDestinationUrl ; adnocGigyaTokenVerificationEndPoint:v2 ; adnoc-gigya-token-credentail ; adnoc-gigya-login-verification-destination-target ;                       ;

@@ -1,0 +1,75 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$b2bspastore-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$b2bspastore-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$b2bspastore-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$b2bspastore-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $b2bspastore-primary,
+      accent: $b2bspastore-accent,
+      warn: $b2bspastore-warn,
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0,
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($b2bspastore-theme);
+
+
+
+@import 'styles-config';
+
+// ORDER IMPORTANT: Spartacus core first
+@import '@spartacus/styles/scss/core';
+
+// ORDER IMPORTANT: Copy of Bootstrap files next
+@import '@spartacus/styles/vendor/bootstrap/scss/reboot';
+@import '@spartacus/styles/vendor/bootstrap/scss/type';
+@import '@spartacus/styles/vendor/bootstrap/scss/grid';
+@import '@spartacus/styles/vendor/bootstrap/scss/utilities';
+@import '@spartacus/styles/vendor/bootstrap/scss/transitions';
+@import '@spartacus/styles/vendor/bootstrap/scss/dropdown';
+@import '@spartacus/styles/vendor/bootstrap/scss/card';
+@import '@spartacus/styles/vendor/bootstrap/scss/nav';
+@import '@spartacus/styles/vendor/bootstrap/scss/buttons';
+@import '@spartacus/styles/vendor/bootstrap/scss/forms';
+@import '@spartacus/styles/vendor/bootstrap/scss/custom-forms';
+@import '@spartacus/styles/vendor/bootstrap/scss/modal';
+@import '@spartacus/styles/vendor/bootstrap/scss/close';
+@import '@spartacus/styles/vendor/bootstrap/scss/alert';
+@import '@spartacus/styles/vendor/bootstrap/scss/tooltip';
+
+// ORDER IMPORTANT: Spartacus styles last
+@import '@spartacus/styles/index';
+
+
+@import "./styles/main.scss";
+@import "./styles/adnoc-styles/index";
+@import "./styles/adnoc-styles/order-history/index";
+@import "./styles/adnoc-styles/quotes-styles/index";
+html,
+body {
+  height: 100%;
+}
+

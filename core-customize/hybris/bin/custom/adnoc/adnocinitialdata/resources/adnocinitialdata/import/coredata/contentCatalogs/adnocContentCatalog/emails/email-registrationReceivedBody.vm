@@ -1,0 +1,40 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-registrationReceived_$lang.properties
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Confirmation</title>
+</head>
+<body style="margin: 0; padding: 20px; font-family: Aptos Display, Arial, Helvetica, sans-serif; background-color: #ffffff; color: #414a4f; font-size: 16px;">
+
+    <div class="content" style="max-width: 600px;">
+
+        <!-- Greeting -->
+        <p style="margin-bottom: 20px;">Dear ${ctx.title} ${ctx.displayName},</p>
+
+        <!-- Registration Confirmation Message -->
+        <p style="margin-bottom: 15px;">${ctx.messages.regisrationRequestSuccess}</p>
+
+        <!-- Reference Number -->
+        <p style="margin-bottom: 15px;">
+            <strong>Reference Number:</strong> ${ctx.registration.pk}
+        </p>
+
+        <!-- Info & Welcome -->
+        <p style="margin-bottom: 15px;">${ctx.messages.question}</p>
+        <p style="margin-bottom: 25px;">${ctx.messages.welcome}</p>
+
+    </div>
+
+        <p style="margin: 5px 0;">${ctx.messages.wish}</p>
+        <p style="margin: 5px 0;">${ctx.messages.portalAdministrator}</p>
+        <p style="margin: 5px 0;">${ctx.messages.adnoc}</p>
+        <p style="margin: 5px 0;">
+            <a href="https://www.adnocdistribution.ae/" style="color: #4682B4; text-decoration: none;">
+                ${ctx.messages.website}
+            </a>
+        </p>
+
+</body>
+</html>

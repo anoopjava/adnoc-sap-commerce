@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="com.adnoc.service.rest.integration.SmsAccessTokenRequestData">
+		<property name="client_id" type="String"/>
+		<property name="client_secret" type="String"/>
+		<property name="grant_type" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.rest.integration.GigyaTokenResponeData">
+		<property name="access_token" type="String"/>
+		<property name="callId" type="String"/>
+		<property name="errorCode" type="String"/>
+		<property name="apiVersion" type="String"/>
+		<property name="statusCode" type="String"/>
+		<property name="statusReason" type="String"/>
+		<property name="time" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.rest.integration.SmsAccessTokenResponseData">
+		<property name="token_type" type="String"/>
+		<property name="expires_in" type="long"/>
+		<property name="ext_expires_in" type="long"/>
+		<property name="access_token" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.rest.integration.SmsRequestData">
+		<property name="mobile_numbers" type="java.util.List&lt;String>"/>
+		<property name="system_key" type="String"/>
+		<property name="sender_name" type="String"/>
+		<property name="message_body" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.rest.integration.SmsResponseWrapperData">
+		<property name="status" type="String"/>
+		<property name="data" type="java.util.List&lt;com.adnoc.service.rest.integration.SmsResponseData>"/>
+	</bean>
+
+	<bean class="com.adnoc.service.rest.integration.SmsResponseData">
+		<property name="status" type="String"/>
+		<property name="message_id" type="String"/>
+		<property name="mobile_number" type="String"/>
+		<property name="description" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.data.AdnocDownloadStatementRequestData">
+		<property name="b2bUnitUid" type="String"/>
+		<property name="currency" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.data.AdnocDownloadStatementResponseData">
+		<property name="output" type="com.adnoc.service.data.response.AdnocDownloadStatementOutputResponse"/>
+	</bean>
+
+	<bean class="com.adnoc.service.data.response.AdnocDownloadStatementOutputResponse">
+		<property name="statementOfAccountB64" type="String"/>
+		<property name="statusCode" type="String"/>
+		<property name="message" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.sap.sapcpiadapter.data.SapCpiOrderItem">
+		<property name="incoTerms" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.company.overdue.invoice.data.AdnocOverdueInvoiceDetailsData">
+		<property name="invoiceNumber" type="java.lang.String"/>
+		<property name="companyCode" type="java.lang.String"/>
+		<property name="fiscalYear" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="com.adnoc.service.price.data.AdnocPriceInfoRequestData">
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<import type="com.fasterxml.jackson.annotation.JsonFormat"/>
+		<property name="date" type="java.util.Date">
+			<annotations>@JsonProperty("dateField")</annotations>
+			<annotations>
+				@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
+			</annotations>
+		</property>
+		<property name="orderType" type="java.lang.String"/>
+		<property name="currency" type="java.lang.String"/>
+		<property name="salesOrg" type="java.lang.String"/>
+		<property name="distribution" type="java.lang.String"/>
+		<property name="division" type="java.lang.String"/>
+		<property name="b2bUnit" type="java.lang.String"/>
+		<property name="shipTo" type="java.lang.String"/>
+		<property name="lineItem" type="com.adnoc.service.price.data.AdnocPriceInfoLineItemRequestData"/>
+	</bean>
+
+	<bean class="com.adnoc.service.price.data.AdnocPriceInfoLineItemRequestData">
+		<property name="entryNumber" type="java.lang.Integer"/>
+		<property name="productCode" type="java.lang.String"/>
+		<property name="quantity" type="java.lang.Long"/>
+		<property name="unit" type="java.lang.String"/>
+		<property name="incoTerms" type="java.lang.String"/>
+		<property name="plant" type="java.lang.String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.price.data.AdnocPriceInfoResponseData">
+		<property name="status" type="java.lang.String"/>
+		<property name="errorMessage" type="java.lang.String"/>
+		<property name="b2bUnit" type="java.lang.String"/>
+		<property name="currency" type="java.lang.String"/>
+		<property name="lineItem" type="com.adnoc.service.price.data.AdnocPriceInfoLineItemResponseData"/>
+	</bean>
+
+	<bean class="com.adnoc.service.price.data.AdnocPriceInfoLineItemResponseData">
+		<property name="entryNumber" type="java.lang.Integer"/>
+		<property name="productCode" type="java.lang.String"/>
+		<property name="quantity" type="java.lang.Long"/>
+		<property name="unit" type="java.lang.String"/>
+		<property name="basePrice" type="java.lang.Double"/>
+		<property name="grossTotalPrice" type="java.lang.Double"/>
+		<property name="totalDiscount" type="java.lang.Double"/>
+		<property name="totalICVDiscount" type="java.lang.Double"/>
+		<property name="totalShippingCharges" type="java.lang.Double"/>
+		<property name="netTotalPrice" type="java.lang.Double"/>
+		<property name="totalTaxAmount" type="java.lang.Double"/>
+		<property name="grandTotalPrice" type="java.lang.Double"/>
+		<property name="sapPricingConditions" type="java.util.List&lt;com.adnoc.service.price.data.AdnocSapPricingConditionResponseData>"/>
+	</bean>
+
+	<bean class="com.adnoc.service.price.data.AdnocSapPricingConditionResponseData">
+		<property name="conditionType" type="java.lang.String"/>
+		<property name="currency" type="java.lang.String"/>
+		<property name="unit" type="java.lang.String"/>
+		<property name="conditionValue" type="java.lang.Double"/>
+		<property name="totalConditionValue" type="java.lang.Double"/>
+	</bean>
+
+	<bean class="com.adnoc.service.event.AdnocReturnOrderRejectedEvent" type="event">
+		<property name="returnRequest" type="de.hybris.platform.returns.model.ReturnRequestModel"/>
+	</bean>
+
+	<bean class="com.adnoc.service.gigya.login.verification.AdnocGigyaLoginVerificationRequestData">
+		<property name="UID" type="String"/>
+		<property name="UIDSignature" type="String"/>
+		<property name="signatureTimestamp" type="String"/>
+	</bean>
+
+	<bean class="com.adnoc.service.gigya.login.verification.AdnocGigyaLoginVerificationResponseData">
+		<property name="errorCode" type="String"/>
+		<property name="statusCode" type="String"/>
+		<property name="statusReason" type="String"/>
+		<property name="errorDetails" type="String"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,83 @@
+@import "../utilities/variables";
+.loginPage,
+.forgotPasswordPage {
+  %LoginPageTemplate {
+    padding-bottom: 3rem;
+    --cx-max-width: 100%;
+
+    .cx-section-title {
+      margin: 40px 0 15px;
+    }
+    cx-page-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: var(--cx-max-width);
+      padding: 0;
+      margin: auto;
+      > * {
+        max-width: var(--cx-max-width, 100%);
+        width: 100%;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      --cx-max-width: 100%;
+
+      button[type="button"] {
+        margin-bottom: 1em;
+      }
+    }
+
+    cx-login-register {
+      @include media-breakpoint-up(md) {
+        width: 50%;
+        --cx-max-width: 50%;
+      }
+    }
+
+    cx-link {
+      a {
+        text-decoration: none;
+        border-radius: 8px !important;
+        &:hover {
+          border-color: var(--cx-color-primary) !important;
+        }
+      }
+    }
+  }
+  .LoginPageTemplate {
+    max-width: 100%;
+    @media (max-width: $breakpoint-xs) {
+      padding: 1rem 0.5rem;
+    }
+    .cx-organization-user-register-button,
+    cx-paragraph .cx-section-title {
+      display: none;
+    }
+  }
+  cx-global-message {
+    position: absolute;
+    width: 100%;
+    @media (max-width: $breakpoint-xs) {
+      left: 0;
+    }
+  }
+}
+.resetPasswordPage {
+  .LeftContentSlot {
+    @include media-breakpoint-up(lg) {
+      align-items: flex-start;
+    }
+    .adnoc-reset-password {
+      @include media-breakpoint-up(lg) {
+        width: 30% !important;
+      }
+      .resetPasswordButton {
+        @include media-breakpoint-down(lg) {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+## messageSource=classpath:/adnocservice/messages/email-adnocOrderCancelled_$lang.properties
+<html>
+<body bgcolor="#ffffff">
+<div class="content" style="font-family: Aptos Display, Arial, Helvetica, sans-serif; color: #414a4f;">
+    <p>Dear ${ctx.title} ${ctx.firstName},</p>
+    <p>${ctx.messages.cancelledOrder}</p>
+    <p><strong>${ctx.messages.customerDetails}</strong></p>
+    <ul style="margin:0; padding-left:1px;">
+    <li><strong>${ctx.messages.customerName}</strong>${ctx.displayName}</li>
+    </ul>
+
+    <p><strong>${ctx.messages.orderDetails}</strong></p>
+    <ul>
+    <li><strong>${ctx.messages.orderReferenceNumber}</strong>${ctx.order.sapOrderCode}</li>
+    <li><strong>${ctx.messages.orderDate}</strong> $ctx.dateTool.format('MM/dd/yyyy', $ctx.order.created)</li>
+    <li><strong>${ctx.messages.state}</strong>${ctx.order.statusDisplay}</li>
+</ul>
+
+ <p>${ctx.messages.websiteURL}&nbsp;<a href="${ctx.frontendUrl}"
+                                        style="color:#4682B4;"><span>${ctx.messages.link}</span></a></p>
+    <p>${ctx.messages.enquiry}</p>
+    <p>${ctx.messages.thankYouMessage}</p>
+    <div class="footer">
+    <p>
+      ${ctx.messages.complimentaryClosing}<br/>
+      ${ctx.messages.salesGroup}<br/>
+      ${ctx.messages.adnoc}<br/>
+      ${ctx.messages.website}<br/>
+    </p>
+    </div>
+</body>
+</html>

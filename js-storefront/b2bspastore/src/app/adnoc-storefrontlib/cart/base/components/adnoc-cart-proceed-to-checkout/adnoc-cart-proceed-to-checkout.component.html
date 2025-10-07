@@ -1,0 +1,29 @@
+<button
+  class="btn btn-block btn-secondary mb-2"
+  ng-reflect-ng-class="btn btn-outline-info"
+  aria-label=""
+  (click)="disableButtonWhileNavigation()"
+  [disabled]="validDateAndAddress || loader"
+>
+  <div *ngIf="!loader" class="cx-progress-button-container">
+    {{ "cartLabels.calculateTotal" | cxTranslate }}
+    <i class="fa-solid fa-calculator text-dark"></i>
+  </div>
+  <div class="loader-wrap" *ngIf="loader">
+    <span class="loader"></span>
+  </div>
+</button>
+<cx-progress-button
+  (clickEvent)="proceedToCheckout()"
+  [class]="'btn btn-primary btn-block'"
+  [disabled]="disableProceedToCheckout"
+  [loading]="cartValidationInProgress"
+  tabindex="-1"
+>
+  {{
+    (cartValidationInProgress
+      ? "validation.inProgress"
+      : "cartDetails.proceedToCheckout"
+    ) | cxTranslate
+  }}
+</cx-progress-button>

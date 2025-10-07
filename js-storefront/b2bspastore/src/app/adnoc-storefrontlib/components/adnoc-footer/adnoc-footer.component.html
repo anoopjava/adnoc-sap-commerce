@@ -1,0 +1,62 @@
+<div class="footer-container">
+  <div class="footer-column-main rightContent">
+    <ng-container *ngIf="node$ | async as node">
+      <ng-container *ngFor="let item of node.children">
+        <div *ngIf="item.title != 'Follow Us'" class="footer-column lists">
+          <h3 class="listTitle">{{ item.title }}</h3>
+          <ul>
+            <li *ngFor="let child of item.children">
+              <a [href]="child.url" target="_blank">{{ child.title }}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="footer-social">
+    <div class="footer-column social-column">
+      <ng-container *ngIf="node$ | async as node">
+        <ng-container *ngFor="let item of node.children">
+          <ng-container *ngIf="item.title === 'Follow Us'">
+            <ng-container *ngFor="let child of item.children">
+              <a
+                class="socialLinks"
+                [ngClass]="{
+                  socialInstagram: child.url && child.url.includes('instagram'),
+                  socialLinkedin: child.url && child.url.includes('linkedin'),
+                  socialTwitter: child.url && child.url.includes('twitter'),
+                  socialYoutube: child.url && child.url.includes('youtube')
+                }"
+                [href]="child.url"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  [src]="
+                    child.url?.includes('facebook')
+                      ? 'images/icon-facebook.svg'
+                      : child.url?.includes('instagram')
+                      ? 'images/icon-instagram.svg'
+                      : child.url?.includes('linkedin')
+                      ? 'images/icon-linkedin.svg'
+                      : child.url?.includes('twitter')
+                      ? 'images/icon-twitter.svg'
+                      : child.url?.includes('youtube')
+                      ? 'images/icon-youtube.svg'
+                      : 'images/icon-globe.svg'
+                  "
+                  [alt]="child.title || 'Social Icon'"
+                  class="socialIcon"
+                />
+              </a>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="footer-column terms">
+    <p class="copyright">{{ "common.footer.copyWriteText" | cxTranslate }}</p>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+#
+# Import essential data for the Accelerator
+#
+
+# Language
+$lang = en
+
+UPDATE Plant; code[unique = true]; name[lang = en]
+            ; 87FX               ; 87FX-Not to be used
+            ; 9301               ; 9301-Lube and Grease plant
+            ; 9302               ; 9302-Mussafah LPG plant
+            ; 9303               ; 9303-AlAin LPG plant
+            ; 9304               ; 9304-CENTRAL STORE MUSSAFAH
+            ; 9305               ; 9305-Smart Service
+            ; 932X               ; 932X-MUSSAFAH LUB DEPOT
+            ; 932Z               ; 932Z-SHARJAH LUB DEPOT
+            ; 933R               ; 933R-DIRECT
+            ; 934H               ; 934H-647-Al Talaa-SHJ
+            ; 934I               ; 934I-155-Al Riyadh City 10 OTG
+            ; 934J               ; 934J-648-Al Tarafa SS (Shj) NE
+            ; 934K               ; 934K-378-Ghoroob Mirdif
+            ; 934L               ; 934L-630-Al NUAIMIA-3-OTG
+            ; 934M               ; 934M-847-Babel-OTG-RAK
+            ; 934N               ; 934N-461-Al Sharya SS FUJ-NE.
+            ; 934O               ; 934O-156-Shamkha Community 2 OTG
+            ; 934P               ; 934P-540-MY STATION SHJ EMIRATE
+            ; 934Q               ; 934Q-118 Al MafraqIndCity OTG AD2SS
+            ; 934R               ; 934R-115 Al Mukatara OTG AD1 SS
+            ; 934S               ; 934S-119 Al GhadeerNorth OTG AD2SS
+            ; 934T               ; 934T-New station X09
+            ; 934U               ; 934U-235-Maleha Ind
+            ; 934V               ; 934V-236-Commercial Al Dhaid
+            ; 934W               ; 934W-117 New Shahama OTG AD2 SS
+            ; 934X               ; 934X-237-Ardh Al Maahed
+            ; 934Y               ; 934Y-238-Al Rahmania
+            ; 934Z               ; 934Z-543-MY STATION RAK EMIRATE
+            ; 935A               ; 935A-129 Al Rahba OTG AD2 SS
+            ; 935B               ; 935B-282 Al Bahia
+            ; 936N               ; 936N-Sharjah Terminal-NE
+            ; 936U               ; 936U-Hamriyah Multi Product Termina
+            ; 936V               ; 936V-Ruwais New Terminal
+            ; 936W               ; 936W-EXT-Hamriyah MP Terminal
+            ; 937V               ; 937V-BEDA ZAYED
+            ; 937W               ; 937W-RAS AL KHAIMA AIRPORT
+            ; 938A               ; 938A-BUNKERING BAAYA
+            ; 938B               ; 938B-DWC DACC Depot
+            ; 938C               ; 938C-RAS AL KHAIMA DEPOT
+            ; 938F               ; 938F-Overseas Direct Delivery
+            ; 938H               ; 938H-ALAIN INETL. AIRPORT
+            ; 938I               ; 938I-ABU DHABI INETL. AIRPORT
+            ; 938J               ; 938J-FUJAIRAH INTL. AIRPORT
+            ; 938L               ; 938L-Shk.Khalifa Air college
+            ; 938M               ; 938M-AL DHAFRA AIR BASE
+            ; 938N               ; 938N-Al Maktoum International Airpo
+            ; 938P               ; 938P-SHARJAH AIRPORT
+            ; 938T               ; 938T-BATEEN AIRPORT
+            ; 93CL               ; 93CL-MARINE
+            ; 93CM               ; 93CM-Musaffah Multi product Depot
+            ; 93CN               ; 93CN-Alain Depot
+            ; 93FE               ; 93FE-442-MY STATION -MUHASINAH
+            ; 93GF               ; 93GF-434-Mahawi My Station hub
+            ; 93HI               ; 93HI-367-Ramlat Al Showaib-OTG
+            ; 93HJ               ; 93HJ-368-Ghnayma-OTG
+            ; 93HS               ; 93HS-344-My Station SuperFuel Truck
+            ; 93HT               ; 93HT-345-My Station SuperFuel Truck
+            ; 93HU               ; 93HU-346-My Station SuperFuel Truck
+            ; 93HV               ; 93HV-347-My Station SuperFuel Truck
+            ; 93HW               ; 93HW-292-MyStation Abu Dhabi Hub
+            ; 93XM               ; 93XM-471-Qusahwira MyStation Micro
+            ; AV01               ; AV01-Abu Dhabi Int'l Airport (N)
+            ; AV02               ; AV02-Abu Dhabi Int'l Airport
+            ; AV03               ; AV03-Al Bateen Executive Airport
+            ; AV04               ; AV04-Al Ain Int'l Airport
+            ; AV05               ; AV05-Mussafah Aviation
+            ; AV11               ; AV11-Al Maktoum Int'l Airport
+            ; AV21               ; AV21-Sharjah Int'l Airport
+            ; AV22               ; AV22-Sharjah Hameriyah
+            ; AV31               ; AV31-Ras Al Khaimah Int'l Airport
+            ; AV41               ; AV41-Fujairah Int'l Airport
+            ; AV97               ; AV97-Aviation Road H
+            ; AV98               ; AV98-Aviation Road H
+            ; AV99               ; AV99-Aviation Pipeline M
+            ; V000               ; V000-Cortem Gulf Fzco
+            ; V001               ; V001-TANQIA FZC
+            ; 93M2               ; 93M2-688-Yas-North-AD

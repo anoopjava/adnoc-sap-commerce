@@ -1,0 +1,51 @@
+## messageSource=classpath:/adnocservice/messages/email-quoteBuyerCancellation_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#0468b3">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+#macro(displayNegationForDiscount $priceData)
+    #if (${priceData.value} > 0)
+    -
+    #end
+    ${priceData.formattedValue}
+#end
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        a
+        {
+            text-decoration: none;
+            color:#0468b3;
+        }
+    </style>
+</head>
+<body>
+   <div class="content">
+             <p>Dear ${ctx.title} ${ctx.displayName},</p>
+             <p>${ctx.messages.quoteDetailsParagraph}</p>
+             <p><strong>Quote ID:</strong> ${ctx.quote.code}</p>
+             <p>${ctx.messages.requestNewQuote}</p>
+             <strong>
+                 #genHtmlLink("${ctx.frontendUrl}", "#0468b3", "${ctx.messages.requestNewQuoteHyperLink}")
+             </strong>
+             <p>${ctx.messages.customerEnquiry}</p>
+             <p>${ctx.messages.thankYouMessage}</p>
+      </div>
+      <div class="footer">
+            <p>Best regards,</p>
+            <p>${ctx.messages.salesGroup}</p>
+            <p>${ctx.messages.admin}</p>
+            <p>${ctx.messages.website}</p>
+       </div>
+</body>
+</html>

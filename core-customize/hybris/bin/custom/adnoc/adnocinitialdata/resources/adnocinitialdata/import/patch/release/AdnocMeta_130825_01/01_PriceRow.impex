@@ -1,0 +1,19 @@
+$productCatalog = adnocProductCatalog
+$catalogVersion = catalogversion(catalog(id[default = $productCatalog]), version[default = 'Staged'])[unique = true, default = '$productCatalog:Staged']
+$prices = Europe1prices[translator = de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$taxGroup = Europe1PriceFactory_PTG(code)[default = ae-sales-tax-full]
+
+# Set product approval status to Approved only for those products that have prices.
+$approved = approvalstatus(code)[default = 'approved']
+$aecurrencies = AED
+$uscurrencies = USD
+
+INSERT_UPDATE UserPriceGroup; code[unique = true]; name[lang = en];
+                            ; 10016207           ; 10016207       ;
+
+INSERT_UPDATE PriceRow; productId[unique = true]; unit(code)[unique = true]; currency(isocode)[unique = true]; price; minqtd; unitFactor; net   ; ug(code)[unique = true]
+                      ; 42                      ; MT                       ; $aecurrencies                   ; 25   ; 1     ; 1         ; false ; 10016207
+                      ; 42                      ; MT                       ; $uscurrencies                   ; 25   ; 1     ; 1         ; false ; 10016207
+
+INSERT_UPDATE B2BUnit; uid[unique = true]; userPriceGroup(code)
+                     ; 10016207          ; 10016207

@@ -1,0 +1,18 @@
+$contentCatalog = adnocContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default = $contentCatalog]), CatalogVersion.version[default = Staged])[default = $contentCatalog:Staged]
+$picture = media(code, $contentCV);
+
+$siteResource = jar:com.adnoc.initialdata.constants.AdnocInitialDataConstants&/adnocinitialdata/import/sampledata/contentCatalogs/$contentCatalog
+
+$medias = medias(code, $contentCV);
+$mediaContainer = media(qualifier, $contentCV)[lang = $lang];
+
+# Language
+$lang = en
+
+
+UPDATE Media; mediaFormat(qualifier); code[unique = true]                      ; @media[translator = de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite = true]; realfilename                             ; altText     ; mime[default = 'image/jpeg']; $contentCV[unique = true]; folder(qualifier)[default = images];
+            ; widescreen            ; Adnoc_1400x480_BigSplash_EN_01_1400W.jpg ; $siteResource/images/banners/homepage/responsive/Adnoc_1400x480_BigSplash_EN_01_1400W.jpg      ; Adnoc_1400x480_BigSplash_EN_01_1400W.jpg ; "Order Now" ;
+            ; mobile                ; Adnoc_320x300_BigSplash_EN_01_320W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_320x300_BigSplash_EN_01_320W.jpg        ; Adnoc_320x300_BigSplash_EN_01_320W.jpg   ; "Order Now" ;
+            ; tablet                ; Adnoc_770x350_BigSplash_EN_01_770W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_770x350_BigSplash_EN_01_770W.jpg        ; Adnoc_770x350_BigSplash_EN_01_770W.jpg   ; "Order Now" ;
+            ; desktop               ; Adnoc_960x400_BigSplash_EN_01_960W.jpg   ; $siteResource/images/banners/homepage/responsive/Adnoc_960x400_BigSplash_EN_01_960W.jpg        ; Adnoc_960x400_BigSplash_EN_01_960W.jpg   ; "Order Now" ;

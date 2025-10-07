@@ -1,0 +1,24 @@
+UPDATE GenericItem[processor = de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor]; pk[unique = true]
+
+
+INSERT_UPDATE CsAgentGroup; UID[unique = true]          ; groups(uid)[mode = append]                                                                       ; locname[lang = en]             ; description
+                          ; customersupportmanagergroup ; customersupportmanagerrole,customersupportagentrole,csagentmanagergroup ; Customer Support Manager Group ; The Customer Support Manager Group has access to the Customer Support Backoffice's Customer Support Manager Group and Customer Support Agent Group views AND/OR the Assisted Service Module.
+                          ; customersupportagentgroup   ; customersupportagentrole                                                       ; Customer Support Agent Group   ; The Customer Support Agent Group has access to the Customer Support Backoffice's Customer Support Agent Group views and AND/OR the Assisted Service Module.
+
+#INSERT_UPDATE UserGroup; UID[unique = true]                ; description
+#                       ; customersupportadministratorgroup ; The Customer Support Administrator Group has access to the Customer Support Backoffice's Customer Support Administrator Group and Customer Support Agent Group views AND/OR the Assisted Service Module.
+
+INSERT_UPDATE UserGroup; UID[unique = true]       ; groups(uid)[mode = append]                                                         ; locname[lang = en]             ; description
+                       ; ecommerceSpecialist      ; customersupportadministratorrole,b2bregistrationapprovergroup,backofficeadmingroup ; "E-Commerce Specialist"        ;
+                       ; adnocSalesManagerGroup   ; customersupportmanagerrole                                                         ; "Adnoc Sales Manager Group"    ;
+                       ; adnocSalesManagerGroup21 ; adnocSalesManagerGroup                                                             ; "Adnoc Sales Manager Group 21" ;
+                       ; adnocSalesManagerGroup31 ; adnocSalesManagerGroup                                                             ; "Adnoc Sales Manager Group 31" ;
+                       ; adnocSalesManagerGroup41 ; adnocSalesManagerGroup                                                             ; "Adnoc Sales Manager Group 41" ;
+
+#Search Restrictions
+INSERT_UPDATE OrgUnit; uid[unique = true]  ; name                               ; description                        ; lineofbuisness(code); active; supplier
+                     ; AdnocFuelLubricants ; Adnoc Fuel Lubricants sales region ; Adnoc Fuel Lubricants sales region ; trade               ; TRUE  ; TRUE
+                     ; AdnocGasCarCare     ; Adnoc Gas Car Care sales region    ; Adnoc Gas Car Care sales region    ; trade               ; TRUE  ; TRUE
+
+UPDATE BackofficeRole;UID[unique=true];backOfficeLoginDisabled;authorities
+                     ;customersupportadministratorrole;FALSE;customersupportadministratorrole,backofficeworkflowuser,backofficeworkflowadmin

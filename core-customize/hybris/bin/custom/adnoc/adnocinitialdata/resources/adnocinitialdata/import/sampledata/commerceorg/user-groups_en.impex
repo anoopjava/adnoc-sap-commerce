@@ -1,0 +1,72 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Language
+$lang = en
+
+UPDATE UserGroup; uid[unique = true]  ; locname[lang = en]
+                ; SuperAccountMangers ; Adnoc Super Account Mangers
+
+UPDATE UserGroup; uid[unique = true] ; locname[lang = en];
+                ; salesemployeegroup ; Adnoc Sales       ;
+                ; salesadmingroup    ; Adnoc Sales       ;
+                ; salesmanagergroup  ; Sales Manager     ;
+                ; salesapprovergroup ; Sales Approver    ;
+
+UPDATE Employee; uid[unique = true]    ; name                            ;
+               ; adnocacctmgr          ; Adnoc Account Manager           ;
+               ; adnocfuelacctmgr      ; Adnoc Fuel Account Manager      ;
+               ; adnoclubricantacctmgr ; Adnoc Lubricant Account Manager ;
+               ; adnocgasacctmgr       ; Adnoc Gas Account Manager       ;
+               ; adnoccarcareacctmgr   ; Adnoc Car Care Account Manager  ;
+
+### Sample promotions of Promotion-Engine ###
+UPDATE UserGroup; uid[unique = true]; locname[lang = en];
+                ; bronzeloyalty     ; Bronze Loyalty    ;
+                ; silverloyalty     ; Silver Loyalty    ;
+                ; goldloyalty       ; Gold Loyalty      ;
+### END Sample promotions of Promotion-Engine ###
+
+# Associate members of salesemployeegroup to the B2B Customer List search strategy
+UPDATE CustomerList; uid[unique = true]; locname[lang = en]
+                   ; b2bCustomerList   ; My Organization Customers
+
+UPDATE SearchRestriction; code[unique = true]                        ; name[lang = en]
+                        ; salesemployeegroupQuotesOrgUnitRestriction ; A sales employee can only see quotes linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]                       ; name[lang = en]
+                        ; csagroupCustomerTicketsOrgUnitRestriction ; Adnoc Customer Support Agent can only see return tickets linked to their sales units
+                        ; csmgroupCustomerTicketsOrgUnitRestriction ; Adnoc Customer Support Manager can only see return tickets linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]                 ; name[lang = en]
+                        ; csagroupCustomersOrgUnitRestriction ; Adnoc Customer Support Agent can only see customers linked to their sales units
+                        ; csmgroupCustomersOrgUnitRestriction ; Adnoc Customer Support Manager can only see customers linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]              ; name[lang = en]
+                        ; csagroupOrdersOrgUnitRestriction ; Adnoc Customer Support Agent can only see orders linked to their sales units
+                        ; csmgroupOrdersOrgUnitRestriction ; Adnoc Customer Support Manager can only see orders linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]                      ; name[lang = en]
+                        ; csagroupReturnRequestsOrgUnitRestriction ; Adnoc Customer Support Agent can only see return orders linked to their sales units
+                        ; csmgroupReturnRequestsOrgUnitRestriction ; Adnoc Customer Support Agent can only see return orders linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]              ; name[lang = en]
+                        ; csagroupQuotesOrgUnitRestriction ; Adnoc Customer Support Agent can only see quotes linked to their sales units
+                        ; csmgroupQuotesOrgUnitRestriction ; Adnoc Customer Support Manager can only see quotes linked to their sales units
+
+UPDATE SearchRestriction; code[unique = true]                   ; name[lang = en]
+                        ; salesemployeegroupEmployeesVisibility ; A member of salesemployeegroup shall only see the employees from salesemployeegroup
+
+UPDATE SearchRestriction; code[unique = true]           ; name[lang = en]
+                        ; addressesVisibilitySalesUnits ; A sales employee shall only see addresses where the owner is of type OrgUnit and has supplier flag set to TRUE
+
+UPDATE SearchRestriction; code[unique = true]                           ; name[lang = en]
+                        ; salesemployeegroupQuotesMaxVersionRestriction ; A sales employee can only see the latest version of a quote with a given code
+
+UPDATE SearchRestriction; code[unique = true]                 ; name[lang = en]
+                        ; salesemployeegroupOrgUnitVisibility ; A member of salesemployeegroup shall only see sales units in their branch
+
+UPDATE Employee; uid[unique = true]; name                           ; description
+               ; asagent           ; "Assisted Service Agent"       ; "Assisted Service Agent"
+               ; asagentsales      ; "Assisted Service Sales Agent" ; "Assisted Service Sales Agent"
+               ; asagentmanager    ; "Assisted Service CS Manager"  ; "Assisted Service CS Manager"

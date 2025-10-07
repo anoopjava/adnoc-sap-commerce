@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="adnocbackofficeService" class="com.adnoc.backoffice.services.AdnocbackofficeService" />
+
+	<bean id="adnocbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator" scope="singleton" init-method="init" lazy-init="false">
+  		<property name="location" value="/adnocbackoffice-backoffice-labels/"/>
+  		<property name="name" value="labels"/>
+  	</bean>
+
+	<alias name="adnocPriceRenderer" alias="priceRenderer"/>
+	<bean id="adnocPriceRenderer" class="com.adnoc.backoffice.renderers.AdnocPriceRenderer">
+		<property name="typeFacade" ref="typeFacade"/>
+		<property name="propertyValueService" ref="propertyValueService" />
+		<property name="labelService" ref="labelService" />
+		<property name="permissionFacade" ref="permissionFacade" />
+		<property name="myEntry" value="" />
+		<property name="priceRenderApplicableFor" value="#{configurationService.configuration.getString('adnoc.backoffice.price.render.applicablefor', 'RefundEntry')}"/>
+	</bean>
+
+	<bean id="adnocQuoteLogicHandler" class="com.adnoc.backoffice.handlers.AdnocQuoteLogicHandler" parent="defaultEditorAreaLogicHandler">
+		<property name="commerceQuoteService" ref="commerceQuoteService"/>
+		<property name="quoteUserIdentificationStrategy" ref="quoteUserIdentificationStrategy"/>
+		<property name="notificationService" ref="notificationService"/>
+	</bean>
+
+	<bean id="adnocQuoteStateRenderer" class="com.adnoc.backoffice.renderers.AdnocQuoteStateRenderer"  parent="editorAreaPanelRenderer">
+		<property name="typeFacade" ref="typeFacade"/>
+	</bean>
+
+</beans>

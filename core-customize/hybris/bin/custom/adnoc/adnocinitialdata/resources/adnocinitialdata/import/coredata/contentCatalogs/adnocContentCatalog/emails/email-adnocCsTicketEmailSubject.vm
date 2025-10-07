@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocCsTicketClosed_$lang.properties
+
+${ctx.messages.emailSubject}

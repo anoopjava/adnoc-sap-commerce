@@ -1,0 +1,17 @@
+@import "../../../../../../../../../src/styles/scss/utilities/mixins";
+
+.cx-account-summary-document-filter-form {
+    .cx-account-summary-document-filter-form-button-block {
+        @include media-breakpoint-up(md) {
+            flex-basis: auto;
+            justify-content: flex-end;
+            margin-inline-end: 0;
+            margin-bottom: 8px;
+            margin-left: auto;
+            align-self: flex-end;
+            display: flex;
+            flex-direction: row;
+        }
+
+    }
+}

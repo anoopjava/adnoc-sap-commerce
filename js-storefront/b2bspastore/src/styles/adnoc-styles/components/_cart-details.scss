@@ -1,0 +1,25 @@
+%adnoc-cart-details {
+  display: block;
+
+  .cart-details-wrapper {
+    padding-bottom: 2rem;
+
+    @include media-breakpoint-up(sm) {
+      margin-top: -23px;
+    }
+  }
+
+  .cx-promotions {
+    @include type('7');
+    color: var(--cx-color-success);
+    padding: 0.5rem 0;
+
+    li {
+      line-height: 1.6;
+    }
+  }
+
+  .cx-total {
+     font-size: 24px;
+  }
+}

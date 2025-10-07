@@ -1,0 +1,16 @@
+<a
+  *ngIf="linkable; else text"
+  [routerLink]="{ cxRoute: route, params: routeModel } | cxUrl"
+  [tabIndex]="tabIndex"
+>
+  <div class="d-flex align-items-baseline">
+    <span class="circle">{{ getDisplayName(item.firstName, item.lastName) }}</span>
+    <span class="text-body"
+      ><ng-container *ngTemplateOutlet="text"></ng-container
+    ></span>
+  </div>
+</a>
+
+<ng-template #text>
+  <span class="text" title="{{ property }}">{{ property }}</span>
+</ng-template>

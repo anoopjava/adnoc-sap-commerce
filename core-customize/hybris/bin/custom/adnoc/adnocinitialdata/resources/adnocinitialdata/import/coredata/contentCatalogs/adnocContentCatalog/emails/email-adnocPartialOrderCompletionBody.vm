@@ -1,0 +1,44 @@
+## messageSource=classpath:/adnocservice/messages/email-adnocPartialOrderCompletion_$lang.properties
+
+<html>
+ <body bgcolor="#ffffff">
+     <div class="content" style="font-family: Aptos Display, Helvetica, sans-serif; color: #414a4f;">
+         <p>Dear ${ctx.title} ${ctx.firstName},</p>
+         <p>${ctx.messages.partialOrder}</p>
+         <p>${ctx.messages.orderDetails}</p>
+         <p><strong>${ctx.messages.sapOrderCode}</strong>${ctx.order.sapOrderCode}</p>
+         <table width="100%" cellpadding="10" cellspacing="0" border="0" style="border-collapse: collapse; border: 1px solid #ccc; font-family: Arial, Helvetica, sans-serif; font-size:14px;">
+           <thead>
+             <tr style="background-color: #e6f2ff; border: 1px solid #ccc;">
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.product}</th>
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.quantity}</th>
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.itemPrice}</th>
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.total}</th>
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.requestedDeliveryDate}</th>
+               <th style="color:#333; font-weight:700; text-align: center; border: 1px solid #ccc;">${ctx.messages.status}</th>
+             </tr>
+           </thead>
+                   #foreach ($entry in ${ctx.order.entries})
+                      <tr style="background:#fafafa; border: 1px solid #ccc;">
+                        <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.product.name.replaceAll("_", " ")</td>
+                        <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.quantity</td>
+                        <td style="color:#555; text-align: center; border: 1px solid #ccc;">$entry.basePrice.formattedValue</td>
+                        <td style="color:#555; text-align: center; border: 1px solid #ccc;">
+                          #if($entry.totalPrice.value > 0)
+                            $entry.totalPrice.formattedValue
+                          #else
+                          #end
+                        </td>
+                        <td style="padding:12px 10px; color:#555; text-align: center; border: 1px solid #ccc;">
+                          $ctx.dateTool.format('MM/dd/yyyy', $entry.namedDeliveryDate)
+                        </td>
+                        <td style="color:#555; text-align: center; border: 1px solid #ccc;">${entry.sapLineItemStatus}</td>
+                      </tr>
+                    #end
+                  </tbody>
+                </table>
+         <p>${ctx.messages.orderStatus}</p>
+         <p>${ctx.messages.enquiry}</p>
+         <p>${ctx.messages.thankYouMessage}</p>
+ </body>
+</html>

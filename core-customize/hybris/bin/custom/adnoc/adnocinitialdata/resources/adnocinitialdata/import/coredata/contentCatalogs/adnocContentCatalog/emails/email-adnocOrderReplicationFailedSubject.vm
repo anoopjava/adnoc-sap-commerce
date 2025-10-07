@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocOrderReplicationFailed_$lang.properties
+
+${ctx.messages.getMessage('replicationFailedOrderEmailSubject', $ctx.order.code)}

@@ -1,0 +1,3 @@
+## messageSource=classpath:/adnocinitialdata/messages/email-adnocB2BCustomerCreation_$lang.properties
+
+${ctx.messages.emailSubject}

@@ -1,0 +1,128 @@
+<cx-org-card
+  *ngIf="model$ | async as model"
+  i18nRoot="orgUnit.details"
+  [cxFocus]="{ refreshFocus: model }"
+  [showHint]="true"
+>
+  <!-- <a
+    actions
+    *ngIf="isUpdatingUnitAllowed"
+    class="link edit"
+    [class.disabled]="!model.active || (isInEditMode$ | async)"
+    [routerLink]="{ cxRoute: 'orgUnitEdit', params: model } | cxUrl"
+  >
+    {{ "organization.edit" | cxTranslate }}
+  </a> 
+
+  <cx-org-toggle-status
+    actions
+    key="uid"
+    *ngIf="isUpdatingUnitAllowed"
+    i18nRoot="orgUnit"
+    class="disabledButton"
+  ></cx-org-toggle-status>
+  -->
+  <!-- As per requirements, we need to remove this button, Considering future changes and keeping it as commented code -->
+
+  <!-- Create a new payer/shipping info link -->
+  <a
+    actions
+    *ngIf="model?.salesOrg && (structure$ | async) as structure"
+    class="link create payerShipto"
+    [routerLink]="{ cxRoute: structure.type + 'Create' } | cxUrl"
+    routerLinkActive="disabled"
+  >
+    <ng-container *ngIf="partnerFunction == 'SP'">
+      {{ "orgUnit.button.addPayer" | cxTranslate }}
+    </ng-container>
+    <ng-container *ngIf="partnerFunction == 'PY'">
+      {{ "orgUnit.button.addShipto" | cxTranslate }}
+    </ng-container>
+  </a>
+
+  <cx-org-disable-info
+    info
+    i18nRoot="orgUnit"
+    [displayInfoConfig]="{ disabledDisable: true }"
+  >
+  </cx-org-disable-info>
+
+  <section main class="details" cxOrgItemExists>
+    <div class="property">
+      <label>{{ "orgUnit.name" | cxTranslate }}</label>
+      <span class="value">
+        {{ model.name }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{ "orgUnit.uid" | cxTranslate }}</label>
+      <span class="value">
+        {{ model.parentOrgUnit?.uid }}
+      </span>
+    </div>
+
+    <div class="property">
+      <label>{{ "orgUnit.active" | cxTranslate }}</label>
+      <span class="value" [class.is-active]="model.active">
+        {{
+          (model.active ? "organization.enabled" : "organization.disabled")
+            | cxTranslate
+        }}
+      </span>
+    </div>
+
+    <div class="property" *ngIf="model.approvalProcess?.name">
+      <label>{{ "orgUnit.approvalProcess" | cxTranslate }}</label>
+      <span class="value">
+        {{ model.approvalProcess?.name }}
+      </span>
+    </div>
+
+    <div class="property" *ngIf="model.parentOrgUnit">
+      <label>{{ "orgUnit.parentUnit" | cxTranslate }}</label>
+      {{ model.parentOrgUnit.name }}
+    </div>
+  </section>
+  <!-- As per requirements, we need to remove this code, Considering future changes and keeping it as commented code-->
+  <!-- <section main class="link-list">
+    <ng-container *ngIf="model.uid">
+      <a
+        class="link"
+        *ngIf="isUpdatingUnitAllowed"
+        [routerLink]="{ cxRoute: 'orgUnitChildren', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ "orgUnit.links.units" | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'orgUnitUserList', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ "orgUnit.links.users" | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'orgUnitApprovers', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ "orgUnit.links.approvers" | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'orgUnitAddressList', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ "orgUnit.links.shippingAddresses" | cxTranslate }}
+      </a>
+      <a
+        class="link"
+        [routerLink]="{ cxRoute: 'orgUnitCostCenters', params: model } | cxUrl"
+        routerLinkActive="is-current"
+      >
+        {{ "orgUnit.links.costCenters" | cxTranslate }}
+      </a>
+    </ng-container>
+  </section> -->
+</cx-org-card>

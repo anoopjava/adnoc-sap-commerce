@@ -1,0 +1,19 @@
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; OutboundCancelOMMOrderOMSOrder
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]             ; type(code)                      ; root[default = false]
+                                   ; OutboundCancelOMMOrderOMSOrder        ; SAPCpiOutboundOrderCancellation ; SAPCpiOutboundOrderCancellation ; true
+                                   ; OutboundCancelOMMOrderOMSOrder        ; SAPCpiOutboundOrderItem         ; SAPCpiOutboundOrderItem         ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier)   ; returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderItem             ; quantity                    ; SAPCpiOutboundOrderItem:quantity                      ;                                                           ;                        ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderItem             ; productName                 ; SAPCpiOutboundOrderItem:productName                   ;                                                           ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderItem             ; rejectionReason             ; SAPCpiOutboundOrderItem:rejectionReason               ;                                                           ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderItem             ; lineItemOrderStatus         ; SAPCpiOutboundOrderItem:lineItemOrderStatus           ;                                                           ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderItem             ; deliveryStatus              ; SAPCpiOutboundOrderItem:deliveryStatus                ;                                                           ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; sapOrderCode                ; SAPCpiOutboundOrderCancellation:sapOrderCode          ;                                                           ;                        ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; distributionChannel         ; SAPCpiOutboundOrderCancellation:distributionChannel   ;                                                           ; true                   ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; division                    ; SAPCpiOutboundOrderCancellation:division              ;                                                           ; true                   ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; salesOrganization           ; SAPCpiOutboundOrderCancellation:salesOrganization     ;                                                           ; true                   ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; rejectionStatusHeader       ; SAPCpiOutboundOrderCancellation:rejectionStatusHeader ;                                                           ; true                   ;
+                                            ; OutboundCancelOMMOrderOMSOrder:SAPCpiOutboundOrderCancellation     ; overAllOrderStatus          ; SAPCpiOutboundOrderCancellation:overAllOrderStatus    ;                                                           ; true                   ;
